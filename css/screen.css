@@ -5,9 +5,8 @@ BODY
 	padding: 0;
 	border: 0;
 /*This removes the border around the viewport in old versions of IE*/
-	width: 1300px;
 	background: #FFF;
-	min-width: 600px;
+	min-width: 900px;
 /*Minimum width of layout - remove line if not required
 The min-width property does not work in old versions of Internet Explorer*/
 	font-size: 95%;
