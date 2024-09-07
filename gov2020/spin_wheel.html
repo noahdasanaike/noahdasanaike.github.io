@@ -11,20 +11,63 @@
             flex-direction: column;
             align-items: center;
             padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
+
+        #wheel-container {
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 20px;
+            position: relative; /* Add this */
+        }
+
         #wheel {
-            width: 800px;
-            height: 800px;
+            width: 100%;
+            height: auto;
         }
+
+        #control-panel {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            position: relative; /* Add this */
+            z-index: 10; /* Add this */
+        }
+
         #spin-button {
-            margin: 20px;
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
+            outline: none;
+            transition: all 0.3s ease;
         }
+
+        #spin-button:active {
+            transform: scale(0.95);
+        }
+
+        #spin-button:focus {
+            outline: none;
+        }
+
+        @keyframes buttonReset {
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .button-clicked {
+            animation: buttonReset 0.3s ease forwards;
+        }
+
         #result {
+            width: 100%;
             max-width: 600px;
             text-align: center;
+            margin-top: 20px;
+            word-wrap: break-word;
         }
         .wheel-section {
             transition: all 0.3s ease;
@@ -38,39 +81,60 @@
 </head>
 <body>
     <h1>Your Titles and Abstracts</h1>
-    <svg id="wheel" viewBox="0 0 100 100">
-        <!-- Wheel sections will be added here by JavaScript -->
-        <circle cx="50" cy="50" r="45" fill="none" stroke="black" stroke-width="0.5"/>
-        <line x1="50" y1="5" x2="50" y2="0" stroke="black" stroke-width="1" />
-    </svg>
-    <button id="spin-button">Spin the Wheel</button>
+    <div id="wheel-container">
+        <svg id="wheel" viewBox="0 0 100 100">
+            <!-- Wheel sections will be added here by JavaScript -->
+            <circle cx="50" cy="50" r="45" fill="none" stroke="black" stroke-width="0.5"/>
+            <line x1="50" y1="5" x2="50" y2="0" stroke="black" stroke-width="1" />
+        </svg>
+    </div>
+    <div id="control-panel">
+        <button id="spin-button">Spin the Wheel</button>
+    </div>
     <div id="result"></div>
 
     <script>
         const papers = [
+            {title: "Dealing with Unattainable Missions of Making “Neofamilial Citizenship”: Criteria of Deservingness for Marriage Migrants in South Korea in the Neoliberal Era",
+                abstract: "The growing significance of neoliberal social policies provides a unique opportunity to reexamine the foundation and formation of migrants’ social citizenship in neoliberal host societies. Drawing on in-depth interviews with South Korea’s street-level bureaucrats who work with marriage migrants at state-led welfare agencies, this paper delves into how two main criteria for migrant deservingness – cultural and economic performance – work in tandem in the neoliberal era to promote women who can take care of both their families and themselves. By focusing on marriage migrants who are deeply embedded in familial relationships with native-born citizens, this study sheds light on the gendered and relational aspects of migrant deservingness, aligning with the feminist critique of the welfare state and citizenship. Furthermore, the paper reveals that street-level bureaucrats tend to shift their focus to other key actors surrounding migrant women when they find their mission unattainable. This finding adds to the current scholarship on street-level bureaucrats, uncovering an alternative coping strategy used by frontline state workers, in which they neither directly confront the issue nor become entirely cynical about their mission.",
+                author: "Jiyeon Lee"
+            },
             { title: "Celebrating Funerals as Weddings: A Computational Text Study of Chinese Foundations’ COVID Sentiment Responses", 
-                abstract: "Current literature has increasingly recognized the significance of cultural responses to disasters. While it largely fo- cuses on the roles of the Chinese state or individuals, other actors’ involvement in producing disaster narratives and emotions remains under-explored. This study examines civic organizations’ bottom-up participation in constructing the “celebrating funerals as weddings” (sangshi xiban, 丧事喜办) COVID-19 rhetoric. Using machine learning and statistical analysis, it analyses an original WeChat dataset of 193 Chinese foundations and their organizational data. We found that foundations displayed predominantly positive sentiments about the pandemic on social media, with grassroots entities exhibiting significantly more positivity than their affluent, government-backed counterparts. Grass- roots ones also attributed more aﬀirmative values to the party-state, healthcare workers, and women while avoiding contentious entities like Zhang Wenhong, WHO, and the U.S. Despite their important presence in material disaster relief, grassroots foundations largely upheld the state’s discursive authority, sidestepping dissenting voices during the pandemic’s early height."},
+                abstract: "Current literature has increasingly recognized the significance of cultural responses to disasters. While it largely fo- cuses on the roles of the Chinese state or individuals, other actors’ involvement in producing disaster narratives and emotions remains under-explored. This study examines civic organizations’ bottom-up participation in constructing the “celebrating funerals as weddings” (sangshi xiban, 丧事喜办) COVID-19 rhetoric. Using machine learning and statistical analysis, it analyses an original WeChat dataset of 193 Chinese foundations and their organizational data. We found that foundations displayed predominantly positive sentiments about the pandemic on social media, with grassroots entities exhibiting significantly more positivity than their affluent, government-backed counterparts. Grass- roots ones also attributed more aﬀirmative values to the party-state, healthcare workers, and women while avoiding contentious entities like Zhang Wenhong, WHO, and the U.S. Despite their important presence in material disaster relief, grassroots foundations largely upheld the state’s discursive authority, sidestepping dissenting voices during the pandemic’s early height.",
+                author: "Rui Chen"
+            },
             { title: "How Unexpected Success Shapes Attitudes", 
-                abstract: "This paper shows how socioeconomic expectations can be used as a benchmark to evaluate current outcomes. I argue that this relative evaluation affects satisfaction with the political system, redistributive preferences, and whether inequality is perceived as the result of a legitimate meritocratic process. To test this argument, I use data from the Danish Longitudinal Survey of Youth (N=3,151), which tracked a cohort born in 1954 from 1968 to 2004. This study presents data on socioeconomic expectations, realized outcomes, and political attitudes. I apply a dynamic panel model with two- way fixed effects to test the within-individual effect of going above expectations on attitudes. I find strong support that citizens update their beliefs about inequality and mixed support that citizens who fare better than their expectations become more content with the political system."},
+                abstract: "This paper shows how socioeconomic expectations can be used as a benchmark to evaluate current outcomes. I argue that this relative evaluation affects satisfaction with the political system, redistributive preferences, and whether inequality is perceived as the result of a legitimate meritocratic process. To test this argument, I use data from the Danish Longitudinal Survey of Youth (N=3,151), which tracked a cohort born in 1954 from 1968 to 2004. This study presents data on socioeconomic expectations, realized outcomes, and political attitudes. I apply a dynamic panel model with two- way fixed effects to test the within-individual effect of going above expectations on attitudes. I find strong support that citizens update their beliefs about inequality and mixed support that citizens who fare better than their expectations become more content with the political system.",
+                author: "Marc Hvidkjær"},
             { title: "Inclusive or Exclusive: Dual Identity and Divergence of Attitudes Towards Immigrants in Taiwan", 
+                author: "Li Zhiyu",
                 abstract: "Many studies have found that identity would affect people’s attitudes toward immigrants. Taiwan shows its uniqueness in the issue of identity, where two different collective identities exist simultaneously. A person could be at the same time an anchor of both Taiwanese identity and Chinese identity. These two identities diverge in distinct imaginations about the community. We explore how these two identities would affect people’s attitudes toward immigrants. Results show that Taiwanese identity promotes unwillingness to accept immigrants and xenophobia, while Chinese identity has a negative effect on them. Taiwanese identity of mainlanders has no impact on ATII. It is concluded that Taiwanese identity is more exclusive and Chinese identity is more inclusive out of their different imaginations about the community, and Taiwanese nationalism is still under-formed, and yet to incorporate all groups on the island. In the study, we are to clarify the image of immigrants in Taiwan, and the evolution of attributes of Chinese identity and Taiwanese identity. Then, the impact of two identities on ATII will be examined with the OLS model and IV model. Finally, we will discuss our findings."},
             { title: "Unpacking Mechanisms of Leadership Decapitation via Drones", 
+                author: "Kentaro Nakamura",
                 abstract: "Leadership decapitation is one of the major strategies for counterinsurgencies. While many scholars have tried to understand the mechanisms of leadership decapitations, the evidence is, at best, mixed. This paper addresses the debate on the mechanisms of leadership decapitation by operationalizing the implica- tion of each theory and providing the comprehensive causal evidence on each mechanism. By combining the instrumental variable approach, natural exper- iment, and satellite images, this paper tests each mechanism separately with the data of drone wars in Pakistan. Through the investigation, I find that leadership decapitation campaigns via drone strikes influence the behavior of terrorists through two dominant mechanisms: signaling and capacity. Drone strikes, regardless of their success, create incentives for terrorist organizations to commit more violence because being targeted by strikes might signal to their opponents and local residents that the organizations are the weak type. To mit- igate these reputational concerns, the targeted terrorist organizations commit more violence in the relatively economically developed areas for the short term (signaling mechanism). However, this effect disappears in around half a year, and if they succeed, the drone strikes can induce decreased violence by the target organizations in the long term (capacity mechanism)."},
             { title: "Paris Agreement Polarizes U.S. Local Policymakers on Climate Action", 
+                author: "Jing Ling Tan",
                 abstract: "Scientists urgently call for local government climate action and existing research suggests that appealing to international treaties may help mobilize such action. However, our national survey of 523 U.S. local policymakers shows that, in today’s American political context, framing climate policy in terms of the Paris Agreement decreases Republican policymakers’ support for pollution regulation and net-zero targets. In contrast, the same frames do not affect Democrats, who already support climate policies at consistently high rates. Thus, appealing to international treaties widens the gap in partisan opinion on climate action. These findings have implications for practical debates about climate change advocacy and, more generally, domestic theories of international institutions."},
             { title: "Thin Red Lines: Escalatory Dynamics and Collusion in Covert Wars", 
-            abstract: "Austin Carson’s theory of collusion between adversaries intervening on opposite sides of  a local conflict posits that collusion – defined as not exposing and publicizing the involvement of the other outside intervener – is a useful device to prevent excessive escalation of the conflict among the interveners. While useful to understand acts of restraint in covert wars, the theory underemphasizes competition: even as they would like to continue benefitting from collusion, interveners will still seek to ensure their local allies’ accrue advantages over time, and may be tempted to escalate to achieve this. How, then, do interveners continue to compete with one another without escalating to such a degree that one or both interveners decide to break collusion? This paper proposes an addendum to Carson’s theory and argues that the clarity of limits and strategic value of an object of contestation in a covert war are two variables that determine the likelihood of escalation among adversaries who would otherwise prefer to continue colluding. We posit that objects of lower strategic value will render escalation less likely as the payoff to potentially breaking collusion would not be worthwhile. We further posit that where the limits to the conflict had been clearly communicated or agreed upon, escalation is less likely. We use a brief analysis of the US and China’s intervention in the Korean War (1950 – 1953) to derive specific hypotheses, which are then further tested in their intervention in the Vietnam War (1964 to 1968). "},
-            { title: "Patronage Politics and ‘Helping Hand’ Behavior: Evidence from 1.4 million Land Transactions in China", 
+                author: "Nic Wicaksono",
+                abstract: "Austin Carson’s theory of collusion between adversaries intervening on opposite sides of  a local conflict posits that collusion – defined as not exposing and publicizing the involvement of the other outside intervener – is a useful device to prevent excessive escalation of the conflict among the interveners. While useful to understand acts of restraint in covert wars, the theory underemphasizes competition: even as they would like to continue benefitting from collusion, interveners will still seek to ensure their local allies’ accrue advantages over time, and may be tempted to escalate to achieve this. How, then, do interveners continue to compete with one another without escalating to such a degree that one or both interveners decide to break collusion? This paper proposes an addendum to Carson’s theory and argues that the clarity of limits and strategic value of an object of contestation in a covert war are two variables that determine the likelihood of escalation among adversaries who would otherwise prefer to continue colluding. We posit that objects of lower strategic value will render escalation less likely as the payoff to potentially breaking collusion would not be worthwhile. We further posit that where the limits to the conflict had been clearly communicated or agreed upon, escalation is less likely. We use a brief analysis of the US and China’s intervention in the Korean War (1950 – 1953) to derive specific hypotheses, which are then further tested in their intervention in the Vietnam War (1964 to 1968). "},
+            { title: "Patronage Politics and ‘Helping Hand’ Behavior: Evidence from 1.4 million Land Transactions in China",
+            author: "Michael Cerny", 
             abstract: "The implications of bureaucratic behavior toward firms and entrepreneurs has re- ceived considerable attention in transition economy research. Despite the affinity be- tween patrimonial bureaucracies and corruption, I examine how patronage networks can actually enhance the business environment for some firms. Using a new data set of 1.4 million land parcels leased by Chinese municipal governments between 2007- 2015, I demonstrate how patrimonial ties between municipal and provincial leaders are causally associated with a 30% decrease in the price per square metre of industrial land— a substantive discount worth hundreds of thousands to millions of yuan to Chi- nese firms. My results hold implications for the literature on the ‘helping hand’ model of economic growth, principal-agent problems in decentralized bureaucracies, and the strategic distribution of state resources in authoritarian regimes."},
             { title: "Judicial Constraints on Representatives’ Freedom to Act and Ability to Hold Office: Evidence from Brazil (1988-2022)", 
+            author: "Gabriela Fischer Armani",
             abstract: "When do judges constrain representatives’ freedom of action and ultimately remove them from office? While democracies usually provide for checks on representatives through elections and legislative procedures, accountability mechanisms can also come from courts - generating interbranch tensions, altering forces in Congress, and imposing popularity costs. Searches and seizures, restrictions on activities, removals, and even arrests of politicians have been on Latin American Courts' agenda. Focusing on Brazil, the paper seeks to explain what incentives and constraints influence the chances that judges imposed sanctions against Congress members' behavior and ability to hold office in the country’s current democratic period (1988-2022). I theorize that the variation in political costs of sanctioning officials and the pressures from episodes of corruption that combine public support and emerge bottom-up in the justice system impact the chances of judicial constraints. I draw on an original dataset of all the cases filed against federal legislators combined with legislative and mediatic documents. Logit and difference-in-differences models suggest that the less severe the legal measures, the less power the incumbent has to retaliate against the Court, and the more insulated from the political arena is the accountability request, the more likely the Court is to impose constraints on parliamentarians. In particular, Operation Car Wash (2015-2018), Latin America’s largest corruption investigation, is a turning point: the court has become more likely to constrain public officials and impose legal sanctions before convictions since the operation started. This pattern recently expanded to cases unrelated to corruption, particularly against representatives accused of anti-democratic behavior, such as trying to subvert legitimate electoral results. The balance between avoiding political backlash from Congress and receiving incentives from aggressive anti-corruption prosecution strategies has shaped the expansion of judicial control over representatives in the long run."},
             { title: "Partisan ‘Mismatch’ Performance in US Nonpartisan Elections", 
+            author: "Chris Vazquez",
             abstract: "Partisanship is the primary influence on vote choice in elections throughout the United States. However, most city elections are nonpartisan. Without the use of party labels, can minority party members successfully run for local offices? Using a recently published database, I analyze the performance of minority party candidates in US city elections. I find that ‘partisan mismatches’ are more likely to perform better in cities with nonpartisan elections."},
             { title: "Does Globalization Favor Autocracies? Explaining the Reversed Patterns", 
+            author: "George Yean",
             abstract: "Compared to the pre-1990 period, more autocratic regime types predict better economic performance than more democratic ones since the 1990s, especially on exports and external surpluses. Apart from the argument that autocratic institutions may also exogenously favor economic development, my analysis emphasizes the role of globalization. In other words, autocracies may perform better conditional on integrating into the globalized economy, contra the pre-1990 period."},
             { title: "Repetition Premium", 
+            author: "John Koo",
             abstract: "Historical records suggest that states in crises often dismiss repeated signals as uninformative even when they correctly perceive those signals as costly. Why do these signals fail? Under what conditions do repeating a signal undercut, rather than support, the signaler’s effort to communicate its resolve? In this paper I propose that repeating a signal across multiple contexts tend to complicate the process in which the receiver attributes the signal to the signalers intention. Signalers suffer a “repetition premium” when a signal has been repeated so many times that the target state consider the signaler to have a context-independent reason to send the signal (e.g. because it is better to appear hawkish), rather than a purposive display of the signaler’s interest in the immediate crisis. I find support for the theory in both repeated military threats using the cross national Militarized Compellent Threat (MCT) dataset for crises. These findings are both good news and bad news for policymakers: while the risk of reciprocation by the target state decreases as a signal is being repeated, the signaler may be incentivized to increase the intensity of its threats to offset the repetition premium, which can push the parties toward the brink of war."},
             { title: "Latinx Ethnic and Racial Identification", 
+            author: "Mary Soledad Craig",
             abstract: "This thesis explores what factors influence the complex and diverse racial self-identification of Latinx Americans, in response to American federal demographic categories which label Latinx identity as an ethnicity, but not as a race. I pursued two methods in this project: analyzing survey data and conducting original interviews. Quantitative findings from survey data suggest that many Latinx respondents struggle to fit into existing racial categories, and that cultural connection and political beliefs correlate to their racial identification. Qualitative findings from interviews suggest that Latinx Americans struggle to answer survey questions about race, and that they think about their phenotype and culture in order to select their racial identification. Together, these results show that selecting their race is a conscious decision for Latinx respondents, based on their phenotype, beliefs, and culture."},
         
         ];
@@ -177,7 +241,7 @@
             const angleStep = 360 / papers.length;
             const index = Math.floor(rotation / angleStep);
             const selectedPaper = papers[(papers.length - index - 1) % papers.length];
-            result.innerHTML = `<h2>${selectedPaper.title}</h2><p>${selectedPaper.abstract}</p>`;
+            result.innerHTML = `<h2>${selectedPaper.title}</h2><h3>${selectedPaper.author}</h3><p>${selectedPaper.abstract}</p>`;
 
             // Remove highlight from all sections
             document.querySelectorAll('.wheel-section').forEach(section => {
@@ -192,7 +256,15 @@
         }
 
         createWheel();
-        spinButton.addEventListener('click', spinWheel);
+        spinButton.addEventListener('click', () => {
+            if (!isSpinning) {
+                spinWheel();
+                spinButton.classList.add('button-clicked');
+                setTimeout(() => {
+                    spinButton.classList.remove('button-clicked');
+                }, 300); // This duration should match the animation duration in CSS
+            }
+        });
     </script>
 </body>
 </html>
