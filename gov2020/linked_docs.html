@@ -66,6 +66,12 @@
             S: "1oHBXw_rMKyRxaIOOK5qAyPnfYsvm6z_kIia91kfKr1U",
         };
 
+        const casLabels = {
+            C: "Course Notes",
+            A: "Assignments",
+            S: "Section Notes"
+        };
+
         const weekData = [
             {
                 title: "Publication",
@@ -172,9 +178,9 @@
                     <div class="week-title">Week ${index + 1}: ${week.title}</div>
                     <div class="cas-buttons">
                         <button class="cas-button show-all" onclick="toggleAllDocuments(${index})">Show All</button>
-                        <button class="cas-button" onclick="toggleDocument('C', ${index})">C</button>
-                        <button class="cas-button" onclick="toggleDocument('A', ${index})">A</button>
-                        <button class="cas-button" onclick="toggleDocument('S', ${index})">S</button>
+                        <button class="cas-button" onclick="toggleDocument('C', ${index})">${casLabels.C}</button>
+                        <button class="cas-button" onclick="toggleDocument('A', ${index})">${casLabels.A}</button>
+                        <button class="cas-button" onclick="toggleDocument('S', ${index})">${casLabels.S}</button>
                     </div>
                     <div class="document-viewers" id="viewers-${index}"></div>
                 `;
