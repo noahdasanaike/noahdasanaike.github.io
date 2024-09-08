@@ -9,15 +9,15 @@
             font-family: Arial, sans-serif;
             line-height: 1.6;
             margin: 0;
-            padding: 10px; /* Reduced padding */
+            padding: 10px;
             background-color: #f0f0f0;
         }
 
         .week-item {
-            margin-bottom: 5px; /* Reduced margin */
+            margin-bottom: 15px;
             background-color: white;
             border-radius: 8px;
-            padding: 8px; /* Reduced padding */
+            padding: 10px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
@@ -25,11 +25,12 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 3px; /* Reduced margin */
+            margin-bottom: 10px;
         }
 
         .week-title {
             font-weight: bold;
+            font-size: 1.1em;
         }
 
         .cas-buttons {
@@ -39,7 +40,7 @@
         }
 
         .cas-button {
-            padding: 3px 7px;
+            padding: 5px 10px;
             border: 1px solid #ccc;
             background-color: #f8f9fa;
             cursor: pointer;
@@ -58,39 +59,44 @@
         }
 
         .document-viewers {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-areas: "course assignments section";
+            display: flex;
+            flex-direction: column;
             gap: 10px;
-            margin-top: 5px; /* Reduced margin */
+            margin-top: 10px;
+            height: 0;
+            overflow: hidden;
+            transition: height 0.3s ease;
+        }
+
+        .document-viewers.active {
+            height: 600px;
+        }
+
+        .document-viewers.all-active {
+            flex-direction: row;
         }
 
         .viewer-container {
-            min-height: 0px;
+            display: none;
+            flex: 1;
+            height: 100%;
+            width: 100%;
         }
 
-        #viewer-C {
-            grid-area: course;
-        }
-
-        #viewer-A {
-            grid-area: assignments;
-        }
-
-        #viewer-S {
-            grid-area: section;
+        .viewer-container.active {
+            display: flex;
+            justify-content: center;
         }
 
         .document-viewer {
-            width: 100%;
+            width: 100%; /* or whatever percentage you prefer */
             height: 100%;
             border: none;
         }
 
-        .viewer-container.active {
-            display: block;
-            height: 300px; /* Set height only when active */
-            overflow: auto;
+        .iframe-wrapper {
+            width: 80%;
+            height: 100%;
         }
     </style>
 </head>
@@ -185,7 +191,7 @@
                 }
             },
             {
-                title: "The long view; what’s grad school all about?",
+                title: "The long view; what's grad school all about?",
                 bookmarks: {
                     C: "id.rjfzhl93mrbz",
                     A: "id.ry0exmrzy0an",
@@ -256,51 +262,91 @@
         }
 
         function toggleDocument(docType, weekIndex) {
-            const viewerContainer = document.getElementById(`viewer-${docType}-${weekIndex}`);
-            const existingViewer = viewerContainer.querySelector('iframe');
-            
-            if (existingViewer) {
-                viewerContainer.removeChild(existingViewer);
-                viewerContainer.style.minHeight = '0';
-            } else {
+            const viewersContainer = document.getElementById(`viewers-${weekIndex}`);
+            const viewerContainers = viewersContainer.querySelectorAll('.viewer-container');
+            const targetContainer = document.getElementById(`viewer-${docType}-${weekIndex}`);
+            const showAllButton = document.querySelector(`.week-item:nth-child(${weekIndex + 1}) .show-all`);
+
+            const isShowingAll = viewersContainer.classList.contains('all-active');
+            const isTargetActive = targetContainer.classList.contains('active');
+
+            viewersContainer.classList.remove('all-active', 'single-active');
+            showAllButton.textContent = 'Show All';
+            showAllButton.classList.remove('active');
+
+            viewerContainers.forEach(container => {
+                container.classList.remove('active');
+                container.innerHTML = '';
+            });
+
+            if (!isTargetActive || isShowingAll) {
+                targetContainer.classList.add('active');
                 const docId = casDocuments[docType];
                 const bookmarkId = weekData[weekIndex].bookmarks[docType];
+                
+                // Create a wrapper div
+                const wrapperDiv = document.createElement('div');
+                wrapperDiv.className = 'iframe-wrapper';
+                
                 const viewer = document.createElement('iframe');
                 viewer.className = 'document-viewer';
                 viewer.src = `https://docs.google.com/document/d/${docId}/pub?embedded=true#${bookmarkId}`;
-                viewerContainer.appendChild(viewer);
-                viewerContainer.style.minHeight = '300px';
+                
+                wrapperDiv.appendChild(viewer);
+                targetContainer.appendChild(wrapperDiv);
+                
+                viewersContainer.classList.add('active', 'single-active');
+            } else {
+                viewersContainer.classList.remove('active');
             }
 
             updateButtonState(docType, weekIndex);
         }
 
+        function showDocument(container, docType, weekIndex) {
+            container.classList.add('active');
+            const docId = casDocuments[docType];
+            const bookmarkId = weekData[weekIndex].bookmarks[docType];
+            const viewer = document.createElement('iframe');
+            viewer.className = 'document-viewer';
+            viewer.src = `https://docs.google.com/document/d/${docId}/pub?embedded=true#${bookmarkId}`;
+            container.appendChild(viewer);
+        }
+
         function toggleAllDocuments(weekIndex) {
-            const types = Object.keys(casDocuments).filter(type => weekData[weekIndex].bookmarks[type]);
+            const viewersContainer = document.getElementById(`viewers-${weekIndex}`);
+            const viewerContainers = viewersContainer.querySelectorAll('.viewer-container');
             const showAllButton = document.querySelector(`.week-item:nth-child(${weekIndex + 1}) .show-all`);
-            const viewerContainers = types.map(type => document.getElementById(`viewer-${type}-${weekIndex}`));
+            const casButtons = document.querySelectorAll(`.week-item:nth-child(${weekIndex + 1}) .cas-button:not(.show-all)`);
 
-            const allViewersActive = viewerContainers.every(viewerContainer =>
-                viewerContainer.children.length > 0
-            );
+            const allActive = viewersContainer.classList.contains('all-active');
 
-            if (allViewersActive) {
-                viewerContainers.forEach(viewerContainer => {
-                    viewerContainer.innerHTML = '';
-                    viewerContainer.style.minHeight = '0';
-                });
-                showAllButton.textContent = 'Show All';
-                showAllButton.classList.remove('active');
-            } else {
-                types.forEach(type => {
-                    const viewerContainer = document.getElementById(`viewer-${type}-${weekIndex}`);
-                    if (viewerContainer.children.length === 0) {
-                        toggleDocument(type, weekIndex);
+            // First, reset all individual document views
+            viewerContainers.forEach(container => {
+                container.classList.remove('active');
+                container.innerHTML = '';
+            });
+            casButtons.forEach(button => button.classList.remove('active'));
+            viewersContainer.classList.remove('active');
+
+            if (!allActive) {
+                // Show all documents
+                viewerContainers.forEach((container, index) => {
+                    const docType = Object.keys(casDocuments)[index];
+                    if (weekData[weekIndex].bookmarks[docType]) {
+                        showDocument(container, docType, weekIndex);
                     }
                 });
+                viewersContainer.classList.add('active', 'all-active');
+                viewersContainer.classList.remove('single-active');
+                showAllButton.textContent = 'Hide All';
+                showAllButton.classList.add('active');
+            } else {
+                // Hide all documents
+                viewersContainer.classList.remove('all-active', 'single-active');
+                showAllButton.textContent = 'Show All';
+                showAllButton.classList.remove('active');
             }
-
-            updateButtonState(null, weekIndex, true);
         }
 
         function updateButtonState(docType, weekIndex, all = false) {
@@ -312,32 +358,21 @@
                 S: document.getElementById(`viewer-S-${weekIndex}`)
             };
 
-            if (all) {
-                Object.keys(viewerContainers).forEach(type => {
-                    const button = Array.from(buttons).find(button => button.textContent === casLabels[type]);
-                    if (viewerContainers[type].children.length > 0) {
-                        button.classList.add('active');
-                    } else {
-                        button.classList.remove('active');
-                    }
-                });
-            } else {
-                if (docType) {
-                    const button = Array.from(buttons).find(button => button.textContent === casLabels[docType]);
-                    if (viewerContainers[docType].children.length > 0) {
-                        button.classList.add('active');
-                    } else {
-                        button.classList.remove('active');
-                    }
-                }
-            }
+            buttons.forEach(button => button.classList.remove('active'));
 
-            if (Object.values(viewerContainers).every(container => container.children.length > 0)) {
-                showAllButton.textContent = 'Hide All';
-                showAllButton.classList.add('active');
-            } else {
-                showAllButton.textContent = 'Show All';
-                showAllButton.classList.remove('active');
+            if (all) {
+                if (Object.values(viewerContainers).some(container => container.classList.contains('active'))) {
+                    showAllButton.textContent = 'Hide All';
+                    showAllButton.classList.add('active');
+                } else {
+                    showAllButton.textContent = 'Show All';
+                    showAllButton.classList.remove('active');
+                }
+            } else if (docType) {
+                const button = Array.from(buttons).find(button => button.textContent === casLabels[docType]);
+                if (viewerContainers[docType].classList.contains('active')) {
+                    button.classList.add('active');
+                }
             }
         }
 
