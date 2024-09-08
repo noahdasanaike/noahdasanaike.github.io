@@ -9,57 +9,93 @@
             font-family: Arial, sans-serif;
             line-height: 1.6;
             margin: 0;
-            padding: 20px;
+            padding: 10px; /* Reduced padding */
             background-color: #f0f0f0;
         }
+
         .week-item {
-            margin-bottom: 10px;
+            margin-bottom: 5px; /* Reduced margin */
             background-color: white;
             border-radius: 8px;
-            padding: 10px;
+            padding: 8px; /* Reduced padding */
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
+
         .week-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 5px;
+            margin-bottom: 3px; /* Reduced margin */
         }
+
         .week-title {
             font-weight: bold;
         }
+
         .cas-buttons {
             display: flex;
             gap: 5px;
+            margin-left: auto;
         }
+
         .cas-button {
             padding: 3px 7px;
             border: 1px solid #ccc;
             background-color: #f8f9fa;
             cursor: pointer;
             border-radius: 4px;
+            font-size: 0.9em;
+            white-space: nowrap;
         }
+
         .cas-button:hover {
             background-color: #e9ecef;
         }
+
         .cas-button.active {
             background-color: #007bff;
             color: white;
         }
+
         .document-viewers {
-            display: flex;
-            gap: 2px;
-            margin-top: 5px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-areas: "course assignments section";
+            gap: 10px;
+            margin-top: 5px; /* Reduced margin */
         }
+
+        .viewer-container {
+            min-height: 0px;
+        }
+
+        #viewer-C {
+            grid-area: course;
+        }
+
+        #viewer-A {
+            grid-area: assignments;
+        }
+
+        #viewer-S {
+            grid-area: section;
+        }
+
         .document-viewer {
-            flex: 1;
-            height: 300px;
+            width: 100%;
+            height: 100%;
             border: none;
+        }
+
+        .viewer-container.active {
+            display: block;
+            height: 300px; /* Set height only when active */
+            overflow: auto;
         }
     </style>
 </head>
 <body>
-    <center><h1>GOV2020: Master Document</h1><h3>Fall 2024</h3></center>
+    <center><h1>GOV 2020: The Hidden Curriculum</h1><h3>Fall 2024</h3></center>
     <div id="weeklyStructure"></div>
 
     <script>
@@ -76,6 +112,14 @@
         };
 
         const weekData = [
+            {
+                title: "Logistics",
+                bookmarks: {
+                    C: "id.esns6bono4y1",
+                    A: "id.3l2muz6xqtxv",
+                    S: "id.47i8z9652mqy"
+                }
+            },
             {
                 title: "Publication",
                 bookmarks: {
@@ -178,8 +222,11 @@
                 const weekItem = document.createElement('div');
                 weekItem.className = 'week-item';
                 
-                let buttons = `
-                    <button class="cas-button show-all" onclick="toggleAllDocuments(${index})">Show All</button>
+                let buttons = '';
+                let viewers = `
+                    <div id="viewer-C-${index}" class="viewer-container"></div>
+                    <div id="viewer-A-${index}" class="viewer-container"></div>
+                    <div id="viewer-S-${index}" class="viewer-container"></div>
                 `;
 
                 for (const docType in casDocuments) {
@@ -188,14 +235,20 @@
                     }
                 }
 
+                buttons += `<button class="cas-button show-all" onclick="toggleAllDocuments(${index})">Show All</button>`;
+
+                const weekTitle = index === 0 ? week.title : `Week ${index}: ${week.title}`;
+
                 weekItem.innerHTML = `
                     <div class="week-header">
-                        <div class="week-title">Week ${index + 1}: ${week.title}</div>
+                        <div class="week-title">${weekTitle}</div>
                         <div class="cas-buttons">
                             ${buttons}
                         </div>
                     </div>
-                    <div class="document-viewers" id="viewers-${index}"></div>
+                    <div class="document-viewers" id="viewers-${index}">
+                        ${viewers}
+                    </div>
                 `;
 
                 container.appendChild(weekItem);
@@ -203,19 +256,20 @@
         }
 
         function toggleDocument(docType, weekIndex) {
-            const viewersContainer = document.getElementById(`viewers-${weekIndex}`);
-            const existingViewer = viewersContainer.querySelector(`[data-type="${docType}"]`);
+            const viewerContainer = document.getElementById(`viewer-${docType}-${weekIndex}`);
+            const existingViewer = viewerContainer.querySelector('iframe');
             
             if (existingViewer) {
-                viewersContainer.removeChild(existingViewer);
+                viewerContainer.removeChild(existingViewer);
+                viewerContainer.style.minHeight = '0';
             } else {
                 const docId = casDocuments[docType];
                 const bookmarkId = weekData[weekIndex].bookmarks[docType];
                 const viewer = document.createElement('iframe');
                 viewer.className = 'document-viewer';
                 viewer.src = `https://docs.google.com/document/d/${docId}/pub?embedded=true#${bookmarkId}`;
-                viewer.dataset.type = docType;
-                viewersContainer.appendChild(viewer);
+                viewerContainer.appendChild(viewer);
+                viewerContainer.style.minHeight = '300px';
             }
 
             updateButtonState(docType, weekIndex);
@@ -223,41 +277,62 @@
 
         function toggleAllDocuments(weekIndex) {
             const types = Object.keys(casDocuments).filter(type => weekData[weekIndex].bookmarks[type]);
-            const viewersContainer = document.getElementById(`viewers-${weekIndex}`);
             const showAllButton = document.querySelector(`.week-item:nth-child(${weekIndex + 1}) .show-all`);
-            const allButtons = document.querySelectorAll(`.week-item:nth-child(${weekIndex + 1}) .cas-button:not(.show-all)`);
+            const viewerContainers = types.map(type => document.getElementById(`viewer-${type}-${weekIndex}`));
 
-            if (viewersContainer.children.length === types.length) {
-                viewersContainer.innerHTML = '';
+            const allViewersActive = viewerContainers.every(viewerContainer =>
+                viewerContainer.children.length > 0
+            );
+
+            if (allViewersActive) {
+                viewerContainers.forEach(viewerContainer => {
+                    viewerContainer.innerHTML = '';
+                    viewerContainer.style.minHeight = '0';
+                });
                 showAllButton.textContent = 'Show All';
                 showAllButton.classList.remove('active');
-                allButtons.forEach(button => button.classList.remove('active'));
             } else {
                 types.forEach(type => {
-                    if (!viewersContainer.querySelector(`[data-type="${type}"]`)) {
+                    const viewerContainer = document.getElementById(`viewer-${type}-${weekIndex}`);
+                    if (viewerContainer.children.length === 0) {
                         toggleDocument(type, weekIndex);
                     }
                 });
-                showAllButton.textContent = 'Hide All';
-                showAllButton.classList.add('active');
-                allButtons.forEach(button => button.classList.add('active'));
             }
+
+            updateButtonState(null, weekIndex, true);
         }
 
-        function updateButtonState(docType, weekIndex) {
-            const button = document.querySelector(`.week-item:nth-child(${weekIndex + 1}) .cas-button:not(.show-all)[onclick*="${docType}"]`);
-            if (button) {
-                button.classList.toggle('active');
-            }
-            updateShowAllButtonState(weekIndex);
-        }
-
-        function updateShowAllButtonState(weekIndex) {
-            const viewersContainer = document.getElementById(`viewers-${weekIndex}`);
+        function updateButtonState(docType, weekIndex, all = false) {
+            const buttons = document.querySelectorAll(`.week-item:nth-child(${weekIndex + 1}) .cas-button`);
             const showAllButton = document.querySelector(`.week-item:nth-child(${weekIndex + 1}) .show-all`);
-            const types = Object.keys(casDocuments).filter(type => weekData[weekIndex].bookmarks[type]);
+            const viewerContainers = {
+                C: document.getElementById(`viewer-C-${weekIndex}`),
+                A: document.getElementById(`viewer-A-${weekIndex}`),
+                S: document.getElementById(`viewer-S-${weekIndex}`)
+            };
 
-            if (viewersContainer.children.length === types.length) {
+            if (all) {
+                Object.keys(viewerContainers).forEach(type => {
+                    const button = Array.from(buttons).find(button => button.textContent === casLabels[type]);
+                    if (viewerContainers[type].children.length > 0) {
+                        button.classList.add('active');
+                    } else {
+                        button.classList.remove('active');
+                    }
+                });
+            } else {
+                if (docType) {
+                    const button = Array.from(buttons).find(button => button.textContent === casLabels[docType]);
+                    if (viewerContainers[docType].children.length > 0) {
+                        button.classList.add('active');
+                    } else {
+                        button.classList.remove('active');
+                    }
+                }
+            }
+
+            if (Object.values(viewerContainers).every(container => container.children.length > 0)) {
                 showAllButton.textContent = 'Hide All';
                 showAllButton.classList.add('active');
             } else {
