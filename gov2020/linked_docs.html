@@ -3,23 +3,228 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Docs Side-by-Side</title>
+    <title>CAS Structure</title>
     <style>
         body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
             margin: 0;
-            padding: 0;
-            display: flex;
-            height: 100vh;
+            padding: 20px;
+            background-color: #f0f0f0;
         }
-        .doc-container {
+        .week-item {
+            margin-bottom: 20px;
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .week-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .cas-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .cas-button {
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            background-color: #f8f9fa;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .cas-button:hover {
+            background-color: #e9ecef;
+        }
+        .cas-button.active {
+            background-color: #007bff;
+            color: white;
+        }
+        .document-viewers {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .document-viewer {
             flex: 1;
+            height: 300px;
             border: none;
         }
     </style>
 </head>
 <body>
-    <iframe class="doc-container" src="https://docs.google.com/document/d/1heBKyy-nu6_WK4Uz4NFy4rriDQGSuaC3AhrIuZfqwVc/pub?embedded=true"></iframe>
-    <iframe class="doc-container" src="https://docs.google.com/document/d/1ffWPTNhPOIagU4VAxaKH2-FlKI7sJ1tNbAsoMxNyof4/pub?embedded=true"></iframe>
-    <iframe class="doc-container" src="https://docs.google.com/document/d/1oHBXw_rMKyRxaIOOK5qAyPnfYsvm6z_kIia91kfKr1U/pub?embedded=true"></iframe>
+    <center><h1>GOV2020: Master Document</h1></center>
+    <div id="weeklyStructure"></div>
+    <iframe id="documentViewer"></iframe>
+
+    <script>
+        const casDocuments = {
+            C: "1heBKyy-nu6_WK4Uz4NFy4rriDQGSuaC3AhrIuZfqwVc",
+            A: "1ffWPTNhPOIagU4VAxaKH2-FlKI7sJ1tNbAsoMxNyof4",
+            S: "1oHBXw_rMKyRxaIOOK5qAyPnfYsvm6z_kIia91kfKr1U",
+        };
+
+        const weekData = [
+            {
+                title: "Publication",
+                bookmarks: {
+                    C: "id.adpabqwv7zv7",
+                    A: "id.oxnozjboaixo",
+                    S: "id.s2zja9h32nyv"
+                }
+            },
+            {
+                title: "What's the Big Idea?",
+                bookmarks: {
+                    C: "id.ivc6kqodc3t1",
+                    A: "id.qzb593mtzlc8",
+                    S: "id.i2n4mamhd4ps"
+                }
+            },
+            {
+                title: "Getting (& presenting) defensible answers",
+                bookmarks: {
+                    C: "id.foj3yecpgns",
+                    A: "id.vxoc8hxau355",
+                    S: "id.oeiyxshoui8x"
+                }
+            },
+            {
+                title: "Research Strategy",
+                bookmarks: {
+                    C: "id.vtpopho3wx3u",
+                    A: "id.k7jwxd5hrznc",
+                    S: "id.asx9lztz7p1i"
+                }
+            },
+            {
+                title: "Changing the Question",
+                bookmarks: {
+                    C: "id.c17o4gf13ewq",
+                    A: "id.qicytri2ahrh",
+                    S: "id.umlfhl1nc674"
+                }
+            },
+            {
+                title: "The Big Picture",
+                bookmarks: {
+                    C: "id.jx3ve7u62f7h",
+                    A: "id.tt30yz1iiuso",
+                    S: "id.ddi2p3tky2eb"
+                }
+            },
+            {
+                title: "Graphics Impact Day",
+                bookmarks: {
+                    C: "id.189fmnj5obl4",
+                    A: "id.tmgynyyr005l",
+                    S: "id.prjj9a7mjikq"
+                }
+            },
+            {
+                title: "An Interlude for Science",
+                bookmarks: {
+                    C: "id.45i7iys9pmgk",
+                    A: "id.tek1ara91kx",
+                    S: "id.f4ao7enb97jf"
+                }
+            },
+            {
+                title: "The long view; what’s grad school all about?",
+                bookmarks: {
+                    C: "id.rjfzhl93mrbz",
+                    A: "id.ry0exmrzy0an",
+                    S: "id.r6zlmssoy2zx"
+                }
+            },
+            {
+                title: "Presentations: how to",
+                bookmarks: {
+                    C: "id.ftdde1vpxfn7",
+                    A: "id.zdpz824z08vj",
+                    S: "id.s2eg6z12z2az"
+                }
+            },
+            {
+                title: "Presentations",
+                bookmarks: {
+                    C: "id.pu6f7q1oddy4",
+                    A: "id.db7ypagin2j"
+                }
+            },
+            {
+                title: "Final Help",
+                bookmarks: {
+                    C: "id.51x0dfbdv161",
+                    A: "id.a3h0f4jb8xv9"
+                }
+            },
+        ];
+
+        function createWeekStructure() {
+            const container = document.getElementById('weeklyStructure');
+            weekData.forEach((week, index) => {
+                const weekItem = document.createElement('div');
+                weekItem.className = 'week-item';
+                weekItem.innerHTML = `
+                    <div class="week-title">Week ${index + 1}: ${week.title}</div>
+                    <div class="cas-buttons">
+                        <button class="cas-button show-all" onclick="toggleAllDocuments(${index})">Show All</button>
+                        <button class="cas-button" onclick="toggleDocument('C', ${index})">C</button>
+                        <button class="cas-button" onclick="toggleDocument('A', ${index})">A</button>
+                        <button class="cas-button" onclick="toggleDocument('S', ${index})">S</button>
+                    </div>
+                    <div class="document-viewers" id="viewers-${index}"></div>
+                `;
+                container.appendChild(weekItem);
+            });
+        }
+
+        function toggleDocument(docType, weekIndex) {
+            const viewersContainer = document.getElementById(`viewers-${weekIndex}`);
+            const existingViewer = viewersContainer.querySelector(`[data-type="${docType}"]`);
+            
+            if (existingViewer) {
+                viewersContainer.removeChild(existingViewer);
+            } else {
+                const docId = casDocuments[docType];
+                const bookmarkId = weekData[weekIndex].bookmarks[docType];
+                const viewer = document.createElement('iframe');
+                viewer.className = 'document-viewer';
+                viewer.src = `https://docs.google.com/document/d/${docId}/pub?embedded=true#${bookmarkId}`;
+                viewer.dataset.type = docType;
+                viewersContainer.appendChild(viewer);
+            }
+
+            updateButtonState(docType, weekIndex);
+        }
+
+        function toggleAllDocuments(weekIndex) {
+            const types = ['C', 'A', 'S'];
+            const viewersContainer = document.getElementById(`viewers-${weekIndex}`);
+            const showAllButton = document.querySelector(`.week-item:nth-child(${weekIndex + 1}) .show-all`);
+
+            if (viewersContainer.children.length === types.length) {
+                viewersContainer.innerHTML = '';
+                showAllButton.textContent = 'Show All';
+            } else {
+                types.forEach(type => {
+                    if (!viewersContainer.querySelector(`[data-type="${type}"]`)) {
+                        toggleDocument(type, weekIndex);
+                    }
+                });
+                showAllButton.textContent = 'Hide All';
+            }
+        }
+
+        function updateButtonState(docType, weekIndex) {
+            const button = document.querySelector(`.week-item:nth-child(${weekIndex + 1}) .cas-button:nth-child(${['C', 'A', 'S'].indexOf(docType) + 2})`);
+            button.classList.toggle('active');
+        }
+
+        createWeekStructure();
+    </script>
 </body>
 </html>
