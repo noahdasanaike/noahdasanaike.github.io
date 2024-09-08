@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CAS Structure</title>
+    <title>GOV2020 Master Document</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,23 +13,27 @@
             background-color: #f0f0f0;
         }
         .week-item {
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             background-color: white;
             border-radius: 8px;
-            padding: 15px;
+            padding: 10px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .week-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 5px;
         }
         .week-title {
             font-weight: bold;
-            margin-bottom: 10px;
         }
         .cas-buttons {
             display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
+            gap: 5px;
         }
         .cas-button {
-            padding: 5px 10px;
+            padding: 3px 7px;
             border: 1px solid #ccc;
             background-color: #f8f9fa;
             cursor: pointer;
@@ -44,8 +48,8 @@
         }
         .document-viewers {
             display: flex;
-            gap: 10px;
-            margin-top: 10px;
+            gap: 2px;
+            margin-top: 5px;
         }
         .document-viewer {
             flex: 1;
@@ -55,9 +59,8 @@
     </style>
 </head>
 <body>
-    <center><h1>GOV2020: Master Document</h1></center>
+    <center><h1>GOV2020: Master Document</h1><h3>Fall 2024</h3></center>
     <div id="weeklyStructure"></div>
-    <iframe id="documentViewer"></iframe>
 
     <script>
         const casDocuments = {
@@ -174,16 +177,27 @@
             weekData.forEach((week, index) => {
                 const weekItem = document.createElement('div');
                 weekItem.className = 'week-item';
+                
+                let buttons = `
+                    <button class="cas-button show-all" onclick="toggleAllDocuments(${index})">Show All</button>
+                `;
+
+                for (const docType in casDocuments) {
+                    if (week.bookmarks[docType]) {
+                        buttons += `<button class="cas-button" onclick="toggleDocument('${docType}', ${index})">${casLabels[docType]}</button>`;
+                    }
+                }
+
                 weekItem.innerHTML = `
-                    <div class="week-title">Week ${index + 1}: ${week.title}</div>
-                    <div class="cas-buttons">
-                        <button class="cas-button show-all" onclick="toggleAllDocuments(${index})">Show All</button>
-                        <button class="cas-button" onclick="toggleDocument('C', ${index})">${casLabels.C}</button>
-                        <button class="cas-button" onclick="toggleDocument('A', ${index})">${casLabels.A}</button>
-                        <button class="cas-button" onclick="toggleDocument('S', ${index})">${casLabels.S}</button>
+                    <div class="week-header">
+                        <div class="week-title">Week ${index + 1}: ${week.title}</div>
+                        <div class="cas-buttons">
+                            ${buttons}
+                        </div>
                     </div>
                     <div class="document-viewers" id="viewers-${index}"></div>
                 `;
+
                 container.appendChild(weekItem);
             });
         }
@@ -208,13 +222,16 @@
         }
 
         function toggleAllDocuments(weekIndex) {
-            const types = ['C', 'A', 'S'];
+            const types = Object.keys(casDocuments).filter(type => weekData[weekIndex].bookmarks[type]);
             const viewersContainer = document.getElementById(`viewers-${weekIndex}`);
             const showAllButton = document.querySelector(`.week-item:nth-child(${weekIndex + 1}) .show-all`);
+            const allButtons = document.querySelectorAll(`.week-item:nth-child(${weekIndex + 1}) .cas-button:not(.show-all)`);
 
             if (viewersContainer.children.length === types.length) {
                 viewersContainer.innerHTML = '';
                 showAllButton.textContent = 'Show All';
+                showAllButton.classList.remove('active');
+                allButtons.forEach(button => button.classList.remove('active'));
             } else {
                 types.forEach(type => {
                     if (!viewersContainer.querySelector(`[data-type="${type}"]`)) {
@@ -222,12 +239,31 @@
                     }
                 });
                 showAllButton.textContent = 'Hide All';
+                showAllButton.classList.add('active');
+                allButtons.forEach(button => button.classList.add('active'));
             }
         }
 
         function updateButtonState(docType, weekIndex) {
-            const button = document.querySelector(`.week-item:nth-child(${weekIndex + 1}) .cas-button:nth-child(${['C', 'A', 'S'].indexOf(docType) + 2})`);
-            button.classList.toggle('active');
+            const button = document.querySelector(`.week-item:nth-child(${weekIndex + 1}) .cas-button:not(.show-all)[onclick*="${docType}"]`);
+            if (button) {
+                button.classList.toggle('active');
+            }
+            updateShowAllButtonState(weekIndex);
+        }
+
+        function updateShowAllButtonState(weekIndex) {
+            const viewersContainer = document.getElementById(`viewers-${weekIndex}`);
+            const showAllButton = document.querySelector(`.week-item:nth-child(${weekIndex + 1}) .show-all`);
+            const types = Object.keys(casDocuments).filter(type => weekData[weekIndex].bookmarks[type]);
+
+            if (viewersContainer.children.length === types.length) {
+                showAllButton.textContent = 'Hide All';
+                showAllButton.classList.add('active');
+            } else {
+                showAllButton.textContent = 'Show All';
+                showAllButton.classList.remove('active');
+            }
         }
 
         createWeekStructure();
