@@ -6,99 +6,104 @@
     <title>GOV2020 Master Document</title>
     <style>
         body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 10px;
-    background-color: #f0f0f0;
-}
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 10px;
+            background-color: #f0f0f0;
+        }
 
-.week-item {
-    margin-bottom: 15px;
-    background-color: white;
-    border-radius: 8px;
-    padding: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
+        .week-item {
+            margin-bottom: 15px;
+            background-color: white;
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
 
-.week-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 10px;
-}
+        .week-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
 
-.week-title {
-    font-weight: bold;
-    font-size: 1.1em;
-}
+        .week-title {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
 
-.cas-buttons {
-    display: flex;
-    gap: 5px;
-    margin-left: auto;
-}
+        .cas-buttons {
+            display: flex;
+            gap: 5px;
+            margin-left: auto;
+        }
 
-.cas-button {
-    padding: 5px 10px;
-    border: 1px solid #ccc;
-    background-color: #f8f9fa;
-    cursor: pointer;
-    border-radius: 4px;
-    font-size: 0.9em;
-    white-space: nowrap;
-}
+        .cas-button {
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            background-color: #f8f9fa;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 0.9em;
+            white-space: nowrap;
+        }
 
-.cas-button:hover {
-    background-color: #e9ecef;
-}
+        .cas-button:hover {
+            background-color: #e9ecef;
+        }
 
-.cas-button.active {
-    background-color: #007bff;
-    color: white;
-}
+        .cas-button.active {
+            background-color: #007bff;
+            color: white;
+        }
 
-.document-viewers {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 10px;
-    height: 0;
-    overflow: hidden;
-    transition: height 0.3s ease;
-}
+        .document-viewers {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+            height: 0;
+            overflow: hidden;
+            transition: height 0.3s ease;
+        }
 
-.document-viewers.active {
-    height: 600px;
-}
+        .document-viewers.active {
+            height: 600px;
+        }
 
-.document-viewers.active.all-active {
-    flex-direction: row;
-    gap: 0; /* No gap between columns */
-}
+        .document-viewers.active.all-active {
+            flex-direction: row;
+            gap: 0; /* No gap between columns */
+        }
 
-.viewer-container {
-    display: none;
-    flex: 1 1 33.33%; /* Responsive 3 column layout */
-    height: 100%;
-    width: 100%;
-}
+        .viewer-container {
+            display: none;
+            flex: 1 1 33.33%; /* Responsive 3 column layout */
+            height: 100%;
+            width: 100%;
+        }
 
-.viewer-container.active {
-    display: flex;
-    justify-content: center;
-}
+        .viewer-container.active {
+            display: flex;
+            justify-content: center;
+        }
 
-.document-viewer {
-    width: 100%; /* or whatever percentage you prefer */
-    height: 100%;
-    border: none;
-}
+        .document-viewer {
+            width: 100%; /* or whatever percentage you prefer */
+            height: 100%;
+            border: none;
+        }
 
-.iframe-wrapper {
-    width: 100%;
-    height: 100%;
-}
+        .iframe-wrapper {
+            width: 100%;
+            height: 100%;
+        }
+
+        ul
+        {
+            list-style-type: none;
+        }
     </style>
 </head>
 <body>
@@ -109,6 +114,11 @@
             <a href="http://garyking.org/" target="_blank">Gary King</a>, 
             <a href="https://noahdasanaike.github.io/" target="_blank">TF: Noah Dasanaike</a>
         </p>
+        <ul class="info-list">
+            <li><strong>Class Notes:</strong> These are instructors’ notes (a preview for students).</li>
+            <li><strong>Assignments:</strong> Weekly and semester-long assignments.</li>
+            <li><strong>Section Notes:</strong> These are plans for section & notes for the TF (a preview for students).</li>
+        </ul>
     </center>
     <div id="weeklyStructure"></div>
 
@@ -120,7 +130,7 @@
         };
 
         const casLabels = {
-            C: "Course Notes",
+            C: "Class Notes",
             A: "Assignments",
             S: "Section Notes"
         };
