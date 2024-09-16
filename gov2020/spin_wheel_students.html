@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Wheel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        #wheel-container {
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        #wheel {
+            width: 100%;
+            height: auto;
+        }
+
+        #control-panel {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        #spin-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        #spin-button:active {
+            transform: scale(0.95);
+        }
+
+        #spin-button:focus {
+            outline: none;
+        }
+
+        @keyframes buttonReset {
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .button-clicked {
+            animation: buttonReset 0.3s ease forwards;
+        }
+
+        #result {
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            margin-top: 20px;
+            word-wrap: break-word;
+        }
+        .wheel-section {
+            transition: all 0.3s ease;
+        }
+        .wheel-section.highlighted {
+            filter: brightness(1.2);
+            stroke: white;
+            stroke-width: 2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Student Wheel</h1>
+    <div id="wheel-container">
+        <svg id="wheel" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="45" fill="none" stroke="black" stroke-width="0.5"/>
+            <line x1="50" y1="5" x2="50" y2="0" stroke="black" stroke-width="1" />
+        </svg>
+    </div>
+    <div id="control-panel">
+        <button id="spin-button">Spin the Wheel</button>
+    </div>
+    <div id="result"></div>
+
+    <script>
+        const students = [
+            "Amelia Malpas",
+            "Nidhi Patel",
+            "Ja'nae Jackson",
+            "Zhiyu Li",
+            "Leah Stein",
+            "Jing Ling Tan",
+            "Marc Sabatier Hvidkjaer",
+            "Nicholas Conroy",
+            "Michael Cerny",
+            "Mary Soledad Craig",
+            "Nicolas Wicaksono",
+            "Sophia Anastazievsky",
+            "Gabriela Fischer Armani",
+            "Joshua Henderson",
+            "John Koo",
+            "David Struhs",
+            "Kentaro Nakamura",
+            "Zheng Ma",
+            "Jiyeon Lee",
+            "George Yean",
+            "Christopher Vazquez",
+            "David Johnson Aboge"
+        ];
+
+        function generateColors(count) {
+            const colors = [];
+            for (let i = 0; i < count; i++) {
+                const hue = (i * 360 / count) % 360;
+                colors.push(`hsl(${hue}, 70%, 60%)`);
+            }
+            return colors;
+        }
+
+        const colors = generateColors(students.length);
+        students.forEach((student, index) => {
+            student.color = colors[index];
+        });
+
+        const wheel = document.getElementById('wheel');
+        const spinButton = document.getElementById('spin-button');
+        const result = document.getElementById('result');
+        let isSpinning = false;
+
+        function createWheel() {
+            const angleStep = 360 / students.length;
+            students.forEach((student, index) => {
+                const startAngle = index * angleStep;
+                const endAngle = (index + 1) * angleStep;
+                const x1 = 50 + 45 * Math.cos(Math.PI * startAngle / 180);
+                const y1 = 50 + 45 * Math.sin(Math.PI * startAngle / 180);
+                const x2 = 50 + 45 * Math.cos(Math.PI * endAngle / 180);
+                const y2 = 50 + 45 * Math.sin(Math.PI * endAngle / 180);
+
+                const section = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                section.setAttribute("d", `M50,50 L${x1},${y1} A45,45 0 0,1 ${x2},${y2} Z`);
+                section.setAttribute("fill", colors[index]);
+                section.classList.add("wheel-section");
+                section.dataset.index = index;
+                wheel.appendChild(section);
+
+                const textGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
+                const textAngle = startAngle + angleStep / 2;
+                const textX = 50 + 30 * Math.cos(Math.PI * textAngle / 180);
+                const textY = 50 + 30 * Math.sin(Math.PI * textAngle / 180);
+                textGroup.setAttribute("transform", `rotate(${textAngle}, ${textX}, ${textY})`);
+
+                const foreignObject = document.createElementNS("http://www.w3.org/2000/svg", "foreignObject");
+                foreignObject.setAttribute("x", textX - 10);
+                foreignObject.setAttribute("y", textY - 5);
+                foreignObject.setAttribute("width", "20");
+                foreignObject.setAttribute("height", "10");
+
+                const div = document.createElement("div");
+                div.style.width = "100%";
+                div.style.height = "100%";
+                div.style.display = "flex";
+                div.style.alignItems = "center";
+                div.style.justifyContent = "center";
+                div.style.textAlign = "center";
+                div.style.color = "white";
+                div.style.fontSize = "1.5px";
+                div.style.wordWrap = "break-word";
+                div.textContent = student.split(' ')[0];  // Display only the first name due to space constraints
+
+                foreignObject.appendChild(div);
+                textGroup.appendChild(foreignObject);
+                wheel.appendChild(textGroup);
+            });
+        }
+
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+
+            // Remove highlight from all sections before spinning
+            document.querySelectorAll('.wheel-section').forEach(section => {
+                section.classList.remove('highlighted');
+            });
+
+            const spins = 1 + Math.random() * 3;
+            const duration = spins * 1500;
+            const startTime = Date.now();
+
+            function rotate() {
+                const now = Date.now();
+                const elapsed = now - startTime;
+                const rotation = (elapsed / duration) * spins * 360;
+
+                if (elapsed < duration) {
+                    wheel.style.transform = `rotate(${rotation}deg)`;
+                    requestAnimationFrame(rotate);
+                } else {
+                    const finalRotation = Math.floor(rotation % 360);
+                    wheel.style.transform = `rotate(${finalRotation}deg)`;
+                    showResult(finalRotation);
+                    isSpinning = false;
+                }
+            }
+
+            rotate();
+        }
+
+        function showResult(finalRotation) {
+            const index = Math.floor(((360 - finalRotation) % 360) / (360 / students.length));
+            const selectedStudent = students[index];
+
+            result.innerHTML = `<h2>Selected Student:</h2><p>${selectedStudent}</p>`;
+
+            // Remove highlight from all sections
+            document.querySelectorAll('.wheel-section').forEach(section => {
+                section.classList.remove('highlighted');
+            });
+
+            // Add highlight to the selected section
+            const selectedSection = document.querySelector(`.wheel-section[data-index="${index}"]`);
+            if (selectedSection) {
+                selectedSection.classList.add('highlighted');
+            }
+        }
+
+        createWheel();
+        spinButton.addEventListener('click', () => {
+            if (!isSpinning) {
+                spinWheel();
+                spinButton.classList.add('button-clicked');
+                setTimeout(() => {
+                    spinButton.classList.remove('button-clicked');
+                }, 300);
+            }
+        });
+    </script>
+</body>
+</html>
