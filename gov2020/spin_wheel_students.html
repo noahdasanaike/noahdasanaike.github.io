@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Wheel</title>
+    <title>Student Wheel (Hidden Weights)</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -80,7 +80,7 @@
     </style>
 </head>
 <body>
-    <h1>Student Wheel</h1>
+    <h1>Student Wheel (Hidden Weights)</h1>
     <div id="wheel-container">
         <svg id="wheel" viewBox="0 0 100 100">
             <circle cx="50" cy="50" r="45" fill="none" stroke="black" stroke-width="0.5"/>
@@ -93,29 +93,31 @@
     <div id="result"></div>
 
     <script>
-        const students = [
+        const studentsWithWeights = [
             "Amelia Malpas",
             "Nidhi Patel",
             "Ja'nae Jackson",
             "Zhiyu Li",
             "Leah Stein",
-            "Jing Ling Tan",
-            "Marc Sabatier Hvidkjaer",
+            "Jing Ling Tan", "Jing Ling Tan",
+            "Marc Sabatier Hvidkjaer", "Marc Sabatier Hvidkjaer",
             "Nicholas Conroy",
             "Michael Cerny",
             "Mary Soledad Craig",
             "Nicolas Wicaksono",
-            "Gabriela Fischer Armani",
+            "Gabriela Fischer Armani", "Gabriela Fischer Armani",
             "Joshua Henderson",
             "John Koo",
             "David Struhs",
-            "Kentaro Nakamura",
-            "Zheng Ma",
+            "Kentaro Nakamura", "Kentaro Nakamura",
+            "Zheng Ma", "Zheng Ma",
             "Jiyeon Lee",
-            "George Yean",
+            "George Yean", "George Yean",
             "Christopher Vazquez",
             "David Johnson Aboge"
         ];
+
+        const uniqueStudents = Array.from(new Set(studentsWithWeights));
 
         function generateColors(count) {
             const colors = [];
@@ -126,8 +128,8 @@
             return colors;
         }
 
-        const colors = generateColors(students.length);
-        students.forEach((student, index) => {
+        const colors = generateColors(uniqueStudents.length);
+        uniqueStudents.forEach((student, index) => {
             student.color = colors[index];
         });
 
@@ -137,8 +139,8 @@
         let isSpinning = false;
 
         function createWheel() {
-            const angleStep = 360 / students.length;
-            students.forEach((student, index) => {
+            const angleStep = 360 / uniqueStudents.length;
+            uniqueStudents.forEach((student, index) => {
                 const startAngle = index * angleStep;
                 const endAngle = (index + 1) * angleStep;
                 const x1 = 50 + 45 * Math.cos(Math.PI * startAngle / 180);
@@ -216,8 +218,9 @@
         }
 
         function showResult(finalRotation) {
-            const index = Math.floor(((360 - finalRotation) % 360) / (360 / students.length));
-            const selectedStudent = students[index];
+            const selectedIndex = Math.floor(Math.random() * studentsWithWeights.length);
+            const selectedStudent = studentsWithWeights[selectedIndex];
+            const visualIndex = uniqueStudents.indexOf(selectedStudent);
 
             result.innerHTML = `<h2>Selected Student:</h2><p>${selectedStudent}</p>`;
 
@@ -227,10 +230,15 @@
             });
 
             // Add highlight to the selected section
-            const selectedSection = document.querySelector(`.wheel-section[data-index="${index}"]`);
+            const selectedSection = document.querySelector(`.wheel-section[data-index="${visualIndex}"]`);
             if (selectedSection) {
                 selectedSection.classList.add('highlighted');
             }
+
+            // Adjust wheel rotation to match the visual selection
+            const anglePerSection = 360 / uniqueStudents.length;
+            const newRotation = (360 - (visualIndex * anglePerSection)) % 360;
+            wheel.style.transform = `rotate(${newRotation}deg)`;
         }
 
         createWheel();
