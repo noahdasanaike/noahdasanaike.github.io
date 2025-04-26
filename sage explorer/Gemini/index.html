@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Small-Area Global Elections Archive</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <!-- PapaParse for CSV parsing (Loaded in Worker, but keep for potential future main thread use) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+
+    <!-- jQuery and jQuery UI for draggable functionality -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+
+    <style>
+        /* --- CSS Styles (Mostly Unchanged) --- */
+        body, html {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden;
+        }
+        #map { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
+        .app-title { position: absolute; top: 10px; left: 10px; z-index: 1000; background-color: rgba(255, 255, 255, 0.9); padding: 10px 15px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); max-width: 300px; }
+        .app-title h1 { margin: 0; font-size: 18px; color: #333; }
+        .app-title p { margin: 5px 0 0 0; font-size: 12px; color: #666; }
+        .controls-panel { position: absolute; top: 10px; right: 10px; z-index: 1000; background-color: rgba(255, 255, 255, 0.9); padding: 15px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); width: 280px; max-height: calc(100vh - 20px); /* Prevent overflow */ overflow-y: auto; /* Allow scroll if needed */ }
+        .database-section { margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 15px; }
+        .database-section h3 { margin: 0 0 8px 0; font-size: 16px; color: var(--crimson); font-weight: 600; }
+        .database-section p { margin: 0 0 10px 0; font-size: 13px; color: var(--gray); line-height: 1.4; }
+        :root { --crimson: #A51C30; --crimson-dark: #8D1027; --crimson-light: #C73545; --gray-dark: #343A40; --gray: #495057; --gray-light: #8E929D; --white: #FFFFFF; --off-white: #F8F9FA; }
+        .database-section button { background: var(--crimson); color: var(--white); border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; font-size: 13px; width: 100%; font-weight: 500; transition: all 0.2s ease; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .database-section button:hover { background: var(--crimson-dark); box-shadow: 0 4px 8px rgba(0,0,0,0.15); transform: translateY(-1px); }
+        .database-section button:active { transform: translateY(0); box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .control-group { margin-bottom: 15px; }
+        .control-group label { display: block; font-weight: 600; margin-bottom: 6px; color: var(--gray-dark); font-size: 13px; }
+        .control-group select { width: 100%; padding: 10px 14px; border: 1px solid #E2E2E2; border-radius: 6px; font-size: 13px; background-color: var(--white); box-sizing: border-box; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23495057' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; box-shadow: 0 1px 3px rgba(0,0,0,0.05); transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+        .control-group select:hover { border-color: #C5C5C5; }
+        .control-group select:focus { outline: none; border-color: var(--crimson); box-shadow: 0 0 0 3px rgba(165, 28, 48, 0.15); }
+        .control-group select:disabled { background-color: #f8f9fa; cursor: not-allowed; } /* Style disabled selects */
+        .select-with-search { position: relative; }
+        .custom-select-wrapper { position: relative; width: 100%; }
+        #country-search { width: 100%; padding: 10px 14px; padding-right: 30px; border: 1px solid #E2E2E2; border-radius: 6px; font-size: 13px; background-color: var(--white); box-sizing: border-box; box-shadow: 0 1px 3px rgba(0,0,0,0.05); transition: all 0.2s ease; cursor: text; }
+        #country-search:disabled { background-color: #f8f9fa; cursor: not-allowed; } /* Style disabled search */
+        .dropdown-arrow { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: var(--gray); font-size: 10px; cursor: pointer; pointer-events: all; padding: 5px; }
+        #country-search:focus { outline: none; border-color: var(--crimson); box-shadow: 0 0 0 3px rgba(165, 28, 48, 0.15); }
+        .custom-select-dropdown { position: absolute; top: 100%; left: 0; right: 0; max-height: 250px; overflow-y: auto; background: white; border: 1px solid #E2E2E2; border-radius: 6px; z-index: 1050; box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: none; margin-top: 4px; }
+        .custom-select-dropdown.active { display: block; }
+        .custom-select-option { padding: 10px 14px; cursor: pointer; transition: background-color 0.2s ease; font-size: 13px; }
+        .custom-select-option:hover, .custom-select-option.highlighted { background-color: #F5F5F5; }
+        .custom-select-option.selected { background-color: rgba(165, 28, 48, 0.08); font-weight: 500; }
+        .no-results { padding: 12px; color: #666; font-style: italic; text-align: center; }
+        .status-messages { position: absolute; top: 70px; left: 50%; transform: translateX(-50%); z-index: 1000; width: 70%; max-width: 500px; }
+        .loading, .error, .success { text-align: center; padding: 10px; margin-bottom: 10px; border-radius: 4px; font-size: 14px; opacity: 0.95; }
+        .loading { background-color: #f8f9fa; color: #333; }
+        .error { background-color: #f8d7da; color: #721c24; }
+        .success { background-color: #d4edda; color: #155724; }
+        .legend { position: absolute; bottom: 30px; right: 10px; background: rgba(255, 255, 255, 0.9); padding: 10px; border-radius: 4px; box-shadow: 0 0 5px rgba(0,0,0,0.2); width: 200px; height: 300px; overflow-y: auto; z-index: 1000; cursor: move; user-select: none; min-width: 150px; min-height: 100px; }
+        .ui-resizable-handle { background-color: rgba(200, 200, 200, 0.3); border-radius: 3px; }
+        .ui-resizable-handle:hover { background-color: rgba(180, 180, 180, 0.5); }
+        .layer-control { position: absolute; top: 150px; left: 10px; background: rgba(255, 255, 255, 0.9); padding: 10px; border-radius: 4px; box-shadow: 0 0 5px rgba(0,0,0,0.2); max-width: 250px; max-height: 400px; overflow-y: auto; z-index: 1000; }
+        .layer-control h4 { margin: 0 0 10px 0; font-size: 14px; padding-bottom: 5px; border-bottom: 1px solid #eee; }
+        .layer-list { margin-bottom: 10px; }
+        .layer-item { display: flex; align-items: center; margin-bottom: 5px; padding: 5px; background: #f8f8f8; border-radius: 3px; }
+        .layer-item button { margin-left: auto; background: var(--crimson); color: white; border: none; border-radius: 4px; padding: 4px 8px; cursor: pointer; font-size: 12px; transition: all 0.2s ease; }
+        .layer-item button:hover { background: var(--crimson-dark); }
+        .layer-actions { margin-top: 12px; display: flex; gap: 8px; }
+        .layer-actions button { background: var(--crimson); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500; flex: 1; transition: all 0.2s ease; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .layer-actions button:hover { background: var(--crimson-dark); box-shadow: 0 4px 8px rgba(0,0,0,0.15); transform: translateY(-1px); }
+        .layer-actions button:active { transform: translateY(0); box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .legend h4 { margin: 0 0 10px 0; padding-bottom: 5px; border-bottom: 1px solid #eee; font-size: 14px; cursor: move; /* Indicate draggable header */ }
+        .legend-item { display: flex; align-items: center; margin-bottom: 5px; font-size: 12px; }
+        .color-box { width: 16px; height: 16px; margin-right: 8px; border: 1px solid rgba(0,0,0,0.2); cursor: pointer; }
+        .leaflet-popup-content { min-width: 200px; max-height: 350px; overflow-y: auto; /* Add scroll for long popups */ }
+        .popup-content h3 { margin: 0 0 10px 0; padding-bottom: 5px; border-bottom: 1px solid #eee; font-size: 16px; }
+        .popup-content table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .popup-content th { text-align: left; padding: 4px; border-bottom: 1px solid #eee; font-weight: 600; }
+        .popup-content td { padding: 4px; border-bottom: 1px solid #f5f5f5; }
+        .search-input-container { display: flex; gap: 8px; margin-bottom: 8px; }
+        #address-search { flex-grow: 1; padding: 10px 14px; border: 1px solid #E2E2E2; border-radius: 6px; font-size: 13px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+        #address-search:focus { outline: none; border-color: var(--crimson); box-shadow: 0 0 0 3px rgba(165, 28, 48, 0.15); }
+        #search-button { background: var(--crimson); color: white; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; font-size: 13px; white-space: nowrap; font-weight: 500; transition: all 0.2s ease; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        #search-button:hover { background: var(--crimson-dark); box-shadow: 0 4px 8px rgba(0,0,0,0.15); transform: translateY(-1px); }
+        #search-button:active { transform: translateY(0); box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        #search-results { max-height: 150px; overflow-y: auto; background: white; border: 1px solid #ddd; border-radius: 4px; margin-top: 5px; font-size: 12px; }
+        .search-result-item { padding: 8px; cursor: pointer; border-bottom: 1px solid #f5f5f5; }
+        .search-result-item:hover { background-color: #f8f9fa; }
+        .footer { position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); color: rgba(0, 0, 0, 0.6); font-size: 12px; background-color: rgba(255, 255, 255, 0.7); padding: 5px 10px; border-radius: 3px; z-index: 1000; }
+    </style>
+</head>
+<body>
+    <!-- HTML Structure -->
+    <div id="map"></div>
+
+    <div class="app-title">
+        <h1>Small-Area Global Elections Archive</h1>
+        <p>by Noah Dasanaike</p>
+        <p>Created for the paper, <a href="https://www.dropbox.com/scl/fi/f5ol59b0n9exxebt3un5v/Dasanaike_Urban_Rural_2025.pdf?rlkey=m1xcfrvl7ey82k7d5kaakkci3&e=2&st=mjmzzuki&dl=0" target="_blank">"Why Urban-Rural Political Cleavages Do Not Generalize"</a></p>
+    </div>
+
+    <div class="controls-panel">
+        <div class="database-section">
+            <h3>Small-Area Global Elections Archive</h3>
+            <p>Use the controls below to explore election data.</p>
+            <input type="hidden" id="data-base-url" value="https://storage.googleapis.com/sage_archive/">
+            <!-- Optional: Button to reload index if needed -->
+            <!-- <button id="reload-index-button" style="margin-top: 10px; background: var(--gray); font-size: 12px; padding: 6px 10px;">Reload Index</button> -->
+        </div>
+
+        <div class="control-group">
+            <label for="country-select">Country</label>
+            <div id="country-select-container" class="select-with-search">
+                 <div class="custom-select-wrapper">
+                    <input type="text" id="country-search" placeholder="Loading countries..." disabled>
+                    <div id="country-dropdown" class="custom-select-dropdown"></div>
+                </div>
+                <select id="country-select" disabled style="display: none;"> <option value="">Select Country</option> </select>
+            </div>
+        </div>
+         <div class="control-group"> <label for="year-select">Year</label> <select id="year-select" disabled> <option value="">Select Year</option> </select> </div>
+         <div class="control-group"> <label for="election-type-select">Election Type</label> <select id="election-type-select" disabled> <option value="">Select Election Type</option> </select> </div>
+         <div class="control-group"> <label for="month-select">Month</label> <select id="month-select" disabled> <option value="">Select Month</option> </select> </div>
+         <div class="control-group"> <label for="round-select">Election Round</label> <select id="round-select" disabled> <option value="">Select Round</option> </select> </div>
+         <div class="control-group"> <label for="display-mode">Display Mode</label> <select id="display-mode"> <option value="points">Points</option> <option value="polygons" disabled>Polygons (unavailable)</option> <option value="both" disabled>Both (unavailable)</option> </select> </div>
+         <div class="control-group"> <label for="basemap-select">Basemap Style</label> <select id="basemap-select"> <option value="light">Light</option> <option value="dark">Dark</option> <option value="streets">Streets</option> <option value="satellite">Satellite</option> <option value="topo">Topographic</option> <option value="borders">Strong Borders</option> </select> </div>
+         <div class="control-group" id="search-container"> <label for="address-search">Search Address</label> <div class="search-input-container"> <input type="text" id="address-search" placeholder="Enter address or location"> <button id="search-button">Search</button> </div> <div id="search-results" style="display: none;"></div> </div>
+    </div>
+
+    <div class="status-messages">
+        <div id="loading" class="loading" style="display: none;">Loading data, please wait... This might take a while for large datasets.</div>
+        <div id="error" class="error" style="display: none;"></div>
+        <div id="success" class="success" style="display: none;"></div>
+    </div>
+
+    <div class="layer-control" id="layer-control">
+        <h4>Map Layers</h4>
+        <div id="layer-list" class="layer-list"> <div class="empty-message">No active layers</div> </div>
+        <div class="layer-actions"> <button id="add-current-layer">Add Current Selection</button> <button id="clear-all-layers">Clear All</button> </div>
+        <div style="margin-top: 15px; border-top: 1px solid #eee; padding-top: 10px;">
+             <div style="display: flex; align-items: center; margin-bottom: 10px;"> <label for="scale-points-toggle" style="flex-grow: 1; font-size: 13px;">Scale Points by Votes:</label> <input type="checkbox" id="scale-points-toggle" checked> </div>
+             <div style="display: flex; align-items: center; margin-bottom: 10px;"> <label for="opacity-toggle" style="flex-grow: 1; font-size: 13px;">Solid Points (No Transparency):</label> <input type="checkbox" id="opacity-toggle"> </div>
+             <!-- <div style="display: flex; align-items: center;"> <label for="country-boundaries-toggle" style="flex-grow: 1; font-size: 13px;">Show Country Borders:</label> <input type="checkbox" id="country-boundaries-toggle"> </div> -->
+         </div>
+    </div>
+
+    <div class="footer">
+        &copy; Noah Dasanaike - 2025
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+        console.log("Script execution started."); // <<< DEBUG
+
+        // Global variables
+        let map;
+        let markersLayer;
+        let myRenderer; // Canvas Renderer instance
+        let currentBasemapLayer;
+        let currentBorderOverlay;
+        let countryBoundariesLayer;
+        let showCountryBoundaries = false;
+        let displayMode = 'points';
+        let scalePointsByVotes = true;
+        let useSolidPoints = false; // Default to transparency
+        let activeLayers = [];
+        let currentDataWorker = null; // Reference to the active data worker
+
+        // Variables to store data received from worker or processed locally
+        let coordGroups = {};
+        let allLocations = [];
+        let partyColors = {};
+        let currentDataBounds = null; // Store bounds calculated by worker or locally
+
+        // Variables for index data (remain on main thread)
+        let mainIndexUrl = '';
+        let countriesIndex = [];
+        let currentCountryIndex = [];
+        let dataBaseUrl = '';
+        let availableMonths = [];
+        let availableRounds = [];
+
+        // Coordinate conversion functions (Unchanged)
+        function latLngToMercator(lat, lng) { return { mercatorX: 6378137 * lng * Math.PI / 180, mercatorY: 6378137 * Math.log(Math.tan(Math.PI / 4 + lat * Math.PI / 180 / 2)) }; }
+        function mercatorToLatLng(x, y) { return { lat: (2 * Math.atan(Math.exp(y / 6378137)) - Math.PI / 2) * 180 / Math.PI, lng: (x / 6378137) * 180 / Math.PI }; }
+
+        // Color Palette (Unchanged)
+        const colorPalette = ['#D32F2F', '#1976D2', '#388E3C', '#F57C00', '#C2185B', '#0097A7', '#455A64', '#7B1FA2', '#5D4037', '#00796B', '#6D4C41', '#512DA8', '#004D40', '#3E2723', '#263238'];
+
+        // DOM elements
+        const dataBaseUrlInput = document.getElementById('data-base-url');
+        const countrySelect = document.getElementById('country-select'); // Hidden select
+        const yearSelect = document.getElementById('year-select');
+        const electionTypeSelect = document.getElementById('election-type-select');
+        const monthSelect = document.getElementById('month-select');
+        const roundSelect = document.getElementById('round-select');
+        const displayModeSelect = document.getElementById('display-mode');
+        const loadingElement = document.getElementById('loading');
+        const errorElement = document.getElementById('error');
+        const successElement = document.getElementById('success');
+        const addressSearchInput = document.getElementById('address-search');
+        const searchButton = document.getElementById('search-button');
+        const searchResultsContainer = document.getElementById('search-results');
+        const countrySearchInput = document.getElementById('country-search'); // Visible search input
+        const countryDropdown = document.getElementById('country-dropdown');
+
+        // Show/hide loading indicator
+        function showLoading(isLoading, message = "Loading data, please wait... This might take a while for large datasets.") {
+             loadingElement.textContent = message;
+             loadingElement.style.display = isLoading ? 'block' : 'none';
+             // Disable controls while loading main index
+             if (isLoading && !countriesIndex.length) { // Only disable initially
+                countrySearchInput.disabled = true;
+                countrySearchInput.placeholder = "Loading countries...";
+             }
+        }
+
+        // Show error message
+        function showError(message) {
+            console.error("Error Displayed:", message); // Log errors shown to user
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+            // Hide after a delay
+            setTimeout(() => {
+                if (errorElement.textContent === message) { // Only hide if it's the same message
+                     errorElement.style.display = 'none';
+                }
+             }, 8000); // Longer timeout for errors
+        }
+
+        // Show success message
+        function showSuccess(message) {
+            successElement.textContent = message;
+            successElement.style.display = 'block';
+            setTimeout(() => { successElement.style.display = 'none'; }, 3000);
+        }
+
+        // Nominatim search implementation (Mostly Unchanged, uses currentDataBounds)
+        let currentCountryCode = null; // Consider setting this when country is selected
+        let currentCountryName = null; // Consider setting this
+
+        async function searchAddress() {
+             const searchTerm = addressSearchInput.value.trim();
+             if (!searchTerm) return;
+             const selectedCountryId = countrySelect.value; // Use hidden select value
+             if (!selectedCountryId) { showError("Please select a country first"); return; }
+
+             showLoading(true, "Searching address...");
+             searchResultsContainer.innerHTML = '';
+             searchResultsContainer.style.display = 'none';
+
+             let viewboxString = null;
+             if (currentDataBounds) {
+                 const bounds = currentDataBounds;
+                 // Ensure bounds are valid numbers before creating string
+                 if ([bounds.west, bounds.south, bounds.east, bounds.north].every(v => typeof v === 'number' && !isNaN(v))) {
+                     viewboxString = `${bounds.west},${bounds.south},${bounds.east},${bounds.north}`;
+                 } else {
+                     console.warn("Invalid currentDataBounds for search:", currentDataBounds);
+                 }
+             }
+
+             await performSearch(searchTerm, selectedCountryId, viewboxString);
+             showLoading(false);
+         }
+
+        async function performSearch(searchTerm, countryId, viewbox = null) {
+             const country = countriesIndex.find(c => c.country_id === countryId);
+             if (!country) { showError("Country information not found for search"); return; }
+             currentCountryName = country.country_name; // Update current country name
+
+             let searchUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchTerm)}&countrycodes=${countryId.toLowerCase()}`;
+             if (viewbox) searchUrl += `&viewbox=${viewbox}&bounded=1`;
+
+             try {
+                 const response = await fetch(searchUrl);
+                 if (!response.ok) throw new Error(`Search failed: ${response.status}`);
+                 const results = await response.json();
+                 displaySearchResults(results);
+             } catch (error) {
+                 showError(`Address search error: ${error.message}`);
+             }
+         }
+
+        function displaySearchResults(results) {
+             searchResultsContainer.innerHTML = '';
+             if (results.length === 0) {
+                 searchResultsContainer.innerHTML = '<div class="search-result-item">No results found</div>';
+                 searchResultsContainer.style.display = 'block';
+                 return;
+             }
+
+             let filteredResults = results;
+             if (currentDataBounds) {
+                 // Add sanity checks for bounds
+                 if (typeof currentDataBounds.south === 'number' && typeof currentDataBounds.north === 'number' &&
+                     typeof currentDataBounds.west === 'number' && typeof currentDataBounds.east === 'number') {
+                     filteredResults = results.filter(result => {
+                         const lat = parseFloat(result.lat); const lon = parseFloat(result.lon);
+                         return lat >= currentDataBounds.south && lat <= currentDataBounds.north &&
+                                lon >= currentDataBounds.west && lon <= currentDataBounds.east;
+                     });
+                     if (filteredResults.length === 0) {
+                         searchResultsContainer.innerHTML = '<div class="search-result-item" style="color: #721c24; background-color: #f8d7da; padding: 8px;">No results within map data area. Showing broader results.</div>';
+                         filteredResults = results; // Show all if none are in bounds
+                     }
+                 } else {
+                    console.warn("Skipping result filtering due to invalid currentDataBounds:", currentDataBounds);
+                 }
+
+             }
+
+             filteredResults.forEach(result => {
+                 const resultItem = document.createElement('div');
+                 resultItem.className = 'search-result-item';
+                 resultItem.textContent = result.display_name;
+                 resultItem.addEventListener('click', () => {
+                     const lat = parseFloat(result.lat); const lon = parseFloat(result.lon);
+                     map.setView([lat, lon], 13);
+                     // Add temporary marker (using default icon for simplicity now)
+                     const marker = L.marker([lat, lon]).addTo(map);
+                     setTimeout(() => { map.removeLayer(marker); }, 5000);
+                     searchResultsContainer.style.display = 'none';
+                     addressSearchInput.value = '';
+                 });
+                 searchResultsContainer.appendChild(resultItem);
+             });
+             searchResultsContainer.style.display = 'block';
+         }
+
+        // Initialize the map
+        function initializeMap() {
+            console.log("Initializing map...");
+            try {
+                 map = L.map('map').setView([20, 0], 2);
+                 myRenderer = L.canvas({ padding: 0.5 });
+                 currentBasemapLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { // Added {r} for retina
+                     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+                     subdomains: 'abcd',
+                     maxZoom: 20 // Increased maxZoom
+                 }).addTo(map);
+                 markersLayer = L.layerGroup().addTo(map);
+                 initCountryBoundariesLayer(); // Initialize but don't add yet
+                 console.log("Map initialized successfully.");
+             } catch (e) {
+                 console.error("Error initializing map:", e);
+                 showError("Fatal Error: Could not initialize map. " + e.message);
+             }
+        }
+
+        // Initialize/Toggle Country Boundaries
+        function initCountryBoundariesLayer() {
+            console.log("Initializing country boundaries layer...");
+             try {
+                if (!map.getPane('boundaries')) {
+                     map.createPane('boundaries');
+                     map.getPane('boundaries').style.zIndex = 450;
+                     map.getPane('boundaries').style.pointerEvents = 'none';
+                }
+                 const boundariesConfig = {
+                    url: 'https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png', // Use labels layer as overlay
+                     options: {
+                         attribution: '', // Attribution is on basemap
+                         pane: 'boundaries',
+                         opacity: 0.9,
+                         maxZoom: 20,
+                         subdomains: 'abcd'
+                     }
+                 };
+                 countryBoundariesLayer = L.tileLayer(boundariesConfig.url, boundariesConfig.options);
+                 console.log("Country boundaries layer created.");
+             } catch (error) {
+                 console.error("Error creating country boundaries layer:", error);
+             }
+         }
+
+        function toggleCountryBoundaries(show) {
+             console.log("Toggling country boundaries:", show);
+             if (!countryBoundariesLayer) {
+                 console.error("Country boundaries layer not initialized!");
+                 initCountryBoundariesLayer(); // Attempt re-init
+                 if (!countryBoundariesLayer) return; // Bail if still not created
+             }
+             try {
+                 if (show && !map.hasLayer(countryBoundariesLayer)) {
+                     countryBoundariesLayer.addTo(map);
+                     console.log("Country boundaries layer added to map.");
+                 } else if (!show && map.hasLayer(countryBoundariesLayer)) {
+                     map.removeLayer(countryBoundariesLayer);
+                     console.log("Country boundaries layer removed from map.");
+                 }
+             } catch (error) {
+                 console.error("Error toggling country boundaries:", error);
+             }
+         }
+
+
+        // Change Basemap
+        function changeBasemap(basemapType) {
+            console.log("Changing basemap to:", basemapType);
+             if (currentBasemapLayer) map.removeLayer(currentBasemapLayer);
+             if (currentBorderOverlay) { map.removeLayer(currentBorderOverlay); currentBorderOverlay = null; } // Remove specific border overlay if used
+
+             let tileUrl = '';
+             let options = { maxZoom: 20, attribution: '' };
+
+             switch (basemapType) {
+                 case 'light':
+                     tileUrl = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
+                     options.attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
+                     options.subdomains = 'abcd';
+                     break;
+                 case 'dark':
+                     tileUrl = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
+                     options.attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
+                     options.subdomains = 'abcd';
+                     break;
+                 case 'streets':
+                     tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+                     options.attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+                     break;
+                 case 'satellite':
+                     tileUrl = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
+                     options.attribution = 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community';
+                     break;
+                 case 'topo':
+                     tileUrl = 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png';
+                     options.attribution = 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)';
+                     break;
+                 case 'borders': // Voyager with labels as overlay
+                     tileUrl = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png';
+                     options.attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
+                     options.subdomains = 'abcd';
+                     // Add labels overlay
+                      currentBorderOverlay = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}{r}.png', {
+                          attribution: '', pane: 'overlayPane', // Use overlay pane for labels
+                          subdomains: 'abcd', maxZoom: 20
+                      });
+                     break;
+                 default: // Default to light
+                     tileUrl = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
+                     options.attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
+                     options.subdomains = 'abcd';
+                     break;
+             }
+
+             currentBasemapLayer = L.tileLayer(tileUrl, options).addTo(map);
+             if (currentBorderOverlay) {
+                 currentBorderOverlay.addTo(map); // Add border overlay if it exists
+             }
+             // Ensure country boundaries are drawn on top if active
+             if (showCountryBoundaries && countryBoundariesLayer) {
+                  countryBoundariesLayer.bringToFront();
+             }
+         }
+
+        // Load the main countries index
+        async function loadMainIndex() {
+            console.log("Loading main index...");
+            showLoading(true, "Loading country index...");
+            countriesIndex = [];
+            clearMap();
+            resetSelectors(); // Keep controls disabled until loaded
+
+            try {
+                dataBaseUrl = dataBaseUrlInput.value.trim();
+                if (!dataBaseUrl.endsWith('/')) dataBaseUrl += '/';
+                mainIndexUrl = dataBaseUrl + 'countries-index.csv';
+                console.log("Fetching main index from:", mainIndexUrl);
+
+                const response = await fetch(mainIndexUrl);
+                if (!response.ok) throw new Error(`Failed to load main index. Status: ${response.status} ${response.statusText}`);
+                const csvText = await response.text();
+
+                console.log("Parsing main index CSV...");
+                Papa.parse(csvText, {
+                    header: true, dynamicTyping: true, skipEmptyLines: true, 
+                    complete: function(results) {
+                        console.log("Main index parsed:", results);
+                        if (results.errors && results.errors.length > 0) {
+                             throw new Error(`Error parsing countries index: ${results.errors.map(e => e.message).join('; ')}`);
+                        }
+                        countriesIndex = results.data.filter(country => country.country_id && country.country_name); // Ensure essential fields exist
+                        if (countriesIndex.length === 0) {
+                             throw new Error("No valid countries found in the index file.");
+                        }
+                        populateCountrySelector(); // Enable dropdown now
+                        showLoading(false);
+                        showSuccess(`Loaded index with ${countriesIndex.length} countries`);
+                        console.log("Main index loading complete.");
+                    },
+                    error: function(error) { // PapaParse specific error
+                        throw new Error(`PapaParse error for countries index: ${error.message}`);
+                    }
+                });
+            } catch (error) {
+                console.error("Error in loadMainIndex:", error);
+                showError(`Failed to load main index: ${error.message}`);
+                showLoading(false);
+                // Ensure controls remain visibly disabled
+                resetSelectors();
+                countrySearchInput.placeholder = "Failed to load countries";
+            }
+        }
+
+        // Populate the country selector dropdown
+        function populateCountrySelector() {
+             console.log("Populating country selector...");
+             try {
+                 // Clear previous options
+                 while (countrySelect.options.length > 1) countrySelect.remove(1);
+                 countryDropdown.innerHTML = '';
+
+                 // Sort countries alphabetically
+                 countriesIndex.sort((a, b) => a.country_name.localeCompare(b.country_name));
+
+                 // Add options to hidden select and visible dropdown
+                 countriesIndex.forEach(country => {
+                     const option = document.createElement('option');
+                     option.value = country.country_id; option.textContent = country.country_name;
+                     countrySelect.appendChild(option);
+
+                     const dropdownOption = document.createElement('div');
+                     dropdownOption.className = 'custom-select-option';
+                     dropdownOption.textContent = country.country_name;
+                     dropdownOption.dataset.value = country.country_id;
+                     dropdownOption.dataset.searchText = country.country_name.toLowerCase();
+                     // Attach click listener directly here
+                     dropdownOption.addEventListener('click', function() {
+                         console.log(`Dropdown option clicked: ${country.country_name}`);
+                         selectCountry(country.country_id, country.country_name);
+                     });
+                     countryDropdown.appendChild(dropdownOption);
+                 });
+
+                 countrySearchInput.disabled = false; // <<< Enable the input
+                 countrySearchInput.value = '';
+                 countrySearchInput.placeholder = "Search or select country...";
+                 console.log("Country selector populated. Setting up custom select interaction...");
+                 setupCustomSelect(); // <<< Setup interactions
+                 console.log("Custom select interaction setup complete.");
+             } catch (e) {
+                 console.error("Error populating country selector:", e);
+                 showError("Error setting up country list: " + e.message);
+                 countrySearchInput.disabled = true; // Ensure it's disabled on error
+                 countrySearchInput.placeholder = "Error loading countries";
+             }
+        }
+
+        // Setup the custom select dropdown functionality (with listener safety)
+        function setupCustomSelect() {
+            console.log("Running setupCustomSelect...");
+            if (!countrySearchInput || !countryDropdown) {
+                 console.error("Custom select elements not found!"); return;
+            }
+
+            let isDropdownOpen = false;
+            let currentHighlight = -1;
+            let searchInputHandler, arrowHandler, focusHandler, inputHandler, keydownHandler;
+
+            // Remove existing arrow if present
+            const existingArrow = countrySearchInput.parentNode.querySelector('.dropdown-arrow');
+            if (existingArrow) existingArrow.remove();
+
+            // Add dropdown arrow indicator
+            const dropdownArrow = document.createElement('div');
+            dropdownArrow.className = 'dropdown-arrow'; dropdownArrow.innerHTML = '▼';
+            // Insert arrow *after* the input, within the wrapper
+             if (countrySearchInput.parentNode === countryDropdown.parentNode) { // Should be the case
+                countrySearchInput.parentNode.insertBefore(dropdownArrow, countrySearchInput.nextSibling);
+             } else { // Fallback if structure is different
+                countrySearchInput.parentNode.appendChild(dropdownArrow);
+             }
+
+
+            console.log("Attaching event listeners to custom select...");
+
+            // --- Define Handlers ---
+            searchInputHandler = function(e) {
+                 e.stopPropagation();
+                 console.log("Search input clicked");
+                 if (isDropdownOpen && this.value && this.selectionStart === this.selectionEnd) { this.value = ''; filterCountries(); } // Clear on second click if not selecting text
+                 else if (!isDropdownOpen) { showDropdown(); const length = this.value.length; this.setSelectionRange(length, length); }
+             };
+            arrowHandler = function(e) {
+                 e.stopPropagation();
+                 console.log("Arrow clicked");
+                 if (!isDropdownOpen) { countrySearchInput.focus(); showDropdown(); } else { hideDropdown(); }
+             };
+            focusHandler = function() {
+                 console.log("Search input focused");
+                 if (!isDropdownOpen) { showDropdown(); }
+             };
+            inputHandler = function() {
+                 console.log("Search input typed");
+                 filterCountries();
+                 if (!isDropdownOpen) showDropdown(); // Ensure dropdown opens on type if closed
+                 // Auto-select logic
+                 const options = Array.from(countryDropdown.querySelectorAll('.custom-select-option:not([style*="display: none"])'));
+                 if (options.length === 1 && this.value && this.value.toLowerCase() === options[0].textContent.toLowerCase()) {
+                     selectCountry(options[0].dataset.value, options[0].textContent);
+                 }
+             };
+            keydownHandler = function(e) {
+                 const options = Array.from(countryDropdown.querySelectorAll('.custom-select-option:not([style*="display: none"])'));
+                 if (options.length === 0 && ['ArrowDown', 'ArrowUp', 'Enter'].includes(e.key)) return;
+
+                 console.log("Keydown:", e.key);
+                 switch(e.key) {
+                     case 'ArrowDown':
+                         e.preventDefault(); if (!isDropdownOpen) showDropdown(); else { if (currentHighlight > -1) options[currentHighlight].classList.remove('highlighted'); currentHighlight = (currentHighlight + 1) % options.length; options[currentHighlight].classList.add('highlighted'); options[currentHighlight].scrollIntoView({ block: 'nearest' }); } break;
+                     case 'ArrowUp':
+                         e.preventDefault(); if (isDropdownOpen) { if (currentHighlight > -1) options[currentHighlight].classList.remove('highlighted'); currentHighlight = (currentHighlight - 1 + options.length) % options.length; options[currentHighlight].classList.add('highlighted'); options[currentHighlight].scrollIntoView({ block: 'nearest' }); } break;
+                     case 'Enter':
+                         e.preventDefault(); if (isDropdownOpen && currentHighlight > -1) { options[currentHighlight].click(); } else if (options.length === 1) { options[0].click(); } break; // Use .click() to trigger selectCountry
+                     case 'Tab': if (isDropdownOpen && options.length === 1) { e.preventDefault(); options[0].click(); } else hideDropdown(); break;
+                     case 'Escape': e.preventDefault(); hideDropdown(); break;
+                 }
+             };
+
+            // --- Remove Old Listeners (if any) ---
+            // Simple removal by replacing the element might be too disruptive if other scripts attach listeners.
+            // We'll rely on checking if handlers are already defined to prevent duplicates, though ideal solution involves named functions and removeEventListener.
+            if (countrySearchInput.dataset.listenersAttached !== 'true') {
+                countrySearchInput.addEventListener('click', searchInputHandler);
+                dropdownArrow.addEventListener('click', arrowHandler);
+                countrySearchInput.addEventListener('focus', focusHandler);
+                countrySearchInput.addEventListener('input', inputHandler);
+                countrySearchInput.addEventListener('keydown', keydownHandler);
+                countrySearchInput.dataset.listenersAttached = 'true'; // Mark as attached
+                console.log("Custom select event listeners attached.");
+            } else {
+                 console.log("Custom select listeners already attached, skipping re-attachment.");
+            }
+
+
+            // --- Functions showDropdown, hideDropdown, filterCountries ---
+            function showDropdown() {
+                 const inputRect = countrySearchInput.getBoundingClientRect();
+                 countryDropdown.style.minWidth = inputRect.width + 'px';
+                 countryDropdown.classList.add('active'); isDropdownOpen = true;
+                 const options = countryDropdown.querySelectorAll('.custom-select-option'); options.forEach(opt => opt.classList.remove('highlighted')); currentHighlight = -1;
+                 if (countrySearchInput.value) filterCountries();
+                 // Ensure it stays open
+                 setTimeout(() => { if (!countryDropdown.classList.contains('active') && document.activeElement === countrySearchInput) countryDropdown.classList.add('active'); }, 10);
+             }
+            function hideDropdown() { countryDropdown.classList.remove('active'); isDropdownOpen = false; }
+            function filterCountries() {
+                 const searchTerm = countrySearchInput.value.toLowerCase();
+                 const options = countryDropdown.querySelectorAll('.custom-select-option');
+                 let visibleCount = 0;
+                 let noResultsMsg = countryDropdown.querySelector('.no-results');
+                 options.forEach(option => {
+                     const match = option.dataset.searchText.includes(searchTerm);
+                     option.style.display = match ? '' : 'none';
+                     if (match) visibleCount++;
+                 });
+                 if (visibleCount === 0) { if (!noResultsMsg) { noResultsMsg = document.createElement('div'); noResultsMsg.className = 'no-results'; noResultsMsg.textContent = 'No matching countries found'; countryDropdown.appendChild(noResultsMsg); } }
+                 else if (noResultsMsg) noResultsMsg.remove();
+             }
+
+            // Close dropdown when clicking outside (add only once)
+            if (!window.customSelectClickListenerAttached) {
+                 console.log("Attaching document click listener for custom select.");
+                 document.addEventListener('mousedown', function(e) {
+                     const container = document.getElementById('country-select-container');
+                     if (container && !container.contains(e.target) && isDropdownOpen) {
+                         console.log("Clicked outside custom select, hiding dropdown.");
+                         hideDropdown();
+                     }
+                 });
+                 window.customSelectClickListenerAttached = true;
+            }
+
+            // Add hover effect to options (already done in populate)
+            const options = countryDropdown.querySelectorAll('.custom-select-option');
+            options.forEach((option, index) => {
+                 option.addEventListener('mouseenter', function() {
+                     // Find currently visible options to get correct index
+                     const visibleOptions = Array.from(countryDropdown.querySelectorAll('.custom-select-option:not([style*="display: none"])'));
+                     const currentIndex = visibleOptions.indexOf(this);
+
+                     if(currentIndex > -1) {
+                         // Remove highlight from previously highlighted option (if any)
+                         if (currentHighlight > -1 && currentHighlight < visibleOptions.length) {
+                             visibleOptions[currentHighlight].classList.remove('highlighted');
+                         }
+                         // Add highlight to this option
+                         this.classList.add('highlighted');
+                         currentHighlight = currentIndex; // Update index based on visible options
+                     }
+                 });
+             });
+
+        }
+
+
+        // Select a country from the custom dropdown
+        function selectCountry(countryId, countryName) {
+            console.log(`Selected country: ${countryName} (${countryId})`);
+            countrySelect.value = countryId; // Update hidden select
+            countrySearchInput.value = countryName; // Update visible input
+
+            const options = countryDropdown.querySelectorAll('.custom-select-option');
+            options.forEach(opt => { opt.classList.toggle('selected', opt.dataset.value === countryId); });
+
+            countryDropdown.classList.remove('active'); // Hide dropdown
+            isDropdownOpen = false; // Update state variable if used directly elsewhere
+
+            loadCountryIndex(); // Load data for the selected country
+        }
+
+        // Load the index for a specific country
+        async function loadCountryIndex() {
+            const selectedCountryId = countrySelect.value;
+            if (!selectedCountryId) { resetYearSelector(); return; }
+
+            console.log(`Loading index for country: ${selectedCountryId}`);
+            showLoading(true, `Loading index for ${countrySearchInput.value}...`); // Use display name
+            clearMap();
+            resetYearSelector();
+
+            try {
+                const country = countriesIndex.find(c => c.country_id === selectedCountryId);
+                if (!country) throw new Error(`Country ${selectedCountryId} not found in main index`);
+                if (!country.index_path) throw new Error(`Index path missing for country ${selectedCountryId}`);
+
+                const countryIndexUrl = dataBaseUrl + country.index_path;
+                console.log("Fetching country index from:", countryIndexUrl);
+                const response = await fetch(countryIndexUrl);
+                if (!response.ok) throw new Error(`Failed to load country index. Status: ${response.status}`);
+                const csvText = await response.text();
+
+                console.log("Parsing country index CSV...");
+                Papa.parse(csvText, {
+                    header: true, dynamicTyping: true, skipEmptyLines: true,
+                    complete: function(results) {
+                        console.log("Country index parsed:", results);
+                         if (results.errors && results.errors.length > 0) {
+                             throw new Error(`Error parsing country index: ${results.errors[0].message}`);
+                        }
+                        currentCountryIndex = results.data.filter(entry => entry.file_path || entry.country); // Basic filter
+                        populateYearSelector();
+                        showLoading(false);
+                        showSuccess(`Loaded index for ${country.country_name}`);
+                    },
+                    error: function(error) { throw new Error(`PapaParse error for country index: ${error}`); }
+                });
+            } catch (error) {
+                console.error("Error in loadCountryIndex:", error);
+                showError(`Failed to load country index: ${error.message}`);
+                showLoading(false);
+                resetYearSelector(); // Ensure subsequent selectors are reset/disabled
+            }
+        }
+
+        // Populate Year Selector
+        function populateYearSelector() {
+            console.log("Populating year selector...");
+            while (yearSelect.options.length > 1) yearSelect.remove(1);
+            const yearsSet = new Set();
+            currentCountryIndex.forEach(entry => { if (entry.year) yearsSet.add(entry.year); });
+            const years = Array.from(yearsSet).sort((a, b) => b - a); // Descending
+
+            years.forEach(year => { const option = document.createElement('option'); option.value = year; option.textContent = year; yearSelect.appendChild(option); });
+
+            const hasEntriesWithoutYear = currentCountryIndex.some(entry => entry.file_path && !entry.year);
+            if (hasEntriesWithoutYear) { const option = document.createElement('option'); option.value = "none"; option.textContent = "No Year (Direct Files)"; yearSelect.appendChild(option); }
+
+            yearSelect.disabled = yearSelect.options.length <= 1; // Disable if only "Select Year"
+            resetElectionTypeSelector(); // Reset next level
+
+             // Add event listener (ensure it's not added multiple times)
+            yearSelect.removeEventListener('change', updateElectionTypeSelector); // Remove previous if any
+            yearSelect.addEventListener('change', updateElectionTypeSelector);
+            console.log("Year selector populated.");
+        }
+
+        // Update Election Type Selector (Complex logic remains)
+        function updateElectionTypeSelector() {
+            const selectedYear = yearSelect.value;
+            console.log("Year selected:", selectedYear);
+            while (electionTypeSelect.options.length > 1) electionTypeSelect.remove(1);
+            resetMonthSelector(); resetRoundSelector(); // Reset next levels
+            if (!selectedYear) { electionTypeSelect.disabled = true; return; }
+
+            let filteredEntries;
+            if (selectedYear === "none") {
+                 filteredEntries = currentCountryIndex.filter(entry => entry.file_path && !entry.year);
+                 filteredEntries.forEach(entry => { /* Add options for direct files */
+                    const displayName = entry.data_type || (entry.file_path.split('/').pop().replace('.csv', ''));
+                    const option = document.createElement('option');
+                    option.value = JSON.stringify({ file_path: entry.file_path, name: displayName, month: entry.month, round: null });
+                    option.textContent = displayName; electionTypeSelect.appendChild(option);
+                 });
+            } else {
+                filteredEntries = currentCountryIndex.filter(entry => entry.year == selectedYear);
+                const cleanedEntries = [];
+                filteredEntries.forEach(entry => { /* Cleaning logic for baseType, roundInfo */
+                     if (entry.election_type && entry.file_path) {
+                        let baseType = entry.election_type.toLowerCase(); let roundInfo = null;
+                        if (baseType.includes("first round")) { baseType = baseType.replace(/\s*first round\s*/i, "").trim(); roundInfo = "first"; }
+                        else if (baseType.includes("second round")) { baseType = baseType.replace(/\s*second round\s*/i, "").trim(); roundInfo = "second"; }
+                        else if (baseType.includes("round 1")) { baseType = baseType.replace(/\s*round 1\s*/i, "").trim(); roundInfo = "first"; }
+                        else if (baseType.includes("round 2")) { baseType = baseType.replace(/\s*round 2\s*/i, "").trim(); roundInfo = "second"; }
+                        baseType = baseType.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+                        cleanedEntries.push({ ...entry, baseType: baseType, roundInfo: roundInfo, originalType: entry.election_type });
+                     }
+                });
+
+                const electionTypes = new Map();
+                cleanedEntries.forEach(entry => { if (!electionTypes.has(entry.baseType)) electionTypes.set(entry.baseType, []); electionTypes.get(entry.baseType).push(entry); });
+
+                Array.from(electionTypes.keys()).sort().forEach(baseType => { /* Grouping logic for rounds */
+                    const entries = electionTypes.get(baseType);
+                    const hasFirstRound = entries.some(e => e.roundInfo === "first"); const hasSecondRound = entries.some(e => e.roundInfo === "second");
+                    const hasMultipleRounds = hasFirstRound && hasSecondRound;
+                    if (hasMultipleRounds) {
+                        const option = document.createElement('option');
+                        option.value = JSON.stringify({ election_type: baseType, name: baseType, hasRounds: true, entries: entries.map(e => ({ file_path: e.file_path, month: e.month !== "NA" ? e.month : null, round: e.roundInfo })) });
+                        option.textContent = baseType; electionTypeSelect.appendChild(option);
+                    } else {
+                        entries.forEach(entry => {
+                            const displayName = entry.originalType; const option = document.createElement('option');
+                            option.value = JSON.stringify({ election_type: displayName, name: displayName, hasRounds: false, entries: [{ file_path: entry.file_path, month: entry.month !== "NA" ? entry.month : null, round: null }] });
+                            option.textContent = displayName; electionTypeSelect.appendChild(option);
+                        });
+                    }
+                });
+            }
+            electionTypeSelect.disabled = electionTypeSelect.options.length <= 1;
+            electionTypeSelect.removeEventListener('change', updateMonthAndRoundSelectors); // Ensure listener is fresh
+            electionTypeSelect.addEventListener('change', updateMonthAndRoundSelectors);
+            // Trigger next level update if only one option (and not the default)
+            if (electionTypeSelect.options.length === 2) {
+                 electionTypeSelect.selectedIndex = 1; // Select the only real option
+                 updateMonthAndRoundSelectors();
+            }
+        }
+
+        // Update Month and Round Selectors
+        function updateMonthAndRoundSelectors() {
+            const selectedOption = electionTypeSelect.value;
+            console.log("Election type selected:", selectedOption);
+            resetMonthSelector(); resetRoundSelector();
+            if (!selectedOption) return;
+
+            try {
+                const optionData = JSON.parse(selectedOption);
+                if (optionData.file_path) { // Direct file case
+                    loadElectionData(); // Load immediately
+                    return;
+                }
+                if (optionData.entries && Array.isArray(optionData.entries)) {
+                    updateMonthSelector(optionData.entries); // Update month dropdown
+                    const roundControlGroup = document.querySelector('label[for="round-select"]').parentNode;
+                    if (optionData.hasRounds === true) { // Check if rounds are relevant
+                         roundControlGroup.style.display = 'block';
+                         updateRoundSelector(optionData.entries);
+                         console.log("Round selector updated and shown.");
+                    } else {
+                         roundControlGroup.style.display = 'none'; // Hide round selector
+                         console.log("Round selector hidden.");
+                    }
+
+                    // Auto-load if no further choices needed
+                    const needsMonthChoice = !monthSelect.disabled && monthSelect.options.length > 2; // More than "Select Month" and one option
+                    const needsRoundChoice = optionData.hasRounds === true && !roundSelect.disabled && roundSelect.options.length > 2;
+
+                    if (!needsMonthChoice && !needsRoundChoice) {
+                        // If there's only one month/round option, select it
+                         if (monthSelect.options.length === 2) monthSelect.selectedIndex = 1;
+                         if (roundSelect.options.length === 2) roundSelect.selectedIndex = 1;
+                         console.log("Auto-loading data as no further month/round choice needed.");
+                         loadElectionData();
+                     } else {
+                        console.log("Waiting for month/round selection.");
+                     }
+                } else { loadElectionData(); } // Fallback for unexpected format
+            } catch (e) {
+                console.error("Error parsing election type data:", e);
+                showError("Error processing election type selection.");
+            }
+        }
+
+
+        // Update Month Selector
+        function updateMonthSelector(entries) {
+            while (monthSelect.options.length > 1) monthSelect.remove(1);
+            const months = new Set();
+            entries.forEach(entry => { if (entry.month && entry.month !== "NA") months.add(entry.month); });
+            const monthsArray = Array.from(months).sort((a, b) => parseInt(a) - parseInt(b));
+            availableMonths = monthsArray; // Store available months
+
+            if (monthsArray.length > 0) {
+                const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                monthsArray.forEach(month => {
+                    const option = document.createElement('option'); option.value = month;
+                    const monthNum = parseInt(month);
+                    option.textContent = (!isNaN(monthNum) && monthNum >= 1 && monthNum <= 12) ? `${monthNames[monthNum - 1]} (${month})` : month;
+                    monthSelect.appendChild(option);
+                });
+                monthSelect.disabled = false;
+                monthSelect.removeEventListener('change', loadElectionData); // Ensure fresh listener
+                monthSelect.addEventListener('change', loadElectionData);
+            } else { monthSelect.disabled = true; }
+            console.log("Month selector updated. Disabled:", monthSelect.disabled);
+        }
+
+
+        // Update Round Selector
+        function updateRoundSelector(entries) {
+            while (roundSelect.options.length > 1) roundSelect.remove(1);
+            const rounds = new Set();
+            entries.forEach(entry => { if (entry.round) rounds.add(entry.round); });
+            const roundsArray = Array.from(rounds); // Order might matter: first, second
+            roundsArray.sort((a, b) => (a === 'first' ? -1 : (b === 'first' ? 1 : (a === 'second' ? -1 : (b === 'second' ? 1 : 0)))));
+            availableRounds = roundsArray; // Store available rounds
+
+            if (roundsArray.length > 0) {
+                roundsArray.forEach(round => {
+                    const option = document.createElement('option'); option.value = round;
+                    option.textContent = (round === "first" ? "First Round" : (round === "second" ? "Second Round" : round));
+                    roundSelect.appendChild(option);
+                });
+                roundSelect.disabled = false;
+                roundSelect.removeEventListener('change', loadElectionData); // Ensure fresh listener
+                roundSelect.addEventListener('change', loadElectionData);
+            } else { roundSelect.disabled = true; }
+             console.log("Round selector updated. Disabled:", roundSelect.disabled);
+        }
+
+        // Reset Month/Round Selectors
+        function resetMonthSelector() { while (monthSelect.options.length > 1) monthSelect.remove(1); monthSelect.disabled = true; availableMonths = []; monthSelect.removeEventListener('change', loadElectionData); }
+        function resetRoundSelector() { while (roundSelect.options.length > 1) roundSelect.remove(1); roundSelect.disabled = true; availableRounds = []; roundSelect.removeEventListener('change', loadElectionData); document.querySelector('label[for="round-select"]').parentNode.style.display = 'block'; /* Ensure it's visible by default */ }
+
+
+        // Load Election Data using Web Worker
+        async function loadElectionData() {
+            const selectedOption = electionTypeSelect.value;
+            if (!selectedOption) { clearMap(); return; }
+
+            if (currentDataWorker) { console.log("Terminating previous data worker."); currentDataWorker.terminate(); currentDataWorker = null; }
+
+            showLoading(true);
+            clearMap();
+
+            try {
+                const optionData = JSON.parse(selectedOption);
+                let filePath, electionType, csvUrl;
+
+                // Determine file path and election type name
+                 if (optionData.file_path) {
+                    filePath = optionData.file_path;
+                    electionType = optionData.name;
+                 } else if (optionData.entries && Array.isArray(optionData.entries)) {
+                    const selectedMonth = monthSelect.value; const selectedRound = roundSelect.value;
+                    electionType = optionData.name; // Base name
+                    let filteredEntries = optionData.entries;
+                    // Filter by selected month (if month selection is enabled and a month is chosen)
+                    if (!monthSelect.disabled && selectedMonth) {
+                        filteredEntries = filteredEntries.filter(entry => entry.month === selectedMonth);
+                    }
+                    // Filter by selected round (if round selection is enabled and a round is chosen)
+                    const roundControlVisible = document.querySelector('label[for="round-select"]').parentNode.style.display !== 'none';
+                    if (roundControlVisible && !roundSelect.disabled && selectedRound) {
+                        filteredEntries = filteredEntries.filter(entry => entry.round === selectedRound);
+                    }
+
+                    if (filteredEntries.length > 0) {
+                        filePath = filteredEntries[0].file_path;
+                        // Construct display name based on final selection
+                        let displayName = optionData.name;
+                        if (roundControlVisible && !roundSelect.disabled && selectedRound) { displayName += (selectedRound === "first" ? " (First Round)" : (selectedRound === "second" ? " (Second Round)" : ` (${selectedRound})`)); }
+                        if (!monthSelect.disabled && selectedMonth) { const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]; const monthNum = parseInt(selectedMonth); if (!isNaN(monthNum) && monthNum >= 1 && monthNum <= 12) displayName += ` - ${monthNames[monthNum - 1]}`; else displayName += ` - Month ${selectedMonth}`; }
+                        electionType = displayName; // Final display name
+                    } else { throw new Error("No data file found matching the selected month/round criteria"); }
+                 } else { throw new Error("Invalid election data format in selection"); }
+
+                if (!filePath) throw new Error("Could not determine data file path");
+                csvUrl = dataBaseUrl + filePath;
+                console.log(`Starting data worker for: ${csvUrl} (Type: ${electionType})`);
+
+                // --- Start the Web Worker ---
+                try {
+                     currentDataWorker = new Worker('dataProcessor.js'); // Assumes same directory
+                     console.log("Worker instance created.");
+                } catch (workerError) {
+                     console.error("Failed to create Worker:", workerError);
+                     showError(`Failed to start data processor: ${workerError.message}. Ensure 'dataProcessor.js' exists.`);
+                     showLoading(false); return;
+                }
+
+                currentDataWorker.postMessage({ csvUrl, filePath, electionType });
+
+                currentDataWorker.onmessage = function(event) {
+                    console.log("Message received from worker:", event.data.status);
+                    if (!event.data || !event.data.status) { console.error("Invalid message received from worker:", event); showError("Received invalid response from data processor."); showLoading(false); if (currentDataWorker) currentDataWorker.terminate(); currentDataWorker = null; return; }
+
+                    if (event.data.status === 'success') {
+                        // --- Process successful worker result ---
+                        coordGroups = event.data.data.coordGroups || {};
+                        allLocations = event.data.data.allLocations || [];
+                        partyColors = event.data.data.partyColors || {};
+                        currentDataBounds = event.data.data.dataBounds;
+                        showLoading(false);
+                        const partyNames = Object.keys(partyColors || {});
+                        if (partyNames.length > 0) createLegend(partyNames); else { const legend = document.querySelector('.legend'); if (legend) legend.remove(); }
+                        renderMapData(); // Render the points
+                        // Zoom map
+                        if (currentDataBounds && typeof currentDataBounds.south === 'number') { const bounds = L.latLngBounds([[currentDataBounds.south, currentDataBounds.west], [currentDataBounds.north, currentDataBounds.east]]); if (bounds.isValid()) map.fitBounds(bounds, { padding: [50, 50] }); else map.setView([20, 0], 2); } else map.setView([20, 0], 2);
+                        showSuccess(`Loaded ${event.data.rowCount} data points`);
+                    } else { // Assumed error status
+                        showLoading(false);
+                        showError(`Data Processing Error: ${event.data.message}`);
+                    }
+                    if (currentDataWorker) currentDataWorker.terminate(); currentDataWorker = null;
+                };
+                currentDataWorker.onerror = function(error) { console.error("Error from data worker:", error); showLoading(false); showError(`Worker Error: ${error.message}. Check console for details.`); if (currentDataWorker) currentDataWorker.terminate(); currentDataWorker = null; };
+            } catch (error) {
+                console.error("Error initiating data load:", error);
+                showLoading(false);
+                showError(`Failed to load election data: ${error.message}`);
+                if (currentDataWorker) currentDataWorker.terminate(); currentDataWorker = null;
+            }
+        }
+
+
+        // Create Legend
+        function createLegend(parties) {
+            console.log("Creating legend...");
+            let previousPosition, previousSize;
+            const existingLegend = document.querySelector('.legend');
+            if (existingLegend) {
+                previousPosition = { left: existingLegend.style.left, top: existingLegend.style.top, right: existingLegend.style.right, bottom: existingLegend.style.bottom };
+                previousSize = { width: $(existingLegend).width(), height: $(existingLegend).height() };
+                $(existingLegend).draggable('destroy').resizable('destroy').remove(); // Clean up jQuery UI first
+            }
+
+            const legend = document.createElement('div');
+            legend.className = 'legend ui-widget-content'; // Added ui-widget-content for styling consistency
+
+            const headerDiv = document.createElement('div'); headerDiv.style.cssText = 'display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid #eee; padding-bottom:5px;';
+            const headerTitle = document.createElement('h4'); headerTitle.textContent = 'Parties'; headerTitle.style.margin = '0'; headerDiv.appendChild(headerTitle);
+
+            // Restore hidden parties UI (simplified for now)
+            const buttonsDiv = document.createElement('div');
+            if (window.hiddenParties && window.hiddenParties.size > 0) {
+                const restoreBtn = document.createElement('button'); restoreBtn.textContent = 'Show All'; restoreBtn.title = 'Restore hidden parties'; restoreBtn.style.cssText = 'font-size:10px; padding:1px 4px; background:#eee; border:1px solid #ccc; border-radius:3px; cursor:pointer;';
+                restoreBtn.onclick = () => { window.hiddenParties.clear(); createLegend(parties); renderMapData(); activeLayers.forEach(renderLayerMarkers); };
+                buttonsDiv.appendChild(restoreBtn);
+            }
+            headerDiv.appendChild(buttonsDiv);
+            legend.appendChild(headerDiv);
+
+            // Calculate national vote shares
+            const partyVotes = {}; let totalVotesNational = 0;
+            allLocations.forEach(location => { location.parties.forEach(party => { partyVotes[party.name] = (partyVotes[party.name] || 0) + (party.votes || 0); }); totalVotesNational += location.total_votes || 0; }); // Use location total votes for national total
+             // Fallback if location total votes unreliable
+             if(totalVotesNational === 0) {
+                 totalVotesNational = Object.values(partyVotes).reduce((sum, votes) => sum + votes, 0);
+             }
+
+
+            const partiesWithShare = parties.map(party => { const votes = partyVotes[party] || 0; const share = totalVotesNational > 0 ? votes / totalVotesNational : 0; return [party, votes, share]; });
+            partiesWithShare.sort((a, b) => b[2] - a[2]); // Sort by share
+
+            if (!window.hiddenParties) window.hiddenParties = new Set();
+            const visiblePartiesWithShare = partiesWithShare.filter(([party]) => !window.hiddenParties.has(party));
+
+            // Add legend items
+            visiblePartiesWithShare.forEach(([party, votes, share]) => {
+                const color = partyColors[party] || '#999';
+                const item = document.createElement('div'); item.className = 'legend-item';
+                const removeBtn = document.createElement('button'); removeBtn.innerHTML = '&times;'; removeBtn.title = 'Hide party'; removeBtn.style.cssText = 'margin-right:5px; background:none; border:none; color:#aaa; font-size:14px; font-weight:bold; cursor:pointer; padding:0 3px; line-height:1;';
+                removeBtn.onclick = () => { window.hiddenParties.add(party); createLegend(parties); renderMapData(); activeLayers.forEach(renderLayerMarkers); };
+                const colorBox = document.createElement('div'); colorBox.className = 'color-box'; colorBox.style.backgroundColor = color;
+                const partyInfo = document.createElement('div'); partyInfo.style.cssText = 'display:flex; justify-content:space-between; width:100%; overflow:hidden; align-items:center;';
+                const partyName = document.createElement('span'); let displayName = party.includes('\n') ? party.split('\n')[0] : party; partyName.title = party; partyName.textContent = displayName; partyName.style.cssText = 'overflow:hidden; text-overflow:ellipsis; white-space:nowrap; flex:1;';
+                const voteShare = document.createElement('span'); voteShare.style.cssText = 'margin-left:8px; font-size:85%; color:#666; white-space:nowrap; flex-shrink:0;'; voteShare.textContent = `${(share * 100).toFixed(1)}%`;
+                partyInfo.appendChild(partyName); partyInfo.appendChild(voteShare);
+
+                // Color picker functionality
+                const colorInput = document.createElement('input'); colorInput.type = 'color'; colorInput.style.cssText = 'position:absolute; opacity:0; pointer-events:none; width:1px; height:1px;'; colorInput.value = color; item.appendChild(colorInput);
+                colorBox.onclick = () => { colorInput.click(); };
+                colorInput.onchange = () => { const newColor = colorInput.value; partyColors[party] = newColor; colorBox.style.backgroundColor = newColor; renderMapData(); activeLayers.forEach(layer => { layer.partyColors[party] = newColor; renderLayerMarkers(layer); }); };
+
+                item.appendChild(removeBtn); item.appendChild(colorBox); item.appendChild(partyInfo);
+                legend.appendChild(item);
+            });
+
+            document.body.appendChild(legend);
+
+            // Restore position/size and make draggable/resizable
+             if (previousPosition) {
+                 if (previousPosition.left && previousPosition.left !== 'auto') legend.style.left = previousPosition.left;
+                 if (previousPosition.top && previousPosition.top !== 'auto') legend.style.top = previousPosition.top;
+                 if (previousPosition.right && !previousPosition.left) legend.style.right = previousPosition.right; // Prefer left/top if manually moved
+                 if (previousPosition.bottom && !previousPosition.top) legend.style.bottom = previousPosition.bottom;
+             }
+             if (previousSize) { $(legend).width(previousSize.width).height(previousSize.height); }
+
+            $(legend).draggable({ handle: 'h4', containment: "document", scroll: false })
+                     .resizable({ minWidth: 150, minHeight: 100, maxWidth: 500, maxHeight: 600, handles: "n, e, s, w, ne, se, sw, nw", containment: "document" });
+             console.log("Legend created and attached.");
+         }
+
+
+        // Render map data (using Canvas and Deferred Popups)
+        function renderMapData() {
+            console.log("Rendering map data...");
+            markersLayer.clearLayers(); // Clear the main marker layer
+            if (!coordGroups || Object.keys(coordGroups).length === 0) { console.log("No coordinate groups to render."); return; }
+            if (!myRenderer) { console.error("Canvas renderer not initialized!"); return; }
+
+            console.log(`Rendering ${Object.keys(coordGroups).length} coordinate groups.`);
+            Object.values(coordGroups).forEach(coordGroup => {
+                try { // Add try-catch around each marker creation
+                    const { latitude, longitude, locations } = coordGroup;
+                    const locationsArray = locations ? Object.values(locations) : [];
+
+                    if (latitude && longitude && !isNaN(parseFloat(latitude)) && !isNaN(parseFloat(longitude)) && locationsArray.length > 0) {
+                        let primaryLocation = locationsArray[0];
+                        locationsArray.forEach(loc => { if ((loc.total_votes || 0) > (primaryLocation.total_votes || 0)) primaryLocation = loc; }); // Safer comparison
+
+                        let radius = 6; let opacity = useSolidPoints ? 1.0 : 0.7;
+                        if (scalePointsByVotes && primaryLocation.total_votes) { radius = Math.max(5, Math.min(15, 3 + Math.log10(primaryLocation.total_votes + 1) * 1.5)); }
+
+                        let winningParty = primaryLocation.winning_party || "Unknown"; let winningShare = primaryLocation.winning_share || 0;
+                        if (primaryLocation.parties && primaryLocation.parties.length > 0) {
+                            const visibleParties = primaryLocation.parties.filter(party => !window.hiddenParties || !window.hiddenParties.has(party.name));
+                            const partiesForRanking = visibleParties.length > 0 ? visibleParties : primaryLocation.parties;
+                            partiesForRanking.sort((a, b) => (b.votes || 0) - (a.votes || 0)); // Safer sort
+                            if (partiesForRanking.length > 0) { winningParty = partiesForRanking[0].name; winningShare = partiesForRanking[0].vote_share; }
+                        }
+
+                        let markerColor = partyColors[winningParty] || '#999';
+                        const numericVoteShare = parseFloat(winningShare) || 0.5;
+                        if (numericVoteShare > 0) { /* Color intensity logic (unchanged but safe) */
+                             const baseColor = partyColors[winningParty] || '#999'; const rgb = hexToRgb(baseColor);
+                             if (rgb) { const cappedShare = Math.min(numericVoteShare, 1.0); let brightnessFactor = (cappedShare < 0.5) ? (1.4 - cappedShare) : (0.9 - (cappedShare - 0.5) * 1.0); brightnessFactor = Math.max(0.1, Math.min(1.5, brightnessFactor)); const adjustedR = Math.min(255, Math.max(0, Math.floor(rgb.r * brightnessFactor))); const adjustedG = Math.min(255, Math.max(0, Math.floor(rgb.g * brightnessFactor))); const adjustedB = Math.min(255, Math.max(0, Math.floor(rgb.b * brightnessFactor))); markerColor = rgbToHex(adjustedR, adjustedG, adjustedB); }
+                        }
+
+                        const marker = L.circleMarker( [parseFloat(latitude), parseFloat(longitude)], { renderer: myRenderer, radius: radius, fillColor: markerColor, color: '#000', weight: 1, opacity: 0.8, fillOpacity: opacity } );
+                        marker.bindPopup(() => { // Defer popup creation
+                            const currentGroup = coordGroups[`${latitude.toFixed(6)},${longitude.toFixed(6)}`];
+                            const currentLocationsArray = currentGroup && currentGroup.locations ? Object.values(currentGroup.locations) : [];
+                            return createPopupContent(currentLocationsArray);
+                        });
+                        markersLayer.addLayer(marker);
+                    }
+                } catch (markerError) {
+                     console.error("Error creating marker for group:", coordGroup, markerError);
+                     // Optionally show a less intrusive error or just log it
+                }
+            });
+            console.log("Map data rendering complete.");
+        }
+
+        // Helper functions hexToRgb, rgbToHex
+        function hexToRgb(hex) { if (!hex) return null; const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i; hex = hex.replace(shorthandRegex, (m, r, g, b) => r + r + g + g + b + b); const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex); return result ? { r: parseInt(result[1], 16), g: parseInt(result[2], 16), b: parseInt(result[3], 16) } : null; }
+        function rgbToHex(r, g, b) { return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase(); }
+
+
+        // Create Popup Content (Complex logic, remains mostly the same)
+        function createPopupContent(locations) {
+            const content = document.createElement('div');
+            content.className = 'popup-content';
+            if (!locations || locations.length === 0) { content.textContent = 'No location data available.'; return content; }
+
+            // De-duplicate based on nameHierarchy or name (same logic)
+             let uniqueLocations = []; const locationMap = new Map();
+             locations.forEach(loc => { let key = (loc.nameHierarchy && loc.nameHierarchy.length > 0) ? loc.nameHierarchy.map(i => `${i.field}:${i.value}`).join('|') : loc.name; if (!locationMap.has(key)) locationMap.set(key, loc); });
+             uniqueLocations = Array.from(locationMap.values());
+
+
+            if (uniqueLocations.length === 1) {
+                const location = uniqueLocations[0];
+                const title = document.createElement('h3'); title.textContent = location.name || 'Unnamed Location'; content.appendChild(title);
+
+                if (location.nameHierarchy && location.nameHierarchy.length > 0) { /* Display hierarchy */
+                     const hierarchyP = document.createElement('p'); hierarchyP.style.cssText = 'font-size:12px; font-style:italic; margin-top:-8px; margin-bottom:10px;';
+                     hierarchyP.innerHTML = location.nameHierarchy.map(item => `<strong>${(item.field || '').toUpperCase()}:</strong> ${item.value}`).join('<br>');
+                     content.appendChild(hierarchyP);
+                }
+
+                const info = document.createElement('p'); let infoHTML = `<strong>Total Votes:</strong> ${(location.total_votes || 0).toLocaleString()}<br>`;
+                if (location.reg) infoHTML += `<strong>Registered Voters:</strong> ${location.reg.toLocaleString()}<br>`;
+                if (location.turnout) infoHTML += `<strong>Turnout:</strong> ${(location.turnout * 100).toFixed(1)}%<br>`;
+                // Add other details if needed from location.fullDetails
+                info.innerHTML = infoHTML; content.appendChild(info);
+
+                if (location.parties && location.parties.length > 0) { /* Display party table */
+                     const tableContainer = document.createElement('div'); tableContainer.style.cssText = 'max-height:200px; overflow-y:auto; margin-top:10px;';
+                     const sortedParties = [...location.parties].sort((a, b) => (b.votes || 0) - (a.votes || 0));
+                     const table = document.createElement('table'); table.style.width = '100%';
+                     table.innerHTML = `<thead><tr><th>Party</th><th>Votes</th><th>Share</th></tr></thead><tbody>` +
+                        sortedParties.map(party => {
+                             const votes = party.votes || 0; const voteShare = party.vote_share || 0;
+                             let formattedName = 'Unknown'; /* Multi-line name formatting */
+                              if (party.name) { if (party.name.includes('\n')) { const parts = party.name.split('\n'); formattedName = parts[0] + parts.slice(1).map(p => `<br><span style="font-size: 85%; color: #666;">${p}</span>`).join(''); } else { formattedName = party.name; } }
+                             return `<tr><td>${formattedName}</td><td>${votes.toLocaleString()}</td><td>${(voteShare * 100).toFixed(1)}%</td></tr>`;
+                         }).join('') + `</tbody>`;
+                     tableContainer.appendChild(table); content.appendChild(tableContainer);
+                 }
+
+            } else { // Multiple locations case (simplified dropdown)
+                 const title = document.createElement('h3'); title.textContent = `${uniqueLocations.length} Locations at this Point`; content.appendChild(title);
+                 const selectContainer = document.createElement('div'); selectContainer.style.marginBottom = '10px';
+                 const label = document.createElement('label'); label.textContent = 'Select a location: '; label.style.fontWeight='bold'; selectContainer.appendChild(label);
+                 const select = document.createElement('select'); select.style.cssText = 'width:100%; margin-top:5px; padding:5px; border-radius:4px;';
+                 uniqueLocations.forEach((location, index) => { const option = document.createElement('option'); option.value = index; option.textContent = location.name || `Location ${index + 1}`; select.appendChild(option); }); // Simple name for dropdown
+                 selectContainer.appendChild(select); content.appendChild(selectContainer);
+                 const detailsContainer = document.createElement('div'); detailsContainer.id = 'location-details-' + Date.now(); // Unique ID for details
+                 content.appendChild(detailsContainer);
+
+                 const showLocationDetails = () => { /* Function to show details for selected index */
+                     const selectedIndex = parseInt(select.value); const selectedLocation = uniqueLocations[selectedIndex];
+                     detailsContainer.innerHTML = ''; // Clear previous
+                     const details = document.createElement('div');
+                     const info = document.createElement('p'); let infoHTML = `<strong>Total Votes:</strong> ${(selectedLocation.total_votes || 0).toLocaleString()}<br>`; if (selectedLocation.reg) infoHTML += `<strong>Registered:</strong> ${selectedLocation.reg.toLocaleString()}<br>`; if (selectedLocation.turnout) infoHTML += `<strong>Turnout:</strong> ${(selectedLocation.turnout * 100).toFixed(1)}%<br>`; info.innerHTML = infoHTML; details.appendChild(info);
+                     if (selectedLocation.parties && selectedLocation.parties.length > 0) { const tableContainer = document.createElement('div'); tableContainer.style.cssText = 'max-height:150px; overflow-y:auto;'; const sortedParties = [...selectedLocation.parties].sort((a, b) => (b.votes || 0) - (a.votes || 0)); const table = document.createElement('table'); table.style.width='100%'; table.innerHTML = `<thead><tr><th>Party</th><th>Votes</th><th>Share</th></tr></thead><tbody>` + sortedParties.map(p => `<tr><td>${p.name || 'Unknown'}</td><td>${(p.votes || 0).toLocaleString()}</td><td>${((p.vote_share || 0) * 100).toFixed(1)}%</td></tr>`).join('') + `</tbody>`; tableContainer.appendChild(table); details.appendChild(tableContainer); }
+                     detailsContainer.appendChild(details);
+                 };
+                 select.addEventListener('change', showLocationDetails);
+                 showLocationDetails(); // Show first one initially
+             }
+            return content;
+        }
+
+
+        // Layer Management (Uses Canvas, Deferred Popups, Deep Copy)
+        function addCurrentLayerToMap() {
+            const countryId = countrySelect.value; const yearVal = yearSelect.value; const electionTypeOption = electionTypeSelect.value;
+            if (!countryId || !yearVal || !electionTypeOption || Object.keys(coordGroups).length === 0) { showError('No data currently loaded to add as a layer.'); return; }
+            const country = countriesIndex.find(c => c.country_id === countryId); if (!country) { showError('Country not found'); return; }
+
+            let electionTypeName = '';
+            try { // Reconstruct display name accurately
+                 const optionData = JSON.parse(electionTypeOption); electionTypeName = optionData.name;
+                 const roundControlVisible = document.querySelector('label[for="round-select"]').parentNode.style.display !== 'none';
+                 const selectedRound = roundSelect.value; const selectedMonth = monthSelect.value;
+                 if (roundControlVisible && !roundSelect.disabled && selectedRound) { electionTypeName += (selectedRound === "first" ? " (First Round)" : (selectedRound === "second" ? " (Second Round)" : ` (${selectedRound})`)); }
+                 if (!monthSelect.disabled && selectedMonth) { const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]; const monthNum = parseInt(selectedMonth); if (!isNaN(monthNum) && monthNum >= 1 && monthNum <= 12) electionTypeName += ` - ${monthNames[monthNum - 1]}`; else electionTypeName += ` - Month ${selectedMonth}`; }
+            } catch (e) { showError('Invalid election type data for layer name'); return; }
+
+            const layerId = `${countryId}_${yearVal}_${electionTypeName}`.replace(/[\s()]+/g, '_').replace(/__/g, '_'); // Robust ID
+            if (activeLayers.some(layer => layer.id === layerId)) { showError('This layer is already added.'); return; }
+
+            // Create deep copy (JSON stringify/parse is usually sufficient here)
+            let copiedCoordGroups; try { copiedCoordGroups = JSON.parse(JSON.stringify(coordGroups)); } catch(copyError) { console.error("Failed to deep copy coordGroups:", copyError); showError("Failed to create layer data."); return; }
+
+            const newLayer = { id: layerId, countryName: country.country_name, year: yearVal === 'none' ? 'No Year' : yearVal, electionType: electionTypeName, coordGroups: copiedCoordGroups, partyColors: { ...partyColors }, markers: L.layerGroup() }; // New layer group for this layer's markers
+
+            activeLayers.push(newLayer);
+            renderLayerMarkers(newLayer); // Render the new layer
+            updateLayerList();
+            showSuccess(`Added layer: ${newLayer.countryName} ${newLayer.year} ${newLayer.electionType}`);
+        }
+
+        function renderLayerMarkers(layer) { // Uses Canvas and Deferred Popups
+            layer.markers.clearLayers();
+            if (!myRenderer) return;
+
+            Object.values(layer.coordGroups).forEach(coordGroup => {
+                try { // Add try-catch
+                    const { latitude, longitude, locations } = coordGroup; const locationsArray = locations ? Object.values(locations) : [];
+                    if (latitude && longitude && !isNaN(parseFloat(latitude)) && !isNaN(parseFloat(longitude)) && locationsArray.length > 0) {
+                        let primaryLocation = locationsArray[0]; locationsArray.forEach(loc => { if ((loc.total_votes || 0) > (primaryLocation.total_votes || 0)) primaryLocation = loc; });
+                        let radius = 6; let opacity = useSolidPoints ? 1.0 : 0.7;
+                        let winningParty = primaryLocation.winning_party || "Unknown"; let winningShare = primaryLocation.winning_share || 0;
+                         if (primaryLocation.parties && primaryLocation.parties.length > 0) { const visibleParties = primaryLocation.parties.filter(party => !window.hiddenParties || !window.hiddenParties.has(party.name)); const partiesForRanking = visibleParties.length > 0 ? visibleParties : primaryLocation.parties; partiesForRanking.sort((a, b) => (b.votes || 0) - (a.votes || 0)); if (partiesForRanking.length > 0) { winningParty = partiesForRanking[0].name; winningShare = partiesForRanking[0].vote_share; } }
+                        let markerColor = layer.partyColors[winningParty] || '#999';
+                        const numericVoteShare = parseFloat(winningShare) || 0.5;
+                        if (numericVoteShare > 0) { /* Color intensity logic */ const baseColor = layer.partyColors[winningParty] || '#999'; const rgb = hexToRgb(baseColor); if (rgb) { const cappedShare = Math.min(numericVoteShare, 1.0); let brightnessFactor = (cappedShare < 0.5) ? (1.4 - cappedShare) : (0.9 - (cappedShare - 0.5) * 1.0); brightnessFactor = Math.max(0.1, Math.min(1.5, brightnessFactor)); const adjustedR = Math.min(255, Math.max(0, Math.floor(rgb.r * brightnessFactor))); const adjustedG = Math.min(255, Math.max(0, Math.floor(rgb.g * brightnessFactor))); const adjustedB = Math.min(255, Math.max(0, Math.floor(rgb.b * brightnessFactor))); markerColor = rgbToHex(adjustedR, adjustedG, adjustedB); } }
+
+                        const marker = L.circleMarker( [parseFloat(latitude), parseFloat(longitude)], { renderer: myRenderer, radius: radius, fillColor: markerColor, color: '#333', weight: 1.5, opacity: 1, fillOpacity: opacity } );
+                        marker.bindPopup(() => { // Defer popup
+                             const popupHeader = `<div><strong>Layer: ${layer.countryName} (${layer.year})</strong><br>${layer.electionType}</div><hr>`;
+                             // Need to get the *specific* coordGroup data for *this layer* for the popup
+                             const currentLayerGroupData = layer.coordGroups[`${latitude.toFixed(6)},${longitude.toFixed(6)}`];
+                             const currentLayerLocationsArray = currentLayerGroupData && currentLayerGroupData.locations ? Object.values(currentLayerGroupData.locations) : [];
+                             const contentElement = createPopupContent(currentLayerLocationsArray);
+                             return popupHeader + contentElement.innerHTML;
+                         });
+                        layer.markers.addLayer(marker);
+                    }
+                } catch(layerMarkerError) {
+                     console.error("Error creating layer marker for group:", coordGroup, layerMarkerError);
+                }
+            });
+            layer.markers.addTo(map); // Add the populated layer group to the map
+        }
+
+
+        function updateLayerList() {
+            const layerList = document.getElementById('layer-list'); layerList.innerHTML = ''; // Clear
+            if (activeLayers.length === 0) { layerList.innerHTML = '<div class="empty-message">No active layers</div>'; return; }
+            activeLayers.forEach(layer => {
+                 const layerItem = document.createElement('div'); layerItem.className = 'layer-item';
+                 layerItem.innerHTML = `<span>${layer.countryName} ${layer.year} ${layer.electionType}</span> <button class="remove-layer" data-id="${layer.id}" title="Remove Layer">&times;</button>`; // Use times symbol
+                 layerList.appendChild(layerItem);
+            });
+            // Add event listeners for remove buttons
+            layerList.querySelectorAll('.remove-layer').forEach(button => { button.addEventListener('click', function() { removeLayer(this.dataset.id); }); });
+        }
+
+        function removeLayer(layerId) {
+            const layerIndex = activeLayers.findIndex(layer => layer.id === layerId);
+            if (layerIndex >= 0) {
+                map.removeLayer(activeLayers[layerIndex].markers); // Remove markers from map
+                const removedLayer = activeLayers.splice(layerIndex, 1)[0]; // Remove from array
+                updateLayerList();
+                showSuccess(`Removed layer: ${removedLayer.countryName} ${removedLayer.year}`);
+            }
+        }
+
+        function clearAllLayers() {
+            activeLayers.forEach(layer => map.removeLayer(layer.markers)); activeLayers = []; updateLayerList(); showSuccess("All layers cleared");
+        }
+
+        function initLayerControls() {
+            document.getElementById('add-current-layer').addEventListener('click', addCurrentLayerToMap);
+            document.getElementById('clear-all-layers').addEventListener('click', clearAllLayers);
+            updateLayerList(); // Initialize
+        }
+
+
+        // Initialize Toggles (scale/opacity)
+        function initToggles() {
+            const scalePointsToggle = document.getElementById('scale-points-toggle');
+            const opacityToggle = document.getElementById('opacity-toggle');
+            // const countryBoundariesToggle = document.getElementById('country-boundaries-toggle'); // If re-enabled
+
+            if (scalePointsToggle) {
+                scalePointsToggle.checked = scalePointsByVotes;
+                scalePointsToggle.addEventListener('change', function() { scalePointsByVotes = this.checked; renderMapData(); activeLayers.forEach(renderLayerMarkers); });
+            }
+            if (opacityToggle) {
+                opacityToggle.checked = useSolidPoints;
+                opacityToggle.addEventListener('change', function() { useSolidPoints = this.checked; renderMapData(); activeLayers.forEach(renderLayerMarkers); });
+            }
+            // if (countryBoundariesToggle) { // If re-enabled
+            //     countryBoundariesToggle.checked = showCountryBoundaries;
+            //     countryBoundariesToggle.addEventListener('change', function() { showCountryBoundaries = this.checked; toggleCountryBoundaries(showCountryBoundaries); });
+            // }
+        }
+
+
+        // Clear Map (markers, legend, global data)
+        function clearMap() {
+            console.log("Clearing map data...");
+            markersLayer.clearLayers();
+            map.closePopup();
+            const legend = document.querySelector('.legend');
+            if (legend) { $(legend).draggable('destroy').resizable('destroy').remove(); } // Clean up jQuery UI
+            // Reset global data stores
+            coordGroups = {}; allLocations = []; partyColors = {}; currentDataBounds = null;
+            if (window.hiddenParties) window.hiddenParties.clear(); // Clear hidden parties state
+            console.log("Map data cleared.");
+        }
+
+
+        // Reset Selectors
+        function resetSelectors() {
+             console.log("Resetting selectors.");
+             countrySearchInput.value = ''; countrySearchInput.disabled = true; countrySearchInput.placeholder = "Loading countries...";
+             countrySelect.innerHTML = '<option value="">Select Country</option>'; countrySelect.disabled = true;
+             countryDropdown.innerHTML = ''; countryDropdown.classList.remove('active');
+             resetYearSelector(); // Cascade reset
+         }
+        function resetYearSelector() { while (yearSelect.options.length > 1) yearSelect.remove(1); yearSelect.disabled = true; resetElectionTypeSelector(); }
+        function resetElectionTypeSelector() { while (electionTypeSelect.options.length > 1) electionTypeSelect.remove(1); electionTypeSelect.disabled = true; resetMonthSelector(); resetRoundSelector(); /* Don't clear map here, only on load/country change */ }
+
+
+        // Basemap Controls
+        function initBasemapControls() {
+            const basemapSelect = document.getElementById('basemap-select');
+            basemapSelect.value = 'light'; // Default
+            basemapSelect.addEventListener('change', function() { changeBasemap(this.value); });
+        }
+
+
+        // --- Initialize the App ---
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("DOM Content Loaded. Initializing App...");
+            try {
+                 initializeMap(); // Needs Leaflet loaded
+                 initToggles();
+                 initLayerControls();
+                 initBasemapControls();
+
+                 // Load main index automatically - crucial for enabling country select
+                 loadMainIndex();
+
+                 // Setup search listeners (ensure elements exist)
+                 if(searchButton) searchButton.addEventListener('click', searchAddress);
+                 if(addressSearchInput) addressSearchInput.addEventListener('keyup', function(event) { if (event.key === 'Enter') searchAddress(); });
+
+                 // Click outside for search results
+                 document.addEventListener('click', function(event) {
+                     if (searchResultsContainer && addressSearchInput && searchButton) { // Check elements exist
+                         const isClickInside = searchResultsContainer.contains(event.target) || addressSearchInput.contains(event.target) || searchButton.contains(event.target);
+                         if (!isClickInside && searchResultsContainer.style.display === 'block') { searchResultsContainer.style.display = 'none'; }
+                     }
+                 });
+
+                 // Optional: Reload index button listener
+                 // const reloadBtn = document.getElementById('reload-index-button');
+                 // if(reloadBtn) reloadBtn.addEventListener('click', loadMainIndex);
+
+                 console.log("App Initialization complete.");
+             } catch(initError) {
+                 console.error("Error during app initialization:", initError);
+                 showError("Fatal Error during app startup: " + initError.message + ". Check console.");
+                 // Attempt to disable controls if init fails badly
+                 resetSelectors();
+             }
+        });
+
+        console.log("Script execution finished.");
+
+    </script>
+</body>
+</html>

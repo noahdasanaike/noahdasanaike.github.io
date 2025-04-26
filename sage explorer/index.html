@@ -1,0 +1,3900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Small-Area Global Elections Archive</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- PapaParse for CSV parsing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    
+    <!-- jQuery and jQuery UI for draggable functionality -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    
+    <style>
+        body, html {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+        
+        #map {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        
+        .app-title {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            max-width: 300px;
+        }
+        
+        .app-title h1 {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+        }
+        
+        .app-title p {
+            margin: 5px 0 0 0;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .controls-panel {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            width: 280px;
+        }
+        
+        .database-section {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+        
+        .database-section h3 {
+            margin: 0 0 8px 0;
+            font-size: 16px;
+            color: var(--crimson);
+            font-weight: 600;
+        }
+        
+        .database-section p {
+            margin: 0 0 10px 0;
+            font-size: 13px;
+            color: var(--gray);
+            line-height: 1.4;
+        }
+        
+        /* Harvard Crimson color palette */
+        :root {
+            --crimson: #A51C30;
+            --crimson-dark: #8D1027;
+            --crimson-light: #C73545;
+            --gray-dark: #343A40;
+            --gray: #495057;
+            --gray-light: #8E929D;
+            --white: #FFFFFF;
+            --off-white: #F8F9FA;
+        }
+        
+        /* Modern button style */
+        .database-section button {
+            background: var(--crimson);
+            color: var(--white);
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            width: 100%;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .database-section button:hover {
+            background: var(--crimson-dark);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            transform: translateY(-1px);
+        }
+        
+        .database-section button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .control-group {
+            margin-bottom: 15px;
+        }
+        
+        .control-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--gray-dark);
+            font-size: 13px;
+        }
+        
+        /* Modern select style */
+        .control-group select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #E2E2E2;
+            border-radius: 6px;
+            font-size: 13px;
+            background-color: var(--white);
+            box-sizing: border-box;
+            appearance: none; /* Remove default arrow */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23495057' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .control-group select:hover {
+            border-color: #C5C5C5;
+        }
+        
+        .control-group select:focus {
+            outline: none;
+            border-color: var(--crimson);
+            box-shadow: 0 0 0 3px rgba(165, 28, 48, 0.15);
+        }
+        
+        /* Custom select with search styling */
+        .select-with-search {
+            position: relative;
+        }
+        
+        .custom-select-wrapper {
+            position: relative;
+            width: 100%;
+        }
+        
+        #country-search {
+            width: 100%;
+            padding: 10px 14px;
+            padding-right: 30px;
+            border: 1px solid #E2E2E2;
+            border-radius: 6px;
+            font-size: 13px;
+            background-color: var(--white);
+            box-sizing: border-box;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+            cursor: text;
+        }
+        
+        .dropdown-arrow {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+            font-size: 10px;
+            cursor: pointer;
+            pointer-events: all;
+            padding: 5px;
+        }
+        
+        #country-search:focus {
+            outline: none;
+            border-color: var(--crimson);
+            box-shadow: 0 0 0 3px rgba(165, 28, 48, 0.15);
+        }
+        
+        .custom-select-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            max-height: 250px;
+            overflow-y: auto;
+            background: white;
+            border: 1px solid #E2E2E2;
+            border-radius: 6px;
+            z-index: 1050;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: none;
+            margin-top: 4px;
+        }
+        
+        .custom-select-dropdown.active {
+            display: block;
+        }
+        
+        .custom-select-option {
+            padding: 10px 14px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            font-size: 13px;
+        }
+        
+        .custom-select-option:hover,
+        .custom-select-option.highlighted {
+            background-color: #F5F5F5;
+        }
+        
+        .custom-select-option.selected {
+            background-color: rgba(165, 28, 48, 0.08);
+            font-weight: 500;
+        }
+        
+        .no-results {
+            padding: 12px;
+            color: #666;
+            font-style: italic;
+            text-align: center;
+        }
+        
+        .status-messages {
+            position: absolute;
+            top: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 70%;
+            max-width: 500px;
+        }
+        
+        .loading, .error, .success {
+            text-align: center;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            font-size: 14px;
+            opacity: 0.95;
+        }
+        
+        .loading {
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .legend {
+            position: absolute;
+            bottom: 30px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px;
+            border-radius: 4px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+            width: 200px;
+            height: 300px;
+            overflow-y: auto;
+            z-index: 1000;
+            cursor: move; /* Shows that the element is draggable */
+            user-select: none; /* Prevents text selection during drag */
+            min-width: 150px; /* Prevent resizing to be too small */
+            min-height: 100px;
+        }
+        
+        /* Styling for resizable handle */
+        .ui-resizable-handle {
+            background-color: rgba(200, 200, 200, 0.3);
+            border-radius: 3px;
+        }
+        
+        .ui-resizable-handle:hover {
+            background-color: rgba(180, 180, 180, 0.5);
+        }
+        
+        .layer-control {
+            position: absolute;
+            top: 150px; /* Moved down to avoid overlap with app title */
+            left: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px;
+            border-radius: 4px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+            max-width: 250px;
+            max-height: 400px;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+        
+        .layer-control h4 {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .layer-list {
+            margin-bottom: 10px;
+        }
+        
+        .layer-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+            padding: 5px;
+            background: #f8f8f8;
+            border-radius: 3px;
+        }
+        
+        .layer-item button {
+            margin-left: auto;
+            background: var(--crimson);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 4px 8px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s ease;
+        }
+        
+        .layer-item button:hover {
+            background: var(--crimson-dark);
+        }
+        
+        .layer-actions {
+            margin-top: 12px;
+            display: flex;
+            gap: 8px;
+        }
+        
+        .layer-actions button {
+            background: var(--crimson);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            flex: 1;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .layer-actions button:hover {
+            background: var(--crimson-dark);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            transform: translateY(-1px);
+        }
+        
+        .layer-actions button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .legend h4 {
+            margin: 0 0 10px 0;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+            font-size: 12px;
+        }
+        
+        .color-box {
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+            border: 1px solid rgba(0,0,0,0.2);
+        }
+        
+        .leaflet-popup-content {
+            min-width: 200px;
+        }
+        
+        .popup-content h3 {
+            margin: 0 0 10px 0;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #eee;
+            font-size: 16px;
+        }
+        
+        .popup-content table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        
+        .popup-content th {
+            text-align: left;
+            padding: 4px;
+            border-bottom: 1px solid #eee;
+            font-weight: 600;
+        }
+        
+        .popup-content td {
+            padding: 4px;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        
+        .search-input-container {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        
+        #address-search {
+            flex-grow: 1;
+            padding: 10px 14px;
+            border: 1px solid #E2E2E2;
+            border-radius: 6px;
+            font-size: 13px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        #address-search:focus {
+            outline: none;
+            border-color: var(--crimson);
+            box-shadow: 0 0 0 3px rgba(165, 28, 48, 0.15);
+        }
+        
+        #search-button {
+            background: var(--crimson);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            white-space: nowrap;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        #search-button:hover {
+            background: var(--crimson-dark);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            transform: translateY(-1px);
+        }
+        
+        #search-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        #search-results {
+            max-height: 150px;
+            overflow-y: auto;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-top: 5px;
+            font-size: 12px;
+        }
+        
+        .search-result-item {
+            padding: 8px;
+            cursor: pointer;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        
+        .search-result-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .footer {
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(0, 0, 0, 0.6);
+            font-size: 12px;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 5px 10px;
+            border-radius: 3px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    
+    <div class="app-title">
+        <h1>Small-Area Global Elections Archive</h1>
+        <p>by Noah Dasanaike</p>
+        <p>Created for the paper, <a href="https://www.dropbox.com/scl/fi/f5ol59b0n9exxebt3un5v/Dasanaike_Urban_Rural_2025.pdf?rlkey=m1xcfrvl7ey82k7d5kaakkci3&e=2&st=mjmzzuki&dl=0" target="_blank">"Why Urban-Rural Political Cleavages Do Not Generalize"</a></p>
+    </div>
+    
+    <div class="controls-panel">
+        <div class="database-section">
+            <h3>Small-Area Global Elections Archive</h3>
+            <p>Use the controls below to explore election data.</p>
+            <input type="hidden" id="data-base-url" value="https://storage.googleapis.com/sage_archive/">
+        </div>
+        
+        <div class="control-group">
+            <label for="country-select">Country</label>
+            <div id="country-select-container" class="select-with-search">
+                <div class="custom-select-wrapper">
+                    <input type="text" id="country-search" placeholder="Search or select country..." disabled>
+                    <div id="country-dropdown" class="custom-select-dropdown">
+                        <!-- Countries will be populated dynamically -->
+                    </div>
+                </div>
+                <select id="country-select" disabled style="display: none;">
+                    <option value="">Select Country</option>
+                    <!-- Hidden select for form submission -->
+                </select>
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <label for="year-select">Year</label>
+            <select id="year-select" disabled>
+                <option value="">Select Year</option>
+            </select>
+        </div>
+        
+        <div class="control-group">
+            <label for="election-type-select">Election Type</label>
+            <select id="election-type-select" disabled>
+                <option value="">Select Election Type</option>
+            </select>
+        </div>
+        
+        <div class="control-group">
+            <label for="month-select">Month</label>
+            <select id="month-select" disabled>
+                <option value="">Select Month</option>
+            </select>
+        </div>
+        
+        <div class="control-group">
+            <label for="round-select">Election Round</label>
+            <select id="round-select" disabled>
+                <option value="">Select Round</option>
+            </select>
+        </div>
+        
+        <div class="control-group">
+            <label for="display-mode">Display Mode</label>
+            <select id="display-mode">
+                <option value="points">Points</option>
+                <option value="polygons" disabled>Polygons (currently unavailable)</option>
+                <option value="both" disabled>Both Points & Polygons (currently unavailable)</option>
+            </select>
+        </div>
+        
+        <div class="control-group">
+            <label for="basemap-select">Basemap Style</label>
+            <select id="basemap-select">
+                <option value="light">Light</option>
+                <option value="dark">Dark</option>
+                <option value="streets">Streets</option>
+                <option value="satellite">Satellite</option>
+                <option value="topo">Topographic</option>
+                <option value="borders">Strong Borders</option>
+            </select>
+        </div>
+        
+        <div class="control-group" id="search-container">
+            <label for="address-search">Search Address</label>
+            <div class="search-input-container">
+                <input type="text" id="address-search" placeholder="Enter address or location">
+                <button id="search-button">Search</button>
+            </div>
+            <div id="search-results" style="display: none;"></div>
+        </div>
+    </div>
+    
+    <div class="status-messages">
+        <div id="loading" class="loading" style="display: none;">
+            Loading data, please wait...
+        </div>
+        
+        <div id="error" class="error" style="display: none;"></div>
+        
+        <div id="success" class="success" style="display: none;"></div>
+    </div>
+    
+    <div class="layer-control" id="layer-control">
+        <h4>Map Layers</h4>
+        <div id="layer-list" class="layer-list">
+            <!-- Layer items will be added here dynamically -->
+            <div class="empty-message">No active layers</div>
+        </div>
+        <div class="layer-actions">
+            <button id="add-current-layer">Add Current Selection</button>
+            <button id="clear-all-layers">Clear All</button>
+        </div>
+        <div style="margin-top: 15px; border-top: 1px solid #eee; padding-top: 10px;">
+            <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                <label for="scale-points-toggle" style="flex-grow: 1; font-size: 13px;">Scale Points by Votes:</label>
+                <input type="checkbox" id="scale-points-toggle" checked>
+            </div>
+            <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                <label for="opacity-toggle" style="flex-grow: 1; font-size: 13px;">Solid Points (No Transparency):</label>
+                <input type="checkbox" id="opacity-toggle" checked>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        &copy; Noah Dasanaike - 2025
+    </div>
+    
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <script>
+        // Global variables
+        let map;
+        let markersLayer;
+        let currentBasemapLayer; // Store current basemap layer
+        let currentBorderOverlay; // Store border overlay layer if used
+        let countryBoundariesLayer; // Store country boundaries layer
+        let showCountryBoundaries = false; // Whether to show country boundaries
+        let displayMode = 'points'; // Only points mode is available
+        let coordGroups = {}; // Store coordinate groups for map data
+        let allLocations = []; // Store all processed locations
+        let scalePointsByVotes = true; // Whether to scale points by vote count
+        let useSolidPoints = false; // Whether to use solid points (set to false for transparency by default)
+        let activeLayers = []; // Store active country layers
+        let partyColors = {}; // Store colors assigned to parties
+        let availableMonths = []; // Store available months for the selected year and election type
+        let availableRounds = []; // Store available election rounds for the selected options
+        
+        // CSV data structure variables
+        let mainIndexUrl = ''; // URL to the main countries-index.csv file
+        let countriesIndex = []; // Main countries index
+        let currentCountryIndex = []; // Index for currently selected country
+        let dataBaseUrl = ''; // Base URL for data files
+        
+        // Coordinate conversion functions for dealing with projections
+        
+        // Convert WGS84 lat/lng to Web Mercator (EPSG:3857)
+        function latLngToMercator(lat, lng) {
+            // Constants
+            const EARTH_RADIUS = 6378137; // Earth's radius in meters
+            
+            // Convert to radians
+            const latRad = lat * Math.PI / 180;
+            const lngRad = lng * Math.PI / 180;
+            
+            // Calculate mercator coordinates
+            const mercatorX = EARTH_RADIUS * lngRad;
+            const mercatorY = EARTH_RADIUS * Math.log(Math.tan(Math.PI / 4 + latRad / 2));
+            
+            return { mercatorX, mercatorY };
+        }
+        
+        // Convert Web Mercator (EPSG:3857) to WGS84 lat/lng
+        function mercatorToLatLng(x, y) {
+            // Constants
+            const EARTH_RADIUS = 6378137; // Earth's radius in meters
+            
+            // Calculate lat/lng in radians
+            const lngRad = x / EARTH_RADIUS;
+            const latRad = 2 * Math.atan(Math.exp(y / EARTH_RADIUS)) - Math.PI / 2;
+            
+            // Convert to degrees
+            const lat = latRad * 180 / Math.PI;
+            const lng = lngRad * 180 / Math.PI;
+            
+            return { lat, lng };
+        }
+        
+        // More contrasting color palette with no yellows and better visual differentiation
+        // Reordered with most distinctive colors first and purple moved down
+        const colorPalette = [
+            '#D32F2F', // Bright red
+            '#1976D2', // Strong blue
+            '#388E3C', // Deep green
+            '#F57C00', // Orange
+            '#C2185B', // Magenta
+            '#0097A7', // Teal
+            '#455A64', // Blue Gray
+            '#7B1FA2', // Purple
+            '#5D4037', // Brown
+            '#00796B', // Dark Teal
+            '#6D4C41', // Dark Brown
+            '#512DA8', // Deep Purple
+            '#004D40', // Darkest Teal
+            '#3E2723', // Darkest Brown  
+            '#263238'  // Darkest Blue Gray
+        ];
+        
+        // DOM elements
+        const dataBaseUrlInput = document.getElementById('data-base-url');
+        const countrySelect = document.getElementById('country-select');
+        const yearSelect = document.getElementById('year-select');
+        const electionTypeSelect = document.getElementById('election-type-select');
+        const monthSelect = document.getElementById('month-select');
+        const roundSelect = document.getElementById('round-select');
+        const displayModeSelect = document.getElementById('display-mode');
+        const loadingElement = document.getElementById('loading');
+        const errorElement = document.getElementById('error');
+        const successElement = document.getElementById('success');
+        const addressSearchInput = document.getElementById('address-search');
+        const searchButton = document.getElementById('search-button');
+        const searchResultsContainer = document.getElementById('search-results');
+        
+        // Show/hide loading indicator
+        function showLoading(isLoading) {
+            loadingElement.style.display = isLoading ? 'block' : 'none';
+        }
+        
+        // Show error message
+        function showError(message) {
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+            
+            // Hide after 5 seconds
+            setTimeout(() => {
+                errorElement.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Show success message
+        function showSuccess(message) {
+            successElement.textContent = message;
+            successElement.style.display = 'block';
+            
+            // Hide after 3 seconds
+            setTimeout(() => {
+                successElement.style.display = 'none';
+            }, 3000);
+        }
+        
+        // Nominatim search implementation
+        let currentCountryCode = null;
+        let currentCountryName = null;
+        let currentDataBounds = null;
+        
+        // Search for an address within the selected country
+        async function searchAddress() {
+            const searchTerm = addressSearchInput.value.trim();
+            if (!searchTerm) {
+                return;
+            }
+            
+            const selectedCountryId = countrySelect.value;
+            if (!selectedCountryId) {
+                showError("Please select a country first");
+                return;
+            }
+            
+            showLoading(true);
+            searchResultsContainer.innerHTML = '';
+            searchResultsContainer.style.display = 'none';
+            
+            // Get current country for search bounds
+            if (currentDataBounds) {
+                // If we have data loaded, use those bounds
+                const bounds = currentDataBounds;
+                const boundsString = `${bounds.west},${bounds.south},${bounds.east},${bounds.north}`;
+                await performSearch(searchTerm, selectedCountryId, boundsString);
+            } else {
+                // Fallback to just country-constrained search
+                await performSearch(searchTerm, selectedCountryId);
+            }
+            
+            showLoading(false);
+        }
+        
+        // Perform the actual search request
+        async function performSearch(searchTerm, countryId, viewbox = null) {
+            // Find the country name/code
+            const country = countriesIndex.find(c => c.country_id === countryId);
+            if (!country) {
+                showError("Country information not found");
+                return;
+            }
+            
+            // Update current country info
+            currentCountryName = country.country_name;
+            
+            // Build the search URL
+            let searchUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchTerm)}`;
+            
+            // Add country constraint
+            searchUrl += `&countrycodes=${countryId.toLowerCase()}`;
+            
+            // Add viewbox constraint if available
+            if (viewbox) {
+                searchUrl += `&viewbox=${viewbox}&bounded=1`;
+            }
+            
+            try {
+                const response = await fetch(searchUrl);
+                
+                if (!response.ok) {
+                    throw new Error(`Search failed with status: ${response.status}`);
+                }
+                
+                const results = await response.json();
+                
+                // Display search results
+                displaySearchResults(results);
+            } catch (error) {
+                showError(`Address search error: ${error.message}`);
+            }
+        }
+        
+        // Display search results
+        function displaySearchResults(results) {
+            searchResultsContainer.innerHTML = '';
+            
+            if (results.length === 0) {
+                searchResultsContainer.innerHTML = '<div class="search-result-item">No results found</div>';
+                searchResultsContainer.style.display = 'block';
+                return;
+            }
+            
+            // Filter results to those within our data bounds (if available)
+            let filteredResults = results;
+            if (currentDataBounds) {
+                filteredResults = results.filter(result => {
+                    const lat = parseFloat(result.lat);
+                    const lon = parseFloat(result.lon);
+                    return (
+                        lat >= currentDataBounds.south &&
+                        lat <= currentDataBounds.north &&
+                        lon >= currentDataBounds.west &&
+                        lon <= currentDataBounds.east
+                    );
+                });
+                
+                // If no results within bounds, show a message but keep all results
+                if (filteredResults.length === 0) {
+                    searchResultsContainer.innerHTML = 
+                        '<div class="search-result-item" style="color: #721c24; background-color: #f8d7da; padding: 8px;">No results within map data area. Showing broader results.</div>';
+                    filteredResults = results;
+                }
+            }
+            
+            // Create results list
+            filteredResults.forEach(result => {
+                const resultItem = document.createElement('div');
+                resultItem.className = 'search-result-item';
+                resultItem.textContent = result.display_name;
+                
+                resultItem.addEventListener('click', () => {
+                    // Center map on result
+                    const lat = parseFloat(result.lat);
+                    const lon = parseFloat(result.lon);
+                    
+                    map.setView([lat, lon], 13);
+                    
+                    // Add a temporary marker
+                    const marker = L.marker([lat, lon], {
+                        icon: L.divIcon({
+                            className: 'search-result-marker',
+                            html: '<div style="background-color: #3388ff; width: 12px; height: 12px; border-radius: 50%; border: 2px solid white;"></div>',
+                            iconSize: [16, 16],
+                            iconAnchor: [8, 8]
+                        })
+                    }).addTo(map);
+                    
+                    // Remove marker after 5 seconds
+                    setTimeout(() => {
+                        map.removeLayer(marker);
+                    }, 5000);
+                    
+                    // Hide results
+                    searchResultsContainer.style.display = 'none';
+                    
+                    // Clear search input
+                    addressSearchInput.value = '';
+                });
+                
+                searchResultsContainer.appendChild(resultItem);
+            });
+            
+            searchResultsContainer.style.display = 'block';
+        }
+        
+        // Calculate bounds from data points
+        function calculateDataBounds(data) {
+            if (!data || data.length === 0) return null;
+            
+            let minLat = 90;
+            let maxLat = -90;
+            let minLng = 180;
+            let maxLng = -180;
+            
+            data.forEach(point => {
+                if (point.lat > maxLat) maxLat = point.lat;
+                if (point.lat < minLat) minLat = point.lat;
+                if (point.lng > maxLng) maxLng = point.lng;
+                if (point.lng < minLng) minLng = point.lng;
+            });
+            
+            // Add a small buffer
+            const latBuffer = (maxLat - minLat) * 0.1;
+            const lngBuffer = (maxLng - minLng) * 0.1;
+            
+            return {
+                north: maxLat + latBuffer,
+                south: minLat - latBuffer,
+                east: maxLng + lngBuffer,
+                west: minLng - lngBuffer
+            };
+        }
+        
+        // Initialize the map
+        function initializeMap() {
+            // Create the map - default to world view
+            map = L.map('map').setView([20, 0], 2); // Centered on world by default
+            
+            // Add a simple light base map by default
+            currentBasemapLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a>',
+                tms: false,
+                detectRetina: true
+            }).addTo(map);
+            
+            // Create layer for markers
+            markersLayer = L.layerGroup();
+            
+            // Add marker layer
+            markersLayer.addTo(map);
+            
+            // Initialize the country boundaries layer (but don't add to map yet)
+            initCountryBoundariesLayer();
+        }
+        
+        // Initialize country boundaries layer with dark black borders
+        function initCountryBoundariesLayer() {
+            // Create a new pane that sits above the base tiles but below markers
+            if (!map.getPane('boundaries')) {
+                map.createPane('boundaries');
+                map.getPane('boundaries').style.zIndex = 450; // Above tile layers (400) but below markers (600)
+                map.getPane('boundaries').style.pointerEvents = 'none'; // Make it non-interactive
+            }
+            
+            // Using a more reliable approach with predefined options
+            const boundariesConfig = {
+                url: 'https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',
+                options: {
+                    attribution: 'Tiles &copy; Esri &mdash; Source: Esri',
+                    pane: 'boundaries',
+                    opacity: 0.9,
+                    detectRetina: true
+                }
+            };
+            
+            // Create country boundaries layer with high-contrast black borders
+            try {
+                console.log("Creating country boundaries layer");
+                countryBoundariesLayer = L.tileLayer(boundariesConfig.url, boundariesConfig.options);
+                console.log("Country boundaries layer created successfully");
+            } catch (error) {
+                console.error("Error creating country boundaries layer:", error);
+            }
+        }
+        
+        // Toggle country boundaries visibility
+        function toggleCountryBoundaries(show) {
+            console.log("Toggling country boundaries:", show);
+            
+            // Make sure countryBoundariesLayer is initialized
+            if (!countryBoundariesLayer) {
+                console.error("Country boundaries layer not initialized!");
+                initCountryBoundariesLayer();
+            }
+            
+            try {
+                if (show && !map.hasLayer(countryBoundariesLayer)) {
+                    console.log("Adding country boundaries layer to map");
+                    countryBoundariesLayer.addTo(map);
+                } else if (!show && map.hasLayer(countryBoundariesLayer)) {
+                    console.log("Removing country boundaries layer from map");
+                    map.removeLayer(countryBoundariesLayer);
+                } else {
+                    console.log("No change needed in country boundaries visibility");
+                }
+            } catch (error) {
+                console.error("Error toggling country boundaries:", error);
+            }
+        }
+        
+        // Change the basemap layer
+        function changeBasemap(basemapType) {
+            // Remove current basemap
+            if (currentBasemapLayer) {
+                map.removeLayer(currentBasemapLayer);
+            }
+            
+            // Remove current border overlay if it exists
+            if (currentBorderOverlay) {
+                map.removeLayer(currentBorderOverlay);
+                currentBorderOverlay = null;
+            }
+            
+            // Set the new basemap based on selection
+            switch (basemapType) {
+                case 'light':
+                    currentBasemapLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+                        attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a>'
+                    });
+                    break;
+                case 'dark':
+                    currentBasemapLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
+                        attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a>'
+                    });
+                    break;
+                case 'streets':
+                    currentBasemapLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    });
+                    break;
+                case 'satellite':
+                    currentBasemapLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+                    });
+                    break;
+                case 'topo':
+                    currentBasemapLayer = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+                        attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+                    });
+                    break;
+                case 'borders':
+                    // Strong borders basemap from CartoDB with emphasized country boundaries
+                    currentBasemapLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                        attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a>, <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                        subdomains: 'abcd',
+                        maxZoom: 19
+                    });
+                    break;
+                default:
+                    // Default to light if unknown type
+                    currentBasemapLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+                        attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a>'
+                    });
+            }
+            
+            // Add the new basemap layer
+            currentBasemapLayer.addTo(map);
+            
+            // Add the border overlay if it exists
+            if (currentBorderOverlay) {
+                currentBorderOverlay.addTo(map);
+            }
+        }
+        
+        // Load the main countries index
+        async function loadMainIndex() {
+            showLoading(true);
+            
+            // Clear existing data
+            countriesIndex = [];
+            clearMap();
+            resetSelectors();
+            
+            try {
+                // Get base URL from input
+                dataBaseUrl = dataBaseUrlInput.value.trim();
+                if (!dataBaseUrl.endsWith('/')) {
+                    dataBaseUrl += '/';
+                }
+                
+                // Construct URL to main index file
+                mainIndexUrl = dataBaseUrl + 'countries-index.csv';
+                
+                // Load and parse the main index CSV
+                const response = await fetch(mainIndexUrl);
+                if (!response.ok) {
+                    throw new Error(`Failed to load main index. Status: ${response.status}`);
+                }
+                
+                const csvText = await response.text();
+                
+                // Parse CSV using PapaParse
+                Papa.parse(csvText, {
+                    header: true,
+                    dynamicTyping: true,
+                    complete: function(results) {
+                        // Store countries index
+                        countriesIndex = results.data.filter(country => country.country_id);
+                        
+                        // Populate country selector
+                        populateCountrySelector();
+                        
+                        showLoading(false);
+                        showSuccess(`Loaded index with ${countriesIndex.length} countries`);
+                    },
+                    error: function(error) {
+                        showError(`Error parsing countries index: ${error}`);
+                        showLoading(false);
+                    }
+                });
+            } catch (error) {
+                showError(`Failed to load main index: ${error.message}`);
+                showLoading(false);
+            }
+        }
+        
+        // Populate the country selector dropdown
+        function populateCountrySelector() {
+            // Clear existing options from hidden select
+            while (countrySelect.options.length > 1) {
+                countrySelect.remove(1);
+            }
+            
+            // Clear existing dropdown options
+            const dropdown = document.getElementById('country-dropdown');
+            dropdown.innerHTML = '';
+            
+            // Sort countries alphabetically
+            countriesIndex.sort((a, b) => a.country_name.localeCompare(b.country_name));
+            
+            // Add options to hidden select for form handling
+            countriesIndex.forEach(country => {
+                const option = document.createElement('option');
+                option.value = country.country_id;
+                option.textContent = country.country_name;
+                countrySelect.appendChild(option);
+                
+                // Create option for the dropdown
+                const dropdownOption = document.createElement('div');
+                dropdownOption.className = 'custom-select-option';
+                dropdownOption.textContent = country.country_name;
+                dropdownOption.dataset.value = country.country_id;
+                dropdownOption.dataset.searchText = country.country_name.toLowerCase();
+                
+                // Add click event to select this option
+                dropdownOption.addEventListener('click', function() {
+                    selectCountry(country.country_id, country.country_name);
+                });
+                
+                dropdown.appendChild(dropdownOption);
+            });
+            
+            // Enable search field
+            const countrySearch = document.getElementById('country-search');
+            countrySearch.disabled = false;
+            countrySearch.value = '';
+            
+            // Setup event listeners for the custom dropdown
+            setupCustomSelect();
+        }
+        
+        // Setup the custom select dropdown functionality
+        function setupCustomSelect() {
+            const searchInput = document.getElementById('country-search');
+            const dropdown = document.getElementById('country-dropdown');
+            let isDropdownOpen = false;
+            let currentHighlight = -1;
+            
+            // Function to show dropdown
+            function showDropdown() {
+                // Calculate position to avoid going off-screen
+                const inputRect = searchInput.getBoundingClientRect();
+                const viewportHeight = window.innerHeight;
+                
+                // Position dropdown
+                dropdown.style.minWidth = inputRect.width + 'px';
+                
+                // Determine if there's enough space below
+                const spaceBelow = viewportHeight - inputRect.bottom;
+                const neededSpace = Math.min(250, dropdown.scrollHeight); // Max height is 250px as defined in CSS
+                
+                // Add active class to show dropdown
+                dropdown.classList.add('active');
+                isDropdownOpen = true;
+                
+                // Reset highlight
+                const options = dropdown.querySelectorAll('.custom-select-option');
+                options.forEach(opt => opt.classList.remove('highlighted'));
+                currentHighlight = -1;
+                
+                // Ensure options are properly filtered based on current input
+                if (searchInput.value) {
+                    filterCountries();
+                }
+                
+                // Use setTimeout to ensure dropdown stays open
+                // This prevents race conditions with click events
+                setTimeout(() => {
+                    if (!dropdown.classList.contains('active')) {
+                        dropdown.classList.add('active');
+                    }
+                }, 10);
+            }
+            
+            // Function to hide dropdown
+            function hideDropdown() {
+                dropdown.classList.remove('active');
+                isDropdownOpen = false;
+            }
+            
+            // When input is clicked, show dropdown and clear input if there's a selection
+            searchInput.addEventListener('click', function(e) {
+                e.stopPropagation();
+                
+                // If dropdown is already open and input has text, this is a second click - clear input
+                if (isDropdownOpen && this.value) {
+                    if (this.selectionStart === this.selectionEnd) { // No text is selected
+                        this.value = ''; // Clear for a fresh search
+                        filterCountries(); // Update dropdown with all countries
+                    }
+                } else if (!isDropdownOpen) {
+                    // If dropdown is closed, open it
+                    showDropdown();
+                    // Put cursor at end of text
+                    const length = this.value.length;
+                    this.setSelectionRange(length, length);
+                }
+            });
+            
+            // Add dropdown arrow indicator
+            const dropdownArrow = document.createElement('div');
+            dropdownArrow.className = 'dropdown-arrow';
+            dropdownArrow.innerHTML = '▼';
+            searchInput.parentNode.appendChild(dropdownArrow);
+            
+            // Arrow click should toggle dropdown
+            dropdownArrow.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (!isDropdownOpen) {
+                    searchInput.focus();
+                    showDropdown();
+                } else {
+                    hideDropdown();
+                }
+            });
+            
+            // Focus in should show dropdown
+            searchInput.addEventListener('focus', function() {
+                if (!isDropdownOpen) {
+                    showDropdown();
+                }
+            });
+            
+            // Handle typing in the search input
+            searchInput.addEventListener('input', function() {
+                filterCountries();
+                showDropdown(); // Make sure dropdown remains visible while typing
+                
+                // Auto-select the first matching item if there's only one
+                const options = Array.from(dropdown.querySelectorAll('.custom-select-option:not([style*="display: none"])'));
+                if (options.length === 1 && this.value && this.value.toLowerCase() === options[0].textContent.toLowerCase()) {
+                    selectCountry(options[0].dataset.value, options[0].textContent);
+                }
+            });
+            
+            // Handle keyboard navigation
+            searchInput.addEventListener('keydown', function(e) {
+                const options = Array.from(dropdown.querySelectorAll('.custom-select-option:not([style*="display: none"])'));
+                
+                // If no options visible, do nothing with navigation keys
+                if (options.length === 0) return;
+                
+                switch(e.key) {
+                    case 'ArrowDown':
+                        e.preventDefault();
+                        if (!isDropdownOpen) {
+                            showDropdown();
+                        } else {
+                            // Highlight next option
+                            if (currentHighlight < options.length - 1) {
+                                // Remove current highlight
+                                if (currentHighlight > -1) {
+                                    options[currentHighlight].classList.remove('highlighted');
+                                }
+                                currentHighlight++;
+                                options[currentHighlight].classList.add('highlighted');
+                                // Scroll to the option if needed
+                                options[currentHighlight].scrollIntoView({ block: 'nearest' });
+                            }
+                        }
+                        break;
+                    case 'ArrowUp':
+                        e.preventDefault();
+                        if (isDropdownOpen && currentHighlight > 0) {
+                            // Highlight previous option
+                            options[currentHighlight].classList.remove('highlighted');
+                            currentHighlight--;
+                            options[currentHighlight].classList.add('highlighted');
+                            // Scroll to the option if needed
+                            options[currentHighlight].scrollIntoView({ block: 'nearest' });
+                        }
+                        break;
+                    case 'Enter':
+                        e.preventDefault();
+                        if (isDropdownOpen && currentHighlight > -1) {
+                            // Select the highlighted option
+                            const selectedOption = options[currentHighlight];
+                            selectCountry(selectedOption.dataset.value, selectedOption.textContent);
+                        } else if (options.length === 1) {
+                            // If there's only one option, select it
+                            const selectedOption = options[0];
+                            selectCountry(selectedOption.dataset.value, selectedOption.textContent);
+                        }
+                        break;
+                    case 'Tab':
+                        // If dropdown is open and there's only one option, auto-select it
+                        if (isDropdownOpen && options.length === 1) {
+                            e.preventDefault();
+                            const selectedOption = options[0];
+                            selectCountry(selectedOption.dataset.value, selectedOption.textContent);
+                        } else {
+                            hideDropdown();
+                        }
+                        break;
+                    case 'Escape':
+                        e.preventDefault();
+                        hideDropdown();
+                        break;
+                }
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('mousedown', function(e) {
+                // Check if click was outside the country select container
+                const container = document.getElementById('country-select-container');
+                const clickedElement = e.target;
+                
+                // Only close if click was outside the container and dropdown is open
+                if (!container.contains(clickedElement) && isDropdownOpen) {
+                    hideDropdown();
+                }
+            });
+            
+            // Add click handlers for all options
+            const options = dropdown.querySelectorAll('.custom-select-option');
+            options.forEach(option => {
+                option.addEventListener('mouseenter', function() {
+                    // Remove highlight from all options
+                    dropdown.querySelectorAll('.custom-select-option').forEach(opt => {
+                        opt.classList.remove('highlighted');
+                    });
+                    
+                    // Add highlight to this option
+                    this.classList.add('highlighted');
+                    
+                    // Update current highlight index
+                    currentHighlight = Array.from(dropdown.querySelectorAll('.custom-select-option:not([style*="display: none"])')).indexOf(this);
+                });
+            });
+        }
+        
+        // Select a country from the custom dropdown
+        function selectCountry(countryId, countryName) {
+            // Update hidden select
+            countrySelect.value = countryId;
+            
+            // Update input display
+            const searchInput = document.getElementById('country-search');
+            searchInput.value = countryName;
+            
+            // Highlight the selected option in the dropdown
+            const dropdown = document.getElementById('country-dropdown');
+            const options = dropdown.querySelectorAll('.custom-select-option');
+            options.forEach(opt => {
+                if (opt.dataset.value === countryId) {
+                    opt.classList.add('selected');
+                } else {
+                    opt.classList.remove('selected');
+                }
+            });
+            
+            // Hide dropdown
+            dropdown.classList.remove('active');
+            
+            // Directly call loadCountryIndex instead of triggering event
+            // This ensures proper loading of country data
+            loadCountryIndex();
+            
+            // Log for debugging
+            console.log(`Selected country: ${countryName} (${countryId})`);
+        }
+        
+        // Filter countries based on search input
+        function filterCountries() {
+            const searchTerm = document.getElementById('country-search').value.toLowerCase();
+            const dropdown = document.getElementById('country-dropdown');
+            const options = dropdown.querySelectorAll('.custom-select-option');
+            
+            let visibleCount = 0;
+            
+            // Show/hide options based on search term
+            options.forEach(option => {
+                const optionText = option.dataset.searchText;
+                if (optionText.includes(searchTerm)) {
+                    option.style.display = '';
+                    visibleCount++;
+                } else {
+                    option.style.display = 'none';
+                }
+            });
+            
+            // Show no results message if needed
+            let noResultsMsg = dropdown.querySelector('.no-results');
+            if (visibleCount === 0) {
+                if (!noResultsMsg) {
+                    noResultsMsg = document.createElement('div');
+                    noResultsMsg.className = 'no-results';
+                    noResultsMsg.textContent = 'No matching countries found';
+                    dropdown.appendChild(noResultsMsg);
+                }
+            } else if (noResultsMsg) {
+                noResultsMsg.remove();
+            }
+        }
+        
+        // Load the index for a specific country
+        async function loadCountryIndex() {
+            const selectedCountryId = countrySelect.value;
+            
+            if (!selectedCountryId) {
+                resetYearSelector();
+                return;
+            }
+            
+            showLoading(true);
+            clearMap();
+            resetYearSelector();
+            
+            try {
+                // Find the country in the index
+                const country = countriesIndex.find(c => c.country_id === selectedCountryId);
+                if (!country) {
+                    throw new Error(`Country ${selectedCountryId} not found in index`);
+                }
+                
+                // Construct URL to country index file
+                const countryIndexUrl = dataBaseUrl + country.index_path;
+                
+                // Load and parse the country index CSV
+                const response = await fetch(countryIndexUrl);
+                if (!response.ok) {
+                    throw new Error(`Failed to load country index. Status: ${response.status}`);
+                }
+                
+                const csvText = await response.text();
+                
+                // Parse CSV using PapaParse
+                Papa.parse(csvText, {
+                    header: true,
+                    dynamicTyping: true,
+                    complete: function(results) {
+                        // Store country index
+                        currentCountryIndex = results.data.filter(entry => 
+                            entry.file_path || entry.country); // Filter out empty rows
+                        
+                        // Populate year selector
+                        populateYearSelector();
+                        
+                        showLoading(false);
+                        showSuccess(`Loaded index for ${country.country_name}`);
+                    },
+                    error: function(error) {
+                        showError(`Error parsing country index: ${error}`);
+                        showLoading(false);
+                    }
+                });
+            } catch (error) {
+                showError(`Failed to load country index: ${error.message}`);
+                showLoading(false);
+            }
+        }
+        
+        // Populate the year selector dropdown
+        function populateYearSelector() {
+            // Clear existing options except the first one
+            while (yearSelect.options.length > 1) {
+                yearSelect.remove(1);
+            }
+            
+            // Get unique years from the country index
+            const yearsSet = new Set();
+            
+            currentCountryIndex.forEach(entry => {
+                if (entry.year) {
+                    yearsSet.add(entry.year);
+                }
+            });
+            
+            // Convert to array and sort in descending order (newest first)
+            const years = Array.from(yearsSet).sort((a, b) => b - a);
+            
+            // Add options for each year
+            years.forEach(year => {
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = year;
+                yearSelect.appendChild(option);
+            });
+            
+            // If there are entries without a year (like direct files), add a "No Year" option
+            const hasEntriesWithoutYear = currentCountryIndex.some(entry => 
+                entry.file_path && !entry.year);
+                
+            if (hasEntriesWithoutYear) {
+                const option = document.createElement('option');
+                option.value = "none";
+                option.textContent = "No Year (Direct Files)";
+                yearSelect.appendChild(option);
+            }
+            
+            // Enable year selector
+            yearSelect.disabled = false;
+            
+            // Add event listener for year selection
+            yearSelect.removeEventListener('change', updateElectionTypeSelector);
+            yearSelect.addEventListener('change', updateElectionTypeSelector);
+        }
+        
+        // Update the election type selector based on the selected year
+        function updateElectionTypeSelector() {
+            const selectedYear = yearSelect.value;
+            
+            if (!selectedYear) {
+                resetElectionTypeSelector();
+                resetMonthSelector();
+                resetRoundSelector();
+                return;
+            }
+            
+            // Clear existing options except the first one
+            while (electionTypeSelect.options.length > 1) {
+                electionTypeSelect.remove(1);
+            }
+            
+            let filteredEntries;
+            
+            if (selectedYear === "none") {
+                // Show entries without a year
+                filteredEntries = currentCountryIndex.filter(entry => 
+                    entry.file_path && !entry.year);
+                    
+                // These might have a different format, using data_type instead of election_type
+                filteredEntries.forEach(entry => {
+                    const displayName = entry.data_type || 
+                                      (entry.file_path.split('/').pop().replace('.csv', ''));
+                    
+                    const option = document.createElement('option');
+                    option.value = JSON.stringify({
+                        file_path: entry.file_path,
+                        name: displayName,
+                        month: entry.month,
+                        round: null
+                    });
+                    option.textContent = displayName;
+                    electionTypeSelect.appendChild(option);
+                });
+            } else {
+                // Show election types for the selected year
+                filteredEntries = currentCountryIndex.filter(entry => 
+                    entry.year == selectedYear); // Use == to match string and number types
+                
+                // Process entries to clean up and normalize election types
+                const cleanedEntries = [];
+                
+                filteredEntries.forEach(entry => {
+                    if (entry.election_type && entry.file_path) {
+                        // Extract the base election type (without round info)
+                        let baseType = entry.election_type.toLowerCase();
+                        let roundInfo = null;
+                        
+                        // Check for round information in the name
+                        if (baseType.includes("first round")) {
+                            baseType = baseType.replace(/\s*first round\s*/i, "").trim();
+                            roundInfo = "first";
+                        } else if (baseType.includes("second round")) {
+                            baseType = baseType.replace(/\s*second round\s*/i, "").trim();
+                            roundInfo = "second";
+                        } else if (baseType.includes("round 1")) {
+                            baseType = baseType.replace(/\s*round 1\s*/i, "").trim();
+                            roundInfo = "first";
+                        } else if (baseType.includes("round 2")) {
+                            baseType = baseType.replace(/\s*round 2\s*/i, "").trim();
+                            roundInfo = "second";
+                        }
+                        
+                        // Capitalize first letter of each word
+                        baseType = baseType.split(' ').map(word => 
+                            word.charAt(0).toUpperCase() + word.slice(1)
+                        ).join(' ');
+                        
+                        cleanedEntries.push({
+                            ...entry,
+                            baseType: baseType,
+                            roundInfo: roundInfo,
+                            originalType: entry.election_type
+                        });
+                    }
+                });
+                
+                // Group by base election type
+                const electionTypes = new Map();
+                
+                cleanedEntries.forEach(entry => {
+                    if (!electionTypes.has(entry.baseType)) {
+                        electionTypes.set(entry.baseType, []);
+                    }
+                    electionTypes.get(entry.baseType).push(entry);
+                });
+                
+                // Add options for each election type
+                Array.from(electionTypes.keys()).sort().forEach(baseType => {
+                    const entries = electionTypes.get(baseType);
+                    
+                    // Check if we have multiple rounds for this type
+                    const hasFirstRound = entries.some(e => e.roundInfo === "first");
+                    const hasSecondRound = entries.some(e => e.roundInfo === "second");
+                    const hasMultipleRounds = hasFirstRound && hasSecondRound;
+                    
+                    if (hasMultipleRounds) {
+                        // This is an election type with multiple rounds - add a single option
+                        const option = document.createElement('option');
+                        option.value = JSON.stringify({
+                            election_type: baseType,
+                            name: baseType,
+                            hasRounds: true,
+                            entries: entries.map(e => ({
+                                file_path: e.file_path,
+                                month: e.month !== "NA" ? e.month : null,
+                                round: e.roundInfo
+                            }))
+                        });
+                        option.textContent = baseType;
+                        electionTypeSelect.appendChild(option);
+                    } else {
+                        // This is a single election type - add as is with original name
+                        entries.forEach(entry => {
+                            const displayName = entry.originalType;
+                            const option = document.createElement('option');
+                            option.value = JSON.stringify({
+                                election_type: displayName,
+                                name: displayName,
+                                hasRounds: false,
+                                entries: [{
+                                    file_path: entry.file_path,
+                                    month: entry.month !== "NA" ? entry.month : null,
+                                    round: null // No need for round since it's in the name
+                                }]
+                            });
+                            option.textContent = displayName;
+                            electionTypeSelect.appendChild(option);
+                        });
+                    }
+                });
+            }
+            
+            // Enable election type selector if we have options
+            electionTypeSelect.disabled = electionTypeSelect.options.length <= 1;
+            
+            // Reset and disable month and round selectors
+            resetMonthSelector();
+            resetRoundSelector();
+            
+            // Add event listener for election type selection
+            electionTypeSelect.removeEventListener('change', updateMonthAndRoundSelectors);
+            electionTypeSelect.addEventListener('change', updateMonthAndRoundSelectors);
+        }
+        
+        // Extract round information from election type name
+        function extractRoundInfo(electionTypeName) {
+            if (!electionTypeName) return null;
+            
+            const lowerName = electionTypeName.toLowerCase();
+            if (lowerName.includes("round 1") || lowerName.includes("first round")) {
+                return "first";
+            } else if (lowerName.includes("round 2") || lowerName.includes("second round")) {
+                return "second";
+            }
+            
+            return null;
+        }
+        
+        // Update month and round selectors based on the selected election type
+        function updateMonthAndRoundSelectors() {
+            const selectedOption = electionTypeSelect.value;
+            
+            if (!selectedOption) {
+                resetMonthSelector();
+                resetRoundSelector();
+                return;
+            }
+            
+            try {
+                const optionData = JSON.parse(selectedOption);
+                
+                // Handle simple file path case (no months or rounds)
+                if (optionData.file_path) {
+                    resetMonthSelector();
+                    resetRoundSelector();
+                    loadElectionData();
+                    return;
+                }
+                
+                // Handle complex case with entries that may contain months and rounds
+                if (optionData.entries && Array.isArray(optionData.entries)) {
+                    // Handle months
+                    updateMonthSelector(optionData.entries);
+                    
+                    // Handle rounds
+                    if (optionData.hasRounds === true) {
+                        // Only show round selector if this election type has multiple rounds
+                        document.querySelector('label[for="round-select"]').parentNode.style.display = 'block';
+                        updateRoundSelector(optionData.entries);
+                    } else {
+                        // Hide round selector
+                        document.querySelector('label[for="round-select"]').parentNode.style.display = 'none';
+                        resetRoundSelector();
+                    }
+                    
+                    // If no user input needed (no month selection and no round selection), load data directly
+                    if (monthSelect.disabled && (roundSelect.disabled || optionData.hasRounds !== true)) {
+                        loadElectionData();
+                    }
+                } else {
+                    resetMonthSelector();
+                    resetRoundSelector();
+                    loadElectionData();
+                }
+            } catch (e) {
+                console.error("Error parsing election type data:", e);
+                resetMonthSelector();
+                resetRoundSelector();
+            }
+        }
+        
+        // Update the month selector based on available months
+        function updateMonthSelector(entries) {
+            // Clear existing options except the first one
+            while (monthSelect.options.length > 1) {
+                monthSelect.remove(1);
+            }
+            
+            // Extract unique months
+            const months = new Set();
+            entries.forEach(entry => {
+                if (entry.month && entry.month !== "NA") {
+                    months.add(entry.month);
+                }
+            });
+            
+            // Convert to array and sort numerically
+            const monthsArray = Array.from(months).sort((a, b) => parseInt(a) - parseInt(b));
+            
+            if (monthsArray.length > 0) {
+                // Create month name mapping
+                const monthNames = [
+                    "January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"
+                ];
+                
+                // Add options for each month
+                monthsArray.forEach(month => {
+                    const option = document.createElement('option');
+                    option.value = month;
+                    
+                    // Try to convert numeric month to name
+                    const monthNum = parseInt(month);
+                    if (!isNaN(monthNum) && monthNum >= 1 && monthNum <= 12) {
+                        option.textContent = monthNames[monthNum - 1] + " (" + month + ")";
+                    } else {
+                        option.textContent = month;
+                    }
+                    
+                    monthSelect.appendChild(option);
+                });
+                
+                // Enable month selector
+                monthSelect.disabled = false;
+                
+                // Add event listener for month selection
+                monthSelect.removeEventListener('change', loadElectionData);
+                monthSelect.addEventListener('change', loadElectionData);
+                
+                // Store available months for later use
+                availableMonths = monthsArray;
+            } else {
+                // No months available
+                monthSelect.disabled = true;
+                availableMonths = [];
+            }
+        }
+        
+        // Update the round selector based on available rounds
+        function updateRoundSelector(entries) {
+            // Clear existing options except the first one
+            while (roundSelect.options.length > 1) {
+                roundSelect.remove(1);
+            }
+            
+            // Extract unique rounds
+            const rounds = new Set();
+            entries.forEach(entry => {
+                if (entry.round) {
+                    rounds.add(entry.round);
+                }
+            });
+            
+            // Convert to array
+            const roundsArray = Array.from(rounds);
+            
+            if (roundsArray.length > 0) {
+                // Add options for each round
+                roundsArray.forEach(round => {
+                    const option = document.createElement('option');
+                    option.value = round;
+                    
+                    // Format round name
+                    if (round === "first") {
+                        option.textContent = "First Round";
+                    } else if (round === "second") {
+                        option.textContent = "Second Round";
+                    } else {
+                        option.textContent = round;
+                    }
+                    
+                    roundSelect.appendChild(option);
+                });
+                
+                // Enable round selector
+                roundSelect.disabled = false;
+                
+                // Add event listener for round selection
+                roundSelect.removeEventListener('change', loadElectionData);
+                roundSelect.addEventListener('change', loadElectionData);
+                
+                // Store available rounds for later use
+                availableRounds = roundsArray;
+            } else {
+                // No rounds available
+                roundSelect.disabled = true;
+                availableRounds = [];
+            }
+        }
+        
+        // Reset month selector
+        function resetMonthSelector() {
+            // Clear existing options except the first one
+            while (monthSelect.options.length > 1) {
+                monthSelect.remove(1);
+            }
+            
+            // Disable selector
+            monthSelect.disabled = true;
+            
+            // Clear available months
+            availableMonths = [];
+            
+            // Remove event listener
+            monthSelect.removeEventListener('change', loadElectionData);
+        }
+        
+        // Reset round selector
+        function resetRoundSelector() {
+            // Clear existing options except the first one
+            while (roundSelect.options.length > 1) {
+                roundSelect.remove(1);
+            }
+            
+            // Disable selector
+            roundSelect.disabled = true;
+            
+            // Clear available rounds
+            availableRounds = [];
+            
+            // Remove event listener
+            roundSelect.removeEventListener('change', loadElectionData);
+        }
+        
+        // Load the election data from the selected CSV file
+        async function loadElectionData() {
+            const selectedOption = electionTypeSelect.value;
+            
+            if (!selectedOption) {
+                clearMap();
+                return;
+            }
+            
+            showLoading(true);
+            clearMap();
+            
+            try {
+                // Parse the data from the selected option
+                const optionData = JSON.parse(selectedOption);
+                let filePath;
+                let electionType;
+                
+                // Handle different data structures based on selection type
+                if (optionData.file_path) {
+                    // Simple case - direct file path
+                    filePath = optionData.file_path;
+                    electionType = optionData.name;
+                } else if (optionData.entries && Array.isArray(optionData.entries)) {
+                    // Complex case - need to filter by month and/or round
+                    const selectedMonth = monthSelect.value;
+                    const selectedRound = roundSelect.value;
+                    electionType = optionData.name;
+                    
+                    // Filter entries based on month and round selection
+                    let filteredEntries = optionData.entries;
+                    
+                    if (selectedMonth && !monthSelect.disabled) {
+                        filteredEntries = filteredEntries.filter(entry => 
+                            entry.month === selectedMonth || entry.month === null);
+                    }
+                    
+                    // Only filter by round if this election type has rounds
+                    if (optionData.hasRounds === true && selectedRound && !roundSelect.disabled) {
+                        filteredEntries = filteredEntries.filter(entry => 
+                            entry.round === selectedRound);
+                    }
+                    
+                    // If we have multiple entries that match our criteria, use the first one
+                    if (filteredEntries.length > 0) {
+                        filePath = filteredEntries[0].file_path;
+                        
+                        // Construct display name
+                        let displayName = electionType;
+                        
+                        // Add round info if this election type has rounds
+                        if (optionData.hasRounds === true && selectedRound && !roundSelect.disabled) {
+                            if (selectedRound === "first") {
+                                displayName += " (First Round)";
+                            } else if (selectedRound === "second") {
+                                displayName += " (Second Round)";
+                            } else {
+                                displayName += ` (${selectedRound})`;
+                            }
+                        }
+                        
+                        // Add month info if available
+                        if (selectedMonth && !monthSelect.disabled) {
+                            // Create month name mapping
+                            const monthNames = [
+                                "January", "February", "March", "April", "May", "June",
+                                "July", "August", "September", "October", "November", "December"
+                            ];
+                            
+                            // Try to convert numeric month to name
+                            const monthNum = parseInt(selectedMonth);
+                            if (!isNaN(monthNum) && monthNum >= 1 && monthNum <= 12) {
+                                displayName += ` - ${monthNames[monthNum - 1]}`;
+                            } else {
+                                displayName += ` - Month ${selectedMonth}`;
+                            }
+                        }
+                        
+                        electionType = displayName;
+                    } else {
+                        throw new Error("No data matches the selected month and round criteria");
+                    }
+                } else {
+                    throw new Error("Invalid election data format");
+                }
+                
+                // Construct URL to the CSV file
+                const csvUrl = dataBaseUrl + filePath;
+                
+                // Load and parse the CSV file
+                const response = await fetch(csvUrl);
+                if (!response.ok) {
+                    throw new Error(`Failed to load election data. Status: ${response.status}`);
+                }
+                
+                const csvText = await response.text();
+                
+                // Parse CSV using PapaParse
+                Papa.parse(csvText, {
+                    header: true,
+                    dynamicTyping: true,
+                    complete: function(results) {
+                        // First check if we have data
+                        if (results.data.length === 0) {
+                            showError("No data found in the CSV file");
+                            showLoading(false);
+                            return;
+                        }
+                            
+                        // Now identify the coordinate columns
+                        const firstRow = results.data[0];
+                        const keys = Object.keys(firstRow);
+                        
+                        // Look for latitude/longitude columns with various possible names
+                        let latColumn = null;
+                        let lngColumn = null;
+                        
+                        // Try exact matches first (most reliable)
+                        for (const key of keys) {
+                            const lowerKey = key.toLowerCase();
+                            if (!latColumn && (lowerKey === 'latitude' || lowerKey === 'lat')) {
+                                latColumn = key;
+                            }
+                            if (!lngColumn && (lowerKey === 'longitude' || lowerKey === 'lng' || lowerKey === 'long')) {
+                                lngColumn = key;
+                            }
+                        }
+                        
+                        // If exact matches failed, try partial matches but be more careful
+                        if (!latColumn || !lngColumn) {
+                            for (const key of keys) {
+                                const lowerKey = key.toLowerCase();
+                                // For partial matches, only match at word boundaries
+                                if (!latColumn && (
+                                    lowerKey === 'y' || 
+                                    lowerKey.startsWith('lat') || 
+                                    lowerKey.endsWith('_lat') ||
+                                    lowerKey.includes('_lat_')
+                                )) {
+                                    latColumn = key;
+                                }
+                                
+                                if (!lngColumn && (
+                                    lowerKey === 'x' || 
+                                    lowerKey.startsWith('lon') || 
+                                    lowerKey.endsWith('_lon') || 
+                                    lowerKey.endsWith('_lng') ||
+                                    lowerKey.includes('_lon_') ||
+                                    lowerKey.includes('_lng_')
+                                )) {
+                                    lngColumn = key;
+                                }
+                            }
+                        }
+                        
+                        // Show debug info about available columns
+                        // console.log("Available columns:", keys);
+                        // console.log(`Found coordinate columns: lat=${latColumn}, lng=${lngColumn}`);
+                        
+                        if (!latColumn || !lngColumn) {
+                            // Show a more descriptive error with the available columns
+                            showError(`Could not find latitude/longitude columns in the data. Available columns: ${keys.join(', ')}`);
+                            showLoading(false);
+                            return;
+                        }
+                        
+                        // Let's examine the first row to see coordinate values
+                        // console.log(`First row lat value: ${firstRow[latColumn]}, lng value: ${firstRow[lngColumn]}`);
+                        
+                        // Filter rows with valid coordinates
+                        const data = results.data.filter(row => 
+                            row[latColumn] !== undefined && row[lngColumn] !== undefined && 
+                            !isNaN(parseFloat(row[latColumn])) && 
+                            !isNaN(parseFloat(row[lngColumn]))
+                        );
+                        
+                        // Rename coordinates to standard lat/lng for consistency in the rest of the code
+                        data.forEach(row => {
+                            row.lat = row[latColumn];
+                            row.lng = row[lngColumn];
+                        });
+                        
+                        if (data.length === 0) {
+                            showError("No valid coordinates found in the data");
+                            showLoading(false);
+                            return;
+                        }
+                        
+                        // Process and display the election data
+                        processElectionData(data, filePath, electionType);
+                        
+                        showLoading(false);
+                        showSuccess(`Loaded ${data.length} data points`);
+                    },
+                    error: function(error) {
+                        showError(`Error parsing election data: ${error}`);
+                        showLoading(false);
+                    }
+                });
+            } catch (error) {
+                showError(`Failed to load election data: ${error.message}`);
+                showLoading(false);
+            }
+        }
+        
+        // Process election data and prepare it for display
+        function processElectionData(data, filePath, electionType) {
+            // Reset data structures
+            coordGroups = {};
+            allLocations = [];
+            partyColors = {};
+            
+            // Identify columns that might contain party data
+            // Party columns often end with specific suffixes or contain keywords
+            const partyColumns = {};
+            const possibleVoteColumns = [];
+            
+            if (data.length > 0) {
+                const firstRow = data[0];
+                const allColumns = Object.keys(firstRow);
+                
+                // Debug output of available columns
+                // console.log("All columns in data:", allColumns);
+                                
+                // First check for a single "party" column - common in your dataset
+                const partyCol = allColumns.find(col => 
+                    col.toLowerCase() === 'party' || 
+                    col.toLowerCase() === 'party_name' ||
+                    col.toLowerCase() === 'partyname'
+                );
+                
+                const votesCol = allColumns.find(col => 
+                    col.toLowerCase() === 'votes' || 
+                    col.toLowerCase() === 'party_votes' ||
+                    col.toLowerCase() === 'partyvotes'
+                );
+                
+                // console.log(`Found party/votes columns: party=${partyCol}, votes=${votesCol}`);
+                
+                // If we have a simple party/votes structure, use that directly
+                if (partyCol && votesCol) {
+                    // console.log(`Found simple party/votes structure: ${partyCol}/${votesCol}`);
+                    partyColumns[partyCol] = votesCol;
+                } else {
+                    // Otherwise check for more complex party column patterns
+                    allColumns.forEach(col => {
+                        // Check for common patterns in party columns
+                        if (col.match(/party[0-9]*(_name)?$/i) || 
+                            col.match(/^p[0-9]+_n$/i) || 
+                            col.toLowerCase().includes("party") ||
+                            col.match(/^party_[a-z0-9_]+$/i) ||
+                            col.match(/party_[a-z]/i)) {
+                            
+                            // Now find a corresponding vote column
+                            const baseCol = col.replace(/_name$/i, '').replace(/_n$/i, '');
+                            const voteCol = allColumns.find(c => 
+                                c === `${baseCol}_votes` || 
+                                c === `${baseCol}_v` ||
+                                c === baseCol.replace('party', 'votes') ||
+                                c === baseCol.replace('name', 'votes')
+                            );
+                            
+                            if (voteCol) {
+                                partyColumns[col] = voteCol;
+                            } else {
+                                // See if there's a 'votes' column that might pair with this party
+                                const possibleVotes = allColumns.find(c => 
+                                    c.toLowerCase() === 'votes' || 
+                                    c.toLowerCase().includes('vote')
+                                );
+                                
+                                if (possibleVotes) {
+                                    partyColumns[col] = possibleVotes;
+                                } else {
+                                    // If we couldn't find a direct match, just collect the column
+                                    // We'll try to pair it later
+                                    possibleVoteColumns.push(col);
+                                }
+                            }
+                        } else if (col.match(/votes[0-9]*$/i) || 
+                                col.match(/^v[0-9]+$/i) ||
+                                col.match(/^p[0-9]+_v$/i)) {
+                            // Collect vote columns that we might need to pair later
+                            possibleVoteColumns.push(col);
+                        }
+                    });
+                }
+                
+                // If we didn't find any paired columns, look for p1, p2, p3, etc. pattern
+                if (Object.keys(partyColumns).length === 0) {
+                    // Look for pattern p1, p2, p3 (party names) and v1, v2, v3 (votes)
+                    const partyNamePattern = /^p([0-9]+)$/i;
+                    
+                    allColumns.forEach(col => {
+                        const match = col.match(partyNamePattern);
+                        if (match) {
+                            const partyNumber = match[1];
+                            const voteCol = allColumns.find(c => 
+                                c.toLowerCase() === `v${partyNumber}` ||
+                                c.toLowerCase() === `votes${partyNumber}`
+                            );
+                            
+                            if (voteCol) {
+                                partyColumns[col] = voteCol;
+                            }
+                        }
+                    });
+                }
+            }
+            
+            // console.log("Detected party columns:", partyColumns);
+            
+            // Process each data point
+            data.forEach(row => {
+                // Basic validation - must have lat/lng
+                if (!row.lat || !row.lng || 
+                    isNaN(parseFloat(row.lat)) || 
+                    isNaN(parseFloat(row.lng))) {
+                    return;
+                }
+                
+                const lat = parseFloat(row.lat);
+                const lng = parseFloat(row.lng);
+                
+                // Create an identifier for this location to group points with the same coords
+                const coordKey = `${lat.toFixed(6)},${lng.toFixed(6)}`;
+                
+                // Find location name from various possible columns
+                const possibleNameFields = [
+                    'name', 'NAME', 'title', 'location', 
+                    'district', 'locality', 'municipality', 
+                    'region', 'state', 'country', 'name1', 'name2', 'name3'
+                ];
+                
+                let locationName = "Unknown Location";
+                for (const field of possibleNameFields) {
+                    if (row[field]) {
+                        locationName = row[field];
+                        break;
+                    }
+                }
+                
+                // Find all name-related columns including suffixed ones (name1, name1_b, name2, etc.)
+                const nameHierarchy = [];
+                const nameFields = [];
+                
+                // Find all name-related columns in the row
+                Object.keys(row).forEach(key => {
+                    // Match name1, name2, name1_b, NAME1, NAME2_B, NAME1_imp, etc.
+                    if (/^name\d+(_[a-z]|_imp)?$/i.test(key)) {
+                        nameFields.push(key);
+                    }
+                });
+                
+                // Sort them in a logical order: name1, name1_b, name1_c, name1_imp, name2, name2_b, name2_imp etc.
+                nameFields.sort((a, b) => {
+                    // Extract the number and suffix
+                    const matchA = a.match(/^name(\d+)(_[a-z]|_imp)?$/i);
+                    const matchB = b.match(/^name(\d+)(_[a-z]|_imp)?$/i);
+                    
+                    if (matchA && matchB) {
+                        const numA = parseInt(matchA[1]);
+                        const numB = parseInt(matchB[1]);
+                        
+                        // First sort by number
+                        if (numA !== numB) {
+                            return numA - numB;
+                        }
+                        
+                        // If numbers are the same, sort by suffix (no suffix comes first)
+                        const suffixA = matchA[2] || '';
+                        const suffixB = matchB[2] || '';
+                        
+                        return suffixA.localeCompare(suffixB);
+                    }
+                    
+                    // Fallback to simple comparison
+                    return a.localeCompare(b);
+                });
+                
+                // Add the values to the hierarchy
+                nameFields.forEach(field => {
+                    if (row[field]) {
+                        nameHierarchy.push({
+                            field: field,
+                            value: row[field]
+                        });
+                    }
+                });
+                
+                // If we have a hierarchy, create a meaningful name
+                if (nameHierarchy.length > 0) {
+                    // Only use main names (without suffixes) for the location title
+                    const mainNames = nameHierarchy.filter(item => !item.field.includes('_'));
+                    
+                    if (mainNames.length > 0) {
+                        // Join all main names with commas for full hierarchical representation
+                        locationName = mainNames.map(item => item.value).join(', ');
+                    } else {
+                        // Fallback to first name if no main names
+                        locationName = nameHierarchy[0].value;
+                    }
+                }
+                
+                // Find total votes from various possible columns
+                const possibleTotalVotesFields = [
+                    'total_votes', 'votes_total', 'totalvotes', 
+                    'valid_votes', 'valid_ballots', 'valid'
+                ];
+                
+                let totalVotes = 0;
+                let totalVotesSource = null;
+                
+                for (const field of possibleTotalVotesFields) {
+                    if (row[field] !== undefined && !isNaN(parseFloat(row[field]))) {
+                        totalVotes = parseFloat(row[field]);
+                        totalVotesSource = field;
+                        break;
+                    }
+                }
+                
+                // If we didn't find total votes, try other approaches
+                if (totalVotes === 0) {
+                    // Try the "votes" column directly
+                    if (row.votes !== undefined && !isNaN(parseFloat(row.votes))) {
+                        totalVotes = parseFloat(row.votes);
+                        totalVotesSource = "votes column";
+                    }
+                    // Or try party votes if available
+                    else if (Object.keys(partyColumns).length > 0) {
+                        try {
+                            // For the simple case of one party per row
+                            const entries = Object.entries(partyColumns);
+                            if (entries.length > 0) {
+                                const [nameCol, voteCol] = entries[0];
+                                if (row[voteCol] !== undefined && !isNaN(parseFloat(row[voteCol]))) {
+                                    totalVotes = parseFloat(row[voteCol]);
+                                    totalVotesSource = "party votes";
+                                }
+                            }
+                        } catch (e) {
+                            console.error("Error calculating total votes from party data:", e);
+                        }
+                    }
+                }
+                
+                // console.log(`Total votes: ${totalVotes} (source: ${totalVotesSource})`);
+                
+                // Find registered voters from various possible columns
+                const possibleRegFields = [
+                    'reg', 'registered', 'evp', 'eligible', 
+                    'registered_voters', 'electorate'
+                ];
+                
+                let registeredVoters = 0;
+                for (const field of possibleRegFields) {
+                    if (row[field] && !isNaN(parseFloat(row[field]))) {
+                        registeredVoters = parseFloat(row[field]);
+                        break;
+                    }
+                }
+                
+                // Find turnout from various possible columns or calculate it
+                let turnout = null;
+                if (row.turnout && !isNaN(parseFloat(row.turnout))) {
+                    turnout = parseFloat(row.turnout);
+                } else if (row.turnout_reg && !isNaN(parseFloat(row.turnout_reg))) {
+                    turnout = parseFloat(row.turnout_reg);
+                } else if (totalVotes > 0 && registeredVoters > 0) {
+                    turnout = totalVotes / registeredVoters;
+                }
+                
+                // Prepare location data with all the fields we found
+                const location = {
+                    latitude: lat,
+                    longitude: lng,
+                    name: locationName,
+                    total_votes: totalVotes,
+                    reg: registeredVoters,
+                    turnout: turnout,
+                    // Store the full row data for detailed popup
+                    fullDetails: { ...row },
+                    nameHierarchy: nameHierarchy,
+                    parties: []
+                };
+                
+                // The Albania data has a multi-row structure where each row represents one party's
+                // votes at one polling station. We need to extract the party data accurately.
+                
+                // First check if this is the expected format for Albania data
+                // These rows should have party, party_b, and votes columns
+                if (row.party !== undefined && row.votes !== undefined) {
+                    // Construct full party name from party, party_b, and party_c
+                    let partyName = row.party || "";
+                    
+                    // Helper function to check if value is NA
+                    const isNA = (val) => {
+                        if (!val) return true;
+                        if (typeof val === 'string') {
+                            const lower = val.toLowerCase();
+                            return lower === 'na' || lower === 'n/a' || lower === 'null' || lower === 'none';
+                        }
+                        return false;
+                    };
+                    
+                    // Add secondary party name fields if available and not NA
+                    if (row.party_b && !isNA(row.party_b)) {
+                        partyName += (partyName ? "\n" : "") + row.party_b;
+                    }
+                    
+                    // Add abbreviation if available and not NA
+                    if (row.party_c && !isNA(row.party_c)) {
+                        partyName += (partyName ? "\n" : "") + row.party_c;
+                    }
+                    
+                    // Add any additional party info if available and not NA
+                    if (row.party_d && !isNA(row.party_d)) {
+                        partyName += (partyName ? "\n" : "") + row.party_d;
+                    }
+                    
+                    // Convert votes to number
+                    const votes = typeof row.votes === 'number' ? row.votes : parseInt(row.votes) || 0;
+                    
+                    // Add this party to the location
+                    location.parties.push({
+                        name: partyName || "Unknown Party",
+                        votes: votes,
+                        vote_share: votes / (location.total_votes || 1)
+                    });
+                    
+                    // console.log(`Extracted party: ${partyName}, votes: ${votes}`);
+                } 
+                // Try alternate capitalized column names
+                else if (row.Party !== undefined && row.Votes !== undefined) {
+                    const votes = typeof row.Votes === 'number' ? row.Votes : parseInt(row.Votes) || 0;
+                    
+                    location.parties.push({
+                        name: row.Party,
+                        votes: votes,
+                        vote_share: votes / (location.total_votes || 1)
+                    });
+                    
+                    // console.log(`Extracted capitalized party: ${row.Party}, votes: ${votes}`);
+                }
+                // If direct methods failed, check for the expected column structure 
+                // and any other potential party data in the row
+                else {
+                    if (Object.keys(partyColumns).length === 1) {
+                        // If we have only one party column but multiple rows per location,
+                        // this means each row is a different party for the same location
+                        const [[nameCol, voteCol]] = Object.entries(partyColumns);
+                        
+                        if (row[nameCol] && row[voteCol] !== undefined) {
+                            // Convert string vote count to number if needed
+                            const voteCount = typeof row[voteCol] === 'number' 
+                                ? row[voteCol] 
+                                : parseInt(row[voteCol]) || 0;
+                                
+                            location.parties.push({
+                                name: row[nameCol],
+                                votes: voteCount,
+                                vote_share: voteCount / (location.total_votes || 1)
+                            });
+                            
+                            // console.log(`Added party from column: ${row[nameCol]}, votes: ${voteCount}`);
+                        }
+                    } else {
+                        // Multiple party columns in a single row
+                        Object.entries(partyColumns).forEach(([nameCol, voteCol]) => {
+                            if (row[nameCol] && row[voteCol] !== undefined) {
+                                // Convert string vote count to number if needed
+                                const voteCount = typeof row[voteCol] === 'number' 
+                                    ? row[voteCol] 
+                                    : parseInt(row[voteCol]) || 0;
+                                    
+                                location.parties.push({
+                                    name: row[nameCol],
+                                    votes: voteCount,
+                                    vote_share: voteCount / (location.total_votes || 1)
+                                });
+                                
+                                // console.log(`Added party from multiple cols: ${row[nameCol]}, votes: ${voteCount}`);
+                            }
+                        });
+                    }
+                }
+                
+                // Find the winning party
+                if (location.parties.length > 0) {
+                    // Sort by votes (descending)
+                    location.parties.sort((a, b) => b.votes - a.votes);
+                    location.winning_party = location.parties[0].name;
+                    location.winning_share = location.parties[0].vote_share;
+                } else {
+                    location.winning_party = "Unknown";
+                    location.winning_share = 0;
+                }
+                
+                // We need to group locations by NAME1-4 values to represent the same physical location
+                // Each entry with the same location but different party should add to that location's parties array
+                let locationKey = '';
+                
+                // Create a key based on the name hierarchy that includes field names
+                if (location.nameHierarchy && location.nameHierarchy.length > 0) {
+                    // Create a key that includes both field names and values
+                    locationKey = location.nameHierarchy
+                        .map(item => `${item.field}:${item.value}`)
+                        .join('|');
+                } else {
+                    locationKey = location.name;
+                }
+                
+                const fullLocationKey = `${lat},${lng},${locationKey}`;
+                
+                // Add to coordinate group
+                if (!coordGroups[coordKey]) {
+                    coordGroups[coordKey] = {
+                        latitude: lat,
+                        longitude: lng,
+                        locations: {},  // Use an object instead of array to track by locationKey
+                        locationKeys: new Set() // Track unique locations
+                    };
+                }
+                
+                // See if we've already added this exact location
+                if (!coordGroups[coordKey].locationKeys.has(fullLocationKey)) {
+                    // First time seeing this location, add it
+                    coordGroups[coordKey].locationKeys.add(fullLocationKey);
+                    coordGroups[coordKey].locations[fullLocationKey] = location;
+                    allLocations.push(location);
+                    // console.log(`Added new location: ${location.name} at ${lat},${lng}`);
+                } else {
+                    // We've seen this location before, add this party to its parties array
+                    const existingLocation = coordGroups[coordKey].locations[fullLocationKey];
+                    
+                    // Add all parties from this row to the existing location
+                    if (location.parties.length > 0) {
+                        location.parties.forEach(party => {
+                            // Check if this party already exists
+                            const existingParty = existingLocation.parties.find(p => p.name === party.name);
+                            if (!existingParty) {
+                                existingLocation.parties.push(party);
+                                // console.log(`Added party ${party.name} to existing location ${location.name}`);
+                            }
+                        });
+                    }
+                }
+            });
+            
+            // Assign colors to parties
+            const allParties = new Set();
+            
+            allLocations.forEach(location => {
+                location.parties.forEach(party => {
+                    allParties.add(party.name);
+                });
+            });
+            
+            // Convert to array and sort
+            const partiesArray = Array.from(allParties);
+            
+            // Keep parties in the same order they were found for consistent color assignment
+            // This ensures the color assignments don't change when the legend sorts by vote share
+            
+            // Assign colors from our palette to each party
+            partiesArray.forEach((party, index) => {
+                partyColors[party] = colorPalette[index % colorPalette.length];
+                // console.log(`Assigned color ${colorPalette[index % colorPalette.length]} to party ${party}`);
+            });
+            
+            // Create legend
+            createLegend(partiesArray);
+            
+            // Render the data on the map
+            renderMapData();
+            
+            // Zoom map to fit all data points
+            if (Object.keys(coordGroups).length > 0) {
+                // Create a bounds object
+                const bounds = L.latLngBounds();
+                
+                // Add each coordinate to the bounds
+                Object.values(coordGroups).forEach(group => {
+                    bounds.extend([group.latitude, group.longitude]);
+                });
+                
+                // Store data bounds for search functionality
+                const allCoords = Object.values(coordGroups).map(group => ({
+                    lat: group.latitude,
+                    lng: group.longitude
+                }));
+                currentDataBounds = calculateDataBounds(allCoords);
+                
+                // Fit the map to these bounds (with padding)
+                map.fitBounds(bounds, { padding: [50, 50] });
+            }
+        }
+        
+        // Create a legend showing party colors
+        function createLegend(parties) {
+            // Check if there's an existing legend position to preserve
+            let previousPosition = null;
+            let previousSize = null;
+            
+            const existingLegend = document.querySelector('.legend');
+            if (existingLegend) {
+                // Store the current position and size before removing
+                previousPosition = {
+                    left: existingLegend.style.left,
+                    top: existingLegend.style.top,
+                    right: existingLegend.style.right,
+                    bottom: existingLegend.style.bottom
+                };
+                
+                previousSize = {
+                    width: $(existingLegend).width(),
+                    height: $(existingLegend).height()
+                };
+                
+                existingLegend.remove();
+            }
+            
+            // Create a new legend
+            const legend = document.createElement('div');
+            legend.className = 'legend';
+            
+            // Add header with buttons
+            const headerDiv = document.createElement('div');
+            headerDiv.style.display = 'flex';
+            headerDiv.style.justifyContent = 'space-between';
+            headerDiv.style.alignItems = 'center';
+            headerDiv.style.marginBottom = '10px';
+            headerDiv.style.borderBottom = '1px solid #eee';
+            headerDiv.style.paddingBottom = '5px';
+            
+            const headerTitle = document.createElement('h4');
+            headerTitle.textContent = 'Parties';
+            headerTitle.style.margin = '0';
+            
+            // Add buttons to show all or restore hidden
+            const buttonsDiv = document.createElement('div');
+            
+            // Track hidden parties
+            if (!window.hiddenParties) {
+                window.hiddenParties = new Set();
+            }
+            
+            // Add a dropdown to restore hidden parties and a "+" button
+            if (window.hiddenParties.size > 0) {
+                // Create a container for better positioning
+                const addPartyContainer = document.createElement('div');
+                addPartyContainer.style.position = 'relative';
+                addPartyContainer.style.display = 'inline-block';
+                
+                // Create the "+" button
+                const addButton = document.createElement('button');
+                addButton.textContent = '+';
+                addButton.title = 'Add a hidden party';
+                addButton.style.fontSize = '12px';
+                addButton.style.padding = '1px 5px';
+                addButton.style.backgroundColor = '#f8f8f8';
+                addButton.style.border = '1px solid #ddd';
+                addButton.style.borderRadius = '3px';
+                addButton.style.cursor = 'pointer';
+                
+                // Create the hidden dropdown
+                const dropdown = document.createElement('select');
+                dropdown.style.position = 'absolute';
+                dropdown.style.top = '100%';
+                dropdown.style.right = '0';
+                dropdown.style.zIndex = '1001';
+                dropdown.style.display = 'none';
+                dropdown.style.width = '180px';
+                dropdown.style.padding = '4px';
+                dropdown.style.border = '1px solid #ddd';
+                dropdown.style.borderRadius = '3px';
+                dropdown.style.backgroundColor = 'white';
+                dropdown.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+                
+                // Add option to restore all
+                const restoreAllOption = document.createElement('option');
+                restoreAllOption.value = 'all';
+                restoreAllOption.textContent = '-- Restore All --';
+                dropdown.appendChild(restoreAllOption);
+                
+                // Add options for each hidden party
+                Array.from(window.hiddenParties).forEach(partyName => {
+                    const option = document.createElement('option');
+                    option.value = partyName;
+                    
+                    // Format the display name
+                    let displayName = partyName;
+                    if (partyName.includes('\n')) {
+                        displayName = partyName.split('\n')[0];
+                    }
+                    if (displayName.length > 25) {
+                        displayName = displayName.substring(0, 22) + '...';
+                    }
+                    
+                    option.textContent = displayName;
+                    dropdown.appendChild(option);
+                });
+                
+                // Toggle dropdown when + button is clicked
+                addButton.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isVisible = dropdown.style.display === 'block';
+                    dropdown.style.display = isVisible ? 'none' : 'block';
+                });
+                
+                // Prevent clicks inside dropdown from closing it
+                dropdown.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                });
+                
+                // Handle dropdown selection
+                dropdown.addEventListener('change', (e) => {
+                    e.stopPropagation();
+                    const selected = dropdown.value;
+                    
+                    if (selected === 'all') {
+                        // Clear all hidden parties
+                        window.hiddenParties.clear();
+                    } else {
+                        // Remove just the selected party from hidden list
+                        window.hiddenParties.delete(selected);
+                    }
+                    
+                    // Update the UI
+                    createLegend(parties);
+                    renderMapData();
+                    
+                    // Re-render any active layers
+                    activeLayers.forEach(layer => {
+                        renderLayerMarkers(layer);
+                    });
+                    
+                    // Keep dropdown open after selection to allow multiple selections
+                    setTimeout(() => {
+                        dropdown.focus();
+                    }, 10);
+                });
+                
+                // Close dropdown when clicking outside both the button and dropdown
+                if (!window.dropdownClickHandler) {
+                    window.dropdownClickHandler = (e) => {
+                        if (e.target !== addButton && e.target !== dropdown && !dropdown.contains(e.target)) {
+                            dropdown.style.display = 'none';
+                        }
+                    };
+                    document.addEventListener('click', window.dropdownClickHandler);
+                }
+                
+                // Add elements to the DOM
+                addPartyContainer.appendChild(addButton);
+                addPartyContainer.appendChild(dropdown);
+                buttonsDiv.appendChild(addPartyContainer);
+            }
+            
+            headerDiv.appendChild(headerTitle);
+            headerDiv.appendChild(buttonsDiv);
+            
+            legend.appendChild(headerDiv);
+            
+            // Calculate national-level vote share for each party
+            const partyVotes = {};
+            let totalVotesNational = 0;
+            
+            // First collect all votes
+            allLocations.forEach(location => {
+                location.parties.forEach(party => {
+                    // Initialize if not exists
+                    if (!partyVotes[party.name]) {
+                        partyVotes[party.name] = 0;
+                    }
+                    
+                    // Add votes
+                    partyVotes[party.name] += party.votes || 0;
+                    totalVotesNational += party.votes || 0;
+                });
+            });
+            
+            // Create an array of [partyName, votes, share] for sorting
+            const partiesWithShare = parties.map(party => {
+                const votes = partyVotes[party] || 0;
+                const share = totalVotesNational > 0 ? votes / totalVotesNational : 0;
+                return [party, votes, share];
+            });
+            
+            // Sort by vote share (descending)
+            partiesWithShare.sort((a, b) => b[2] - a[2]);
+            
+            // Filter out any hidden parties
+            const visiblePartiesWithShare = partiesWithShare.filter(([party]) => 
+                !window.hiddenParties.has(party)
+            );
+            
+            // Add each party to the legend
+            visiblePartiesWithShare.forEach(([party, votes, share]) => {
+                const color = partyColors[party] || '#999';
+                
+                const item = document.createElement('div');
+                item.className = 'legend-item';
+                
+                // Add remove button
+                const removeBtn = document.createElement('button');
+                removeBtn.textContent = '×'; // × character for remove
+                removeBtn.style.marginRight = '5px';
+                removeBtn.style.background = 'none';
+                removeBtn.style.border = 'none';
+                removeBtn.style.color = '#999';
+                removeBtn.style.fontSize = '14px';
+                removeBtn.style.fontWeight = 'bold';
+                removeBtn.style.cursor = 'pointer';
+                removeBtn.style.padding = '0 5px';
+                removeBtn.title = 'Hide this party';
+                
+                // Handle removing a party
+                removeBtn.addEventListener('click', () => {
+                    // Add to hidden parties set
+                    window.hiddenParties.add(party);
+                    
+                    // Recreate the legend without this party
+                    createLegend(parties);
+                    
+                    // Re-render the map to update colors based on visible parties
+                    renderMapData();
+                    
+                    // Re-render any active layers
+                    activeLayers.forEach(layer => {
+                        renderLayerMarkers(layer);
+                    });
+                });
+                
+                const colorBox = document.createElement('div');
+                colorBox.className = 'color-box';
+                colorBox.style.backgroundColor = color;
+                
+                const partyInfo = document.createElement('div');
+                partyInfo.style.display = 'flex';
+                partyInfo.style.justifyContent = 'space-between';
+                partyInfo.style.width = '100%';
+                partyInfo.style.overflow = 'hidden'; // Prevent text overflow
+                partyInfo.style.alignItems = 'center'; // Vertically center content
+                
+                const partyName = document.createElement('span');
+                // Format party name - support multi-line party names (just show first line in legend)
+                let displayName = party;
+                if (party.includes('\n')) {
+                    displayName = party.split('\n')[0];
+                }
+                
+                // Add full name as title for tooltip hover
+                partyName.title = displayName;
+                
+                // Set initial text - will adjust with resize
+                partyName.textContent = displayName;
+                
+                // Styling for dynamic text
+                partyName.style.overflow = 'hidden';
+                partyName.style.textOverflow = 'ellipsis';
+                partyName.style.whiteSpace = 'nowrap';
+                partyName.style.flex = '1'; // Let it take available space
+                
+                const voteShare = document.createElement('span');
+                voteShare.style.marginLeft = '8px';
+                voteShare.style.fontSize = '85%';
+                voteShare.style.color = '#666';
+                voteShare.style.whiteSpace = 'nowrap'; // Prevent wrapping
+                voteShare.style.flexShrink = '0'; // Don't shrink the percentage
+                voteShare.textContent = `${(share * 100).toFixed(1)}%`;
+                
+                partyInfo.appendChild(partyName);
+                partyInfo.appendChild(voteShare);
+                
+                // Make color box clickable to change the party's color
+                colorBox.style.cursor = 'pointer';
+                colorBox.title = 'Click to change party color';
+                
+                // Create a hidden color input
+                const colorInput = document.createElement('input');
+                colorInput.type = 'color';
+                colorInput.style.position = 'absolute';
+                colorInput.style.opacity = '0';
+                colorInput.style.pointerEvents = 'none';
+                colorInput.value = color; // Set initial color
+                item.appendChild(colorInput);
+                
+                // Add click event to open color picker
+                colorBox.addEventListener('click', () => {
+                    // Trigger the hidden color input
+                    colorInput.style.opacity = '1';
+                    colorInput.style.pointerEvents = 'auto';
+                    colorInput.focus();
+                    colorInput.click();
+                    
+                    // Hide it again after selection
+                    setTimeout(() => {
+                        colorInput.style.opacity = '0';
+                        colorInput.style.pointerEvents = 'none';
+                    }, 500);
+                });
+                
+                // Handle color selection
+                colorInput.addEventListener('change', () => {
+                    const newColor = colorInput.value;
+                    
+                    // Update the color in the partyColors map
+                    partyColors[party] = newColor;
+                    
+                    // Update the color box
+                    colorBox.style.backgroundColor = newColor;
+                    
+                    // Re-render the map with the new colors
+                    renderMapData();
+                    
+                    // Re-render any active layers
+                    activeLayers.forEach(layer => {
+                        // Update the layer's partyColors
+                        layer.partyColors[party] = newColor;
+                        
+                        // Re-render the layer
+                        renderLayerMarkers(layer);
+                    });
+                });
+                
+                item.appendChild(removeBtn);
+                item.appendChild(colorBox);
+                item.appendChild(partyInfo);
+                legend.appendChild(item);
+            });
+            
+            // Basemap selection is now in the controls panel
+            
+            document.body.appendChild(legend);
+            
+            // Restore previous position and size if available
+            if (previousPosition) {
+                // If the legend was moved (has left/top), use those values
+                if (previousPosition.left) {
+                    legend.style.left = previousPosition.left;
+                    legend.style.right = 'auto'; // Reset default right position
+                }
+                if (previousPosition.top) {
+                    legend.style.top = previousPosition.top;
+                    legend.style.bottom = 'auto'; // Reset default bottom position
+                }
+            }
+            
+            if (previousSize) {
+                $(legend).width(previousSize.width);
+                $(legend).height(previousSize.height);
+            }
+            
+            // Make the legend draggable and resizable using jQuery UI
+            $(legend).draggable({
+                handle: headerDiv,  // Use the header as the drag handle
+                containment: "document",  // Constrain movement within the document
+                scroll: false  // Prevent page scrolling during drag
+            }).resizable({
+                minWidth: 150,
+                minHeight: 100,
+                maxWidth: 500,
+                maxHeight: 600,
+                handles: "all", // Allow resizing from any edge/corner
+                containment: "document",
+                stop: function(event, ui) {
+                    // Adjust internal elements if needed after resize
+                    $(this).css("overflow-y", "auto"); // Ensure scrolling works
+                }
+            });
+        }
+        
+        // Render the processed data on the map
+        function renderMapData() {
+            // Clear previous markers
+            markersLayer.clearLayers();
+            
+            // Create markers for each coordinate group
+            Object.values(coordGroups).forEach(coordGroup => {
+                const { latitude, longitude, locations, locationKeys } = coordGroup;
+                
+                if (latitude && longitude && 
+                    !isNaN(parseFloat(latitude)) && 
+                    !isNaN(parseFloat(longitude))) {
+                    
+                    // Convert the locations object to an array for rendering
+                    const locationsArray = Object.values(locations);
+                    
+                    // Make sure we have locations
+                    if (locationsArray.length === 0) {
+                        return;
+                    }
+                    
+                    // Find the location with the most total votes for display
+                    let primaryLocation = locationsArray[0];
+                    locationsArray.forEach(loc => {
+                        if (loc.total_votes > primaryLocation.total_votes) {
+                            primaryLocation = loc;
+                        }
+                    });
+                    
+                    // Calculate marker properties based on the data
+                    let radius = 6; // Default radius
+                    let opacity = useSolidPoints ? 1.0 : 0.7; // Default opacity
+                    
+                    // Scale the marker size based on the number of votes if enabled
+                    if (scalePointsByVotes && primaryLocation.total_votes) {
+                        // Use a logarithmic scale for better visualization
+                        const votes = primaryLocation.total_votes;
+                        radius = Math.max(5, Math.min(15, 3 + Math.log10(votes) * 1.5));
+                    }
+                    
+                    // Make sure the parties are sorted by votes to find the winning party
+                    if (primaryLocation.parties && primaryLocation.parties.length > 0) {
+                        // Filter to only include visible parties (not in hiddenParties)
+                        const visibleParties = primaryLocation.parties.filter(party => 
+                            !window.hiddenParties || !window.hiddenParties.has(party.name)
+                        );
+                        
+                        // If there are no visible parties, use all parties
+                        const partiesForRanking = visibleParties.length > 0 ? visibleParties : primaryLocation.parties;
+                        
+                        // Sort parties by votes (descending)
+                        partiesForRanking.sort((a, b) => b.votes - a.votes);
+                        
+                        // Update the winning party based on filtered list
+                        if (partiesForRanking.length > 0) {
+                            primaryLocation.winning_party = partiesForRanking[0].name;
+                            primaryLocation.winning_share = partiesForRanking[0].vote_share;
+                        } else {
+                            primaryLocation.winning_party = "Unknown";
+                            primaryLocation.winning_share = 0;
+                        }
+                    }
+                    
+                    // Get the winning party (the first party after sorting)
+                    const winningParty = primaryLocation.winning_party;
+                    
+                    // Get the base color from the legend
+                    let markerColor = partyColors[winningParty] || '#999';
+                    
+                    // Calculate color intensity based on vote share
+                    const numericVoteShare = parseFloat(primaryLocation.winning_share) || 0.5;
+                    
+                    // Adjust color intensity based on vote share
+                    if (numericVoteShare > 0) {
+                        // Get the base color for the party
+                        const baseColor = partyColors[winningParty] || '#999';
+                        
+                        // Convert to RGB to adjust brightness
+                        const rgb = hexToRgb(baseColor);
+                        if (rgb) {
+                            // Cap vote share at 100% for calculation purposes
+                            const cappedShare = Math.min(numericVoteShare, 1.0);
+                            
+                            // Calculate brightness factor
+                            const voteShareFactor = cappedShare;
+                            let brightnessFactor;
+                            
+                            if (voteShareFactor < 0.5) {
+                                // For low vote shares, use a different formula to make them lighter
+                                brightnessFactor = 1.4 - voteShareFactor;
+                            } else {
+                                // For high vote shares, make them progressively darker
+                                brightnessFactor = 0.9 - (voteShareFactor - 0.5) * 1.0;
+                            }
+                            
+                            // Adjust RGB values based on brightness factor
+                            const adjustedR = Math.min(255, Math.floor(rgb.r * brightnessFactor));
+                            const adjustedG = Math.min(255, Math.floor(rgb.g * brightnessFactor));
+                            const adjustedB = Math.min(255, Math.floor(rgb.b * brightnessFactor));
+                            
+                            // Convert back to hex
+                            markerColor = rgbToHex(adjustedR, adjustedG, adjustedB);
+                        }
+                    }
+                    
+                    // Log the color assignment for debugging
+                    // console.log(`Winning party: ${winningParty}, Color: ${markerColor}`);
+                    
+                    // Create the marker
+                    const marker = L.circleMarker(
+                        [parseFloat(latitude), parseFloat(longitude)], 
+                        {
+                            radius: radius,
+                            fillColor: markerColor,
+                            color: '#000',
+                            weight: 1,
+                            opacity: 0.8,
+                            fillOpacity: opacity
+                        }
+                    );
+                    
+                    // Log party information for debugging (commented out)
+                    // console.log(`Marker at ${latitude},${longitude} has ${locationsArray.length} locations`);
+                    locationsArray.forEach(loc => {
+                        // console.log(`Location ${loc.name} has ${loc.parties.length} parties`);
+                        // loc.parties.forEach(p => console.log(`  ${p.name}: ${p.votes} votes`));
+                    });
+                    
+                    // Add popup with location details
+                    marker.bindPopup(createPopupContent(locationsArray));
+                    
+                    // Add to markers layer
+                    markersLayer.addLayer(marker);
+                }
+            });
+        }
+        
+        // Helper function to convert hex to RGB
+        function hexToRgb(hex) {
+            // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+            const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+            hex = hex.replace(shorthandRegex, (m, r, g, b) => r + r + g + g + b + b);
+            
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
+            } : null;
+        }
+        
+        // Helper function to convert RGB to hex
+        function rgbToHex(r, g, b) {
+            return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+        }
+        
+        // Create popup content for markers
+        function createPopupContent(locations) {
+            const content = document.createElement('div');
+            content.className = 'popup-content';
+            
+            // Only keep unique locations based on their nameHierarchy
+            let uniqueLocations = [];
+            
+            // Create a map to track unique locations
+            const locationMap = new Map();
+            
+            // Process each location
+            locations.forEach(loc => {
+                // Create a key based on name hierarchy (or just name if no hierarchy)
+                let key;
+                if (loc.nameHierarchy && loc.nameHierarchy.length > 0) {
+                    key = loc.nameHierarchy.join('|');
+                } else {
+                    key = loc.name;
+                }
+                
+                // If we haven't seen this location, add it
+                if (!locationMap.has(key)) {
+                    locationMap.set(key, loc);
+                }
+            });
+            
+            // Convert map values to array
+            uniqueLocations = Array.from(locationMap.values());
+            
+            // Debug output
+            // console.log(`Processed ${locations.length} locations into ${uniqueLocations.length} unique ones`);
+            
+            // If there's only one unique location, show its details
+            if (uniqueLocations.length === 1) {
+                const location = uniqueLocations[0];
+                
+                // Set the title using the name or first level of hierarchy
+                const title = document.createElement('h3');
+                title.textContent = location.name;
+                content.appendChild(title);
+                
+                // If we have a name hierarchy, show it
+                if (location.nameHierarchy && location.nameHierarchy.length > 0) {
+                    const hierarchy = document.createElement('p');
+                    hierarchy.style.fontSize = '12px';
+                    hierarchy.style.fontStyle = 'italic';
+                    hierarchy.style.marginTop = '-8px';
+                    hierarchy.style.marginBottom = '10px';
+                    
+                    // Use the original column names including suffixes
+                    const hierarchyItems = location.nameHierarchy.map(item => {
+                        // Use the original field name (like NAME1, NAME1_b, etc.) as the label
+                        return `<strong>${item.field.toUpperCase()}:</strong> ${item.value}`;
+                    });
+                    
+                    hierarchy.innerHTML = hierarchyItems.join('<br>');
+                    content.appendChild(hierarchy);
+                }
+                
+                // Create a basic info section
+                const info = document.createElement('p');
+                
+                // Start with total votes which should always be present
+                let infoHTML = `<strong>Total Votes:</strong> ${location.total_votes.toLocaleString()}<br>`;
+                
+                // Add registered voters if available
+                if (location.reg) {
+                    infoHTML += `<strong>Registered Voters:</strong> ${location.reg.toLocaleString()}<br>`;
+                }
+                
+                // Add turnout if available
+                if (location.turnout) {
+                    infoHTML += `<strong>Turnout:</strong> ${(location.turnout * 100).toFixed(1)}%<br>`;
+                }
+                
+                // Add additional metadata if available
+                if (location.fullDetails.geometry_type) {
+                    infoHTML += `<strong>Geometry Type:</strong> ${location.fullDetails.geometry_type}<br>`;
+                }
+                
+                if (location.fullDetails.geometry_type_b) {
+                    infoHTML += `<strong>Geocode Source:</strong> ${location.fullDetails.geometry_type_b}<br>`;
+                }
+                
+                info.innerHTML = infoHTML;
+                content.appendChild(info);
+                
+                // Create a scrollable container for the table
+                const tableContainer = document.createElement('div');
+                tableContainer.style.maxHeight = '200px';
+                tableContainer.style.overflowY = 'auto';
+                tableContainer.style.marginTop = '10px';
+                
+                // Show party data in a table
+                if (location.parties && location.parties.length > 0) {
+                    // Log party data for debugging
+                    // console.log("Popup - Party data:", location.parties);
+                    
+                    // Sort parties by votes (descending)
+                    const sortedParties = [...location.parties].sort((a, b) => (b.votes || 0) - (a.votes || 0));
+                    
+                    const table = document.createElement('table');
+                    table.style.width = '100%';
+                    
+                    // Handle null/undefined votes safely
+                    table.innerHTML = `
+                        <thead>
+                            <tr>
+                                <th>Party</th>
+                                <th>Votes</th>
+                                <th>Share</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${sortedParties.map(party => {
+                                const votes = party.votes || 0;
+                                const voteShare = party.vote_share || 0;
+                                
+                                // Format party name: If it contains newlines, split and format with different styles
+                                let formattedName = 'Unknown';
+                                if (party.name) {
+                                    if (party.name.includes('\n')) {
+                                        const parts = party.name.split('\n');
+                                        // First line is main party name, rest are secondary in smaller font
+                                        formattedName = parts[0]; 
+                                        if (parts.length > 1) {
+                                            formattedName += parts.slice(1).map(p => 
+                                                `<br><span style="font-size: 85%; color: #666;">${p}</span>`
+                                            ).join('');
+                                        }
+                                    } else {
+                                        formattedName = party.name;
+                                    }
+                                }
+                                
+                                return `
+                                <tr>
+                                    <td>${formattedName}</td>
+                                    <td>${votes.toLocaleString()}</td>
+                                    <td>${(voteShare * 100).toFixed(1)}%</td>
+                                </tr>
+                                `;
+                            }).join('')}
+                        </tbody>
+                    `;
+                    
+                    tableContainer.appendChild(table);
+                    content.appendChild(tableContainer);
+                }
+            } else {
+                // Multiple unique locations at the same coordinates
+                // Create a dropdown selector like the old version
+                const title = document.createElement('h3');
+                title.textContent = `${uniqueLocations.length} Locations`;
+                content.appendChild(title);
+                
+                // Create a dropdown select element
+                const selectContainer = document.createElement('div');
+                selectContainer.style.marginBottom = '10px';
+                
+                const label = document.createElement('label');
+                label.textContent = 'Select a location: ';
+                label.style.fontWeight = 'bold';
+                label.style.fontSize = '14px';
+                selectContainer.appendChild(label);
+                
+                const select = document.createElement('select');
+                select.style.width = '100%';
+                select.style.marginTop = '5px';
+                select.style.padding = '5px';
+                select.style.borderRadius = '4px';
+                
+                // Add options for each location
+                uniqueLocations.forEach((location, index) => {
+                    const option = document.createElement('option');
+                    option.value = index;
+                    
+                    // Create descriptive label for the location
+                    let label = "";
+                    if (location.nameHierarchy && location.nameHierarchy.length > 0) {
+                        // Find the name4 field or equivalent if available
+                        const name4Field = location.nameHierarchy.find(item => 
+                            item.field.toLowerCase() === 'name4' || 
+                            item.field.toLowerCase().startsWith('name4_'));
+                            
+                        if (name4Field) {
+                            // Find the main location names (name1-3)
+                            const name1 = location.nameHierarchy.find(item => item.field.toLowerCase() === 'name1');
+                            const name2 = location.nameHierarchy.find(item => item.field.toLowerCase() === 'name2');
+                            const name3 = location.nameHierarchy.find(item => item.field.toLowerCase() === 'name3');
+                            
+                            // Construct a hierarchical label
+                            const parts = [];
+                            if (name1) parts.push(name1.value);
+                            if (name2) parts.push(name2.value);
+                            if (name3) parts.push(name3.value);
+                            parts.push(`${name4Field.field.toUpperCase()}: ${name4Field.value}`);
+                            
+                            label = parts.join(', ');
+                        } else {
+                            // Join all name fields
+                            label = location.nameHierarchy
+                                .map(item => `${item.field.toUpperCase()}: ${item.value}`)
+                                .join(', ');
+                        }
+                    } else {
+                        label = location.name;
+                    }
+                    
+                    option.textContent = label;
+                    select.appendChild(option);
+                });
+                
+                selectContainer.appendChild(select);
+                content.appendChild(selectContainer);
+                
+                // Create a container for the details
+                const detailsContainer = document.createElement('div');
+                detailsContainer.id = 'location-details';
+                content.appendChild(detailsContainer);
+                
+                // Function to show selected location details
+                const showLocationDetails = () => {
+                    const selectedIndex = parseInt(select.value);
+                    const selectedLocation = uniqueLocations[selectedIndex];
+                    
+                    // Create details for this location
+                    const details = document.createElement('div');
+                    
+                    // Create location details similar to single location display
+                    // Simplified version with just the party table
+                    
+                    // Show party data in a table
+                    if (selectedLocation.parties && selectedLocation.parties.length > 0) {
+                        // Create a basic info section first
+                        const info = document.createElement('p');
+                        
+                        // Start with total votes which should always be present
+                        let infoHTML = `<strong>Total Votes:</strong> ${selectedLocation.total_votes.toLocaleString()}<br>`;
+                        
+                        // Add registered voters if available
+                        if (selectedLocation.reg) {
+                            infoHTML += `<strong>Registered Voters:</strong> ${selectedLocation.reg.toLocaleString()}<br>`;
+                        }
+                        
+                        // Add turnout if available
+                        if (selectedLocation.turnout) {
+                            infoHTML += `<strong>Turnout:</strong> ${(selectedLocation.turnout * 100).toFixed(1)}%<br>`;
+                        }
+                        
+                        info.innerHTML = infoHTML;
+                        details.appendChild(info);
+                        
+                        // Create party table
+                        const tableContainer = document.createElement('div');
+                        tableContainer.style.maxHeight = '200px';
+                        tableContainer.style.overflowY = 'auto';
+                        
+                        // Sort parties by votes
+                        const sortedParties = [...selectedLocation.parties].sort((a, b) => (b.votes || 0) - (a.votes || 0));
+                        
+                        const table = document.createElement('table');
+                        table.style.width = '100%';
+                        
+                        // Handle null/undefined votes safely
+                        table.innerHTML = `
+                            <thead>
+                                <tr>
+                                    <th>Party</th>
+                                    <th>Votes</th>
+                                    <th>Share</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${sortedParties.map(party => {
+                                    const votes = party.votes || 0;
+                                    const voteShare = party.vote_share || 0;
+                                    return `
+                                    <tr>
+                                        <td>${party.name || 'Unknown'}</td>
+                                        <td>${votes.toLocaleString()}</td>
+                                        <td>${(voteShare * 100).toFixed(1)}%</td>
+                                    </tr>
+                                    `;
+                                }).join('')}
+                            </tbody>
+                        `;
+                        
+                        tableContainer.appendChild(table);
+                        details.appendChild(tableContainer);
+                    } else {
+                        const noData = document.createElement('p');
+                        noData.textContent = 'No party data available for this location.';
+                        details.appendChild(noData);
+                    }
+                    
+                    // Update the details container
+                    detailsContainer.innerHTML = '';
+                    detailsContainer.appendChild(details);
+                };
+                
+                // Show first location by default
+                showLocationDetails();
+                
+                // Add change event to select
+                select.addEventListener('change', showLocationDetails);
+            }
+            
+            return content;
+        }
+        
+        // Add the current layer to the map
+        function addCurrentLayerToMap() {
+            // Get current selections
+            const countryId = countrySelect.value;
+            const yearVal = yearSelect.value;
+            const electionTypeOption = electionTypeSelect.value;
+            
+            if (!countryId || !yearVal || !electionTypeOption) {
+                showError('Please select a country, year, and election type first');
+                return;
+            }
+            
+            // Find the country name
+            const country = countriesIndex.find(c => c.country_id === countryId);
+            if (!country) {
+                showError('Country not found');
+                return;
+            }
+            
+            // Parse the election type data
+            let electionTypeName = '';
+            let filePath = '';
+            try {
+                const optionData = JSON.parse(electionTypeOption);
+                electionTypeName = optionData.name;
+                filePath = optionData.file_path;
+            } catch (e) {
+                showError('Invalid election type data');
+                return;
+            }
+            
+            // Create a unique ID for this layer
+            const layerId = `${countryId}_${yearVal}_${electionTypeName}`.replace(/\s+/g, '_');
+            
+            // Check if this layer already exists
+            if (activeLayers.some(layer => layer.id === layerId)) {
+                showError('This layer is already added to the map');
+                return;
+            }
+            
+            // Create a deep copy of the coordinate groups - handling the new object structure
+            const copiedCoordGroups = {};
+            Object.keys(coordGroups).forEach(key => {
+                const group = coordGroups[key];
+                
+                // Create a deep copy of locations object
+                const locationsCopy = {};
+                Object.keys(group.locations).forEach(locKey => {
+                    locationsCopy[locKey] = JSON.parse(JSON.stringify(group.locations[locKey]));
+                });
+                
+                copiedCoordGroups[key] = {
+                    latitude: group.latitude,
+                    longitude: group.longitude,
+                    locations: locationsCopy,
+                    locationKeys: new Set(Array.from(group.locationKeys))
+                };
+            });
+            
+            // Create a new layer
+            const newLayer = {
+                id: layerId,
+                countryName: country.country_name,
+                year: yearVal === 'none' ? 'No Year' : yearVal,
+                electionType: electionTypeName,
+                coordGroups: copiedCoordGroups, // Properly structured deep copy
+                partyColors: { ...partyColors }, // Copy party colors
+                markers: L.layerGroup()
+            };
+            
+            // Add to active layers array
+            activeLayers.push(newLayer);
+            
+            // Render markers for this layer
+            renderLayerMarkers(newLayer);
+            
+            // Update the layer list UI
+            updateLayerList();
+            
+            showSuccess(`Added layer: ${newLayer.countryName} ${newLayer.year} ${newLayer.electionType}`);
+        }
+        
+        // Render markers for a specific layer
+        function renderLayerMarkers(layer) {
+            // Clear previous markers
+            layer.markers.clearLayers();
+            
+            // Create markers similar to renderMapData but for the layer
+            Object.values(layer.coordGroups).forEach(coordGroup => {
+                const { latitude, longitude, locations } = coordGroup;
+                
+                if (latitude && longitude && 
+                    !isNaN(parseFloat(latitude)) && 
+                    !isNaN(parseFloat(longitude))) {
+                    
+                    // Convert the locations object to an array for processing
+                    const locationsArray = Object.values(locations);
+                    
+                    // Skip if no locations
+                    if (locationsArray.length === 0) {
+                        return;
+                    }
+                    
+                    // Find the location with the most votes for display
+                    let primaryLocation = locationsArray[0];
+                    locationsArray.forEach(loc => {
+                        if (loc.total_votes > primaryLocation.total_votes) {
+                            primaryLocation = loc;
+                        }
+                    });
+                    
+                    // Calculate marker properties based on the data
+                    let radius = 6; // Default radius for layer markers
+                    
+                    // Make sure the parties are sorted by votes to find the winning party
+                    if (primaryLocation.parties && primaryLocation.parties.length > 0) {
+                        // Filter to only include visible parties (not in hiddenParties)
+                        const visibleParties = primaryLocation.parties.filter(party => 
+                            !window.hiddenParties || !window.hiddenParties.has(party.name)
+                        );
+                        
+                        // If there are no visible parties, use all parties
+                        const partiesForRanking = visibleParties.length > 0 ? visibleParties : primaryLocation.parties;
+                        
+                        // Sort parties by votes (descending)
+                        partiesForRanking.sort((a, b) => b.votes - a.votes);
+                        
+                        // Update the winning party based on filtered list
+                        if (partiesForRanking.length > 0) {
+                            primaryLocation.winning_party = partiesForRanking[0].name;
+                            primaryLocation.winning_share = partiesForRanking[0].vote_share;
+                        } else {
+                            primaryLocation.winning_party = "Unknown";
+                            primaryLocation.winning_share = 0;
+                        }
+                    }
+                    
+                    // Get the winning party
+                    const winningParty = primaryLocation.winning_party;
+                    
+                    // Get the base color for the party
+                    let markerColor = layer.partyColors[winningParty] || '#999';
+                    
+                    // Calculate color intensity based on vote share
+                    const numericVoteShare = parseFloat(primaryLocation.winning_share) || 0.5;
+                    
+                    if (numericVoteShare > 0) {
+                        // Get the base color for the party
+                        const baseColor = layer.partyColors[winningParty] || '#999';
+                        
+                        // Convert to RGB to adjust brightness
+                        const rgb = hexToRgb(baseColor);
+                        if (rgb) {
+                            const cappedShare = Math.min(numericVoteShare, 1.0);
+                            
+                            // Calculate brightness factor
+                            const voteShareFactor = cappedShare;
+                            let brightnessFactor;
+                            
+                            if (voteShareFactor < 0.5) {
+                                brightnessFactor = 1.4 - voteShareFactor;
+                            } else {
+                                brightnessFactor = 0.9 - (voteShareFactor - 0.5) * 1.0;
+                            }
+                            
+                            // Adjust RGB values
+                            const adjustedR = Math.min(255, Math.floor(rgb.r * brightnessFactor));
+                            const adjustedG = Math.min(255, Math.floor(rgb.g * brightnessFactor));
+                            const adjustedB = Math.min(255, Math.floor(rgb.b * brightnessFactor));
+                            
+                            // Convert back to hex
+                            markerColor = rgbToHex(adjustedR, adjustedG, adjustedB);
+                        }
+                    }
+                    
+                    // Log the color assignment for debugging
+                    console.log(`Layer marker - Winning party: ${winningParty}, Color: ${markerColor}`);
+                    
+                    // Create marker with different color or style to differentiate layers
+                    const marker = L.circleMarker(
+                        [parseFloat(latitude), parseFloat(longitude)], 
+                        {
+                            radius: radius,
+                            fillColor: markerColor,
+                            color: '#000',
+                            weight: 1.5,
+                            opacity: 1,
+                            fillOpacity: useSolidPoints ? 1.0 : 0.7 // Use the same transparency setting as regular markers
+                        }
+                    );
+                    
+                    // Add popup showing this is part of a saved layer
+                    marker.bindPopup(
+                        `<div><strong>${layer.countryName} (${layer.year})</strong></div>` +
+                        createPopupContent(locationsArray).innerHTML
+                    );
+                    
+                    // Add to layer's marker group
+                    layer.markers.addLayer(marker);
+                }
+            });
+            
+            // Add the layer to the map
+            layer.markers.addTo(map);
+        }
+        
+        // Update the layer list UI
+        function updateLayerList() {
+            const layerList = document.getElementById('layer-list');
+            
+            // Clear current list
+            layerList.innerHTML = '';
+            
+            if (activeLayers.length === 0) {
+                layerList.innerHTML = '<div class="empty-message">No active layers</div>';
+                return;
+            }
+            
+            // Add each layer to the list
+            activeLayers.forEach(layer => {
+                const layerItem = document.createElement('div');
+                layerItem.className = 'layer-item';
+                
+                layerItem.innerHTML = `
+                    <span>${layer.countryName} ${layer.year} ${layer.electionType}</span>
+                    <button class="remove-layer" data-id="${layer.id}">Remove</button>
+                `;
+                
+                layerList.appendChild(layerItem);
+            });
+            
+            // Add event listeners for remove buttons
+            const removeButtons = layerList.querySelectorAll('.remove-layer');
+            removeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    removeLayer(button.dataset.id);
+                });
+            });
+        }
+        
+        // Remove a layer from the map
+        function removeLayer(layerId) {
+            const layerIndex = activeLayers.findIndex(layer => layer.id === layerId);
+            
+            if (layerIndex >= 0) {
+                // Remove layer from map
+                map.removeLayer(activeLayers[layerIndex].markers);
+                
+                // Remove from array
+                const removedLayer = activeLayers.splice(layerIndex, 1)[0];
+                
+                // Update UI
+                updateLayerList();
+                
+                showSuccess(`Removed layer: ${removedLayer.countryName} ${removedLayer.year} ${removedLayer.electionType}`);
+            }
+        }
+        
+        // Clear all layers
+        function clearAllLayers() {
+            // Remove all layers from map
+            activeLayers.forEach(layer => {
+                map.removeLayer(layer.markers);
+            });
+            
+            // Clear array
+            activeLayers = [];
+            
+            // Update UI
+            updateLayerList();
+            
+            showSuccess("All layers cleared");
+        }
+        
+        // Initialize layer controls
+        function initLayerControls() {
+            const addButton = document.getElementById('add-current-layer');
+            const clearButton = document.getElementById('clear-all-layers');
+            
+            if (addButton) {
+                addButton.addEventListener('click', addCurrentLayerToMap);
+            }
+            
+            if (clearButton) {
+                clearButton.addEventListener('click', clearAllLayers);
+            }
+            
+            // Initialize empty layer list
+            updateLayerList();
+        }
+        
+        // Initialize toggles for scaling points and opacity
+        function initToggles() {
+            const scalePointsToggle = document.getElementById('scale-points-toggle');
+            const opacityToggle = document.getElementById('opacity-toggle');
+            const countryBoundariesToggle = document.getElementById('country-boundaries-toggle');
+            
+            if (scalePointsToggle) {
+                scalePointsToggle.checked = scalePointsByVotes;
+                scalePointsToggle.addEventListener('change', function() {
+                    scalePointsByVotes = this.checked;
+                    renderMapData(); // Re-render with new settings
+                });
+            }
+            
+            if (opacityToggle) {
+                opacityToggle.checked = useSolidPoints;
+                opacityToggle.addEventListener('change', function() {
+                    useSolidPoints = this.checked;
+                    
+                    // Re-render main markers
+                    renderMapData(); 
+                    
+                    // Re-render all active layers with new opacity setting
+                    activeLayers.forEach(layer => {
+                        renderLayerMarkers(layer);
+                    });
+                });
+            }
+            
+            // Ensure country boundaries layer is created
+            if (!countryBoundariesLayer) {
+                console.log("Initializing country boundaries layer in initToggles");
+                initCountryBoundariesLayer();
+            }
+            
+            if (countryBoundariesToggle) {
+                countryBoundariesToggle.checked = showCountryBoundaries;
+                console.log("Setting up country boundaries toggle, initial state:", showCountryBoundaries);
+                
+                countryBoundariesToggle.addEventListener('change', function() {
+                    console.log("Country boundaries toggle changed to:", this.checked);
+                    showCountryBoundaries = this.checked;
+                    toggleCountryBoundaries(showCountryBoundaries);
+                });
+            }
+        }
+        
+        // Clear the map
+        function clearMap() {
+            // Clear all markers from layer
+            markersLayer.clearLayers();
+            
+            // Close any open popups
+            map.closePopup();
+            
+            // Remove legend if it exists
+            const legend = document.querySelector('.legend');
+            if (legend) {
+                legend.remove();
+            }
+        }
+        
+        // Reset the year selector
+        function resetYearSelector() {
+            yearSelect.innerHTML = '<option value="">Select Year</option>';
+            yearSelect.disabled = true;
+            resetElectionTypeSelector();
+        }
+        
+        // Reset the election type selector
+        function resetElectionTypeSelector() {
+            electionTypeSelect.innerHTML = '<option value="">Select Election Type</option>';
+            electionTypeSelect.disabled = true;
+            resetMonthSelector();
+            resetRoundSelector();
+            clearMap();
+        }
+        
+        // Reset all selectors
+        function resetSelectors() {
+            // Reset and hide hidden select
+            while (countrySelect.options.length > 1) {
+                countrySelect.remove(1);
+            }
+            countrySelect.disabled = true;
+            
+            // Reset and disable country search input
+            const countrySearch = document.getElementById('country-search');
+            countrySearch.value = '';
+            countrySearch.disabled = true;
+            
+            // Clear dropdown options
+            const dropdown = document.getElementById('country-dropdown');
+            dropdown.innerHTML = '';
+            dropdown.classList.remove('active');
+            
+            resetYearSelector();
+        }
+        
+        // Initialize basemap controls
+        function initBasemapControls() {
+            // Get the basemap selector element
+            const basemapSelect = document.getElementById('basemap-select');
+            
+            // Set default value to 'light'
+            basemapSelect.value = 'light';
+            
+            // Add event listener for basemap selection
+            basemapSelect.addEventListener('change', function() {
+                const selectedBasemap = this.value;
+                changeBasemap(selectedBasemap);
+            });
+        }
+        
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeMap();
+            initToggles();
+            initLayerControls();
+            initBasemapControls();
+            
+            // Load data automatically
+            loadMainIndex();
+            
+            // Set up search functionality
+            searchButton.addEventListener('click', searchAddress);
+            
+            // Add enter key for search
+            addressSearchInput.addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') {
+                    searchAddress();
+                }
+            });
+            
+            // Hide search results when clicking elsewhere
+            document.addEventListener('click', function(event) {
+                const isClickInside = searchResultsContainer.contains(event.target) || 
+                                      addressSearchInput.contains(event.target) ||
+                                      searchButton.contains(event.target);
+                
+                if (!isClickInside && searchResultsContainer.style.display === 'block') {
+                    searchResultsContainer.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
