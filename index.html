@@ -2,333 +2,153 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Noah Dasanaike</title>
-  <meta name="keywords" content="noah dasanaike, dasanaike, political geography, institutions">
-  <meta name="description"
-    content="Noah Dasanaike - PhD candidate in Government at Harvard University, focusing on political behavior and institutions.">
-
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-132914120-1"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'UA-132914120-1');
-  </script>
-  <script src="https://ipmeta.io/plugin.js"></script>
-  <script>
-    provideGtagPlugin({
-      serviceProvider: 'dimension1',
-      networkDomain: 'dimension2',
-      networkType: 'dimension3',
-    });
-  </script>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
   <style>
-    /* Base styles */
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-      line-height: 1.6;
-      margin: 0;
-      padding: 0;
-      color: #333;
-      background-color: #fff;
-    }
-
-    /* Page container */
-    .page-container {
       max-width: 800px;
-      margin: 0 auto;
-      padding: 30px 20px;
-    }
-
-    /* Header section with Monet image */
-    .header {
-      margin-bottom: 30px;
-    }
-
-    .header-image {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-      object-position: center 80%;
-      margin-bottom: 8px;
-      border-radius: 4px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .header .banner-credit {
-      font-size: 0.75rem;
-      color: #666;
-      text-align: right;
-      margin: 0 0 20px 0;
-      line-height: 1.3;
-    }
-
-    /* Main content area */
-    .content-wrapper {
-      display: grid;
-      grid-template-columns: 220px 1fr;
-      gap: 50px;
-    }
-
-    /* Left sidebar */
-    .sidebar {
-      padding-right: 20px;
-    }
-
-    .sidebar h1 {
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin-top: 0;
-      margin-bottom: 20px;
-      letter-spacing: -0.01em;
-    }
-
-    .profile-img {
-      width: 100%;
-      max-width: 300px;
-      height: auto;
-      display: block;
-      margin-bottom: 20px;
-      border-radius: 4px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    .contact-info {
-      margin-bottom: 25px;
-    }
-
-    /* Fix for email wrapping */
-    .contact-info p strong {
-      word-break: break-word;
-      overflow-wrap: break-word;
+      margin: auto;
+      padding: 1em;
+      text-align: justify;
       hyphens: auto;
-      display: inline-block;
     }
 
-    /* Main content */
-    .main-content {
-      max-width: 100%;
-    }
-
-    .main-content h2 {
-      font-size: 1.3rem;
-      font-weight: 600;
-      margin-top: 30px;
-      margin-bottom: 15px;
-      letter-spacing: -0.01em;
-      border-bottom: 1px solid #eee;
-      padding-bottom: 8px;
-      color: #2a4d69;
-    }
-
-    .main-content h3 {
-      font-size: 1.1rem;
-      font-weight: 500;
-      margin-top: 25px;
-      margin-bottom: 12px;
-      color: #2a4d69;
-    }
-
-    .main-content p {
-      margin-bottom: 15px;
-      line-height: 1.7;
-    }
-
-    /* Lists */
-    ul {
-      padding-left: 20px;
-      margin-bottom: 20px;
-    }
-
-    li {
-      margin-bottom: 12px;
-      line-height: 1.6;
-    }
-
-    /* Links */
-    a {
-      color: #2a6496;
-      text-decoration: none;
-      transition: color 0.2s ease;
-    }
-
-    a:hover {
-      text-decoration: underline;
-      color: #1a4d80;
-    }
-
-    /* Footer */
-    .footer {
-      margin-top: 50px;
-      padding-top: 15px;
-      border-top: 1px solid #eee;
-      color: #888;
-      font-size: 0.85em;
+    header {
       text-align: center;
+      margin-bottom: 2em;
     }
 
-    /* Journal titles */
-    .journal {
+    date {
+      display: block;
+      text-align: right;
       font-style: italic;
     }
 
-    /* Publication entries - improved spacing */
-    .publication-item {
-      margin-bottom: 16px;
+    .date {
+      text-align: right;
+      font-style: italic;
     }
 
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-      .content-wrapper {
-        grid-template-columns: 1fr;
-        gap: 30px;
-      }
-
-      .sidebar {
-        padding-right: 0;
-        border-bottom: 1px solid #eee;
-        padding-bottom: 20px;
-        text-align: center;
-      }
-
-      .profile-img {
-        max-width: 150px;
-        margin: 0 auto 20px auto;
-      }
-
-      .header-image {
-        height: 180px;
-      }
-
-      /* Further reduce font size on smaller screens */
-      .contact-info p strong {
-        font-size: 0.95em;
-      }
+    footer {
+      text-align: center;
+      border-top: 2px solid black;
+      margin-top: 2em;
+      padding: 1em;
     }
 
-    /* Photo attribution styling */
-    .photo-attribution {
-      margin-bottom: 15px;
+    pre {
+      margin-left: 3em;
     }
 
-    .banner-credit {
-      font-size: 0.75rem;
-      color: #666;
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
       margin: 0;
-      line-height: 1.3;
+      hyphens: manual;
     }
 
-    /* Accessibility improvements - focus states */
-    a:focus {
-      outline: 2px solid #2a6496;
-      outline-offset: 2px;
+    table {
+      border-collapse: collapse;
+      margin: auto;
     }
 
-    /* Dark mode support (optional) */
-    @media (prefers-color-scheme: dark) {
-      body {
-        background-color: #222;
-        color: #eee;
-      }
+    td,
+    th {
+      border-right: solid black 1px;
+      border-left: solid black 1px;
+      padding: 0.4em
+    }
 
-      a {
-        color: #5a9bd5;
-      }
+    th {
+      border-bottom: solid black 1px;
+    }
 
-      a:hover {
-        color: #7bb8f1;
-      }
+    td:first-of-type,
+    td:last-of-type,
+    th:first-of-type,
+    th:last-of-type {
+      border-left: none;
+      border-right: none;
+    }
 
-      .main-content h2 {
-        border-bottom-color: #444;
-        color: #6aafed;
-      }
+    td {
+      text-align: right;
+    }
 
-      .main-content h3 {
-        color: #6aafed;
-      }
+    img {
+      display: block;
+      margin: auto;
+    }
 
-      .footer {
-        border-top-color: #444;
-      }
+    figure {
+      margin-bottom: 2em;
+    }
 
-      .sidebar {
-        border-bottom-color: #444;
-      }
+    figcaption {
+      text-align: center;
+    }
+
+    img {
+      height: auto;
+      max-width: 100%;
     }
   </style>
 </head>
 
 <body>
-  <div class="page-container">
-    <div class="header">
-      <img class="header-image"
-        src="https://upload.wikimedia.org/wikipedia/commons/d/d2/Claude_Monet%2C_1873-74%2C_Boulevard_des_Capucines%2C_oil_on_canvas%2C_80.3_x_60.3_cm%2C_Nelson-Atkins_Museum_of_Art%2C_Kansas_City.jpg"
-        alt="Monet's Boulevard des Capucines">
-      <p class="banner-credit">Monet, <em>Boulevard des Capucines</em> (1873)</p>
-    </div>
+  <header>
+    <h1>Noah Dasanaike</h1>
+  </header>
+  <hr />
+  <p>Hi, I'm Noah.
+    I'm a fourth-year PhD candidate and the Carl J. Friedrich Fellow in the Department of Government at Harvard
+    University. In the Summer of 2025, I was a Quantitative Research Intern at Two Sigma.</p>
 
-    <div class="content-wrapper">
-      <div class="sidebar">
-        <h1>Noah Dasanaike</h1>
-        <img class="profile-img" src="pics/noah.png" alt="Noah Dasanaike">
+  <p>I'm primarily interested in large-scale, structuralist questions of electoral behavior and political institutions.
+    I'm also interested in measurement and computation.</p>
 
-        <div class="contact-info">
-          <p><strong>noahdasanaike[at]g.harvard.edu</strong></p>
-          <p><a href="cv/dasanaike_cv.pdf" aria-label="Download Curriculum Vitae">Curriculum Vitae</a></p>
-        </div>
-      </div>
+  <p>At Harvard, I have twice taught the Ph.D.-level "Math Prefresher" and GOV 2020: The Hidden Curriculum (for Gary
+    King). I have also taught STAT 186: Causal Inference (for Susan Murphy) and GOV 97: Political Geography (instructor
+    on record).
+  </p>
 
-      <div class="main-content">
-        <p>I'm a fourth-year PhD candidate and the Carl J. Friedrich Fellow in the Department of Government at Harvard
-          University. In the Summer of 2025, I was a Quantitative Research Intern at Two Sigma.</p>
+  <p>You can contact me by email at <code>noahdasanaike[at]g.harvard.edu</code>.</p>
 
-        <p>I'm primarily interested in large-scale, structuralist questions of electoral behavior and political
-          institutions. I'm also interested in measurement and computation.</p>
+  <hr />
+  <h2>Research</h2>
+  <h3>Working Papers</h3>
+  <ul>
+    <li><strong>Why Urban-Rural Political Cleavages Do Not Generalize.</strong> [<a
+        href="https://www.dropbox.com/scl/fi/f5ol59b0n9exxebt3un5v/Dasanaike_Urban_Rural_2025.pdf?rlkey=m1xcfrvl7ey82k7d5kaakkci3&st=mjmzzuki&dl=0">full
+        working paper</a>]</li>
+    <li><strong>Are Politics in the United States Nationalizing?</strong> (with Ryan Enos)</li>
+  </ul>
 
-        <p>At Harvard, I have taught the Ph.D.-level "Math Prefresher" and GOV 2020: The Hidden Curriculum (with Gary
-          King), as well as STAT 186: Causal Inference (with Susan Murphy) and GOV 97: Political Geography (instructor
-          on record).</p>
+  <h3>Publications</h3>
+  <ul>
+    <li>Ekiert, Grzegorz and Noah Dasanaike. (2024). <strong>The Return of Dictatorship.</strong> <em>Journal of
+        Democracy</em>. [<a href="research/dasanaike_ekiert_2024.pdf">article pdf</a>], [<a
+        href="https://muse.jhu.edu/article/937742">publication page</a>], [<a
+        href="https://ces.fas.harvard.edu/uploads/files/Open-Forum-Papers/Open-Forum-2024-Ekiert-Dasanaike.pdf">full
+        working paper</a>], [<a
+        href="https://revdem.ceu.edu/2024/12/02/return-dictatorship-ekiert-dasanaike/">interview</a>]</li>
+    <li>Dasanaike, Noah. (2021). <strong>Businessperson Deputies and Party Cohesion: Evidence from the Russian State
+        Duma.</strong> <em>Party Politics</em>. [<a href="research/dasanaike_2021_duma.pdf">article pdf</a>]</li>
+  </ul>
 
-        <h2>Research</h2>
+  <hr />
+  <h2>Other</h2>
+  <ul>
+    <li><a href="cv/dasanaike_cv.pdf">Curriculum Vitae</a></li>
+  </ul>
 
-        <h3>Working Papers</h3>
-        <ul>
-          <li class="publication-item">Why Urban-Rural Political Cleavages Do Not Generalize. [<a
-              href="https://www.dropbox.com/scl/fi/f5ol59b0n9exxebt3un5v/Dasanaike_Urban_Rural_2025.pdf?rlkey=m1xcfrvl7ey82k7d5kaakkci3&st=mjmzzuki&dl=0"
-              target="_blank" rel="noopener">full working paper</a>]</li>
-          <li class="publication-item">Are Politics in the United States Nationalizing? (with Ryan Enos)</li>
-        </ul>
-
-        <h3>Publications</h3>
-        <ul>
-          <li class="publication-item">Ekiert, Grzegorz and Noah Dasanaike. (2024). The Return of Dictatorship. <span
-              class="journal">Journal of Democracy</span>. [<a href="research/dasanaike_ekiert_2024.pdf" target="_blank"
-              rel="noopener">article pdf</a>], [<a href="https://muse.jhu.edu/article/937742" target="_blank"
-              rel="noopener">publication page</a>], [<a
-              href="https://ces.fas.harvard.edu/uploads/files/Open-Forum-Papers/Open-Forum-2024-Ekiert-Dasanaike.pdf"
-              target="_blank" rel="noopener">full working paper</a>], [<a
-              href="https://revdem.ceu.edu/2024/12/02/return-dictatorship-ekiert-dasanaike/" target="_blank"
-              rel="noopener">interview</a>]</li>
-
-          <li class="publication-item">Dasanaike, Noah. (2021). Businessperson Deputies and Party Cohesion: Evidence
-            from the Russian State Duma. <span class="journal">Party Politics</span>. [<a
-              href="research/dasanaike_2021_duma.pdf" target="_blank" rel="noopener">article pdf</a>]</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="footer">
-      <p>Last updated March 2025.</p>
-    </div>
-  </div>
+  <footer>
+    Last modified
+    <time>
+      2025-03-01
+    </time>
+  </footer>
 </body>
 
 </html>
