@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SAGE Archive - Noah Dasanaike</title>
+    <style>
+        body {
+            max-width: 800px;
+            margin: auto;
+            padding: 1em;
+            text-align: justify;
+            hyphens: auto;
+            color: #333;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2em;
+        }
+
+        h1 {
+            color: #750014;
+        }
+
+        h2 {
+            color: #750014;
+        }
+
+        h3 {
+            color: #A0522D;
+        }
+
+        a {
+            color: #750014;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .version-section {
+            margin: 2em 0;
+        }
+
+        .version-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1em;
+            padding-bottom: 0.5em;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .version-title {
+            margin: 0;
+            color: #750014;
+        }
+
+        .version-date {
+            font-style: italic;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .country-list {
+            margin-top: 1em;
+            line-height: 1.6;
+        }
+
+        .country-link {
+            color: #333;
+            text-decoration: none;
+            margin-right: 8px;
+            display: inline-block;
+        }
+
+        .country-link:hover {
+            text-decoration: underline;
+        }
+
+
+        footer {
+            text-align: center;
+            border-top: 2px solid black;
+            margin-top: 2em;
+            padding: 1em;
+        }
+
+        .back-link {
+            margin-bottom: 2em;
+        }
+
+        header p {
+            font-size: 1.1em;
+            margin-top: 0.5em;
+        }
+
+        .email-form {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1.5em;
+            margin: 2em auto;
+            text-align: center;
+            max-width: 500px;
+        }
+
+        .email-form h3 {
+            margin-top: 0;
+            color: #750014;
+        }
+
+        .email-form input[type="email"] {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 300px;
+            margin: 1em;
+            font-size: 1em;
+        }
+
+        .email-form input[type="checkbox"] {
+            width: auto;
+            padding: 0;
+            margin: 0;
+            border: none;
+        }
+
+        .email-form button {
+            background-color: #750014;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-left: 10px;
+        }
+
+        .email-form button:hover {
+            background-color: #5a0010;
+        }
+
+        .email-note {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 1em;
+            font-style: italic;
+        }
+
+        .downloads-locked {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+
+        /* Abstract toggle styles */
+        .abstract-toggle {
+            color: #750014;
+            text-decoration: none;
+            font-size: inherit;
+            font-family: inherit;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            margin: 0;
+        }
+
+        .abstract-toggle:hover {
+            text-decoration: underline;
+        }
+
+        .abstract-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, margin 0.3s ease, padding 0.3s ease;
+            margin: 0;
+            padding-left: 0;
+        }
+
+        .abstract-content.expanded {
+            max-height: 500px;
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+
+        .abstract-text {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="back-link">
+        <a href="index.html">← Back to Home</a>
+    </div>
+
+    <header>
+        <h1>Small-Area Global Elections (SAGE) Archive</h1>
+        <p><a href="index.html">by Noah Dasanaike</a></p>
+    </header>
+
+    <p>The Small-Area Global Elections (SAGE) Archive comprises small-area, mostly polling station-level, election
+        results with polygon geometry for national elections across 110 countries. This dataset supports the working
+        paper "Why Urban-Rural Political Cleavages Do Not Generalize."</p>
+
+    <div id="email-gate" class="email-form">
+        <h3>Request Access</h3>
+        <p>To download SAGE data, please provide your email address:</p>
+        <input type="email" id="user-email" placeholder="your.email@university.edu" required>
+        <div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin: 1em 0;">
+            <input type="checkbox" id="receive-updates" checked>
+            <label for="receive-updates" style="font-size: 0.9em; color: #333;">I would like to receive updates about
+                SAGE dataset releases</label>
+        </div>
+        <button onclick="unlockDownloads()">Submit</button>
+    </div>
+
+    <div class="version-section">
+        <div class="version-header">
+            <h3 class="version-title">Release V1.0</h3>
+            <span class="version-date">September 30th, 2025</span>
+        </div>
+        <p>[<button class="abstract-toggle" onclick="toggleAbstract('changelog-abstract')">changelog</button>] [<a
+                href="codebook.pdf">codebook</a>] [<a href="https://github.com/noahdasanaike/sage">country-level
+                coverage</a>]</p>
+        <div id="changelog-abstract" class="abstract-content">
+            <p class="abstract-text">
+                <strong>v0.895 (September 30th, 2025):</strong> Fixed Croatian vote-share aggregation<br>
+                <strong>v0.89 (August 25th, 2025):</strong> Fixed party names in Chile and Slovakia; minor party name
+                adjustments elsewhere<br>
+                <strong>v0.88 (July 14th, 2025):</strong> Added 2025 South Korean presidential election; Fixed Danish
+                eligible voter and turnout calculation<br>
+                <strong>v0.875 (July 9th, 2025):</strong> Added Portugal parish boundaries back to 1976, fixed
+                independent candidate reference<br>
+                <strong>v0.87 (May 30th, 2025):</strong> Added elections for the Kyrgyz Republic, Liechtenstein,
+                Mauritania, Uganda, making 110 total countries<br>
+                <strong>v0.86 (May 6th, 2025):</strong> Added registered voter turnout in the United States for 2012 to
+                2020<br>
+                <strong>v0.85 (April 5th, 2025):</strong> Redid all of the United States; presidential results only from
+                2008 to 2024<br>
+                <strong>v0.81 (March 24th, 2025):</strong> Redid all of Greece from scratch, and added 2023
+                elections<br>
+                <strong>v0.80 (March 17th, 2025):</strong> Added registered/eligible voter counts to elections in
+                Canada, Denmark, Finland, Hungary<br>
+                <strong>v0.78 (March 12th, 2025):</strong> Changed party columns corresponding to candidates in Myanmar
+                to candidate columns<br>
+                <strong>v0.75 (February 4th, 2025):</strong> Added turnout for most Russian elections<br>
+                <strong>v0.7 (January 24th, 2025):</strong> Fixed Bosnia and Herzegovina Thiessen polygons<br>
+                <strong>v0.6 (January 15th, 2025):</strong> Fixed bug in Thiessen generation code affecting polygon
+                edges<br>
+                <strong>v0.5 (January 9th, 2025):</strong> Added 2024 election results for multiple countries<br>
+                <strong>v0.4 (January 7th, 2025):</strong> Added 2014 and 2018 Hungarian elections<br>
+                <strong>v0.3 (December 20th, 2024):</strong> Added Icelandic presidential elections<br>
+                <strong>v0.2 (December 8th, 2024):</strong> Fixed overseas France geometry (meridian Thiessen
+                issues)<br>
+                <strong>v0.1 (September 5th, 2024):</strong> Fixed vote count totals for Uruguay and the Solomon
+                Islands<br>
+                <strong>v0.0 (August 6th, 2024):</strong> Initial completion of the data
+            </p>
+        </div>
+        <div class="country-list" id="sage-countries">
+            <!-- SAGE countries will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <h2>Citation</h2>
+    <p>If you use SAGE data in your research, please cite:</p>
+    <blockquote>
+        Dasanaike, Noah. "Why Urban-Rural Political Cleavages Do Not Generalize." Working Paper, 2025.
+    </blockquote>
+
+    <footer>
+        <p>For questions about SAGE, contact <a
+                href="mailto:noahdasanaike@g.harvard.edu">noahdasanaike@g.harvard.edu</a></p>
+        <p><a href="https://github.com/noahdasanaike/sage">Report issues on GitHub</a></p>
+    </footer>
+
+    <script>
+        // SAGE Countries (110 total)
+        const sageCountries = [
+            'Afghanistan', 'Albania', 'Argentina', 'Armenia', 'Australia', 'Austria', 'Bangladesh', 'Belgium', 'Bhutan', 'Bolivia',
+            'Bosnia and Herzegovina', 'Botswana', 'Brazil', 'Bulgaria', 'Cabo Verde', 'Canada', 'Colombia', 'Costa Rica', 'Chile', 'Croatia',
+            'Cyprus', 'Czechia', 'Denmark', 'Dominica', 'Dominican Republic', 'Ecuador', 'El Salvador', 'Estonia', 'Fiji', 'Finland',
+            'France', 'Georgia', 'Germany', 'Ghana', 'Greece', 'Greenland', 'Guatemala', 'Guyana', 'Honduras', 'Hong Kong',
+            'Hungary', 'Iceland', 'Indonesia', 'India', 'Iran', 'Ireland', 'Israel', 'Italy', 'Jamaica', 'Japan',
+            'Kenya', 'Kosovo', 'Kyrgyz Republic', 'Latvia', 'Lebanon', 'Lesotho', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'Madagascar',
+            'Malaysia', 'Malawi', 'Mauritania', 'Mexico', 'Moldova', 'Mongolia', 'Montenegro', 'Myanmar', 'Namibia', 'Nepal',
+            'Netherlands', 'New Zealand', 'Nigeria', 'North Macedonia', 'Norway', 'Pakistan', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru',
+            'Philippines', 'Poland', 'Portugal', 'Romania', 'Russia', 'Senegal', 'Serbia', 'Singapore', 'Slovakia', 'Slovenia',
+            'Solomon Islands', 'South Africa', 'South Korea', 'Spain', 'Sri Lanka', 'Sweden', 'Switzerland', 'Taiwan', 'Thailand', 'Trinidad and Tobago',
+            'Tunisia', 'Turkey', 'Uganda', 'Ukraine', 'United Kingdom', 'United States of America', 'Uruguay', 'Vanuatu', 'Venezuela', 'Zambia'
+        ];
+
+        function createCountryLink(country) {
+            const fileName = country.replace(/[^a-zA-Z0-9]/g, '_').toLowerCase();
+            const bucketPath = `https://your-bucket-url.s3.amazonaws.com/sage/${fileName}.zip`;
+
+            const link = document.createElement('a');
+            link.className = 'country-link';
+            link.href = bucketPath;
+            link.textContent = country;
+            link.download = `sage_${fileName}.zip`;
+            link.target = '_blank';
+
+            return link;
+        }
+
+        function populateCountries(containerId, countries) {
+            const container = document.getElementById(containerId);
+            countries.forEach(country => {
+                container.appendChild(createCountryLink(country));
+            });
+        }
+
+        function toggleAbstract(abstractId) {
+            const abstract = document.getElementById(abstractId);
+            const button = document.querySelector(`[onclick="toggleAbstract('${abstractId}')"]`);
+
+            if (abstract.classList.contains('expanded')) {
+                // Smooth collapse: set to current height, then to 0
+                abstract.style.maxHeight = abstract.scrollHeight + 'px';
+                requestAnimationFrame(() => {
+                    abstract.style.maxHeight = '0px';
+                    abstract.classList.remove('expanded');
+                    button.textContent = 'changelog';
+                });
+            } else {
+                // Prepare expansion
+                abstract.classList.add('expanded');
+                // Set to content height for smooth expand
+                abstract.style.maxHeight = abstract.scrollHeight + 'px';
+                button.textContent = 'hide changelog';
+            }
+
+            // After transition ends on collapse, clean inline style
+            abstract.addEventListener('transitionend', function handleEnd(e) {
+                if (e.propertyName === 'max-height') {
+                    if (!abstract.classList.contains('expanded')) {
+                        abstract.style.maxHeight = '';
+                    }
+                    abstract.removeEventListener('transitionend', handleEnd);
+                }
+            });
+        }
+
+        function unlockDownloads() {
+            const email = document.getElementById('user-email').value.trim();
+            const receiveUpdates = document.getElementById('receive-updates').checked;
+
+            if (!email || !email.includes('@')) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+
+            // Store email and preferences in localStorage
+            const userData = {
+                email: email,
+                receiveUpdates: receiveUpdates,
+                timestamp: new Date().toISOString()
+            };
+            localStorage.setItem('sage-user-data', JSON.stringify(userData));
+
+            // Hide email form
+            document.getElementById('email-gate').style.display = 'none';
+
+            // Show downloads
+            document.getElementById('sage-countries').classList.remove('downloads-locked');
+
+            // Log download access (you can replace this with actual analytics)
+            console.log('SAGE access granted to:', email, 'Updates:', receiveUpdates ? 'Yes' : 'No');
+        }
+
+        function checkEmailGate() {
+            const storedData = localStorage.getItem('sage-user-data');
+            if (storedData) {
+                try {
+                    const userData = JSON.parse(storedData);
+                    // User has already provided email
+                    document.getElementById('email-gate').style.display = 'none';
+                    document.getElementById('sage-countries').classList.remove('downloads-locked');
+                    console.log('SAGE access restored for:', userData.email, 'Updates:', userData.receiveUpdates ? 'Yes' : 'No');
+                } catch (e) {
+                    // Fallback for old localStorage format
+                    const storedEmail = localStorage.getItem('sage-user-email');
+                    if (storedEmail) {
+                        document.getElementById('email-gate').style.display = 'none';
+                        document.getElementById('sage-countries').classList.remove('downloads-locked');
+                        console.log('SAGE access restored for:', storedEmail);
+                    } else {
+                        document.getElementById('sage-countries').classList.add('downloads-locked');
+                    }
+                }
+            } else {
+                // Lock downloads until email is provided
+                document.getElementById('sage-countries').classList.add('downloads-locked');
+            }
+        }
+
+        // Initialize the page
+        function initializePage() {
+            // Check if user has already provided email
+            checkEmailGate();
+
+            // Populate SAGE section
+            populateCountries('sage-countries', sageCountries);
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', initializePage);
+    </script>
+</body>
+
+</html>
