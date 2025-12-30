@@ -3,320 +3,116 @@
 
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Noah Dasanaike</title>
   <style>
     body {
-      max-width: 800px;
+      max-width: 1000px;
       margin: auto;
       padding: 1em;
-      text-align: justify;
-      hyphens: auto;
-      color: #333;
-    }
-
-    header {
-      text-align: center;
-      margin-bottom: 2em;
-    }
-
-    h1 {
-      color: #750014;
-    }
-
-    h2 {
-      color: #750014;
-    }
-
-    h3 {
-      color: #A0522D;
     }
 
     a {
-      color: #750014;
-      text-decoration: none;
+      color: blue;
     }
 
-    a:hover {
-      text-decoration: underline;
+    .left-panel {
+      float: left;
+      width: 200px;
+      padding-right: 2em;
     }
 
-    date {
+    .right-panel {
+      margin-left: 220px;
+    }
+
+    .left-panel img {
       display: block;
-      text-align: right;
-      font-style: italic;
+      margin-bottom: 1em;
     }
 
-    .date {
-      text-align: right;
-      font-style: italic;
-    }
-
-    footer {
-      text-align: center;
-      border-top: 2px solid black;
-      margin-top: 2em;
-      padding: 1em;
-    }
-
-    pre {
-      margin-left: 3em;
-    }
-
-    code {
-      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
-      font-size: 85%;
-      margin: 0;
-      hyphens: manual;
-    }
-
-    table {
-      border-collapse: collapse;
-      margin: auto;
-    }
-
-    td,
-    th {
-      border-right: solid black 1px;
-      border-left: solid black 1px;
-      padding: 0.4em
-    }
-
-    th {
-      border-bottom: solid black 1px;
-    }
-
-    td:first-of-type,
-    td:last-of-type,
-    th:first-of-type,
-    th:last-of-type {
-      border-left: none;
-      border-right: none;
-    }
-
-    td {
-      text-align: right;
-    }
-
-    img {
-      display: block;
-      margin: auto;
-    }
-
-    figure {
-      margin-bottom: 2em;
-    }
-
-    figcaption {
-      text-align: center;
-    }
-
-    img {
-      height: auto;
-      max-width: 100%;
-    }
-
-    /* Abstract toggle styles */
-    .abstract-toggle {
-      color: #750014;
-      text-decoration: none;
-      font-size: inherit;
-      font-family: inherit;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0;
-      margin: 0;
-    }
-
-    .abstract-toggle:hover {
-      text-decoration: underline;
-    }
-
-    .abstract-content {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease, margin 0.3s ease, padding 0.3s ease;
-      margin: 0;
-      padding-left: 0;
-    }
-
-    .abstract-content.expanded {
-      max-height: 500px;
-      margin: 8px 0;
-      padding-left: 20px;
-    }
-
-    .abstract-text {
-      margin: 0;
-      padding: 0;
+    .left-panel h1 {
+      margin: 0 0 1em 0;
     }
   </style>
 </head>
 
 <body>
-  <header>
-    <img src="pics/noah.png" alt="Noah Dasanaike"
-      style="width: 120px; height: auto; margin-bottom: 1em; border-radius: 8px;">
+  <div class="left-panel">
+    <img src="pics/noah.png" alt="Noah Dasanaike" width="150">
     <h1>Noah Dasanaike</h1>
+    <p>PhD Candidate<br>Department of Government<br>Harvard University</p>
     <a href="cv/dasanaike_cv.pdf">Curriculum Vitae</a>
-  </header>
-  <hr />
-  <p>Hi, I'm Noah.
-    I'm a fourth-year PhD candidate and the Carl J. Friedrich Fellow in the Department of Government at Harvard
-    University, where I also received my MA (2024) and BA (2022). In the Summer of 2025, I was a Quantitative Research
-    Intern at Two Sigma, where I continue to work part-time during the academic year.</p>
+  </div>
+  <div class="right-panel">
+    <hr />
+    <p>Hi, I'm Noah.
+      I'm a fourth-year PhD candidate and the Carl J. Friedrich Fellow in the Department of Government at Harvard
+      University, where I also received my MA (2024) and BA (2022). In the Summer of 2025, I was a Quantitative Research
+      Intern at Two Sigma, where I continue to work part-time during the academic year.</p>
 
-  <p>I'm primarily interested in the study of party system cleavages, particularly from a comparative and geographic
-    perspective.</p>
+    <p>I'm primarily interested in the study of party system cleavages, particularly from a comparative and geographic
+      perspective.</p>
 
-  <p>I am the creator of the Small-Area Global Elections (SAGE) Archive, a database of geocoded,
-    small-area (usually polling-station level) election results for 110 countries. You can read more about the progress
-    of SAGE <a href="https://github.com/noahdasanaike/sage">here.</a></p>
+    <p>I am the creator of the Small-Area Global Elections (SAGE) Archive, a database of geocoded,
+      small-area (usually polling-station level) election results for 110 countries. You can read more about the
+      progress
+      of SAGE <a href="https://github.com/noahdasanaike/sage">here.</a></p>
 
-  <p>At Harvard, I have twice taught the Ph.D.-level "Math Prefresher" and GOV 2020: The Hidden Curriculum (for Gary
-    King). I have also taught STAT 186: Causal Inference (for Susan Murphy) and GOV 97: Political Geography (instructor
-    on record), as well as a GIS workshop for PhD students.
-  </p>
+    <p>At Harvard, I have twice taught the Ph.D.-level "Math Prefresher" and GOV 2020: The Hidden Curriculum (for Gary
+      King). I have also taught STAT 186: Causal Inference (for Susan Murphy) and GOV 97: Political Geography
+      (instructor
+      on record), as well as a GIS workshop for PhD students.
+    </p>
 
-  <p>You can contact me by email at <code>noahdasanaike[at]g.harvard.edu</code>.</p>
+    <p>You can contact me by email at <a href="mailto:noahdasanaike@g.harvard.edu">noahdasanaike@g.harvard.edu</a>.</p>
 
-  <hr />
-  <h2>Research</h2>
-  <h3>Working Papers</h3>
-  <ul>
-    <li>Why Urban-Rural Political Cleavages Do Not Generalize. [<a
-        href="https://www.dropbox.com/scl/fi/f5ol59b0n9exxebt3un5v/Dasanaike_Urban_Rural_2025.pdf?rlkey=m1xcfrvl7ey82k7d5kaakkci3&st=mjmzzuki&dl=0">working
-        paper</a>], [<a href="https://github.com/noahdasanaike/sage">SAGE data archive</a>]</li>
-    <li>Going Glocal: A Macro-Micro Approach to Political Science. (with John Gerring) [<a
-        href="https://www.dropbox.com/scl/fi/pxz67z0478nqpicrd32s5/Dasanaike_Gerring_Glocal_2025.pdf?rlkey=d5o039a05ejtgc354gfqr5u6b&st=i92wncez&dl=0">working
-        paper</a>]
-    </li>
-    <li>Shifting Modernization and the Origins of Party System Cleavages. [<button class="abstract-toggle"
-        onclick="toggleAbstract('modernization-abstract')">abstract</button>]
-      <div id="modernization-abstract" class="abstract-content">
-        <p class="abstract-text">Classical modernization theory holds that development shifts party competition from
-          identities to class interests. I argue the opposite: not levels but the sequence of modernization
-          determines long-run cleavage structure. I distinguish between social modernization--the spread of literacy,
-          mass communication, and universal participation--and economic modernization--the shift out of agriculture into
-          industry and services. The absolute and relative timing of these separable forms determines which social
-          solidarities are available when mass politics begins. Early or concurrent social modernization foregrounds
-          class and occupation; late social modernization, especially with late economic modernization, foregrounds
-          ethnic, religious, linguistic, or regional identities. Uncertainty at entry into mass politics pushes voters
-          and elites toward these existing organizations, and path dependence then locks them in: what I call a
-          cleavage shift. To test this alternative modernization story, I digitize individual-level electoral
-          rolls, censuses, tax lists, civil registration records, and telephone books across time, totaling over 2
-          billion individual records, 30 countries, and a collective span of more than 150 years. A variety of empirical
-          tests, including predicting vote choice for every individual in the data, align with the hypothesis of
-          cleavage shift.
-        </p>
-      </div>
-    </li>
-    <li>When Does Local Governance Matter? [<button class="abstract-toggle"
-        onclick="toggleAbstract('localgov-abstract')">abstract</button>]
-      <div id="localgov-abstract" class="abstract-content">
-        <p class="abstract-text">Does local governance still shape economic outcomes in an era of globalized capital and
-          post-industrial production? Classic theories of comparative political economy held that partisan control and
-          labor organization determined growth in advanced democracies during the industrial era. Yet the structural
-          transformation of these economies since the 1970s casts doubt on whether such mechanisms operate at the local
-          level, where authority is tightly constrained and capital highly mobile. This paper reconsiders the question
-          of whether ``who governs'' locally matters for economic performance under post-industrial conditions. I argue
-          that the channels linking local political control to aggregate growth have weakened as production has become
-          spatially fragmented and macroeconomic management centralized. To evaluate this argument, I assemble what is,
-          to my knowledge, the largest multi-country collection of subnational political and economic data ever
-          compiled: over two billion administrative and proprietary observations spanning multiple tiers of government,
-          as well as polling station-level election returns in local contests across advanced democracies.
-          The analysis combines regression-discontinuity designs around close elections with global boundary comparisons
-          and newly constructed, fine-grained economic indicators—from satellite-derived estimates of gross regional
-          product and night-time light intensity to property transactions, rent listings, job postings, and consumer
-          spending patterns. Across settings, I find that turnover in local government has no measurable effect on
-          aggregate economic growth or its rate of change. Instead, political turnover systematically alters the
-          composition and spatial distribution of economic activity, reshaping who benefits from development and where
-          gains are realized. I illustrate these distributive effects using a new, image-based measure of road quality
-          derived from millions of street-level panoramas evaluated by vision–language models. Taken together, the
-          results suggest that in the contemporary economy, local politics matters less for the quantity of growth than
-          for its geography and beneficiaries.
-        </p>
-      </div>
-    </li>
-    <li>Are Politics in the United States Nationalizing? (with Ryan Enos) [<button class="abstract-toggle"
-        onclick="toggleAbstract('nationalization-abstract')">abstract</button>]
-      <div id="nationalization-abstract" class="abstract-content">
-        <p class="abstract-text">Are politics in the United States nationalizing? Increased polarization on the one hand
-          seems discordant from recent scholarship arguing that nationalization has increased. We propose a measure of
-          horizontal nationalization focusing on the level of political similarity between geographically distant but
-          demographically similar places, and distinguish it from vertical nationalization, which is more commonly
-          studied. Horizontal nationalization adheres closely to both classic and intuitive definitions of
-          nationalization. Leveraging aggregate data at the state, county, and precinct level and individual data from
-          surveys and voter files, we examine horizontal nationalization since the 19th century and find that it has
-          decreased in recent decades from a peak in the late-20th century. We compare this to horizontal
-          nationalization in France, which is higher and far more stable over the full time period. We suggest that one
-          explanation for these fluctuations in the American case is the changing nature of the media landscape owing to
-          technological development. Our findings have implications for recent literature in American politics on the
-          influence of geographic and demographic sorting, and contrasts with recent prominent conceptualizations of
-          nationalization that have focused on the levels of vertical unification between national and sub-national
-          behavior to argue that nationalization has increased in recent years.
-        </p>
-      </div>
-    </li>
+    <hr />
+    <h2>Research</h2>
+    <h3>Working Papers</h3>
+    <ul>
+      <li>Why Urban-Rural Political Cleavages Do Not Generalize. [<a
+          href="https://www.dropbox.com/scl/fi/f5ol59b0n9exxebt3un5v/Dasanaike_Urban_Rural_2025.pdf?rlkey=m1xcfrvl7ey82k7d5kaakkci3&st=mjmzzuki&dl=0">working
+          paper</a>], [<a href="https://github.com/noahdasanaike/sage">SAGE data archive</a>]</li>
+      <li>Going Glocal: A Macro-Micro Approach to Political Science. (with John Gerring) [<a
+          href="https://www.dropbox.com/scl/fi/pxz67z0478nqpicrd32s5/Dasanaike_Gerring_Glocal_2025.pdf?rlkey=d5o039a05ejtgc354gfqr5u6b&st=i92wncez&dl=0">working
+          paper</a>]
+      </li>
+    </ul>
 
-    <li>Overtime Database of Micro-level Partisan Segregation (ODeMPS) (with Ryan Enos and Jacob Brown)
-    </li>
-  </ul>
+    <h3>Publications</h3>
+    <ul>
+      <li>Ekiert, Grzegorz and Noah Dasanaike. (2024). The Return of Dictatorship. <em>Journal of
+          Democracy</em>. [<a href="research/dasanaike_ekiert_2024.pdf">article pdf</a>], [<a
+          href="https://muse.jhu.edu/article/937742">publication page</a>], [<a
+          href="https://ces.fas.harvard.edu/uploads/files/Open-Forum-Papers/Open-Forum-2024-Ekiert-Dasanaike.pdf">working
+          paper</a>], [<a href="https://revdem.ceu.edu/2024/12/02/return-dictatorship-ekiert-dasanaike/">interview</a>]
+      </li>
+      <li>Dasanaike, Noah. (2021). Businessperson Deputies and Party Cohesion: Evidence from the Russian State
+        Duma. <em>Party Politics</em>. [<a href="research/dasanaike_2021_duma.pdf">article pdf</a>]</li>
+    </ul>
 
-  <h3>Publications</h3>
-  <ul>
-    <li>Ekiert, Grzegorz and Noah Dasanaike. (2024). The Return of Dictatorship. <em>Journal of
-        Democracy</em>. [<a href="research/dasanaike_ekiert_2024.pdf">article pdf</a>], [<a
-        href="https://muse.jhu.edu/article/937742">publication page</a>], [<a
-        href="https://ces.fas.harvard.edu/uploads/files/Open-Forum-Papers/Open-Forum-2024-Ekiert-Dasanaike.pdf">working
-        paper</a>], [<a href="https://revdem.ceu.edu/2024/12/02/return-dictatorship-ekiert-dasanaike/">interview</a>]
-    </li>
-    <li>Dasanaike, Noah. (2021). Businessperson Deputies and Party Cohesion: Evidence from the Russian State
-      Duma. <em>Party Politics</em>. [<a href="research/dasanaike_2021_duma.pdf">article pdf</a>]</li>
-  </ul>
-
-  <h3>Additional Work</h3>
-  <ul>
-    <li>Dasanaike, Noah and Grzegorz Ekiert. (2025). Autorytarne Preferencje Wyborców Jako Przyczyna Erozji
-      Demokracji. <em>Almanach 2025/2026, Concilium Civitas.</em> [<a
-        href="https://conciliumcivitas.pl/wp-content/uploads/2025/06/almanach-2025-26_WEB.pdf">article pdf</a>]
-    </li>
-  </ul>
+    <h3>Additional Work</h3>
+    <ul>
+      <li>Dasanaike, Noah and Grzegorz Ekiert. (2025). Autorytarne Preferencje Wyborców Jako Przyczyna Erozji
+        Demokracji. <em>Almanach 2025/2026, Concilium Civitas.</em> [<a
+          href="https://conciliumcivitas.pl/wp-content/uploads/2025/06/almanach-2025-26_WEB.pdf">article pdf</a>]
+      </li>
+    </ul>
+  </div>
 
   <script>
     function toggleAbstract(abstractId) {
       const abstract = document.getElementById(abstractId);
       const button = abstract.previousElementSibling;
-
-      if (abstract.classList.contains('expanded')) {
-        // Smooth collapse: set to current height, then to 0
-        abstract.style.maxHeight = abstract.scrollHeight + 'px';
-        requestAnimationFrame(() => {
-          abstract.style.maxHeight = '0px';
-          abstract.classList.remove('expanded');
-          button.textContent = 'abstract';
-        });
-      } else {
-        // Prepare expansion
-        abstract.classList.add('expanded');
-        // Set to content height for smooth expand
-        abstract.style.maxHeight = abstract.scrollHeight + 'px';
+      if (abstract.style.display === 'none') {
+        abstract.style.display = 'block';
         button.textContent = 'hide abstract';
+      } else {
+        abstract.style.display = 'none';
+        button.textContent = 'abstract';
       }
-
-      // After transition ends on collapse, clean inline style
-      abstract.addEventListener('transitionend', function handleEnd(e) {
-        if (e.propertyName === 'max-height') {
-          if (!abstract.classList.contains('expanded')) {
-            abstract.style.maxHeight = '';
-          }
-          abstract.removeEventListener('transitionend', handleEnd);
-        }
-      });
     }
   </script>
 </body>
-<hr />
 
 </html>
