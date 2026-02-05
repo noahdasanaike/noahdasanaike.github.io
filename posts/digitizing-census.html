@@ -212,7 +212,7 @@
         running on 12 H100 GPUs each with 28 concurrent requests. These were, of course, also tuned to maximize
         efficiency. As you can imagine, my Slurm fair-share is approximately 0, and queuing up even a single GPU job can
         take days at this point. It may very well be the case that the data will not be digitized for another year, at
-        this rate.</p>
+        this rate (unless someone has GPUs...).</p>
 
       <p>The raw images are sitting on a 20TB HDD on my local machine and I have a "smart" bash script that only uploads
         images with neither (1) outputs on the cluster waiting to be transformed locally or (2) outputs already
@@ -242,7 +242,7 @@
       <p>However, given more than ten million markdown files that need to be processed locally, I didn't expect to use
         the Qwen models, which were not performing well here anyways. Instead, I fine-tuned a GLiNER (Named Entity
         Recognition model) on the real and synthetic inputs and outputs, and this worked much more effectively at
-        post-processing. It also ran relatively efficiently on my RTX 4090.</p>
+        post-processing. It also ran relatively efficiently on my RTX 4090 (we do get SOME grant money...).</p>
 
       <p>The final lesson that I've learned is perhaps the most important one to anyone working on related projects, and
         circles back to the point on endlessly fine-tuning new model releases. A friend told me several years ago that
@@ -261,21 +261,11 @@
 
     <div class="comments-section">
       <h3>Comments</h3>
-      <script src="https://giscus.app/client.js"
-        data-repo="noahdasanaike/noahdasanaike.github.io"
-        data-repo-id="R_kgDOG0UbfQ"
-        data-category="General"
-        data-category-id="DIC_kwDOG0Ubfc4C17dM"
-        data-mapping="pathname"
-        data-strict="0"
-        data-reactions-enabled="1"
-        data-emit-metadata="0"
-        data-input-position="bottom"
-        data-theme="preferred_color_scheme"
-        data-lang="en"
-        crossorigin="anonymous"
-        async>
-      </script>
+      <script src="https://giscus.app/client.js" data-repo="noahdasanaike/noahdasanaike.github.io"
+        data-repo-id="R_kgDOG0UbfQ" data-category="General" data-category-id="DIC_kwDOG0Ubfc4C17dM"
+        data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0"
+        data-input-position="bottom" data-theme="preferred_color_scheme" data-lang="en" crossorigin="anonymous" async>
+        </script>
     </div>
   </div>
 </body>
