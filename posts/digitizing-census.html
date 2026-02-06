@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>What I Learned From Digitizing 20 Million Historical Documents - Noah Dasanaike</title>
+  <title>What I've Learned From Digitizing 20 Million Historical Documents - Noah Dasanaike</title>
   <style>
     body {
       max-width: 1000px;
@@ -49,11 +49,6 @@
     li {
       margin: 0;
       padding: 0;
-    }
-
-    .post-content {
-      text-align: justify;
-      line-height: 1.6;
     }
 
     .post-content p {
@@ -118,16 +113,17 @@
   <div class="right-panel">
     <hr />
     <p><a href="../index.html">&larr; Back to Home</a></p>
-    <h2>What I Learned From Digitizing 20 Million Historical Documents</h2>
+    <h2>What I've Learned From Digitizing 20 Million Historical Documents</h2>
     <p class="post-date">February 5, 2026</p>
 
     <div class="post-content">
       <p>As part of my dissertation, I scraped and am now digitizing nearly 20 million historical census (and related)
-        images spanning
-        9 countries, 5 languages (English, French, Spanish, Finnish, Estonian), and 200 years. In total, the process has
-        spanned about 8 months, although digitization is still underway. While I can't go into much detail about the
-        project or the data for now (scraped across various websites over six months with 30+ parallel workers and tens
-        of paid accounts), I hope to share a few lesson(s) that I've learned about the digitization process.</p>
+        images spanning 9 countries, 5 languages (English, French, Spanish, Finnish, Estonian), and 200 years. In total,
+        the process has spanned about 8 months, although digitization is still underway. While I can't go into much
+        detail about the project or the data for now (scraped across various websites over six months with 30+ parallel
+        workers and tens
+        of paid accounts), I hope to share a few lesson(s) that I've learned about the digitization process, especially
+        since OCR with VLMs is a hot topic at the moment.</p>
 
       <div class="ocr-example">
         <img src="../pics/FR_1980_33022_304403-00253.jpg" alt="1980 Canadian Federal Census page">
@@ -151,8 +147,9 @@
           311 Whelen, John (M) c/o Chateau Lake Louise, AB TOL 1E0</div>
       </div>
 
-      <p>For proprietary models, which I used to generate training data for smaller models like dots.ocr, Gemini 3 Pro
-        is still the best option, particularly for historical documents, handwritten or multilingual text, and so on.
+      <p>When it comes to proprietary models, which I use to generate training data for smaller models,
+        Gemini 3 Pro remains the best option, particularly for historical documents, handwritten or multilingual
+        text, and so on.
         When I first started the project, Gemini 2.5 Pro was state of the art (SOTA), but the difference between the two
         was considerable enough that I fully re-generated my training data with the former. Gemini performs so well at
         many of the older documents that it was accurately translating text that I couldn't read myself. There was one
