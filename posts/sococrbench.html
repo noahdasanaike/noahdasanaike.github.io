@@ -369,6 +369,14 @@
             <td>0.0000</td>
           </tr>
           <tr>
+            <td data-sort="Seed 2.0 Pro">Seed 2.0 Pro <span class="model-tag vlm">VLM</span></td>
+            <td>0.4058</td>
+            <td>0.4582</td>
+            <td>0.2601</td>
+            <td>0.9513</td>
+            <td>0.2350</td>
+          </tr>
+          <tr>
             <td data-sort="Sarvam Vision">Sarvam Vision <span class="model-tag vlm">VLM</span></td>
             <td>0.2735</td>
             <td>0.2851</td>
@@ -501,6 +509,13 @@
               }
             });
           });
+          // Default sort: Overall (column 1) descending
+          var overallIdx = 1;
+          table.setAttribute("data-sort-col", String(overallIdx));
+          table.setAttribute("data-sort-dir", "desc");
+          headers[overallIdx].classList.add("sort-desc");
+          headers[overallIdx].setAttribute("aria-sort", "descending");
+          sortTableByColumn(table, overallIdx, "desc");
         });
       });
     })();
