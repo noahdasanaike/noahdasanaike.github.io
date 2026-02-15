@@ -231,7 +231,7 @@
           <tr>
             <td data-sort="Gemini 3 Pro (low)">Gemini 3 Pro (low) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
             <td>0.5472</td>
-            <td class="best">0.6445</td>
+            <td>0.6445</td>
             <td class="best">0.5289</td>
             <td>0.8936</td>
             <td>0.2667</td>
@@ -302,11 +302,11 @@
           </tr>
           <tr>
             <td data-sort="Gemini 3 Pro (high)">Gemini 3 Pro (high) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
-            <td>0.3700</td>
-            <td>0.5336</td>
-            <td>0.3506</td>
-            <td>0.4097</td>
-            <td>0.1564</td>
+            <td>0.5406</td>
+            <td class="best">0.6589</td>
+            <td>0.5106</td>
+            <td>0.8989</td>
+            <td>0.2400</td>
           </tr>
           <tr>
             <td data-sort="dots.ocr">dots.ocr <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
@@ -566,6 +566,16 @@
             </tbody>
           </table>
 
+        </div>
+      </details>
+
+      <details style="margin-top: 1.5em;">
+        <summary style="cursor: pointer; font-weight: bold; font-size: 1.1em;">Changelog</summary>
+        <div style="margin-top: 1em; font-size: 0.92em; line-height: 1.6;">
+          <p><strong>February 15, 2026:</strong> Re-ran Gemini 3 Pro (high). The original run used a default
+            max_tokens that was too low for thinking models, where reasoning tokens count against the output limit.
+            This caused many responses to be truncated. After increasing max_tokens to 64K, the score rose from
+            0.3700 to 0.5406, placing it just below Gemini 3 Pro (low) rather than far below it.</p>
         </div>
       </details>
 
