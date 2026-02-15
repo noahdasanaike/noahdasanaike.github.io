@@ -309,6 +309,14 @@
             <td>0.2400</td>
           </tr>
           <tr>
+            <td data-sort="dots.ocr-1.5">dots.ocr-1.5 <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+            <td>0.3720</td>
+            <td>0.5670</td>
+            <td>0.1423</td>
+            <td>0.7768</td>
+            <td>0.1810</td>
+          </tr>
+          <tr>
             <td data-sort="dots.ocr">dots.ocr <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
             <td>0.3328</td>
             <td>0.4193</td>
@@ -334,11 +342,11 @@
           </tr>
           <tr>
             <td data-sort="GPT-5.2 (high)">GPT-5.2 (high) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
-            <td>0.2841</td>
-            <td>0.4190</td>
-            <td>0.0564</td>
-            <td>0.8312</td>
-            <td>0.0995</td>
+            <td>0.3932</td>
+            <td>0.5190</td>
+            <td>0.1959</td>
+            <td>0.8951</td>
+            <td>0.2074</td>
           </tr>
           <tr>
             <td data-sort="Sarvam Vision">Sarvam Vision <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
@@ -431,7 +439,8 @@
             <code>Transcribe all the text in this image exactly as written. Output ONLY the transcribed text, nothing else.</code>
             For table samples:
             <code>OCR this document image into a markdown table. Transcribe all text exactly as written. Output ONLY the markdown table, nothing else.</code>
-            Image-only models (dots.ocr, OlmOCR-2, Nemotron-Nano) receive no text prompt. The metric is Normalized
+            Image-only models (dots.ocr, OlmOCR-2) receive no text prompt. dots.ocr-1.5 uses its native
+            <code>prompt_ocr</code> prompt (<code>Extract the text content from this image.</code>). The metric is Normalized
             Edit Similarity (NES): <code>1 - edit_distance(pred, gt) / max(len(pred), len(gt))</code>.</p>
 
           <table class="results-table" style="font-size: 0.9em;">
@@ -497,6 +506,11 @@
                 <td>Seed 2.0 Lite</td>
                 <td>ZenMux</td>
                 <td><code>volcengine/doubao-seed-2.0-lite</code></td>
+              </tr>
+              <tr>
+                <td>dots.ocr-1.5</td>
+                <td>Local (vLLM)</td>
+                <td><code>rednote-hilab/dots.ocr-1.5</code>, native <code>prompt_ocr</code></td>
               </tr>
               <tr>
                 <td>dots.ocr</td>
@@ -572,10 +586,13 @@
       <details style="margin-top: 1.5em;">
         <summary style="cursor: pointer; font-weight: bold; font-size: 1.1em;">Changelog</summary>
         <div style="margin-top: 1em; font-size: 0.92em; line-height: 1.6;">
-          <p><strong>February 15, 2026:</strong> Re-ran Gemini 3 Pro (high). The original run used a default
-            max_tokens that was too low for thinking models, where reasoning tokens count against the output limit.
-            This caused many responses to be truncated. After increasing max_tokens to 64K, the score rose from
-            0.3700 to 0.5406, placing it just below Gemini 3 Pro (low) rather than far below it.</p>
+          <p><strong>February 15, 2026:</strong> Added dots.ocr-1.5 (3B, local vLLM inference with native prompt)
+            and PP-OCRv5 (PaddlePaddle classical OCR pipeline).
+            Re-ran Gemini 3 Pro (high), GPT-5.2 (high), and corrected Gemini 3 Flash (low).
+            These were affected by a default max_tokens that was too low for thinking models, where reasoning tokens
+            count against the output limit, causing many responses to be truncated. After increasing max_tokens to
+            64K, Gemini 3 Pro (high) rose from 0.3700 to 0.5406, and GPT-5.2 (high) rose from 0.2841 to 0.3932.
+            Gemini 3 Flash (low) scores were also corrected.</p>
         </div>
       </details>
 
