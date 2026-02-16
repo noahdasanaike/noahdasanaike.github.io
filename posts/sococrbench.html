@@ -349,7 +349,7 @@
             <td class="best">0.5522</td>
             <td>0.6369</td>
             <td>0.5153</td>
-            <td class="best">0.9717</td>
+            <td>0.9717</td>
             <td class="best">0.2737</td>
             <td>0.50</td>
             <td>3.00</td>
@@ -586,11 +586,11 @@
           </tr>
           <tr>
             <td data-sort="DeepSeek-OCR2" data-size="tiny">DeepSeek-OCR2 <span class="model-size">3B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
-            <td>0.2039</td>
-            <td>0.2202</td>
-            <td>0.0637</td>
-            <td>0.6022</td>
-            <td>0.1480</td>
+            <td>0.1162</td>
+            <td>0.0995</td>
+            <td>0.0303</td>
+            <td>0.3715</td>
+            <td>0.1117</td>
             <td>0.03</td>
             <td>0.03</td>
           </tr>
@@ -643,6 +643,15 @@
             <td>0.1187</td>
             <td>/</td>
             <td>/</td>
+          </tr>
+          <tr>
+            <td data-sort="Mistral OCR" data-size="unknown">Mistral OCR <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+            <td>0.2997</td>
+            <td>0.3103</td>
+            <td>0.1032</td>
+            <td class="best">0.9760</td>
+            <td>0.1784</td>
+            <td colspan="2">$2/1K pages</td>
           </tr>
         </tbody>
       </table>
@@ -783,7 +792,7 @@
               <tr>
                 <td>DeepSeek-OCR2</td>
                 <td>Novita AI</td>
-                <td><code>deepseek/deepseek-ocr</code>, native prompts</td>
+                <td><code>deepseek/deepseek-ocr-2</code>, native prompts</td>
               </tr>
               <tr>
                 <td>Qwen3-VL-8B</td>
@@ -844,6 +853,11 @@
                 <td>Datalab (accurate)</td>
                 <td>Datalab API</td>
                 <td><code>datalab-python-sdk</code>, mode=accurate</td>
+              </tr>
+              <tr>
+                <td>Mistral OCR</td>
+                <td>Mistral AI</td>
+                <td><code>mistral-ocr-latest</code> via <code>mistralai</code> SDK, image-only input</td>
               </tr>
             </tbody>
           </table>
