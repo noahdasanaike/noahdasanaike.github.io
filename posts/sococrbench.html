@@ -253,6 +253,14 @@
             <td>0.2541</td>
           </tr>
           <tr>
+            <td data-sort="Gemini 2.0 Flash">Gemini 2.0 Flash <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+            <td>0.4286</td>
+            <td>0.5849</td>
+            <td>0.4312</td>
+            <td>0.3748</td>
+            <td>0.2454</td>
+          </tr>
+          <tr>
             <td data-sort="Gemini 3 Flash (low)">Gemini 3 Flash (low) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
             <td class="best">0.5522</td>
             <td>0.6369</td>
@@ -301,6 +309,14 @@
             <td>0.1920</td>
           </tr>
           <tr>
+            <td data-sort="Datalab (accurate)">Datalab (accurate) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+            <td>0.3477</td>
+            <td>0.3575</td>
+            <td>0.1854</td>
+            <td>0.9260</td>
+            <td>0.2363</td>
+          </tr>
+          <tr>
             <td data-sort="Gemini 3 Pro (high)">Gemini 3 Pro (high) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
             <td>0.5406</td>
             <td class="best">0.6589</td>
@@ -315,6 +331,14 @@
             <td>0.1423</td>
             <td>0.7768</td>
             <td>0.1810</td>
+          </tr>
+          <tr>
+            <td data-sort="Qwen3-VL-8B">Qwen3-VL-8B <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+            <td>0.3623</td>
+            <td>0.5705</td>
+            <td>0.1637</td>
+            <td>0.8456</td>
+            <td>0.0780</td>
           </tr>
           <tr>
             <td data-sort="dots.ocr">dots.ocr <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
@@ -365,6 +389,14 @@
             <td>0.1759</td>
           </tr>
           <tr>
+            <td data-sort="Datalab (fast)">Datalab (fast) <span class="model-tag classical">Classical OCR</span> <span class="model-tag proprietary">Proprietary</span></td>
+            <td>0.2975</td>
+            <td>0.3031</td>
+            <td>0.0837</td>
+            <td>0.9169</td>
+            <td>0.2317</td>
+          </tr>
+          <tr>
             <td data-sort="PaddleOCR-VL-0.9B">PaddleOCR-VL-0.9B <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
             <td>0.2864</td>
             <td>0.3231</td>
@@ -397,12 +429,28 @@
             <td>0.0345</td>
           </tr>
           <tr>
+            <td data-sort="DeepSeek-OCR2">DeepSeek-OCR2 <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+            <td>0.2039</td>
+            <td>0.2202</td>
+            <td>0.0637</td>
+            <td>0.6022</td>
+            <td>0.1480</td>
+          </tr>
+          <tr>
             <td data-sort="DeepSeek-OCR">DeepSeek-OCR <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
             <td>0.1997</td>
             <td>0.2534</td>
             <td>0.0336</td>
             <td>0.5004</td>
             <td>0.1732</td>
+          </tr>
+          <tr>
+            <td data-sort="Kimi K2.5">Kimi K2.5 <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+            <td>0.1336</td>
+            <td>0.2081</td>
+            <td>0.0415</td>
+            <td>0.3944</td>
+            <td>0.0129</td>
           </tr>
           <tr>
             <td data-sort="Tesseract">Tesseract <span class="model-tag classical">Classical OCR</span> <span class="model-tag open-source">Open Source</span></td>
@@ -466,6 +514,11 @@
                 <td>Gemini 2.5 Flash</td>
                 <td>Google GenAI SDK</td>
                 <td><code>gemini-2.5-flash</code> via <code>genai.Client</code></td>
+              </tr>
+              <tr>
+                <td>Gemini 2.0 Flash</td>
+                <td>OpenRouter</td>
+                <td><code>google/gemini-2.0-flash-001</code></td>
               </tr>
               <tr>
                 <td>Gemini 3 Flash (low)</td>
@@ -553,6 +606,16 @@
                 <td><code>deepseek-ai/DeepSeek-OCR</code></td>
               </tr>
               <tr>
+                <td>DeepSeek-OCR2</td>
+                <td>Novita AI</td>
+                <td><code>deepseek/deepseek-ocr</code>, native prompts</td>
+              </tr>
+              <tr>
+                <td>Qwen3-VL-8B</td>
+                <td>Novita AI</td>
+                <td><code>qwen/qwen3-vl-8b-instruct</code></td>
+              </tr>
+              <tr>
                 <td>Sarvam Vision</td>
                 <td>Sarvam AI</td>
                 <td>Document Intelligence API, output_format=md</td>
@@ -577,6 +640,21 @@
                 <td>Local</td>
                 <td>Tiled word-level FAISS KNN recognition</td>
               </tr>
+              <tr>
+                <td>Kimi K2.5</td>
+                <td>OpenRouter</td>
+                <td><code>moonshotai/kimi-k2.5</code></td>
+              </tr>
+              <tr>
+                <td>Datalab (fast)</td>
+                <td>Datalab API</td>
+                <td><code>datalab-python-sdk</code>, mode=fast</td>
+              </tr>
+              <tr>
+                <td>Datalab (accurate)</td>
+                <td>Datalab API</td>
+                <td><code>datalab-python-sdk</code>, mode=accurate</td>
+              </tr>
             </tbody>
           </table>
 
@@ -586,8 +664,8 @@
       <details style="margin-top: 1.5em;">
         <summary style="cursor: pointer; font-weight: bold; font-size: 1.1em;">Changelog</summary>
         <div style="margin-top: 1em; font-size: 0.92em; line-height: 1.6;">
-          <p><strong>February 15, 2026:</strong> Added dots.ocr-1.5 (3B, local vLLM inference with native prompt)
-            and PP-OCRv5 (PaddlePaddle classical OCR pipeline).
+          <p><strong>February 15, 2026:</strong> Added dots.ocr-1.5, PP-OCRv5, Gemini 2.0 Flash, Kimi K2.5,
+            Datalab (fast/accurate), DeepSeek-OCR2, and Qwen3-VL-8B.
             Re-ran Gemini 3 Pro (high), GPT-5.2 (high), and corrected Gemini 3 Flash (low).
             These were affected by a default max_tokens that was too low for thinking models, where reasoning tokens
             count against the output limit, causing many responses to be truncated. After increasing max_tokens to
