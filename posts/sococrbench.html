@@ -655,6 +655,16 @@
             <td>3.60</td>
           </tr>
           <tr>
+            <td data-sort="Qwen3.5-397B (thinking)" data-size="large">Qwen3.5-397B (thinking) <span class="model-size">397B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+            <td>0.4598</td>
+            <td>0.6128</td>
+            <td>0.2734</td>
+            <td>0.9016</td>
+            <td>0.2552</td>
+            <td>0.60</td>
+            <td>3.60</td>
+          </tr>
+          <tr>
             <td data-sort="Mistral OCR" data-size="unknown">Mistral OCR <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
             <td>0.2997</td>
             <td>0.3103</td>
@@ -851,8 +861,13 @@
               </tr>
               <tr>
                 <td>Qwen3.5-397B</td>
-                <td>Novita AI</td>
+                <td>Novita AI / OpenRouter</td>
                 <td><code>qwen/qwen3.5-397b-a17b</code>, thinking disabled</td>
+              </tr>
+              <tr>
+                <td>Qwen3.5-397B (thinking)</td>
+                <td>Novita AI / OpenRouter</td>
+                <td><code>qwen/qwen3.5-397b-a17b</code>, thinking enabled, max_tokens=32768</td>
               </tr>
               <tr>
                 <td>Kimi K2.5</td>
@@ -883,7 +898,7 @@
       <details style="margin-top: 1.5em;">
         <summary style="cursor: pointer; font-weight: bold; font-size: 1.1em;">Changelog</summary>
         <div style="margin-top: 1em; font-size: 0.92em; line-height: 1.6;">
-          <p><strong>February 16, 2026:</strong> Added Qwen3.5-397B (thinking disabled) via Novita AI.</p>
+          <p><strong>February 16, 2026:</strong> Added Qwen3.5-397B in two variants: thinking disabled (0.4484) and thinking enabled (0.4598). Thinking mode improved handwriting recognition, especially Thai (+17pp) and French Census (+7pp), but slightly reduced table accuracy.</p>
           <p><strong>February 15, 2026 (API Cost Update):</strong> Added API cost column with pricing information for all models. Costs shown as input/output price per 1M tokens. Pricing data sourced from provider documentation and aggregated from OpenRouter, DeepInfra, Google AI, OpenAI, and other API providers.</p>
           <p><strong>February 15, 2026:</strong> Added Gemini 2.5 Flash, Gemini 2.0 Flash, Gemini 3 Flash (low),
             ERNIE 4.5 VL 424B, Llama 4 Maverick, dots.ocr-1.5, Qwen3-VL-8B, DeepSeek-OCR2, Kimi K2.5,
