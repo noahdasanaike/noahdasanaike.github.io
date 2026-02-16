@@ -169,18 +169,19 @@
       margin-bottom: 1em;
       display: flex;
       gap: 0.5em;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
     }
 
     .filter-btn {
-      padding: 0.3em 0.9em;
+      padding: 0.3em 0.7em;
       border-radius: 999px;
       border: 1px solid #ccc;
       background: #fff;
       cursor: pointer;
-      font-size: 0.85em;
+      font-size: 0.8em;
       font-weight: 500;
       transition: all 0.15s;
+      white-space: nowrap;
     }
 
     .filter-btn:hover {
@@ -284,8 +285,8 @@
         <span style="border-left: 1px solid #ccc; margin: 0 0.3em;"></span>
         <button class="filter-btn active filter-size" data-filter="size-tiny">&le;3B</button>
         <button class="filter-btn active filter-size" data-filter="size-small">3-10B</button>
-        <button class="filter-btn active filter-size" data-filter="size-medium">10-100B</button>
-        <button class="filter-btn active filter-size" data-filter="size-large">100B+</button>
+        <button class="filter-btn active filter-size" data-filter="size-medium">10-30B</button>
+        <button class="filter-btn active filter-size" data-filter="size-large">30B+</button>
         <button class="filter-btn active filter-size" data-filter="size-unknown">Unknown</button>
       </div>
 
@@ -358,7 +359,7 @@
             <td>0.2350</td>
           </tr>
           <tr>
-            <td data-sort="Qwen3-VL-30B" data-size="medium">Qwen3-VL-30B <span class="model-size">30B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+            <td data-sort="Qwen3-VL-30B" data-size="large">Qwen3-VL-30B <span class="model-size">30B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
             <td>0.4022</td>
             <td>0.5716</td>
             <td>0.1699</td>
