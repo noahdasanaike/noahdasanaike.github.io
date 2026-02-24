@@ -1005,11 +1005,11 @@
         addresses,
         exchanges, and phone numbers that must be correctly associated.</p>
 
-      <p>Below is the page alongside its OCR output from Datalab (fast mode), which
-        proved to do pretty well on this task. Obviously not perfect, and there's some performance degredation at the
-        tail end of the image, but not too bad. Cropping the model with, e.g., PP-DocLayoutV3, and then OCR'ing those
+      <p>Below is the page alongside OCR output from Datalab (fast mode) and Qwen3.5-397B, which does even better&mdash;greatly
+        improving on Datalab's tail-end degradation. Both APIs processed the image in under 20 seconds.
+        Cropping the image with, e.g., PP-DocLayoutV3, and then OCR'ing those crops
         would doubtlessly work best, since the raw image is (6627x8628) and characterized by "long tiny text" (in the
-        words of OmniDocBench). </p>
+        words of OmniDocBench).</p>
 
       <div style="display: flex; gap: 1.5em; align-items: flex-start; margin: 1.5em 0;">
         <div style="flex: 1; text-align: center;">
@@ -1025,6 +1025,13 @@
             View OCR Output &rarr;
           </a>
           <div style="font-size: 0.85em; color: #666; margin-top: 0.5em;">Datalab (fast) &mdash; 17,362 characters</div>
+        </div>
+        <div style="flex: 1; text-align: center;">
+          <a href="../pics/qwen_output_full.txt" target="_blank"
+            style="display: inline-block; padding: 1em 2em; border: 1px solid #ddd; border-radius: 6px; text-decoration: none; color: #750014; font-weight: 500; margin-top: 2em;">
+            View OCR Output &rarr;
+          </a>
+          <div style="font-size: 0.85em; color: #666; margin-top: 0.5em;">Qwen3.5-397B &mdash; 23,340 characters</div>
         </div>
       </div>
 
