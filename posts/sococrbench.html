@@ -1007,7 +1007,9 @@
 
       <p>Below is the page alongside its OCR output from Datalab (fast mode), which
         proved to do pretty well on this task. Obviously not perfect, and there's some performance degredation at the
-        tail end of the image, but not too bad.</p>
+        tail end of the image, but not too bad. Cropping the model with, e.g., PP-DocLayoutV3, and then OCR'ing those
+        would doubtlessly work best, since the raw image is (6627x8628) and characterized by "long tiny text" (in the
+        words of OmniDocBench). </p>
 
       <div style="display: flex; gap: 1.5em; align-items: flex-start; margin: 1.5em 0;">
         <div style="flex: 1; text-align: center;">
