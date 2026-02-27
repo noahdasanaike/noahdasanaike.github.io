@@ -6,7 +6,7 @@
   <title>socOCRbench - Noah Dasanaike</title>
   <style>
     body {
-      max-width: 1000px;
+      max-width: 1100px;
       margin: auto;
       padding: 1em;
     }
@@ -79,14 +79,14 @@
     .results-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.82em;
-      margin: 1.5em 0;
+      font-size: 0.78em;
+      margin: 0.5em 0 1.5em 0;
     }
 
     .results-table th,
     .results-table td {
       border: 1px solid #ddd;
-      padding: 5px 8px;
+      padding: 4px 6px;
       text-align: center;
     }
 
@@ -241,6 +241,93 @@
       font-style: italic;
       margin-top: 2em;
     }
+
+    /* Version tabs */
+    .version-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 0;
+      border-bottom: 2px solid #ddd;
+    }
+
+    .version-tab {
+      padding: 0.5em 1.5em;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95em;
+      border: 2px solid transparent;
+      border-bottom: none;
+      border-radius: 6px 6px 0 0;
+      background: #f5f5f5;
+      color: #666;
+      margin-bottom: -2px;
+      transition: all 0.15s;
+    }
+
+    .version-tab:hover {
+      background: #eee;
+    }
+
+    .version-tab.active {
+      background: #fff;
+      color: #750014;
+      border-color: #ddd;
+      border-bottom-color: #fff;
+    }
+
+    .version-panel {
+      display: none;
+    }
+
+    .version-panel.active {
+      display: block;
+    }
+
+    /* Expandable sub-columns */
+    .sub-col {
+      display: none;
+      font-size: 0.92em;
+      color: #555;
+    }
+
+    .sub-col.visible {
+      display: table-cell;
+    }
+
+    th.sub-col {
+      background: #fafafa;
+      font-weight: 600;
+      font-size: 0.85em;
+    }
+
+    .expand-btn {
+      cursor: pointer;
+      display: inline-block;
+      width: 1.2em;
+      text-align: center;
+      font-weight: bold;
+      font-size: 0.85em;
+      color: #750014;
+      vertical-align: middle;
+      margin-left: 2px;
+      border-radius: 3px;
+    }
+
+    .expand-btn::after {
+      content: "+";
+    }
+
+    .expand-btn.expanded::after {
+      content: "\2212";
+    }
+
+    .expand-btn:hover {
+      background: #f0e0e5;
+    }
+
+    .results-table {
+      table-layout: auto;
+    }
   </style>
 </head>
 
@@ -266,16 +353,9 @@
         well-resourced languages. Handwritten census records, historical logbooks, degraded administrative
         forms, and other ``messy" real-world data are not well represented.</p>
 
-      <p>socOCRbench is a small (private) benchmark designed with this gap in mind. It evaluates OCR models on hundreds
-        of samples across two broad task types: handwriting recognition and table extraction. Within each, results are
-        split into (A) and (B) sub-categories that roughly correspond to how well-covered the material is by existing
-        training data and benchmarks: (A) being more conventional, (B) being more challenging or
-        underrepresented. The metric used is Normalized Edit Similarity (NES), where 1.0 represents a perfect
-        transcription. Note that details about what data constitutes each category are intentionally unforthcoming to
-        protect the sanctity of the evaluation.</p>
-
-      <p>Future iterations of the benchmark will include more diverse document types, larger sample sizes, model
-        efficiency, and performance after fine-tuning. </p>
+      <p>socOCRbench is a small (private) benchmark designed with this gap in mind. It evaluates OCR models on
+        samples across handwriting recognition, table extraction, and printed text recognition. The metric used is
+        Normalized Edit Similarity (NES), where 1.0 represents a perfect transcription.</p>
 
       <div class="filter-bar">
         <button class="filter-btn active filter-vlm" data-filter="vlm">VLM</button>
@@ -290,512 +370,809 @@
         <button class="filter-btn active filter-size" data-filter="size-unknown">Unknown</button>
       </div>
 
-      <table class="results-table sortable">
-        <thead>
-          <tr>
-            <th>Model</th>
-            <th>Overall</th>
-            <th>HW [A]</th>
-            <th>HW [B]</th>
-            <th>Tables [A]</th>
-            <th>Tables [B]</th>
-            <th>$/M In</th>
-            <th>$/M Out</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td data-sort="Gemini 3 Pro (low)" data-size="unknown">Gemini 3 Pro (low) <span
-                class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
-            <td>0.5472</td>
-            <td>0.6445</td>
-            <td>0.5289</td>
-            <td>0.8936</td>
-            <td>0.2667</td>
-            <td>2.00</td>
-            <td>12.00</td>
-          </tr>
-          <tr>
-            <td data-sort="Gemini 3 Flash (high)" data-size="unknown">Gemini 3 Flash (high) <span
-                class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
-            <td>0.4808</td>
-            <td>0.6049</td>
-            <td>0.4750</td>
-            <td>0.7551</td>
-            <td>0.1862</td>
-            <td>0.50</td>
-            <td>3.00</td>
-          </tr>
-          <tr>
-            <td data-sort="Gemini 2.5 Flash" data-size="unknown">Gemini 2.5 Flash <span class="model-tag vlm">VLM</span>
-              <span class="model-tag proprietary">Proprietary</span>
-            </td>
-            <td>0.4670</td>
-            <td>0.5390</td>
-            <td>0.3689</td>
-            <td>0.9107</td>
-            <td>0.2650</td>
-            <td>0.15</td>
-            <td>0.60</td>
-          </tr>
-          <tr>
-            <td data-sort="Gemini 2.0 Flash" data-size="unknown">Gemini 2.0 Flash <span class="model-tag vlm">VLM</span>
-              <span class="model-tag proprietary">Proprietary</span>
-            </td>
-            <td>0.5100</td>
-            <td>0.5849</td>
-            <td>0.4312</td>
-            <td>0.9471</td>
-            <td>0.2850</td>
-            <td>0.10</td>
-            <td>0.40</td>
-          </tr>
-          <tr>
-            <td data-sort="Gemini 3.1 Pro (low)" data-size="unknown">Gemini 3.1 Pro (low) <span
-                class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
-            <td class="best">0.5965</td>
-            <td class="best">0.6959</td>
-            <td class="best">0.5260</td>
-            <td>0.9636</td>
-            <td class="best">0.3640</td>
-            <td>2.00</td>
-            <td>12.00</td>
-          </tr>
-          <tr>
-            <td data-sort="Gemini 3 Flash (low)" data-size="unknown">Gemini 3 Flash (low) <span
-                class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
-            <td>0.5522</td>
-            <td>0.6369</td>
-            <td>0.5153</td>
-            <td>0.9717</td>
-            <td>0.2737</td>
-            <td>0.50</td>
-            <td>3.00</td>
-          </tr>
-          <tr>
-            <td data-sort="Qwen3-VL-235B" data-size="large">Qwen3-VL-235B <span class="model-size">235B</span> <span
-                class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
-            <td>0.4581</td>
-            <td>0.6174</td>
-            <td>0.1969</td>
-            <td>0.9398</td>
-            <td>0.3132</td>
-            <td>0.20</td>
-            <td>0.88</td>
-          </tr>
-          <tr>
-            <td data-sort="Seed 2.0 Pro" data-size="unknown">Seed 2.0 Pro <span class="model-tag vlm">VLM</span> <span
-                class="model-tag proprietary">Proprietary</span></td>
-            <td>0.4058</td>
-            <td>0.4582</td>
-            <td>0.2601</td>
-            <td>0.9513</td>
-            <td>0.2350</td>
-            <td>0.47</td>
-            <td>2.37</td>
-          </tr>
-          <tr>
-            <td data-sort="Qwen3-VL-30B" data-size="large">Qwen3-VL-30B <span class="model-size">30B</span> <span
-                class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
-            <td>0.4194</td>
-            <td>0.5716</td>
-            <td>0.1699</td>
-            <td>0.9104</td>
-            <td>0.2653</td>
-            <td>0.10</td>
-            <td>0.40</td>
-          </tr>
-          <tr>
-            <td data-sort="ERNIE 4.5 VL 424B" data-size="large">ERNIE 4.5 VL 424B <span class="model-size">424B</span>
-              <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span>
-            </td>
-            <td>0.4057</td>
-            <td>0.5468</td>
-            <td>0.1896</td>
-            <td>0.9062</td>
-            <td>0.2222</td>
-            <td>0.55</td>
-            <td>2.20</td>
-          </tr>
-          <tr>
-            <td data-sort="Llama 4 Maverick" data-size="large">Llama 4 Maverick <span class="model-size">400B</span>
-              <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span>
-            </td>
-            <td>0.3911</td>
-            <td>0.4563</td>
-            <td>0.1884</td>
-            <td>0.9358</td>
-            <td>0.2704</td>
-            <td>0.15</td>
-            <td>0.60</td>
-          </tr>
-          <tr>
-            <td data-sort="ERNIE 4.5 VL 28B" data-size="medium">ERNIE 4.5 VL 28B <span class="model-size">28B</span>
-              <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span>
-            </td>
-            <td>0.3837</td>
-            <td>0.5256</td>
-            <td>0.1537</td>
-            <td>0.8735</td>
-            <td>0.2212</td>
-            <td>0.55</td>
-            <td>2.20</td>
-          </tr>
-          <tr>
-            <td data-sort="GPT-5.2 (low)" data-size="unknown">GPT-5.2 (low) <span class="model-tag vlm">VLM</span> <span
-                class="model-tag proprietary">Proprietary</span></td>
-            <td>0.3759</td>
-            <td>0.5140</td>
-            <td>0.1693</td>
-            <td>0.8445</td>
-            <td>0.2014</td>
-            <td>1.75</td>
-            <td>14.00</td>
-          </tr>
-          <tr>
-            <td data-sort="Seed 2.0 Lite" data-size="unknown">Seed 2.0 Lite <span class="model-tag vlm">VLM</span> <span
-                class="model-tag proprietary">Proprietary</span></td>
-            <td>0.3724</td>
-            <td>0.4653</td>
-            <td>0.1918</td>
-            <td>0.9013</td>
-            <td>0.1970</td>
-            <td>0.47</td>
-            <td>2.37</td>
-          </tr>
-          <tr>
-            <td data-sort="Datalab (accurate)" data-size="unknown">Datalab (accurate) <span
-                class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
-            <td>0.3477</td>
-            <td>0.3575</td>
-            <td>0.1854</td>
-            <td>0.9260</td>
-            <td>0.2363</td>
-            <td>?</td>
-            <td>?</td>
-          </tr>
-          <tr>
-            <td data-sort="Gemini 3 Pro (high)" data-size="unknown">Gemini 3 Pro (high) <span
-                class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
-            <td>0.5406</td>
-            <td>0.6589</td>
-            <td>0.5106</td>
-            <td>0.8989</td>
-            <td>0.2400</td>
-            <td>2.00</td>
-            <td>12.00</td>
-          </tr>
-          <tr>
-            <td data-sort="dots.ocr-1.5" data-size="tiny">dots.ocr-1.5 <span class="model-size">3B</span> <span
-                class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
-            <td>0.3720</td>
-            <td>0.5670</td>
-            <td>0.1423</td>
-            <td>0.7768</td>
-            <td>0.1810</td>
-            <td>/</td>
-            <td>/</td>
-          </tr>
-          <tr>
-            <td data-sort="Qwen3-VL-8B" data-size="small">Qwen3-VL-8B <span class="model-size">8B</span> <span
-                class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
-            <td>0.4105</td>
-            <td>0.5705</td>
-            <td>0.1637</td>
-            <td>0.8456</td>
-            <td>0.2709</td>
-            <td>0.08</td>
-            <td>0.50</td>
-          </tr>
-          <tr>
-            <td data-sort="dots.ocr" data-size="tiny">dots.ocr <span class="model-size">3B</span> <span
-                class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
-            <td>0.3328</td>
-            <td>0.4193</td>
-            <td>0.0751</td>
-            <td>0.9150</td>
-            <td>0.2299</td>
-            <td>/</td>
-            <td>/</td>
-          </tr>
-          <tr>
-            <td data-sort="GLM-OCR" data-size="tiny">GLM-OCR <span class="model-size">0.9B</span> <span
-                class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
-            <td>0.3247</td>
-            <td>0.4369</td>
-            <td>0.0693</td>
-            <td>0.8200</td>
-            <td>0.2283</td>
-            <td>0.03</td>
-            <td>0.03</td>
-          </tr>
-          <tr>
-            <td data-sort="PaddleOCR-VL-1.5" data-size="tiny">PaddleOCR-VL-1.5 <span class="model-size">0.9B</span>
-              <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span>
-            </td>
-            <td>0.3131</td>
-            <td>0.4066</td>
-            <td>0.1155</td>
-            <td>0.7949</td>
-            <td>0.1805</td>
-            <td>/</td>
-            <td>/</td>
-          </tr>
-          <tr>
-            <td data-sort="GPT-5.2 (high)" data-size="unknown">GPT-5.2 (high) <span class="model-tag vlm">VLM</span>
-              <span class="model-tag proprietary">Proprietary</span>
-            </td>
-            <td>0.3932</td>
-            <td>0.5190</td>
-            <td>0.1959</td>
-            <td>0.8951</td>
-            <td>0.2074</td>
-            <td>1.75</td>
-            <td>14.00</td>
-          </tr>
-          <tr>
-            <td data-sort="Sarvam Vision" data-size="unknown">Sarvam Vision <span class="model-tag vlm">VLM</span> <span
-                class="model-tag proprietary">Proprietary</span></td>
-            <td>0.2735</td>
-            <td>0.2851</td>
-            <td>0.1899</td>
-            <td>0.7194</td>
-            <td>0.1335</td>
-            <td>/</td>
-            <td>/</td>
-          </tr>
-          <tr>
-            <td data-sort="PP-OCRv5" data-size="tiny">PP-OCRv5 <span class="model-tag classical">Classical OCR</span>
-              <span class="model-tag open-source">Open Source</span>
-            </td>
-            <td>0.2501</td>
-            <td>0.3400</td>
-            <td>0.0069</td>
-            <td>0.7319</td>
-            <td>0.1759</td>
-            <td>/</td>
-            <td>/</td>
-          </tr>
-          <tr>
-            <td data-sort="Datalab (fast)" data-size="unknown">Datalab (fast) <span
-                class="model-tag classical">Classical OCR</span> <span class="model-tag proprietary">Proprietary</span>
-            </td>
-            <td>0.2975</td>
-            <td>0.3031</td>
-            <td>0.0837</td>
-            <td>0.9169</td>
-            <td>0.2317</td>
-            <td>?</td>
-            <td>?</td>
-          </tr>
-          <tr>
-            <td data-sort="PaddleOCR-VL-0.9B" data-size="tiny">PaddleOCR-VL-0.9B <span class="model-size">0.9B</span>
-              <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span>
-            </td>
-            <td>0.2864</td>
-            <td>0.3231</td>
-            <td>0.0856</td>
-            <td>0.8047</td>
-            <td>0.2145</td>
-            <td>/</td>
-            <td>/</td>
-          </tr>
-          <tr>
-            <td data-sort="Nemotron-Nano-12B" data-size="medium">Nemotron-Nano-12B <span class="model-size">12B</span>
-              <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span>
-            </td>
-            <td>0.2177</td>
-            <td>0.2568</td>
-            <td>0.0127</td>
-            <td>0.6273</td>
-            <td>0.2020</td>
-            <td>0.20</td>
-            <td>0.20</td>
-          </tr>
-          <tr>
-            <td data-sort="OlmOCR-2" data-size="small">OlmOCR-2 <span class="model-size">7B</span> <span
-                class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
-            <td>0.2087</td>
-            <td>0.3405</td>
-            <td>0.0696</td>
-            <td>0.2791</td>
-            <td>0.1624</td>
-            <td>/</td>
-            <td>/</td>
-          </tr>
-          <tr>
-            <td data-sort="LightOnOCR-2-1B" data-size="tiny">LightOnOCR-2-1B <span class="model-size">1B</span> <span
-                class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
-            <td>0.2024</td>
-            <td>0.3138</td>
-            <td>0.1005</td>
-            <td>0.4828</td>
-            <td>0.0345</td>
-            <td>/</td>
-            <td>/</td>
-          </tr>
-          <tr>
-            <td data-sort="DeepSeek-OCR2" data-size="tiny">DeepSeek-OCR2 <span class="model-size">3B</span> <span
-                class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
-            <td>0.1181</td>
-            <td>0.0995</td>
-            <td>0.0303</td>
-            <td>0.3715</td>
-            <td>0.1191</td>
-            <td>0.03</td>
-            <td>0.03</td>
-          </tr>
-          <tr>
-            <td data-sort="DeepSeek-OCR" data-size="tiny">DeepSeek-OCR <span class="model-size">3B</span> <span
-                class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
-            <td>0.1997</td>
-            <td>0.2534</td>
-            <td>0.0336</td>
-            <td>0.5004</td>
-            <td>0.1732</td>
-            <td>0.03</td>
-            <td>0.03</td>
-          </tr>
-          <tr>
-            <td data-sort="Kimi K2.5" data-size="unknown">Kimi K2.5 <span class="model-tag vlm">VLM</span> <span
-                class="model-tag proprietary">Proprietary</span></td>
-            <td>0.1336</td>
-            <td>0.2081</td>
-            <td>0.0415</td>
-            <td>0.3944</td>
-            <td>0.0129</td>
-            <td>0.60</td>
-            <td>2.50</td>
-          </tr>
-          <tr>
-            <td data-sort="Tesseract" data-size="tiny">Tesseract <span class="model-tag classical">Classical OCR</span>
-              <span class="model-tag open-source">Open Source</span>
-            </td>
-            <td>0.1091</td>
-            <td>0.1037</td>
-            <td>0.0285</td>
-            <td>0.1696</td>
-            <td>0.1808</td>
-            <td>/</td>
-            <td>/</td>
-          </tr>
-          <tr>
-            <td data-sort="Layout Parser" data-size="tiny">Layout Parser <span class="model-tag classical">Classical
-                OCR</span> <span class="model-tag open-source">Open Source</span></td>
-            <td>0.1082</td>
-            <td>0.1037</td>
-            <td>0.0285</td>
-            <td>0.1609</td>
-            <td>0.1815</td>
-            <td>/</td>
-            <td>/</td>
-          </tr>
-          <tr>
-            <td data-sort="Efficient OCR" data-size="tiny">EfficientOCR <span class="model-tag classical">Classical
-                OCR</span> <span class="model-tag open-source">Open Source</span></td>
-            <td>0.0635</td>
-            <td>0.0509</td>
-            <td>0.0108</td>
-            <td>0.1104</td>
-            <td>0.1187</td>
-            <td>/</td>
-            <td>/</td>
-          </tr>
-          <tr>
-            <td data-sort="Qwen3.5-397B" data-size="large">Qwen3.5-397B <span class="model-size">397B</span> <span
-                class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
-            <td>0.4484</td>
-            <td>0.6055</td>
-            <td>0.2409</td>
-            <td>0.9301</td>
-            <td>0.2432</td>
-            <td>0.60</td>
-            <td>3.60</td>
-          </tr>
-          <tr>
-            <td data-sort="Qwen3.5-397B (thinking)" data-size="large">Qwen3.5-397B (thinking) <span
-                class="model-size">397B</span> <span class="model-tag vlm">VLM</span> <span
-                class="model-tag open-source">Open Source</span></td>
-            <td>0.4598</td>
-            <td>0.6128</td>
-            <td>0.2734</td>
-            <td>0.9016</td>
-            <td>0.2552</td>
-            <td>0.60</td>
-            <td>3.60</td>
-          </tr>
-          <tr>
-            <td data-sort="Qwen3.5-27B" data-size="small">Qwen3.5-27B <span class="model-size">27B</span> <span
-                class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
-            <td>0.4340</td>
-            <td>0.5733</td>
-            <td>0.1976</td>
-            <td>0.9368</td>
-            <td>0.2760</td>
-            <td>0.30</td>
-            <td>2.40</td>
-          </tr>
-          <tr>
-            <td data-sort="Qwen3.5-35B" data-size="small">Qwen3.5-35B <span class="model-size">35B</span> <span
-                class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
-            <td>0.4296</td>
-            <td>0.5784</td>
-            <td>0.2273</td>
-            <td>0.9275</td>
-            <td>0.2210</td>
-            <td>0.25</td>
-            <td>2.00</td>
-          </tr>
-          <tr>
-            <td data-sort="Qwen3.5-Flash" data-size="unknown">Qwen3.5-Flash <span class="model-tag vlm">VLM</span> <span
-                class="model-tag proprietary">Proprietary</span></td>
-            <td>0.4280</td>
-            <td>0.5763</td>
-            <td>0.2247</td>
-            <td>0.9247</td>
-            <td>0.2220</td>
-            <td>0.10</td>
-            <td>0.40</td>
-          </tr>
-          <tr>
-            <td data-sort="Qwen3.5-122B" data-size="large">Qwen3.5-122B <span class="model-size">122B</span> <span
-                class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
-            <td>0.4264</td>
-            <td>0.5637</td>
-            <td>0.1954</td>
-            <td>0.9195</td>
-            <td>0.2692</td>
-            <td>0.40</td>
-            <td>3.20</td>
-          </tr>
-          <tr>
-            <td data-sort="Qwen-VL-OCR" data-size="unknown">Qwen-VL-OCR <span class="model-tag vlm">VLM</span> <span
-                class="model-tag proprietary">Proprietary</span></td>
-            <td>0.3525</td>
-            <td>0.5082</td>
-            <td>0.1105</td>
-            <td>0.8696</td>
-            <td>0.1720</td>
-            <td colspan="2">undisclosed</td>
-          </tr>
-          <tr>
-            <td data-sort="Mistral OCR" data-size="unknown">Mistral OCR <span class="model-tag vlm">VLM</span> <span
-                class="model-tag proprietary">Proprietary</span></td>
-            <td>0.3006</td>
-            <td>0.3103</td>
-            <td>0.1063</td>
-            <td class="best">0.9760</td>
-            <td>0.1784</td>
-            <td colspan="2">$2/1K pages</td>
-          </tr>
-        </tbody>
-      </table>
+      <!-- Version Tabs -->
+      <div class="version-tabs">
+        <div class="version-tab active" data-version="v2">v2</div>
+        <div class="version-tab" data-version="v1">v1</div>
+      </div>
+
+      <!-- V2 Panel -->
+      <div class="version-panel active" id="panel-v2">
+        <table class="results-table sortable" id="table-v2">
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>socOCRbench</th>
+              <th data-group="region">Region <span class="expand-btn" data-group="region"></span></th>
+              <th class="sub-col" data-group="region">Europe</th>
+              <th class="sub-col" data-group="region">E. Asia</th>
+              <th class="sub-col" data-group="region">S. Asia</th>
+              <th class="sub-col" data-group="region">SE Asia</th>
+              <th class="sub-col" data-group="region">MENA</th>
+              <th class="sub-col" data-group="region">E. Africa</th>
+              <th data-group="period">Period <span class="expand-btn" data-group="period"></span></th>
+              <th class="sub-col" data-group="period">Pre-mod.</th>
+              <th class="sub-col" data-group="period">Historical</th>
+              <th class="sub-col" data-group="period">Contemp.</th>
+              <th data-group="format">Format <span class="expand-btn" data-group="format"></span></th>
+              <th class="sub-col" data-group="format">HW Text</th>
+              <th class="sub-col" data-group="format">Print Text</th>
+              <th class="sub-col" data-group="format">Print Tbl</th>
+              <th class="sub-col" data-group="format">HW Tbl</th>
+              <th>$/M In</th>
+              <th>$/M Out</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-sort="Gemini 3.1 Pro (low)" data-size="unknown">Gemini 3.1 Pro (low) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td class="best">0.7067</td>
+              <td class="best">0.7067</td>
+              <td class="sub-col" data-group="region">0.7070</td><td class="sub-col" data-group="region">0.6447</td><td class="sub-col" data-group="region">0.7189</td><td class="sub-col" data-group="region">0.7136</td><td class="sub-col" data-group="region">0.7204</td><td class="sub-col" data-group="region">0.6654</td>
+              <td class="best">0.6952</td>
+              <td class="sub-col" data-group="period">0.5641</td><td class="sub-col" data-group="period">0.6762</td><td class="sub-col" data-group="period">0.8271</td>
+              <td class="best">0.7024</td>
+              <td class="sub-col" data-group="format">0.6703</td><td class="sub-col" data-group="format">0.9415</td><td class="sub-col" data-group="format">0.8295</td><td class="sub-col" data-group="format">0.3561</td>
+              <td>2.00</td>
+              <td>12.00</td>
+            </tr>
+            <tr>
+              <td data-sort="Gemini 3 Pro (low)" data-size="unknown">Gemini 3 Pro (low) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.6989</td>
+              <td>0.6989</td>
+              <td class="sub-col" data-group="region">0.6721</td><td class="sub-col" data-group="region">0.6908</td><td class="sub-col" data-group="region">0.7544</td><td class="sub-col" data-group="region">0.7463</td><td class="sub-col" data-group="region">0.7033</td><td class="sub-col" data-group="region">0.5976</td>
+              <td>0.6781</td>
+              <td class="sub-col" data-group="period">0.5882</td><td class="sub-col" data-group="period">0.6307</td><td class="sub-col" data-group="period">0.8107</td>
+              <td>0.6706</td>
+              <td class="sub-col" data-group="format">0.6551</td><td class="sub-col" data-group="format">0.9440</td><td class="sub-col" data-group="format">0.7914</td><td class="sub-col" data-group="format">0.2862</td>
+              <td>2.00</td>
+              <td>12.00</td>
+            </tr>
+            <tr>
+              <td data-sort="Gemini 3 Flash (low)" data-size="unknown">Gemini 3 Flash (low) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.6980</td>
+              <td>0.6980</td>
+              <td class="sub-col" data-group="region">0.6754</td><td class="sub-col" data-group="region">0.6587</td><td class="sub-col" data-group="region">0.7460</td><td class="sub-col" data-group="region">0.6632</td><td class="sub-col" data-group="region">0.7400</td><td class="sub-col" data-group="region">0.6643</td>
+              <td>0.6738</td>
+              <td class="sub-col" data-group="period">0.5635</td><td class="sub-col" data-group="period">0.6400</td><td class="sub-col" data-group="period">0.8165</td>
+              <td>0.6736</td>
+              <td class="sub-col" data-group="format">0.6572</td><td class="sub-col" data-group="format">0.9218</td><td class="sub-col" data-group="format">0.8232</td><td class="sub-col" data-group="format">0.2916</td>
+              <td>0.50</td>
+              <td>3.00</td>
+            </tr>
+            <tr>
+              <td data-sort="Gemini 3 Pro (high)" data-size="unknown">Gemini 3 Pro (high) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.6908</td>
+              <td>0.6908</td>
+              <td class="sub-col" data-group="region">0.6783</td><td class="sub-col" data-group="region">0.7297</td><td class="sub-col" data-group="region">0.6642</td><td class="sub-col" data-group="region">0.7088</td><td class="sub-col" data-group="region">0.6662</td><td class="sub-col" data-group="region">0.6650</td>
+              <td>0.6757</td>
+              <td class="sub-col" data-group="period">0.5682</td><td class="sub-col" data-group="period">0.6352</td><td class="sub-col" data-group="period">0.8189</td>
+              <td>0.6746</td>
+              <td class="sub-col" data-group="format">0.6586</td><td class="sub-col" data-group="format">0.9177</td><td class="sub-col" data-group="format">0.8472</td><td class="sub-col" data-group="format">0.2691</td>
+              <td>2.00</td>
+              <td>12.00</td>
+            </tr>
+            <tr>
+              <td data-sort="Gemini 3 Flash (high)" data-size="unknown">Gemini 3 Flash (high) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.6800</td>
+              <td>0.6800</td>
+              <td class="sub-col" data-group="region">0.6574</td><td class="sub-col" data-group="region">0.6451</td><td class="sub-col" data-group="region">0.7455</td><td class="sub-col" data-group="region">0.6079</td><td class="sub-col" data-group="region">0.6871</td><td class="sub-col" data-group="region">0.7298</td>
+              <td>0.6571</td>
+              <td class="sub-col" data-group="period">0.5689</td><td class="sub-col" data-group="period">0.6120</td><td class="sub-col" data-group="period">0.7782</td>
+              <td>0.6217</td>
+              <td class="sub-col" data-group="format">0.6450</td><td class="sub-col" data-group="format">0.9169</td><td class="sub-col" data-group="format">0.7360</td><td class="sub-col" data-group="format">0.1943</td>
+              <td>0.50</td>
+              <td>3.00</td>
+            </tr>
+            <tr>
+              <td data-sort="Gemini 2.0 Flash" data-size="unknown">Gemini 2.0 Flash <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.5677</td>
+              <td>0.5677</td>
+              <td class="sub-col" data-group="region">0.6117</td><td class="sub-col" data-group="region">0.6283</td><td class="sub-col" data-group="region">0.7427</td><td class="sub-col" data-group="region">0.5819</td><td class="sub-col" data-group="region">0.5898</td><td class="sub-col" data-group="region">0.2326</td>
+              <td>0.5827</td>
+              <td class="sub-col" data-group="period">0.4916</td><td class="sub-col" data-group="period">0.5693</td><td class="sub-col" data-group="period">0.7055</td>
+              <td>0.6372</td>
+              <td class="sub-col" data-group="format">0.5339</td><td class="sub-col" data-group="format">0.8704</td><td class="sub-col" data-group="format">0.8543</td><td class="sub-col" data-group="format">0.2711</td>
+              <td>0.10</td>
+              <td>0.40</td>
+            </tr>
+            <tr>
+              <td data-sort="Claude Sonnet 4.6" data-size="unknown">Claude Sonnet 4.6 <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.5564</td>
+              <td>0.5564</td>
+              <td class="sub-col" data-group="region">0.6708</td><td class="sub-col" data-group="region">0.6649</td><td class="sub-col" data-group="region">0.3461</td><td class="sub-col" data-group="region">0.6341</td><td class="sub-col" data-group="region">0.5795</td><td class="sub-col" data-group="region">0.3809</td>
+              <td>0.6064</td>
+              <td class="sub-col" data-group="period">0.4635</td><td class="sub-col" data-group="period">0.6182</td><td class="sub-col" data-group="period">0.7324</td>
+              <td>0.6568</td>
+              <td class="sub-col" data-group="format">0.5738</td><td class="sub-col" data-group="format">0.8076</td><td class="sub-col" data-group="format">0.8646</td><td class="sub-col" data-group="format">0.3806</td>
+              <td>3.00</td>
+              <td>15.00</td>
+            </tr>
+            <tr>
+              <td data-sort="Claude Opus 4.6" data-size="unknown">Claude Opus 4.6 <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.5230</td>
+              <td>0.5230</td>
+              <td class="sub-col" data-group="region">0.6571</td><td class="sub-col" data-group="region">0.6759</td><td class="sub-col" data-group="region">0.2823</td><td class="sub-col" data-group="region">0.5700</td><td class="sub-col" data-group="region">0.6099</td><td class="sub-col" data-group="region">0.2579</td>
+              <td>0.5905</td>
+              <td class="sub-col" data-group="period">0.4512</td><td class="sub-col" data-group="period">0.6110</td><td class="sub-col" data-group="period">0.6884</td>
+              <td>0.6242</td>
+              <td class="sub-col" data-group="format">0.5578</td><td class="sub-col" data-group="format">0.7852</td><td class="sub-col" data-group="format">0.8620</td><td class="sub-col" data-group="format">0.2860</td>
+              <td>15.00</td>
+              <td>75.00</td>
+            </tr>
+            <tr>
+              <td data-sort="Seed 2.0 Pro" data-size="unknown">Seed 2.0 Pro <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.5048</td>
+              <td>0.5048</td>
+              <td class="sub-col" data-group="region">0.5834</td><td class="sub-col" data-group="region">0.6921</td><td class="sub-col" data-group="region">0.4448</td><td class="sub-col" data-group="region">0.4795</td><td class="sub-col" data-group="region">0.4504</td><td class="sub-col" data-group="region">0.4309</td>
+              <td>0.5160</td>
+              <td class="sub-col" data-group="period">0.3857</td><td class="sub-col" data-group="period">0.5285</td><td class="sub-col" data-group="period">0.7038</td>
+              <td>0.6104</td>
+              <td class="sub-col" data-group="format">0.4760</td><td class="sub-col" data-group="format">0.8650</td><td class="sub-col" data-group="format">0.8314</td><td class="sub-col" data-group="format">0.2703</td>
+              <td>0.47</td>
+              <td>2.37</td>
+            </tr>
+            <tr>
+              <td data-sort="Qwen3.5-397B (thinking)" data-size="large">Qwen3.5-397B (thinking) <span class="model-size">397B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.5013</td>
+              <td>0.5013</td>
+              <td class="sub-col" data-group="region">0.5586</td><td class="sub-col" data-group="region">0.7943</td><td class="sub-col" data-group="region">0.4912</td><td class="sub-col" data-group="region">0.4407</td><td class="sub-col" data-group="region">0.5306</td><td class="sub-col" data-group="region">0.2443</td>
+              <td>0.5084</td>
+              <td class="sub-col" data-group="period">0.4707</td><td class="sub-col" data-group="period">0.4982</td><td class="sub-col" data-group="period">0.6451</td>
+              <td>0.6041</td>
+              <td class="sub-col" data-group="format">0.4736</td><td class="sub-col" data-group="format">0.8478</td><td class="sub-col" data-group="format">0.8283</td><td class="sub-col" data-group="format">0.2826</td>
+              <td>0.60</td>
+              <td>3.60</td>
+            </tr>
+            <tr>
+              <td data-sort="Qwen3.5-397B" data-size="large">Qwen3.5-397B <span class="model-size">397B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.4938</td>
+              <td>0.4938</td>
+              <td class="sub-col" data-group="region">0.5594</td><td class="sub-col" data-group="region">0.7964</td><td class="sub-col" data-group="region">0.4787</td><td class="sub-col" data-group="region">0.4118</td><td class="sub-col" data-group="region">0.5336</td><td class="sub-col" data-group="region">0.2426</td>
+              <td>0.5046</td>
+              <td class="sub-col" data-group="period">0.4717</td><td class="sub-col" data-group="period">0.4992</td><td class="sub-col" data-group="period">0.6372</td>
+              <td>0.6030</td>
+              <td class="sub-col" data-group="format">0.4655</td><td class="sub-col" data-group="format">0.8630</td><td class="sub-col" data-group="format">0.8310</td><td class="sub-col" data-group="format">0.2698</td>
+              <td>0.60</td>
+              <td>3.60</td>
+            </tr>
+            <tr>
+              <td data-sort="Gemini 2.5 Flash" data-size="unknown">Gemini 2.5 Flash <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.4849</td>
+              <td>0.4849</td>
+              <td class="sub-col" data-group="region">0.6019</td><td class="sub-col" data-group="region">0.6280</td><td class="sub-col" data-group="region">0.3612</td><td class="sub-col" data-group="region">0.4876</td><td class="sub-col" data-group="region">0.5514</td><td class="sub-col" data-group="region">0.1352</td>
+              <td>0.5238</td>
+              <td class="sub-col" data-group="period">0.3388</td><td class="sub-col" data-group="period">0.5678</td><td class="sub-col" data-group="period">0.6632</td>
+              <td>0.5933</td>
+              <td class="sub-col" data-group="format">0.4946</td><td class="sub-col" data-group="format">0.7361</td><td class="sub-col" data-group="format">0.8466</td><td class="sub-col" data-group="format">0.2777</td>
+              <td>0.15</td>
+              <td>0.60</td>
+            </tr>
+            <tr>
+              <td data-sort="Qwen3.5-122B" data-size="large">Qwen3.5-122B <span class="model-size">122B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.4747</td>
+              <td>0.4747</td>
+              <td class="sub-col" data-group="region">0.6181</td><td class="sub-col" data-group="region">0.6829</td><td class="sub-col" data-group="region">0.4321</td><td class="sub-col" data-group="region">0.4451</td><td class="sub-col" data-group="region">0.5150</td><td class="sub-col" data-group="region">0.1827</td>
+              <td>0.5502</td>
+              <td class="sub-col" data-group="period">0.4639</td><td class="sub-col" data-group="period">0.5653</td><td class="sub-col" data-group="period">0.6326</td>
+              <td>0.6179</td>
+              <td class="sub-col" data-group="format">0.4880</td><td class="sub-col" data-group="format">0.8292</td><td class="sub-col" data-group="format">0.8529</td><td class="sub-col" data-group="format">0.2792</td>
+              <td>0.40</td>
+              <td>3.20</td>
+            </tr>
+            <tr>
+              <td data-sort="Seed 2.0 Lite" data-size="unknown">Seed 2.0 Lite <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.4675</td>
+              <td>0.4675</td>
+              <td class="sub-col" data-group="region">0.5496</td><td class="sub-col" data-group="region">0.6361</td><td class="sub-col" data-group="region">0.3388</td><td class="sub-col" data-group="region">0.4753</td><td class="sub-col" data-group="region">0.3991</td><td class="sub-col" data-group="region">0.4287</td>
+              <td>0.4915</td>
+              <td class="sub-col" data-group="period">0.3606</td><td class="sub-col" data-group="period">0.4997</td><td class="sub-col" data-group="period">0.6577</td>
+              <td>0.5718</td>
+              <td class="sub-col" data-group="format">0.4521</td><td class="sub-col" data-group="format">0.8026</td><td class="sub-col" data-group="format">0.8220</td><td class="sub-col" data-group="format">0.2091</td>
+              <td>0.47</td>
+              <td>2.37</td>
+            </tr>
+            <tr>
+              <td data-sort="Qwen3.5-35B" data-size="small">Qwen3.5-35B <span class="model-size">35B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.4632</td>
+              <td>0.4632</td>
+              <td class="sub-col" data-group="region">0.5955</td><td class="sub-col" data-group="region">0.6737</td><td class="sub-col" data-group="region">0.4841</td><td class="sub-col" data-group="region">0.3780</td><td class="sub-col" data-group="region">0.5521</td><td class="sub-col" data-group="region">0.0690</td>
+              <td>0.5409</td>
+              <td class="sub-col" data-group="period">0.4638</td><td class="sub-col" data-group="period">0.5492</td><td class="sub-col" data-group="period">0.5927</td>
+              <td>0.5826</td>
+              <td class="sub-col" data-group="format">0.4823</td><td class="sub-col" data-group="format">0.7792</td><td class="sub-col" data-group="format">0.8047</td><td class="sub-col" data-group="format">0.2307</td>
+              <td>0.25</td>
+              <td>2.00</td>
+            </tr>
+            <tr>
+              <td data-sort="Qwen3.5-Plus" data-size="unknown">Qwen3.5-Plus <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.4627</td>
+              <td>0.4627</td>
+              <td class="sub-col" data-group="region">0.6303</td><td class="sub-col" data-group="region">0.6582</td><td class="sub-col" data-group="region">0.3997</td><td class="sub-col" data-group="region">0.4647</td><td class="sub-col" data-group="region">0.4494</td><td class="sub-col" data-group="region">0.1498</td>
+              <td>0.5491</td>
+              <td class="sub-col" data-group="period">0.4429</td><td class="sub-col" data-group="period">0.5736</td><td class="sub-col" data-group="period">0.6296</td>
+              <td>0.6062</td>
+              <td class="sub-col" data-group="format">0.4952</td><td class="sub-col" data-group="format">0.7976</td><td class="sub-col" data-group="format">0.8418</td><td class="sub-col" data-group="format">0.2684</td>
+              <td>0.80</td>
+              <td>2.00</td>
+            </tr>
+            <tr>
+              <td data-sort="Qwen3.5-Flash" data-size="unknown">Qwen3.5-Flash <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.4611</td>
+              <td>0.4611</td>
+              <td class="sub-col" data-group="region">0.5930</td><td class="sub-col" data-group="region">0.6731</td><td class="sub-col" data-group="region">0.4865</td><td class="sub-col" data-group="region">0.3770</td><td class="sub-col" data-group="region">0.5416</td><td class="sub-col" data-group="region">0.0690</td>
+              <td>0.5395</td>
+              <td class="sub-col" data-group="period">0.4635</td><td class="sub-col" data-group="period">0.5461</td><td class="sub-col" data-group="period">0.5924</td>
+              <td>0.5821</td>
+              <td class="sub-col" data-group="format">0.4808</td><td class="sub-col" data-group="format">0.7750</td><td class="sub-col" data-group="format">0.8142</td><td class="sub-col" data-group="format">0.2251</td>
+              <td>0.10</td>
+              <td>0.40</td>
+            </tr>
+            <tr>
+              <td data-sort="Qwen3-VL-235B" data-size="large">Qwen3-VL-235B <span class="model-size">235B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.4556</td>
+              <td>0.4556</td>
+              <td class="sub-col" data-group="region">0.6368</td><td class="sub-col" data-group="region">0.7218</td><td class="sub-col" data-group="region">0.3922</td><td class="sub-col" data-group="region">0.4066</td><td class="sub-col" data-group="region">0.4853</td><td class="sub-col" data-group="region">0.0976</td>
+              <td>0.5555</td>
+              <td class="sub-col" data-group="period">0.4760</td><td class="sub-col" data-group="period">0.5799</td><td class="sub-col" data-group="period">0.6138</td>
+              <td>0.6237</td>
+              <td class="sub-col" data-group="format">0.4934</td><td class="sub-col" data-group="format">0.7958</td><td class="sub-col" data-group="format">0.8817</td><td class="sub-col" data-group="format">0.2978</td>
+              <td>0.20</td>
+              <td>0.88</td>
+            </tr>
+            <tr>
+              <td data-sort="Qwen3.5-27B" data-size="small">Qwen3.5-27B <span class="model-size">27B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.4330</td>
+              <td>0.4330</td>
+              <td class="sub-col" data-group="region">0.6080</td><td class="sub-col" data-group="region">0.6913</td><td class="sub-col" data-group="region">0.4533</td><td class="sub-col" data-group="region">0.3577</td><td class="sub-col" data-group="region">0.4705</td><td class="sub-col" data-group="region">0.0131</td>
+              <td>0.5299</td>
+              <td class="sub-col" data-group="period">0.4402</td><td class="sub-col" data-group="period">0.5574</td><td class="sub-col" data-group="period">0.5863</td>
+              <td>0.6082</td>
+              <td class="sub-col" data-group="format">0.4553</td><td class="sub-col" data-group="format">0.7902</td><td class="sub-col" data-group="format">0.8621</td><td class="sub-col" data-group="format">0.2903</td>
+              <td>0.30</td>
+              <td>2.40</td>
+            </tr>
+            <tr>
+              <td data-sort="ERNIE 4.5 VL 424B" data-size="large">ERNIE 4.5 VL 424B <span class="model-size">424B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.4312</td>
+              <td>0.4312</td>
+              <td class="sub-col" data-group="region">0.5234</td><td class="sub-col" data-group="region">0.8225</td><td class="sub-col" data-group="region">0.4044</td><td class="sub-col" data-group="region">0.3104</td><td class="sub-col" data-group="region">0.4642</td><td class="sub-col" data-group="region">0.0769</td>
+              <td>0.4393</td>
+              <td class="sub-col" data-group="period">0.3771</td><td class="sub-col" data-group="period">0.4588</td><td class="sub-col" data-group="period">0.5869</td>
+              <td>0.5655</td>
+              <td class="sub-col" data-group="format">0.3919</td><td class="sub-col" data-group="format">0.8244</td><td class="sub-col" data-group="format">0.8242</td><td class="sub-col" data-group="format">0.2327</td>
+              <td>0.42</td>
+              <td>1.25</td>
+            </tr>
+            <tr>
+              <td data-sort="Qwen3-VL-8B" data-size="small">Qwen3-VL-8B <span class="model-size">8B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.4282</td>
+              <td>0.4282</td>
+              <td class="sub-col" data-group="region">0.5396</td><td class="sub-col" data-group="region">0.8490</td><td class="sub-col" data-group="region">0.3524</td><td class="sub-col" data-group="region">0.3390</td><td class="sub-col" data-group="region">0.4445</td><td class="sub-col" data-group="region">0.0856</td>
+              <td>0.4422</td>
+              <td class="sub-col" data-group="period">0.3718</td><td class="sub-col" data-group="period">0.4771</td><td class="sub-col" data-group="period">0.5851</td>
+              <td>0.5766</td>
+              <td class="sub-col" data-group="format">0.3941</td><td class="sub-col" data-group="format">0.8176</td><td class="sub-col" data-group="format">0.8530</td><td class="sub-col" data-group="format">0.2513</td>
+              <td>0.08</td>
+              <td>0.50</td>
+            </tr>
+            <tr>
+              <td data-sort="Qwen3-VL-30B" data-size="large">Qwen3-VL-30B <span class="model-size">30B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.4221</td>
+              <td>0.4221</td>
+              <td class="sub-col" data-group="region">0.5953</td><td class="sub-col" data-group="region">0.7066</td><td class="sub-col" data-group="region">0.4107</td><td class="sub-col" data-group="region">0.2800</td><td class="sub-col" data-group="region">0.4316</td><td class="sub-col" data-group="region">0.1088</td>
+              <td>0.5111</td>
+              <td class="sub-col" data-group="period">0.4380</td><td class="sub-col" data-group="period">0.5441</td><td class="sub-col" data-group="period">0.5650</td>
+              <td>0.5843</td>
+              <td class="sub-col" data-group="format">0.4507</td><td class="sub-col" data-group="format">0.7529</td><td class="sub-col" data-group="format">0.8528</td><td class="sub-col" data-group="format">0.2570</td>
+              <td>0.10</td>
+              <td>0.40</td>
+            </tr>
+            <tr>
+              <td data-sort="GPT-5.2 (high)" data-size="unknown">GPT-5.2 (high) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.3986</td>
+              <td>0.3986</td>
+              <td class="sub-col" data-group="region">0.5834</td><td class="sub-col" data-group="region">0.6594</td><td class="sub-col" data-group="region">0.0823</td><td class="sub-col" data-group="region">0.3493</td><td class="sub-col" data-group="region">0.4858</td><td class="sub-col" data-group="region">0.0839</td>
+              <td>0.4770</td>
+              <td class="sub-col" data-group="period">0.2951</td><td class="sub-col" data-group="period">0.5450</td><td class="sub-col" data-group="period">0.5833</td>
+              <td>0.5486</td>
+              <td class="sub-col" data-group="format">0.4467</td><td class="sub-col" data-group="format">0.6697</td><td class="sub-col" data-group="format">0.8264</td><td class="sub-col" data-group="format">0.2195</td>
+              <td>1.75</td>
+              <td>14.00</td>
+            </tr>
+            <tr>
+              <td data-sort="ERNIE 4.5 VL 28B" data-size="small">ERNIE 4.5 VL 28B <span class="model-size">28B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.3973</td>
+              <td>0.3973</td>
+              <td class="sub-col" data-group="region">0.5166</td><td class="sub-col" data-group="region">0.7791</td><td class="sub-col" data-group="region">0.3545</td><td class="sub-col" data-group="region">0.2767</td><td class="sub-col" data-group="region">0.4216</td><td class="sub-col" data-group="region">0.0619</td>
+              <td>0.4138</td>
+              <td class="sub-col" data-group="period">0.3437</td><td class="sub-col" data-group="period">0.4518</td><td class="sub-col" data-group="period">0.5560</td>
+              <td>0.5444</td>
+              <td class="sub-col" data-group="format">0.3677</td><td class="sub-col" data-group="format">0.8017</td><td class="sub-col" data-group="format">0.7952</td><td class="sub-col" data-group="format">0.2251</td>
+              <td>0.14</td>
+              <td>0.56</td>
+            </tr>
+            <tr>
+              <td data-sort="Llama 4 Maverick" data-size="large">Llama 4 Maverick <span class="model-size">17Bx128E</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.3839</td>
+              <td>0.3839</td>
+              <td class="sub-col" data-group="region">0.5178</td><td class="sub-col" data-group="region">0.6417</td><td class="sub-col" data-group="region">0.1262</td><td class="sub-col" data-group="region">0.3583</td><td class="sub-col" data-group="region">0.3442</td><td class="sub-col" data-group="region">0.4088</td>
+              <td>0.3671</td>
+              <td class="sub-col" data-group="period">0.1788</td><td class="sub-col" data-group="period">0.4522</td><td class="sub-col" data-group="period">0.6064</td>
+              <td>0.5209</td>
+              <td class="sub-col" data-group="format">0.3933</td><td class="sub-col" data-group="format">0.6502</td><td class="sub-col" data-group="format">0.8031</td><td class="sub-col" data-group="format">0.2665</td>
+              <td>0.27</td>
+              <td>0.85</td>
+            </tr>
+            <tr>
+              <td data-sort="Sarvam Vision" data-size="unknown">Sarvam Vision <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.3832</td>
+              <td>0.3832</td>
+              <td class="sub-col" data-group="region">0.5746</td><td class="sub-col" data-group="region">0.4961</td><td class="sub-col" data-group="region">0.5608</td><td class="sub-col" data-group="region">0.1437</td><td class="sub-col" data-group="region">0.4912</td><td class="sub-col" data-group="region">0.0438</td>
+              <td>0.4785</td>
+              <td class="sub-col" data-group="period">0.4116</td><td class="sub-col" data-group="period">0.5095</td><td class="sub-col" data-group="period">0.5379</td>
+              <td>0.5367</td>
+              <td class="sub-col" data-group="format">0.4363</td><td class="sub-col" data-group="format">0.6899</td><td class="sub-col" data-group="format">0.7996</td><td class="sub-col" data-group="format">0.2181</td>
+              <td>/</td>
+              <td>/</td>
+            </tr>
+            <tr>
+              <td data-sort="dots.ocr" data-size="tiny">dots.ocr <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.3692</td>
+              <td>0.3692</td>
+              <td class="sub-col" data-group="region">0.5866</td><td class="sub-col" data-group="region">0.6893</td><td class="sub-col" data-group="region">0.4162</td><td class="sub-col" data-group="region">0.2657</td><td class="sub-col" data-group="region">0.2643</td><td class="sub-col" data-group="region">0.0438</td>
+              <td>0.4974</td>
+              <td class="sub-col" data-group="period">0.4834</td><td class="sub-col" data-group="period">0.5066</td><td class="sub-col" data-group="period">0.5329</td>
+              <td>0.5556</td>
+              <td class="sub-col" data-group="format">0.4328</td><td class="sub-col" data-group="format">0.7678</td><td class="sub-col" data-group="format">0.8259</td><td class="sub-col" data-group="format">0.2145</td>
+              <td>/</td>
+              <td>/</td>
+            </tr>
+            <tr>
+              <td data-sort="GPT-5.2 (low)" data-size="unknown">GPT-5.2 (low) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.3647</td>
+              <td>0.3647</td>
+              <td class="sub-col" data-group="region">0.5640</td><td class="sub-col" data-group="region">0.6379</td><td class="sub-col" data-group="region">0.0816</td><td class="sub-col" data-group="region">0.2801</td><td class="sub-col" data-group="region">0.4366</td><td class="sub-col" data-group="region">0.0187</td>
+              <td>0.4495</td>
+              <td class="sub-col" data-group="period">0.2591</td><td class="sub-col" data-group="period">0.5166</td><td class="sub-col" data-group="period">0.5553</td>
+              <td>0.5223</td>
+              <td class="sub-col" data-group="format">0.4189</td><td class="sub-col" data-group="format">0.6228</td><td class="sub-col" data-group="format">0.8011</td><td class="sub-col" data-group="format">0.2083</td>
+              <td>1.75</td>
+              <td>14.00</td>
+            </tr>
+            <tr>
+              <td data-sort="Qwen-VL-OCR" data-size="unknown">Qwen-VL-OCR <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.3483</td>
+              <td>0.3483</td>
+              <td class="sub-col" data-group="region">0.5620</td><td class="sub-col" data-group="region">0.6426</td><td class="sub-col" data-group="region">0.3564</td><td class="sub-col" data-group="region">0.1609</td><td class="sub-col" data-group="region">0.3294</td><td class="sub-col" data-group="region">0.0085</td>
+              <td>0.4562</td>
+              <td class="sub-col" data-group="period">0.3698</td><td class="sub-col" data-group="period">0.5010</td><td class="sub-col" data-group="period">0.4999</td>
+              <td>0.5186</td>
+              <td class="sub-col" data-group="format">0.3972</td><td class="sub-col" data-group="format">0.7102</td><td class="sub-col" data-group="format">0.7663</td><td class="sub-col" data-group="format">0.1660</td>
+              <td>0.07</td>
+              <td>0.16</td>
+            </tr>
+            <tr>
+              <td data-sort="GPT-5.3 Codex" data-size="unknown">GPT-5.3 Codex <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.3189</td>
+              <td>0.3189</td>
+              <td class="sub-col" data-group="region">0.5164</td><td class="sub-col" data-group="region">0.6209</td><td class="sub-col" data-group="region">0.0751</td><td class="sub-col" data-group="region">0.2527</td><td class="sub-col" data-group="region">0.2643</td><td class="sub-col" data-group="region">0.0000</td>
+              <td>0.3956</td>
+              <td class="sub-col" data-group="period">0.1736</td><td class="sub-col" data-group="period">0.4717</td><td class="sub-col" data-group="period">0.5333</td>
+              <td>0.4995</td>
+              <td class="sub-col" data-group="format">0.3662</td><td class="sub-col" data-group="format">0.5521</td><td class="sub-col" data-group="format">0.8357</td><td class="sub-col" data-group="format">0.2000</td>
+              <td>1.75</td>
+              <td>14.00</td>
+            </tr>
+            <tr>
+              <td data-sort="PaddleOCR-VL-1.5" data-size="unknown">PaddleOCR-VL-1.5 <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.2931</td>
+              <td>0.2931</td>
+              <td class="sub-col" data-group="region">0.4845</td><td class="sub-col" data-group="region">0.4084</td><td class="sub-col" data-group="region">0.1493</td><td class="sub-col" data-group="region">0.1717</td><td class="sub-col" data-group="region">0.3347</td><td class="sub-col" data-group="region">0.0248</td>
+              <td>0.3688</td>
+              <td class="sub-col" data-group="period">0.2394</td><td class="sub-col" data-group="period">0.4318</td><td class="sub-col" data-group="period">0.3724</td>
+              <td>0.3284</td>
+              <td class="sub-col" data-group="format">0.3491</td><td class="sub-col" data-group="format">0.5913</td><td class="sub-col" data-group="format">0.2006</td><td class="sub-col" data-group="format">0.1280</td>
+              <td>/</td>
+              <td>/</td>
+            </tr>
+            <tr>
+              <td data-sort="GLM-OCR" data-size="unknown">GLM-OCR <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.2660</td>
+              <td>0.2660</td>
+              <td class="sub-col" data-group="region">0.5421</td><td class="sub-col" data-group="region">0.4205</td><td class="sub-col" data-group="region">0.0412</td><td class="sub-col" data-group="region">0.1746</td><td class="sub-col" data-group="region">0.1629</td><td class="sub-col" data-group="region">0.0504</td>
+              <td>0.3848</td>
+              <td class="sub-col" data-group="period">0.2346</td><td class="sub-col" data-group="period">0.4754</td><td class="sub-col" data-group="period">0.3641</td>
+              <td>0.3402</td>
+              <td class="sub-col" data-group="format">0.3662</td><td class="sub-col" data-group="format">0.5810</td><td class="sub-col" data-group="format">0.2202</td><td class="sub-col" data-group="format">0.1492</td>
+              <td>/</td>
+              <td>/</td>
+            </tr>
+            <tr>
+              <td data-sort="Mistral OCR" data-size="unknown">Mistral OCR <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.2432</td>
+              <td>0.2432</td>
+              <td class="sub-col" data-group="region">0.4644</td><td class="sub-col" data-group="region">0.4102</td><td class="sub-col" data-group="region">0.0356</td><td class="sub-col" data-group="region">0.1263</td><td class="sub-col" data-group="region">0.3713</td><td class="sub-col" data-group="region">0.0615</td>
+              <td>0.3205</td>
+              <td class="sub-col" data-group="period">0.1429</td><td class="sub-col" data-group="period">0.4526</td><td class="sub-col" data-group="period">0.4474</td>
+              <td>0.4668</td>
+              <td class="sub-col" data-group="format">0.2887</td><td class="sub-col" data-group="format">0.5483</td><td class="sub-col" data-group="format">0.8719</td><td class="sub-col" data-group="format">0.1809</td>
+              <td>1.00</td>
+              <td>1.00</td>
+            </tr>
+            <tr>
+              <td data-sort="PaddleOCR-VL v2" data-size="unknown">PaddleOCR-VL v2 <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.2365</td>
+              <td>0.2365</td>
+              <td class="sub-col" data-group="region">0.3731</td><td class="sub-col" data-group="region">0.3815</td><td class="sub-col" data-group="region">0.0114</td><td class="sub-col" data-group="region">0.1036</td><td class="sub-col" data-group="region">0.3402</td><td class="sub-col" data-group="region">0.0448</td>
+              <td>0.2768</td>
+              <td class="sub-col" data-group="period">0.1299</td><td class="sub-col" data-group="period">0.3078</td><td class="sub-col" data-group="period">0.3657</td>
+              <td>0.2685</td>
+              <td class="sub-col" data-group="format">0.2842</td><td class="sub-col" data-group="format">0.4066</td><td class="sub-col" data-group="format">0.2336</td><td class="sub-col" data-group="format">0.1294</td>
+              <td>/</td>
+              <td>/</td>
+            </tr>
+            <tr>
+              <td data-sort="OlmOCR-2" data-size="small">OlmOCR-2 <span class="model-size">7B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.2230</td>
+              <td>0.2230</td>
+              <td class="sub-col" data-group="region">0.3287</td><td class="sub-col" data-group="region">0.4291</td><td class="sub-col" data-group="region">0.0780</td><td class="sub-col" data-group="region">0.1960</td><td class="sub-col" data-group="region">0.1049</td><td class="sub-col" data-group="region">0.0093</td>
+              <td>0.2435</td>
+              <td class="sub-col" data-group="period">0.0807</td><td class="sub-col" data-group="period">0.2799</td><td class="sub-col" data-group="period">0.3524</td>
+              <td>0.2640</td>
+              <td class="sub-col" data-group="format">0.2440</td><td class="sub-col" data-group="format">0.3741</td><td class="sub-col" data-group="format">0.2761</td><td class="sub-col" data-group="format">0.1435</td>
+              <td>/</td>
+              <td>/</td>
+            </tr>
+            <tr>
+              <td data-sort="PP-OCRv5" data-size="n/a">PP-OCRv5 <span class="model-tag classical">Classical OCR</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.2120</td>
+              <td>0.2120</td>
+              <td class="sub-col" data-group="region">0.4748</td><td class="sub-col" data-group="region">0.6559</td><td class="sub-col" data-group="region">0.0016</td><td class="sub-col" data-group="region">0.0348</td><td class="sub-col" data-group="region">0.0243</td><td class="sub-col" data-group="region">0.0296</td>
+              <td>0.3197</td>
+              <td class="sub-col" data-group="period">0.1596</td><td class="sub-col" data-group="period">0.4529</td><td class="sub-col" data-group="period">0.3930</td>
+              <td>0.4563</td>
+              <td class="sub-col" data-group="format">0.2669</td><td class="sub-col" data-group="format">0.5575</td><td class="sub-col" data-group="format">0.7961</td><td class="sub-col" data-group="format">0.1905</td>
+              <td>/</td>
+              <td>/</td>
+            </tr>
+            <tr>
+              <td data-sort="PaddleOCR-VL-0.9B" data-size="tiny">PaddleOCR-VL-0.9B <span class="model-size">0.9B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.1795</td>
+              <td>0.1795</td>
+              <td class="sub-col" data-group="region">0.3663</td><td class="sub-col" data-group="region">0.3914</td><td class="sub-col" data-group="region">0.0201</td><td class="sub-col" data-group="region">0.0415</td><td class="sub-col" data-group="region">0.0925</td><td class="sub-col" data-group="region">0.0338</td>
+              <td>0.2353</td>
+              <td class="sub-col" data-group="period">0.0814</td><td class="sub-col" data-group="period">0.3588</td><td class="sub-col" data-group="period">0.3019</td>
+              <td>0.3162</td>
+              <td class="sub-col" data-group="format">0.1987</td><td class="sub-col" data-group="format">0.5310</td><td class="sub-col" data-group="format">0.3901</td><td class="sub-col" data-group="format">0.1187</td>
+              <td>/</td>
+              <td>/</td>
+            </tr>
+            <tr>
+              <td data-sort="DeepSeek-OCR" data-size="tiny">DeepSeek-OCR <span class="model-size">1.3B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.1762</td>
+              <td>0.1762</td>
+              <td class="sub-col" data-group="region">0.2574</td><td class="sub-col" data-group="region">0.4116</td><td class="sub-col" data-group="region">0.1256</td><td class="sub-col" data-group="region">0.0670</td><td class="sub-col" data-group="region">0.0797</td><td class="sub-col" data-group="region">0.0254</td>
+              <td>0.1970</td>
+              <td class="sub-col" data-group="period">0.0991</td><td class="sub-col" data-group="period">0.2278</td><td class="sub-col" data-group="period">0.2725</td>
+              <td>0.2484</td>
+              <td class="sub-col" data-group="format">0.1768</td><td class="sub-col" data-group="format">0.3228</td><td class="sub-col" data-group="format">0.3155</td><td class="sub-col" data-group="format">0.1640</td>
+              <td>0.03</td>
+              <td>0.03</td>
+            </tr>
+            <tr>
+              <td data-sort="DeepSeek-OCR2" data-size="unknown">DeepSeek-OCR2 <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.1690</td>
+              <td>0.1690</td>
+              <td class="sub-col" data-group="region">0.3680</td><td class="sub-col" data-group="region">0.5368</td><td class="sub-col" data-group="region">0.0739</td><td class="sub-col" data-group="region">0.0625</td><td class="sub-col" data-group="region">0.1649</td><td class="sub-col" data-group="region">0.0370</td>
+              <td>0.1823</td>
+              <td class="sub-col" data-group="period">0.0980</td><td class="sub-col" data-group="period">0.2878</td><td class="sub-col" data-group="period">0.3466</td>
+              <td>0.3319</td>
+              <td class="sub-col" data-group="format">0.1670</td><td class="sub-col" data-group="format">0.5477</td><td class="sub-col" data-group="format">0.5290</td><td class="sub-col" data-group="format">0.1293</td>
+              <td>0.03</td>
+              <td>0.03</td>
+            </tr>
+            <tr>
+              <td data-sort="Nemotron-Nano-12B" data-size="medium">Nemotron-Nano-12B <span class="model-size">12B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.1359</td>
+              <td>0.1359</td>
+              <td class="sub-col" data-group="region">0.2912</td><td class="sub-col" data-group="region">0.4353</td><td class="sub-col" data-group="region">0.0143</td><td class="sub-col" data-group="region">0.0679</td><td class="sub-col" data-group="region">0.0273</td><td class="sub-col" data-group="region">0.0004</td>
+              <td>0.1779</td>
+              <td class="sub-col" data-group="period">0.0464</td><td class="sub-col" data-group="period">0.2657</td><td class="sub-col" data-group="period">0.3087</td>
+              <td>0.3223</td>
+              <td class="sub-col" data-group="format">0.1521</td><td class="sub-col" data-group="format">0.3392</td><td class="sub-col" data-group="format">0.6151</td><td class="sub-col" data-group="format">0.2032</td>
+              <td>0.20</td>
+              <td>0.20</td>
+            </tr>
+            <tr>
+              <td data-sort="Kimi K2.5" data-size="unknown">Kimi K2.5 <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.1138</td>
+              <td>0.1138</td>
+              <td class="sub-col" data-group="region">0.2094</td><td class="sub-col" data-group="region">0.3004</td><td class="sub-col" data-group="region">0.0323</td><td class="sub-col" data-group="region">0.0497</td><td class="sub-col" data-group="region">0.0238</td><td class="sub-col" data-group="region">0.0000</td>
+              <td>0.1365</td>
+              <td class="sub-col" data-group="period">0.0347</td><td class="sub-col" data-group="period">0.1414</td><td class="sub-col" data-group="period">0.2715</td>
+              <td>0.1821</td>
+              <td class="sub-col" data-group="format">0.1448</td><td class="sub-col" data-group="format">0.2229</td><td class="sub-col" data-group="format">0.3720</td><td class="sub-col" data-group="format">0.0168</td>
+              <td>0.60</td>
+              <td>2.50</td>
+            </tr>
+            <tr>
+              <td data-sort="LayoutParser" data-size="n/a">LayoutParser <span class="model-tag classical">Classical OCR</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.0953</td>
+              <td>0.0953</td>
+              <td class="sub-col" data-group="region">0.3033</td><td class="sub-col" data-group="region">0.0510</td><td class="sub-col" data-group="region">0.0220</td><td class="sub-col" data-group="region">0.0536</td><td class="sub-col" data-group="region">0.0848</td><td class="sub-col" data-group="region">0.0732</td>
+              <td>0.1677</td>
+              <td class="sub-col" data-group="period">0.0892</td><td class="sub-col" data-group="period">0.2705</td><td class="sub-col" data-group="period">0.1650</td>
+              <td>0.2027</td>
+              <td class="sub-col" data-group="format">0.1372</td><td class="sub-col" data-group="format">0.3988</td><td class="sub-col" data-group="format">0.1187</td><td class="sub-col" data-group="format">0.1462</td>
+              <td>/</td>
+              <td>/</td>
+            </tr>
+            <tr>
+              <td data-sort="Tesseract v5" data-size="n/a">Tesseract v5 <span class="model-tag classical">Classical OCR</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.0953</td>
+              <td>0.0953</td>
+              <td class="sub-col" data-group="region">0.3036</td><td class="sub-col" data-group="region">0.0510</td><td class="sub-col" data-group="region">0.0220</td><td class="sub-col" data-group="region">0.0536</td><td class="sub-col" data-group="region">0.0848</td><td class="sub-col" data-group="region">0.0732</td>
+              <td>0.1673</td>
+              <td class="sub-col" data-group="period">0.0892</td><td class="sub-col" data-group="period">0.2709</td><td class="sub-col" data-group="period">0.1627</td>
+              <td>0.2004</td>
+              <td class="sub-col" data-group="format">0.1372</td><td class="sub-col" data-group="format">0.3988</td><td class="sub-col" data-group="format">0.1081</td><td class="sub-col" data-group="format">0.1479</td>
+              <td>/</td>
+              <td>/</td>
+            </tr>
+            <tr>
+              <td data-sort="EfficientOCR" data-size="n/a">EfficientOCR <span class="model-tag classical">Classical OCR</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.0359</td>
+              <td>0.0359</td>
+              <td class="sub-col" data-group="region">0.0979</td><td class="sub-col" data-group="region">0.0186</td><td class="sub-col" data-group="region">0.0168</td><td class="sub-col" data-group="region">0.0292</td><td class="sub-col" data-group="region">0.0374</td><td class="sub-col" data-group="region">0.0213</td>
+              <td>0.0568</td>
+              <td class="sub-col" data-group="period">0.0294</td><td class="sub-col" data-group="period">0.1057</td><td class="sub-col" data-group="period">0.0474</td>
+              <td>0.0806</td>
+              <td class="sub-col" data-group="format">0.0438</td><td class="sub-col" data-group="format">0.1236</td><td class="sub-col" data-group="format">0.0628</td><td class="sub-col" data-group="format">0.0944</td>
+              <td>/</td>
+              <td>/</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- V1 Panel -->
+      <div class="version-panel" id="panel-v1">
+        <table class="results-table sortable" id="table-v1">
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>Overall</th>
+              <th>HW [A]</th>
+              <th>HW [B]</th>
+              <th>Tables [A]</th>
+              <th>Tables [B]</th>
+              <th>$/M In</th>
+              <th>$/M Out</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td data-sort="Gemini 3.1 Pro (low)" data-size="unknown">Gemini 3.1 Pro (low) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td><td class="best">0.5965</td><td class="best">0.6959</td><td class="best">0.5260</td><td>0.9636</td><td class="best">0.3640</td><td>2.00</td><td>12.00</td></tr>
+            <tr><td data-sort="Gemini 3 Flash (low)" data-size="unknown">Gemini 3 Flash (low) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td><td>0.5522</td><td>0.6369</td><td>0.5153</td><td>0.9717</td><td>0.2737</td><td>0.50</td><td>3.00</td></tr>
+            <tr><td data-sort="Gemini 3 Pro (low)" data-size="unknown">Gemini 3 Pro (low) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td><td>0.5472</td><td>0.6445</td><td>0.5289</td><td>0.8936</td><td>0.2667</td><td>2.00</td><td>12.00</td></tr>
+            <tr><td data-sort="Gemini 3 Pro (high)" data-size="unknown">Gemini 3 Pro (high) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td><td>0.5406</td><td>0.6589</td><td>0.5106</td><td>0.8989</td><td>0.2400</td><td>2.00</td><td>12.00</td></tr>
+            <tr><td data-sort="Gemini 2.0 Flash" data-size="unknown">Gemini 2.0 Flash <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td><td>0.5100</td><td>0.5849</td><td>0.4312</td><td>0.9471</td><td>0.2850</td><td>0.10</td><td>0.40</td></tr>
+            <tr><td data-sort="Gemini 3 Flash (high)" data-size="unknown">Gemini 3 Flash (high) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td><td>0.4808</td><td>0.6049</td><td>0.4750</td><td>0.7551</td><td>0.1862</td><td>0.50</td><td>3.00</td></tr>
+            <tr><td data-sort="Gemini 2.5 Flash" data-size="unknown">Gemini 2.5 Flash <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td><td>0.4670</td><td>0.5390</td><td>0.3689</td><td>0.9107</td><td>0.2650</td><td>0.15</td><td>0.60</td></tr>
+            <tr><td data-sort="Qwen3.5-397B (thinking)" data-size="large">Qwen3.5-397B (thinking) <span class="model-size">397B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td><td>0.4598</td><td>0.6128</td><td>0.2734</td><td>0.9016</td><td>0.2552</td><td>0.60</td><td>3.60</td></tr>
+            <tr><td data-sort="Qwen3-VL-235B" data-size="large">Qwen3-VL-235B <span class="model-size">235B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td><td>0.4581</td><td>0.6174</td><td>0.1969</td><td>0.9398</td><td>0.3132</td><td>0.20</td><td>0.88</td></tr>
+            <tr><td data-sort="Qwen3.5-397B" data-size="large">Qwen3.5-397B <span class="model-size">397B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td><td>0.4484</td><td>0.6055</td><td>0.2409</td><td>0.9301</td><td>0.2432</td><td>0.60</td><td>3.60</td></tr>
+            <tr><td data-sort="Qwen3.5-27B" data-size="small">Qwen3.5-27B <span class="model-size">27B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td><td>0.4340</td><td>0.5733</td><td>0.1976</td><td>0.9368</td><td>0.2760</td><td>0.30</td><td>2.40</td></tr>
+            <tr><td data-sort="Qwen3.5-35B" data-size="small">Qwen3.5-35B <span class="model-size">35B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td><td>0.4296</td><td>0.5784</td><td>0.2273</td><td>0.9275</td><td>0.2210</td><td>0.25</td><td>2.00</td></tr>
+            <tr><td data-sort="Qwen3.5-Flash" data-size="unknown">Qwen3.5-Flash <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td><td>0.4280</td><td>0.5763</td><td>0.2247</td><td>0.9247</td><td>0.2220</td><td>0.10</td><td>0.40</td></tr>
+            <tr><td data-sort="Qwen3.5-122B" data-size="large">Qwen3.5-122B <span class="model-size">122B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td><td>0.4264</td><td>0.5637</td><td>0.1954</td><td>0.9195</td><td>0.2692</td><td>0.40</td><td>3.20</td></tr>
+            <tr><td data-sort="Qwen3-VL-30B" data-size="large">Qwen3-VL-30B <span class="model-size">30B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td><td>0.4194</td><td>0.5716</td><td>0.1699</td><td>0.9104</td><td>0.2653</td><td>0.10</td><td>0.40</td></tr>
+            <tr><td data-sort="Qwen3-VL-8B" data-size="small">Qwen3-VL-8B <span class="model-size">8B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td><td>0.4105</td><td>0.5705</td><td>0.1637</td><td>0.8456</td><td>0.2709</td><td>0.08</td><td>0.50</td></tr>
+            <tr><td data-sort="ERNIE 4.5 VL 424B" data-size="large">ERNIE 4.5 VL 424B <span class="model-size">424B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td><td>0.4057</td><td>0.5468</td><td>0.1896</td><td>0.9062</td><td>0.2222</td><td>0.55</td><td>2.20</td></tr>
+            <tr><td data-sort="Seed 2.0 Pro" data-size="unknown">Seed 2.0 Pro <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td><td>0.4058</td><td>0.4582</td><td>0.2601</td><td>0.9513</td><td>0.2350</td><td>0.47</td><td>2.37</td></tr>
+            <tr><td data-sort="GPT-5.2 (high)" data-size="unknown">GPT-5.2 (high) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td><td>0.3932</td><td>0.5190</td><td>0.1959</td><td>0.8951</td><td>0.2074</td><td>1.75</td><td>14.00</td></tr>
+            <tr><td data-sort="Llama 4 Maverick" data-size="large">Llama 4 Maverick <span class="model-size">400B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td><td>0.3911</td><td>0.4563</td><td>0.1884</td><td>0.9358</td><td>0.2704</td><td>0.15</td><td>0.60</td></tr>
+            <tr><td data-sort="ERNIE 4.5 VL 28B" data-size="medium">ERNIE 4.5 VL 28B <span class="model-size">28B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td><td>0.3837</td><td>0.5256</td><td>0.1537</td><td>0.8735</td><td>0.2212</td><td>0.55</td><td>2.20</td></tr>
+            <tr><td data-sort="GPT-5.2 (low)" data-size="unknown">GPT-5.2 (low) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td><td>0.3759</td><td>0.5140</td><td>0.1693</td><td>0.8445</td><td>0.2014</td><td>1.75</td><td>14.00</td></tr>
+            <tr><td data-sort="Seed 2.0 Lite" data-size="unknown">Seed 2.0 Lite <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td><td>0.3724</td><td>0.4653</td><td>0.1918</td><td>0.9013</td><td>0.1970</td><td>0.47</td><td>2.37</td></tr>
+            <tr><td data-sort="dots.ocr-1.5" data-size="tiny">dots.ocr-1.5 <span class="model-size">3B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td><td>0.3720</td><td>0.5670</td><td>0.1423</td><td>0.7768</td><td>0.1810</td><td>/</td><td>/</td></tr>
+            <tr><td data-sort="Qwen-VL-OCR" data-size="unknown">Qwen-VL-OCR <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td><td>0.3525</td><td>0.5082</td><td>0.1105</td><td>0.8696</td><td>0.1720</td><td>0.07</td><td>0.16</td></tr>
+            <tr><td data-sort="Datalab (accurate)" data-size="unknown">Datalab (accurate) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td><td>0.3477</td><td>0.3575</td><td>0.1854</td><td>0.9260</td><td>0.2363</td><td>?</td><td>?</td></tr>
+            <tr><td data-sort="dots.ocr" data-size="tiny">dots.ocr <span class="model-size">3B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td><td>0.3328</td><td>0.4193</td><td>0.0751</td><td>0.9150</td><td>0.2299</td><td>/</td><td>/</td></tr>
+            <tr><td data-sort="GLM-OCR" data-size="tiny">GLM-OCR <span class="model-size">0.9B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td><td>0.3247</td><td>0.4369</td><td>0.0693</td><td>0.8200</td><td>0.2283</td><td>0.03</td><td>0.03</td></tr>
+            <tr><td data-sort="PaddleOCR-VL-1.5" data-size="tiny">PaddleOCR-VL-1.5 <span class="model-size">0.9B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td><td>0.3131</td><td>0.4066</td><td>0.1155</td><td>0.7949</td><td>0.1805</td><td>/</td><td>/</td></tr>
+            <tr><td data-sort="Mistral OCR" data-size="unknown">Mistral OCR <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td><td>0.3006</td><td>0.3103</td><td>0.1063</td><td class="best">0.9760</td><td>0.1784</td><td colspan="2">$2/1K pages</td></tr>
+            <tr><td data-sort="Datalab (fast)" data-size="unknown">Datalab (fast) <span class="model-tag classical">Classical OCR</span> <span class="model-tag proprietary">Proprietary</span></td><td>0.2975</td><td>0.3031</td><td>0.0837</td><td>0.9169</td><td>0.2317</td><td>?</td><td>?</td></tr>
+            <tr><td data-sort="PaddleOCR-VL-0.9B" data-size="tiny">PaddleOCR-VL-0.9B <span class="model-size">0.9B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td><td>0.2864</td><td>0.3231</td><td>0.0856</td><td>0.8047</td><td>0.2145</td><td>/</td><td>/</td></tr>
+            <tr><td data-sort="Sarvam Vision" data-size="unknown">Sarvam Vision <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td><td>0.2735</td><td>0.2851</td><td>0.1899</td><td>0.7194</td><td>0.1335</td><td>/</td><td>/</td></tr>
+            <tr><td data-sort="PP-OCRv5" data-size="tiny">PP-OCRv5 <span class="model-tag classical">Classical OCR</span> <span class="model-tag open-source">Open Source</span></td><td>0.2501</td><td>0.3400</td><td>0.0069</td><td>0.7319</td><td>0.1759</td><td>/</td><td>/</td></tr>
+            <tr><td data-sort="Nemotron-Nano-12B" data-size="medium">Nemotron-Nano-12B <span class="model-size">12B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td><td>0.2177</td><td>0.2568</td><td>0.0127</td><td>0.6273</td><td>0.2020</td><td>0.20</td><td>0.20</td></tr>
+            <tr><td data-sort="OlmOCR-2" data-size="small">OlmOCR-2 <span class="model-size">7B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td><td>0.2087</td><td>0.3405</td><td>0.0696</td><td>0.2791</td><td>0.1624</td><td>/</td><td>/</td></tr>
+            <tr><td data-sort="LightOnOCR-2-1B" data-size="tiny">LightOnOCR-2-1B <span class="model-size">1B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td><td>0.2024</td><td>0.3138</td><td>0.1005</td><td>0.4828</td><td>0.0345</td><td>/</td><td>/</td></tr>
+            <tr><td data-sort="DeepSeek-OCR" data-size="tiny">DeepSeek-OCR <span class="model-size">3B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td><td>0.1997</td><td>0.2534</td><td>0.0336</td><td>0.5004</td><td>0.1732</td><td>0.03</td><td>0.03</td></tr>
+            <tr><td data-sort="Kimi K2.5" data-size="unknown">Kimi K2.5 <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td><td>0.1336</td><td>0.2081</td><td>0.0415</td><td>0.3944</td><td>0.0129</td><td>0.60</td><td>2.50</td></tr>
+            <tr><td data-sort="DeepSeek-OCR2" data-size="tiny">DeepSeek-OCR2 <span class="model-size">3B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td><td>0.1181</td><td>0.0995</td><td>0.0303</td><td>0.3715</td><td>0.1191</td><td>0.03</td><td>0.03</td></tr>
+            <tr><td data-sort="Tesseract" data-size="tiny">Tesseract <span class="model-tag classical">Classical OCR</span> <span class="model-tag open-source">Open Source</span></td><td>0.1091</td><td>0.1037</td><td>0.0285</td><td>0.1696</td><td>0.1808</td><td>/</td><td>/</td></tr>
+            <tr><td data-sort="Layout Parser" data-size="tiny">Layout Parser <span class="model-tag classical">Classical OCR</span> <span class="model-tag open-source">Open Source</span></td><td>0.1082</td><td>0.1037</td><td>0.0285</td><td>0.1609</td><td>0.1815</td><td>/</td><td>/</td></tr>
+            <tr><td data-sort="Efficient OCR" data-size="tiny">EfficientOCR <span class="model-tag classical">Classical OCR</span> <span class="model-tag open-source">Open Source</span></td><td>0.0635</td><td>0.0509</td><td>0.0108</td><td>0.1104</td><td>0.1187</td><td>/</td><td>/</td></tr>
+          </tbody>
+        </table>
+      </div>
 
       <p style="margin-top: 1em; font-size: 0.9em; color: #666;">
         <strong>API Cost Note:</strong> Pricing shown per million tokens ($/M In = input cost, $/M Out = output cost).
         "/" indicates free/open-source models. "?" indicates proprietary pricing (contact vendor). Costs are approximate
         and may vary by provider or region. Data collected February 2026.
       </p>
+
+      <h3 style="margin-top: 2em;">Cost vs Performance</h3>
+          <p style="font-size: 0.92em;">Average token cost = (input + output price per 1M tokens) / 2. Open-source models without API pricing
+            use estimated self-hosting costs based on model size and typical cloud GPU rates.
+            Models with no viable cost estimate are omitted. Log scale on x-axis.</p>
+          <div style="max-width: 800px; margin: 1em auto;">
+            <canvas id="cost-perf-chart-main" width="800" height="450"></canvas>
+          </div>
+          <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+                                                                                                                                                      <script>
+          (function() {
+            const data = [
+              [7.000, 0.7067, "Gemini 3.1 Pro (low)", "#4285F4"],
+              [7.000, 0.6989, "Gemini 3 Pro (low)", "#4285F4"],
+              [1.750, 0.6980, "Gemini 3 Flash (low)", "#4285F4"],
+              [7.000, 0.6908, "Gemini 3 Pro (high)", "#4285F4"],
+              [1.750, 0.6800, "Gemini 3 Flash (high)", "#4285F4"],
+              [0.250, 0.5677, "Gemini 2.0 Flash", "#4285F4"],
+              [9.000, 0.5564, "Claude Sonnet 4.6", "#B8860B"],
+              [45.000, 0.5230, "Claude Opus 4.6", "#B8860B"],
+              [1.420, 0.5048, "Seed 2.0 Pro", "#607D8B"],
+              [2.100, 0.5013, "Qwen3.5-397B (thinking)", "#E91E63"],
+              [2.100, 0.4938, "Qwen3.5-397B", "#E91E63"],
+              [0.375, 0.4849, "Gemini 2.5 Flash", "#4285F4"],
+              [1.800, 0.4747, "Qwen3.5-122B", "#E91E63"],
+              [1.420, 0.4675, "Seed 2.0 Lite", "#607D8B"],
+              [1.125, 0.4632, "Qwen3.5-35B", "#E91E63"],
+              [1.400, 0.4627, "Qwen3.5-Plus", "#E91E63"],
+              [0.250, 0.4611, "Qwen3.5-Flash", "#E91E63"],
+              [0.540, 0.4556, "Qwen3-VL-235B", "#E91E63"],
+              [1.350, 0.4330, "Qwen3.5-27B", "#E91E63"],
+              [0.835, 0.4312, "ERNIE 4.5 VL 424B", "#607D8B"],
+              [0.290, 0.4282, "Qwen3-VL-8B", "#E91E63"],
+              [0.250, 0.4221, "Qwen3-VL-30B", "#E91E63"],
+              [7.875, 0.3986, "GPT-5.2 (high)", "#10a37f"],
+              [0.350, 0.3973, "ERNIE 4.5 VL 28B", "#607D8B"],
+              [0.560, 0.3839, "Llama 4 Maverick", "#607D8B"],
+              [0.100, 0.3832, "Sarvam Vision", "#607D8B"],
+              [0.020, 0.3692, "dots.ocr", "#607D8B"],
+              [7.875, 0.3647, "GPT-5.2 (low)", "#10a37f"],
+              [0.115, 0.3483, "Qwen-VL-OCR", "#E91E63"],
+              [7.875, 0.3189, "GPT-5.3 Codex", "#10a37f"],
+              [0.020, 0.2931, "PaddleOCR-VL-1.5", "#607D8B"],
+              [0.050, 0.2660, "GLM-OCR", "#607D8B"],
+              [1.000, 0.2432, "Mistral OCR", "#FF6B35"],
+              [0.020, 0.2365, "PaddleOCR-VL v2", "#607D8B"],
+              [0.100, 0.2230, "OlmOCR-2", "#607D8B"],
+              [0.010, 0.2120, "PP-OCRv5", "#999"],
+              [0.020, 0.1795, "PaddleOCR-VL-0.9B", "#607D8B"],
+              [0.030, 0.1762, "DeepSeek-OCR", "#607D8B"],
+              [0.030, 0.1690, "DeepSeek-OCR2", "#607D8B"],
+              [0.200, 0.1359, "Nemotron-Nano-12B", "#607D8B"],
+              [1.550, 0.1138, "Kimi K2.5", "#607D8B"],
+              [0.005, 0.0953, "LayoutParser", "#999"],
+              [0.005, 0.0953, "Tesseract v5", "#999"],
+              [0.010, 0.0359, "EfficientOCR", "#999"]
+            ];
+            const batchData = [
+              [3.500, 0.7067, "Gemini 3.1 Pro (low) (batch)", "#4285F4", 7.000],
+              [3.500, 0.6989, "Gemini 3 Pro (low) (batch)", "#4285F4", 7.000],
+              [0.875, 0.6980, "Gemini 3 Flash (low) (batch)", "#4285F4", 1.750],
+              [3.500, 0.6908, "Gemini 3 Pro (high) (batch)", "#4285F4", 7.000],
+              [0.875, 0.6800, "Gemini 3 Flash (high) (batch)", "#4285F4", 1.750],
+              [0.125, 0.5677, "Gemini 2.0 Flash (batch)", "#4285F4", 0.250],
+              [0.188, 0.4849, "Gemini 2.5 Flash (batch)", "#4285F4", 0.375]
+            ];
+            const ctx = document.getElementById("cost-perf-chart-main").getContext("2d");
+            new Chart(ctx, {
+              type: "scatter",
+              data: {
+                datasets: [
+                  {
+                    label: "Models",
+                    data: data.map(d => ({x: d[0], y: d[1], label: d[2]})),
+                    pointBackgroundColor: data.map(d => d[3]),
+                    pointBorderColor: data.map(d => d[3]),
+                    pointRadius: 6,
+                    pointHoverRadius: 8,
+                  },
+                  {
+                    label: "Batch",
+                    data: batchData.map(d => ({x: d[0], y: d[1], label: d[2], stdX: d[4]})),
+                    pointBackgroundColor: batchData.map(d => d[3] + "40"),
+                    pointBorderColor: batchData.map(d => d[3] + "80"),
+                    pointRadius: 5,
+                    pointHoverRadius: 7,
+                    pointStyle: "circle",
+                  }
+                ]
+              },
+              options: {
+                responsive: true,
+                plugins: {
+                  legend: {display: false},
+                  tooltip: {
+                    callbacks: {
+                      label: function(ctx) {
+                        const d = ctx.raw;
+                        return d.label + ": " + d.y.toFixed(4) + " @ $" + d.x.toFixed(2) + "/1M tok";
+                      }
+                    }
+                  }
+                },
+                scales: {
+                  x: {
+                    type: "logarithmic",
+                    title: {display: true, text: "Avg Cost ($/1M tokens)", font: {size: 13}},
+                    min: 0.003, max: 60,
+                    afterBuildTicks: function(axis) {
+                      axis.ticks = [0.01, 0.1, 1, 10, 50].map(v => ({value: v}));
+                    },
+                    ticks: { callback: function(v) { return "$" + v; } }
+                  },
+                  y: {
+                    title: {display: true, text: "socOCRbench v2 Score", font: {size: 13}},
+                    min: 0, max: 0.75,
+                  }
+                }
+              },
+              plugins: [{
+                afterDraw: function(chart) {
+                  const ctx2 = chart.ctx;
+                  // Draw lines connecting batch dots to standard dots
+                  const batchMeta = chart.getDatasetMeta(1);
+                  const mainMeta = chart.getDatasetMeta(0);
+                  batchMeta.data.forEach(function(bPt, i) {
+                    const bd = chart.data.datasets[1].data[i];
+                    // Find matching main point by stdX and same y
+                    for (let j = 0; j < mainMeta.data.length; j++) {
+                      const md = chart.data.datasets[0].data[j];
+                      if (Math.abs(md.x - bd.stdX) < 0.001 && Math.abs(md.y - bd.y) < 0.0001) {
+                        ctx2.beginPath();
+                        ctx2.moveTo(bPt.x, bPt.y);
+                        ctx2.lineTo(mainMeta.data[j].x, mainMeta.data[j].y);
+                        ctx2.strokeStyle = chart.data.datasets[1].pointBorderColor[i];
+                        ctx2.lineWidth = 1.5;
+                        ctx2.setLineDash([4, 3]);
+                        ctx2.stroke();
+                        ctx2.setLineDash([]);
+                        break;
+                      }
+                    }
+                  });
+                  // Draw text labels
+                  ctx2.font = "10px sans-serif";
+                  ctx2.textAlign = "left";
+                  const show = new Set(["Claude Opus 4.6", "Claude Sonnet 4.6", "DeepSeek-OCR", "ERNIE 4.5 VL 424B", "GPT-5.2 (high)", "Gemini 2.0 Flash", "Gemini 3 Flash (low)", "Gemini 3.1 Pro (low)", "Llama 4 Maverick", "Mistral OCR", "PP-OCRv5", "PaddleOCR-VL-0.9B", "Qwen-VL-OCR", "Qwen3-VL-235B", "Qwen3.5-397B", "Seed 2.0 Pro", "Tesseract v5"]);
+                  chart.data.datasets[0].data.forEach(function(d, i) {
+                    if (!show.has(d.label)) return;
+                    const meta = mainMeta.data[i];
+                    if (!meta) return;
+                    ctx2.fillStyle = "#333";
+                    ctx2.fillText(d.label, meta.x + 8, meta.y - 6);
+                  });
+                }
+              }]
+            });
+          })();
+          </script>
+          <p style="font-size: 0.85em; color: #666; margin-top: 0.5em;">
+            <strong>Legend:</strong>
+            <span style="color: #4285F4;">&bull; Google</span> &nbsp;
+            <span style="color: #B8860B;">&bull; Anthropic</span> &nbsp;
+            <span style="color: #10a37f;">&bull; OpenAI</span> &nbsp;
+            <span style="color: #E91E63;">&bull; Qwen</span> &nbsp;
+            <span style="color: #FF6B35;">&bull; Mistral</span> &nbsp;
+            <span style="color: #607D8B;">&bull; Other</span> &nbsp;
+            <span style="color: #999;">&bull; Traditional OCR</span>
+          </p>
 
       <details style="margin-top: 2em;">
         <summary style="cursor: pointer; font-weight: bold; font-size: 1.1em;">Methodology &amp; Reproduction</summary>
@@ -813,6 +1190,16 @@
             <code>1 - edit_distance(pred, gt) / max(len(pred), len(gt))</code>.
           </p>
 
+          <h4>v2 Scoring</h4>
+          <p>The headline <strong>socOCRbench</strong> score is a region macro-average: the mean of per-region
+            dataset means, so that each region counts equally regardless of sample count. Regions: Europe, East Asia,
+            South Asia, Southeast Asia, MENA, East Africa. Period and format breakdowns are shown as supplementary
+            columns. Periods: Pre-modern (&lt;1700), Historical (1700&ndash;1950), Contemporary (post-1950).
+            Formats: Handwritten text, Printed text, Printed tables, Handwritten tables.</p>
+
+          <h4>v1 Scoring</h4>
+          <p>A simpler weighted average across HW [A], HW [B], Tables [A], and Tables [B] categories.</p>
+
           <table class="results-table" style="font-size: 0.9em;">
             <thead>
               <tr>
@@ -822,221 +1209,52 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Gemini 3.1 Pro (low)</td>
-                <td>OpenRouter</td>
-                <td><code>google/gemini-3.1-pro-preview</code>, reasoning_effort=low</td>
-              </tr>
-              <tr>
-                <td>Gemini 3 Pro (low)</td>
-                <td>OpenRouter</td>
-                <td><code>google/gemini-3-pro-preview</code>, reasoning_effort=low</td>
-              </tr>
-              <tr>
-                <td>Gemini 3 Pro (high)</td>
-                <td>OpenRouter</td>
-                <td><code>google/gemini-3-pro-preview</code>, reasoning_effort=high</td>
-              </tr>
-              <tr>
-                <td>Gemini 2.5 Flash</td>
-                <td>Google GenAI SDK</td>
-                <td><code>gemini-2.5-flash</code> via <code>genai.Client</code></td>
-              </tr>
-              <tr>
-                <td>Gemini 2.0 Flash</td>
-                <td>OpenRouter</td>
-                <td><code>google/gemini-2.0-flash-001</code></td>
-              </tr>
-              <tr>
-                <td>Gemini 3 Flash (low)</td>
-                <td>OpenRouter</td>
-                <td><code>google/gemini-3-flash-preview</code>, reasoning_effort=low</td>
-              </tr>
-              <tr>
-                <td>Gemini 3 Flash (high)</td>
-                <td>OpenRouter</td>
-                <td><code>google/gemini-3-flash-preview</code>, reasoning_effort=high</td>
-              </tr>
-              <tr>
-                <td>Qwen3-VL-235B</td>
-                <td>OpenRouter</td>
-                <td><code>qwen/qwen3-vl-235b-a22b-instruct</code></td>
-              </tr>
-              <tr>
-                <td>Qwen3-VL-30B</td>
-                <td>DeepInfra</td>
-                <td><code>Qwen/Qwen3-VL-30B-A3B-Instruct</code></td>
-              </tr>
-              <tr>
-                <td>GPT-5.2 (low)</td>
-                <td>OpenRouter</td>
-                <td><code>openai/gpt-5.2</code>, reasoning_effort=low</td>
-              </tr>
-              <tr>
-                <td>GPT-5.2 (high)</td>
-                <td>OpenRouter</td>
-                <td><code>openai/gpt-5.2</code>, reasoning_effort=high</td>
-              </tr>
-              <tr>
-                <td>Seed 2.0 Pro</td>
-                <td>ZenMux</td>
-                <td><code>volcengine/doubao-seed-2.0-pro</code></td>
-              </tr>
-              <tr>
-                <td>Seed 2.0 Lite</td>
-                <td>ZenMux</td>
-                <td><code>volcengine/doubao-seed-2.0-lite</code></td>
-              </tr>
-              <tr>
-                <td>dots.ocr-1.5</td>
-                <td>Local (vLLM)</td>
-                <td><code>rednote-hilab/dots.ocr-1.5</code>, native <code>prompt_ocr</code></td>
-              </tr>
-              <tr>
-                <td>dots.ocr</td>
-                <td>Replicate</td>
-                <td><code>sljeff/dots.ocr</code>, image-only input</td>
-              </tr>
-              <tr>
-                <td>GLM-OCR</td>
-                <td>Zhipu AI</td>
-                <td><code>glm-ocr</code> via layout parsing API</td>
-              </tr>
-              <tr>
-                <td>PaddleOCR-VL-1.5</td>
-                <td>PaddlePaddle Cloud</td>
-                <td>Layout parsing API (<code>aistudio-app.com</code>)</td>
-              </tr>
-              <tr>
-                <td>PaddleOCR-VL-0.9B</td>
-                <td>PaddlePaddle Cloud</td>
-                <td>Layout parsing API (<code>aistudio-app.com</code>)</td>
-              </tr>
-              <tr>
-                <td>Nemotron-Nano-12B</td>
-                <td>DeepInfra</td>
-                <td><code>nvidia/NVIDIA-Nemotron-Nano-12B-v2-VL</code></td>
-              </tr>
-              <tr>
-                <td>OlmOCR-2</td>
-                <td>DeepInfra</td>
-                <td><code>allenai/olmOCR-2-7B-1025</code>, image-only input</td>
-              </tr>
-              <tr>
-                <td>LightOnOCR-2-1B</td>
-                <td>Local (transformers)</td>
-                <td><code>lightonai/LightOnOCR-2-1B</code>, bfloat16, CUDA</td>
-              </tr>
-              <tr>
-                <td>DeepSeek-OCR</td>
-                <td>DeepInfra</td>
-                <td><code>deepseek-ai/DeepSeek-OCR</code></td>
-              </tr>
-              <tr>
-                <td>DeepSeek-OCR2</td>
-                <td>Novita AI</td>
-                <td><code>deepseek/deepseek-ocr-2</code>, native prompts</td>
-              </tr>
-              <tr>
-                <td>Qwen3-VL-8B</td>
-                <td>Novita AI</td>
-                <td><code>qwen/qwen3-vl-8b-instruct</code></td>
-              </tr>
-              <tr>
-                <td>Llama 4 Maverick</td>
-                <td>Novita AI</td>
-                <td><code>meta-llama/llama-4-maverick-17b-128e-instruct-fp8</code></td>
-              </tr>
-              <tr>
-                <td>ERNIE 4.5 VL 424B</td>
-                <td>Novita AI</td>
-                <td><code>baidu/ernie-4.5-vl-424b-a47b</code></td>
-              </tr>
-              <tr>
-                <td>ERNIE 4.5 VL 28B</td>
-                <td>Novita AI</td>
-                <td><code>baidu/ernie-4.5-vl-28b-a3b</code></td>
-              </tr>
-              <tr>
-                <td>Sarvam Vision</td>
-                <td>Sarvam AI</td>
-                <td>Document Intelligence API, output_format=md</td>
-              </tr>
-              <tr>
-                <td>PP-OCRv5</td>
-                <td>PaddlePaddle Cloud</td>
-                <td>OCR API (<code>aistudio-app.com</code>)</td>
-              </tr>
-              <tr>
-                <td>Tesseract</td>
-                <td>Local</td>
-                <td>Tesseract 5, <code>eng+fra+deu+nor</code>, psm 6</td>
-              </tr>
-              <tr>
-                <td>Layout Parser</td>
-                <td>Local</td>
-                <td>Detectron2 (PubLayNet Faster R-CNN) + Tesseract</td>
-              </tr>
-              <tr>
-                <td>EfficientOCR</td>
-                <td>Local</td>
-                <td>Tiled word-level FAISS KNN recognition</td>
-              </tr>
-              <tr>
-                <td>Qwen3.5-397B</td>
-                <td>Novita AI / OpenRouter</td>
-                <td><code>qwen/qwen3.5-397b-a17b</code>, thinking disabled</td>
-              </tr>
-              <tr>
-                <td>Qwen3.5-397B (thinking)</td>
-                <td>Novita AI / OpenRouter</td>
-                <td><code>qwen/qwen3.5-397b-a17b</code>, thinking enabled, max_tokens=32768</td>
-              </tr>
-              <tr>
-                <td>Qwen3.5-27B</td>
-                <td>Alibaba Cloud Model Studio</td>
-                <td><code>qwen3.5-27b</code>, thinking disabled</td>
-              </tr>
-              <tr>
-                <td>Qwen3.5-35B</td>
-                <td>Alibaba Cloud Model Studio</td>
-                <td><code>qwen3.5-35b-a3b</code>, thinking disabled</td>
-              </tr>
-              <tr>
-                <td>Qwen3.5-Flash</td>
-                <td>Alibaba Cloud Model Studio</td>
-                <td><code>qwen3.5-flash</code>, thinking disabled</td>
-              </tr>
-              <tr>
-                <td>Qwen3.5-122B</td>
-                <td>Alibaba Cloud Model Studio</td>
-                <td><code>qwen3.5-122b-a10b</code>, thinking disabled</td>
-              </tr>
-              <tr>
-                <td>Qwen-VL-OCR</td>
-                <td>Alibaba Cloud Model Studio</td>
-                <td><code>qwen-vl-ocr</code>, min_pixels=3072, max_pixels=8388608</td>
-              </tr>
-              <tr>
-                <td>Kimi K2.5</td>
-                <td>OpenRouter</td>
-                <td><code>moonshotai/kimi-k2.5</code></td>
-              </tr>
-              <tr>
-                <td>Datalab (fast)</td>
-                <td>Datalab API</td>
-                <td><code>datalab-python-sdk</code>, mode=fast</td>
-              </tr>
-              <tr>
-                <td>Datalab (accurate)</td>
-                <td>Datalab API</td>
-                <td><code>datalab-python-sdk</code>, mode=accurate</td>
-              </tr>
-              <tr>
-                <td>Mistral OCR</td>
-                <td>Mistral AI</td>
-                <td><code>mistral-ocr-latest</code> via <code>mistralai</code> SDK, image-only input</td>
-              </tr>
+              <tr><td>Gemini 3.1 Pro (low)</td><td>OpenRouter</td><td><code>google/gemini-3.1-pro-preview</code>, reasoning_effort=low</td></tr>
+              <tr><td>Gemini 3 Pro (low)</td><td>OpenRouter</td><td><code>google/gemini-3-pro-preview</code>, reasoning_effort=low</td></tr>
+              <tr><td>Gemini 3 Pro (high)</td><td>OpenRouter</td><td><code>google/gemini-3-pro-preview</code>, reasoning_effort=high</td></tr>
+              <tr><td>Gemini 2.5 Flash</td><td>Google GenAI SDK</td><td><code>gemini-2.5-flash</code> via <code>genai.Client</code></td></tr>
+              <tr><td>Gemini 2.0 Flash</td><td>OpenRouter</td><td><code>google/gemini-2.0-flash-001</code></td></tr>
+              <tr><td>Gemini 3 Flash (low)</td><td>OpenRouter</td><td><code>google/gemini-3-flash-preview</code>, reasoning_effort=low</td></tr>
+              <tr><td>Gemini 3 Flash (high)</td><td>OpenRouter</td><td><code>google/gemini-3-flash-preview</code>, reasoning_effort=high</td></tr>
+              <tr><td>GPT-5.3 Codex</td><td>OpenRouter</td><td><code>openai/gpt-5.3-codex</code></td></tr>
+              <tr><td>GPT-5.2 (low)</td><td>OpenRouter</td><td><code>openai/gpt-5.2</code>, reasoning_effort=low</td></tr>
+              <tr><td>GPT-5.2 (high)</td><td>OpenRouter</td><td><code>openai/gpt-5.2</code>, reasoning_effort=high</td></tr>
+              <tr><td>Claude Sonnet 4.6</td><td>OpenRouter</td><td><code>anthropic/claude-sonnet-4.6</code></td></tr>
+              <tr><td>Claude Opus 4.6</td><td>OpenRouter</td><td><code>anthropic/claude-opus-4.6</code></td></tr>
+              <tr><td>Qwen3-VL-235B</td><td>OpenRouter</td><td><code>qwen/qwen3-vl-235b-a22b-instruct</code></td></tr>
+              <tr><td>Qwen3-VL-30B</td><td>DeepInfra</td><td><code>Qwen/Qwen3-VL-30B-A3B-Instruct</code></td></tr>
+              <tr><td>Seed 2.0 Pro</td><td>ZenMux</td><td><code>volcengine/doubao-seed-2.0-pro</code></td></tr>
+              <tr><td>Seed 2.0 Lite</td><td>ZenMux</td><td><code>volcengine/doubao-seed-2.0-lite</code></td></tr>
+              <tr><td>dots.ocr-1.5</td><td>Local (vLLM)</td><td><code>rednote-hilab/dots.ocr-1.5</code>, native <code>prompt_ocr</code></td></tr>
+              <tr><td>dots.ocr</td><td>Replicate</td><td><code>sljeff/dots.ocr</code>, image-only input</td></tr>
+              <tr><td>GLM-OCR</td><td>Zhipu AI</td><td><code>glm-ocr</code> via layout parsing API</td></tr>
+              <tr><td>PaddleOCR-VL-1.5</td><td>PaddlePaddle Cloud</td><td>Layout parsing API (<code>aistudio-app.com</code>)</td></tr>
+              <tr><td>PaddleOCR-VL-0.9B</td><td>DeepInfra</td><td><code>PaddlePaddle/PaddleOCR-VL-0.9B</code></td></tr>
+              <tr><td>Nemotron-Nano-12B</td><td>DeepInfra</td><td><code>nvidia/NVIDIA-Nemotron-Nano-12B-v2-VL</code></td></tr>
+              <tr><td>OlmOCR-2</td><td>DeepInfra</td><td><code>allenai/olmOCR-2-7B-1025</code>, image-only input</td></tr>
+              <tr><td>LightOnOCR-2-1B</td><td>Local (transformers)</td><td><code>lightonai/LightOnOCR-2-1B</code>, bfloat16, CUDA</td></tr>
+              <tr><td>DeepSeek-OCR</td><td>DeepInfra</td><td><code>deepseek-ai/DeepSeek-OCR</code></td></tr>
+              <tr><td>DeepSeek-OCR2</td><td>Novita AI</td><td><code>deepseek/deepseek-ocr-2</code>, native prompts</td></tr>
+              <tr><td>Qwen3-VL-8B</td><td>Novita AI</td><td><code>qwen/qwen3-vl-8b-instruct</code></td></tr>
+              <tr><td>Llama 4 Maverick</td><td>Novita AI</td><td><code>meta-llama/llama-4-maverick-17b-128e-instruct-fp8</code></td></tr>
+              <tr><td>ERNIE 4.5 VL 424B</td><td>Novita AI</td><td><code>baidu/ernie-4.5-vl-424b-a47b</code></td></tr>
+              <tr><td>ERNIE 4.5 VL 28B</td><td>Novita AI</td><td><code>baidu/ernie-4.5-vl-28b-a3b</code></td></tr>
+              <tr><td>Sarvam Vision</td><td>Sarvam AI</td><td>Document Intelligence API, output_format=md</td></tr>
+              <tr><td>PP-OCRv5</td><td>PaddlePaddle Cloud</td><td>OCR API (<code>aistudio-app.com</code>)</td></tr>
+              <tr><td>Tesseract</td><td>Local</td><td>Tesseract 5, <code>eng+fra+deu+nor</code>, psm 6</td></tr>
+              <tr><td>Layout Parser</td><td>Local</td><td>Detectron2 (PubLayNet Faster R-CNN) + Tesseract</td></tr>
+              <tr><td>EfficientOCR</td><td>Local</td><td>Tiled word-level FAISS KNN recognition</td></tr>
+              <tr><td>Qwen3.5-397B</td><td>Novita AI / OpenRouter</td><td><code>qwen/qwen3.5-397b-a17b</code>, thinking disabled</td></tr>
+              <tr><td>Qwen3.5-397B (thinking)</td><td>Novita AI / OpenRouter</td><td><code>qwen/qwen3.5-397b-a17b</code>, thinking enabled, max_tokens=32768</td></tr>
+              <tr><td>Qwen3.5-27B</td><td>Alibaba Cloud Model Studio</td><td><code>qwen3.5-27b</code>, thinking disabled</td></tr>
+              <tr><td>Qwen3.5-35B</td><td>Alibaba Cloud Model Studio</td><td><code>qwen3.5-35b-a3b</code>, thinking disabled</td></tr>
+              <tr><td>Qwen3.5-Flash</td><td>Alibaba Cloud Model Studio</td><td><code>qwen3.5-flash</code>, thinking disabled</td></tr>
+              <tr><td>Qwen3.5-122B</td><td>Alibaba Cloud Model Studio</td><td><code>qwen3.5-122b-a10b</code>, thinking disabled</td></tr>
+              <tr><td>Qwen-VL-OCR</td><td>Alibaba Cloud Model Studio</td><td><code>qwen-vl-ocr</code>, min_pixels=3072, max_pixels=8388608</td></tr>
+              <tr><td>Kimi K2.5</td><td>OpenRouter</td><td><code>moonshotai/kimi-k2.5</code></td></tr>
+              <tr><td>Datalab (fast)</td><td>Datalab API</td><td><code>datalab-python-sdk</code>, mode=fast</td></tr>
+              <tr><td>Datalab (accurate)</td><td>Datalab API</td><td><code>datalab-python-sdk</code>, mode=accurate</td></tr>
+              <tr><td>Mistral OCR</td><td>Mistral AI</td><td><code>mistral-ocr-latest</code> via <code>mistralai</code> SDK, image-only input</td></tr>
             </tbody>
           </table>
 
@@ -1046,6 +1264,13 @@
       <details style="margin-top: 1.5em;">
         <summary style="cursor: pointer; font-weight: bold; font-size: 1.1em;">Changelog</summary>
         <div style="margin-top: 1em; font-size: 0.92em; line-height: 1.6;">
+          <p><strong>February 26, 2026:</strong> Expanded benchmark with new handwriting and table samples.
+            Europe share reduced from 58% to 44% of samples.
+            Added Tesseract v5, LayoutParser, EfficientOCR, PP-OCRv5, and Mistral OCR.
+            Added cost vs performance scatter plot.</p>
+          <p><strong>February 25, 2026:</strong> Expanded benchmark with new handwriting samples.
+            Launched <strong>v2</strong> scoring with macro-averaging across Region, Period, and Format axes.
+            Added Claude Sonnet 4.6, Claude Opus 4.6, and GPT-5.3 Codex.</p>
           <p><strong>February 24, 2026:</strong> Added five Qwen models via Alibaba Cloud Model Studio:
             Qwen3.5-27B (0.4340), Qwen3.5-35B (0.4296), Qwen3.5-Flash (0.4280), Qwen3.5-122B (0.4264),
             and Qwen-VL-OCR (0.3525). All Qwen3.5 variants scored within a tight 0.43&ndash;0.43 range,
@@ -1054,27 +1279,11 @@
           <p><strong>February 19, 2026:</strong> Added Gemini 3.1 Pro (low), which takes the #1 spot at 0.5965.
             Fixed a bug in the evaluation script where models that wrapped output in markdown code fences
             (e.g. <code>```markdown ... ```</code>) had their entire response stripped instead of just the fence
-            markers.
-            This primarily affected table scores for Gemini 2.0 Flash (+8.1pp), Qwen3-VL-8B (+4.8pp),
-            Qwen3-VL-30B (+1.7pp), and Qwen3-VL-235B (+1.5pp). All model scores have been re-evaluated with the fix.</p>
+            markers.</p>
           <p><strong>February 16, 2026:</strong> Added Qwen3.5-397B in two variants: thinking disabled (0.4484) and
-            thinking enabled (0.4598). Thinking mode improved handwriting recognition, especially Thai (+17pp) and
-            French Census (+7pp), but slightly reduced table accuracy.</p>
-          <p><strong>February 15, 2026 (API Cost Update):</strong> Added API cost column with pricing information for
-            all models. Costs shown as input/output price per 1M tokens. Pricing data sourced from provider
-            documentation and aggregated from OpenRouter, DeepInfra, Google AI, OpenAI, and other API providers.</p>
-          <p><strong>February 15, 2026:</strong> Added Gemini 2.5 Flash, Gemini 2.0 Flash, Gemini 3 Flash (low),
-            ERNIE 4.5 VL 424B, Llama 4 Maverick, dots.ocr-1.5, Qwen3-VL-8B, DeepSeek-OCR2, Kimi K2.5,
-            Datalab (fast/accurate), and PP-OCRv5.
-            Re-ran Gemini 3 Pro (high), GPT-5.2 (high), and corrected the previous Gemini 3 Flash (low) entry,
-            which had been run with <code>gemini-2.5-flash</code> via Google GenAI SDK instead of
-            <code>google/gemini-3-flash-preview</code> via OpenRouter. That entry is now listed separately as Gemini 2.5
-            Flash.
-            Gemini 3 Pro (high) and GPT-5.2 (high) were affected by a default max_tokens that was too low for
-            thinking models, where reasoning tokens count against the output limit, causing many responses to be
-            truncated. After increasing max_tokens to 64K, Gemini 3 Pro (high) rose from 0.3700 to 0.5406,
-            and GPT-5.2 (high) rose from 0.2841 to 0.3932.
-          </p>
+            thinking enabled (0.4598).</p>
+          <p><strong>February 15, 2026:</strong> Added API cost columns, Gemini 2.5/2.0 Flash, ERNIE 4.5 VL, Llama 4 Maverick,
+            dots.ocr-1.5, Qwen3-VL-8B, DeepSeek-OCR2, Kimi K2.5, Datalab, PP-OCRv5. Fixed max_tokens for thinking models.</p>
         </div>
       </details>
 
@@ -1121,7 +1330,7 @@
         </div>
       </div>
 
-      <p class="post-updated">Last updated: February 24, 2026</p>
+      <p class="post-updated">Last updated: February 25, 2026</p>
 
     </div>
 
@@ -1136,6 +1345,51 @@
   </div>
 
   <script>
+    // Version tab switching
+    (function () {
+      document.addEventListener("DOMContentLoaded", function () {
+        var tabs = document.querySelectorAll(".version-tab");
+        var panels = document.querySelectorAll(".version-panel");
+
+        Array.prototype.forEach.call(tabs, function (tab) {
+          tab.addEventListener("click", function () {
+            var version = tab.getAttribute("data-version");
+            Array.prototype.forEach.call(tabs, function (t) { t.classList.remove("active"); });
+            tab.classList.add("active");
+            Array.prototype.forEach.call(panels, function (p) { p.classList.remove("active"); });
+            var panel = document.getElementById("panel-" + version);
+            if (panel) panel.classList.add("active");
+            if (typeof applyFilters === "function") applyFilters();
+          });
+        });
+      });
+    })();
+
+    // Expand/collapse sub-columns via inline +/- buttons
+    (function () {
+      document.addEventListener("DOMContentLoaded", function () {
+        var btns = document.querySelectorAll(".expand-btn");
+        Array.prototype.forEach.call(btns, function (btn) {
+          btn.addEventListener("click", function (e) {
+            e.stopPropagation(); // Don't trigger sort on parent th
+            var group = btn.getAttribute("data-group");
+            var table = btn.closest("table");
+            var subs = table.querySelectorAll('.sub-col[data-group="' + group + '"]');
+            var isExpanded = btn.classList.contains("expanded");
+
+            if (isExpanded) {
+              btn.classList.remove("expanded");
+              Array.prototype.forEach.call(subs, function (el) { el.classList.remove("visible"); });
+            } else {
+              btn.classList.add("expanded");
+              Array.prototype.forEach.call(subs, function (el) { el.classList.add("visible"); });
+            }
+          });
+        });
+      });
+    })();
+
+    // Sorting
     (function () {
       function getCellText(cell) {
         if (!cell) return "";
@@ -1158,30 +1412,24 @@
       function sortTableByColumn(table, columnIndex, dir) {
         var tbody = table.tBodies && table.tBodies[0];
         if (!tbody) return;
-
         var rows = Array.prototype.slice.call(tbody.querySelectorAll("tr"));
         var wrapped = rows.map(function (tr, idx) { return { tr: tr, idx: idx }; });
-
         wrapped.sort(function (ra, rb) {
           var aCell = ra.tr.children && ra.tr.children[columnIndex];
           var bCell = rb.tr.children && rb.tr.children[columnIndex];
           var aText = getCellText(aCell);
           var bText = getCellText(bCell);
-
           var aNum = parseNumber(aText);
           var bNum = parseNumber(bText);
-
           var cmp = 0;
           if (aNum !== null && bNum !== null) {
             cmp = aNum === bNum ? 0 : (aNum < bNum ? -1 : 1);
           } else {
             cmp = stringCompare(aText, bText);
           }
-
-          if (cmp === 0) cmp = ra.idx - rb.idx; // stable sort
+          if (cmp === 0) cmp = ra.idx - rb.idx;
           return dir === "asc" ? cmp : -cmp;
         });
-
         wrapped.forEach(function (r) { tbody.appendChild(r.tr); });
       }
 
@@ -1199,18 +1447,17 @@
           if (!headers.length) return;
 
           Array.prototype.forEach.call(headers, function (th, idx) {
+
             th.tabIndex = 0;
             th.title = "Click to sort";
 
             function handleActivate() {
               var currentCol = table.getAttribute("data-sort-col");
               var currentDir = table.getAttribute("data-sort-dir") || "asc";
-
               var nextDir = "asc";
               if (String(currentCol) === String(idx)) {
                 nextDir = currentDir === "asc" ? "desc" : "asc";
               } else {
-                // Default to descending for numeric columns (common for leaderboard tables).
                 var tbody = table.tBodies && table.tBodies[0];
                 if (tbody) {
                   var trs = tbody.querySelectorAll("tr");
@@ -1224,26 +1471,21 @@
                   }
                 }
               }
-
               table.setAttribute("data-sort-col", String(idx));
               table.setAttribute("data-sort-dir", nextDir);
-
               clearSortIndicators(headers);
               th.classList.add(nextDir === "asc" ? "sort-asc" : "sort-desc");
               th.setAttribute("aria-sort", nextDir === "asc" ? "ascending" : "descending");
-
               sortTableByColumn(table, idx, nextDir);
             }
 
             th.addEventListener("click", handleActivate);
             th.addEventListener("keydown", function (e) {
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                handleActivate();
-              }
+              if (e.key === "Enter" || e.key === " ") { e.preventDefault(); handleActivate(); }
             });
           });
-          // Default sort: Overall (column 1) descending
+
+          // Default sort: column 1 descending
           var overallIdx = 1;
           table.setAttribute("data-sort-col", String(overallIdx));
           table.setAttribute("data-sort-dir", "desc");
@@ -1255,53 +1497,45 @@
     })();
 
     // Filter buttons
+    var applyFilters;
     (function () {
       document.addEventListener("DOMContentLoaded", function () {
         var buttons = document.querySelectorAll(".filter-btn");
-        var table = document.querySelector("table.sortable");
-        if (!table || !buttons.length) return;
+        if (!buttons.length) return;
 
-        function applyFilters() {
+        applyFilters = function () {
           var activeFilters = [];
           Array.prototype.forEach.call(buttons, function (btn) {
-            if (btn.classList.contains("active")) {
-              activeFilters.push(btn.getAttribute("data-filter"));
-            }
+            if (btn.classList.contains("active")) activeFilters.push(btn.getAttribute("data-filter"));
           });
-
-          var rows = table.tBodies[0].querySelectorAll("tr");
-          Array.prototype.forEach.call(rows, function (row) {
-            var cell = row.children[0];
-            if (!cell) return;
-            var tags = cell.querySelectorAll(".model-tag");
-            var rowTypes = [];
-            Array.prototype.forEach.call(tags, function (tag) {
-              if (tag.classList.contains("vlm")) rowTypes.push("vlm");
-              if (tag.classList.contains("classical")) rowTypes.push("classical");
-              if (tag.classList.contains("open-source")) rowTypes.push("open-source");
-              if (tag.classList.contains("proprietary")) rowTypes.push("proprietary");
+          var tables = document.querySelectorAll("table.sortable");
+          Array.prototype.forEach.call(tables, function (table) {
+            var rows = table.tBodies[0].querySelectorAll("tr");
+            Array.prototype.forEach.call(rows, function (row) {
+              var cell = row.children[0];
+              if (!cell) return;
+              var tags = cell.querySelectorAll(".model-tag");
+              var rowTypes = [];
+              Array.prototype.forEach.call(tags, function (tag) {
+                if (tag.classList.contains("vlm")) rowTypes.push("vlm");
+                if (tag.classList.contains("classical")) rowTypes.push("classical");
+                if (tag.classList.contains("open-source")) rowTypes.push("open-source");
+                if (tag.classList.contains("proprietary")) rowTypes.push("proprietary");
+              });
+              var rowSize = cell.getAttribute("data-size") || "unknown";
+              var typeFilters = activeFilters.filter(function (f) { return f === "vlm" || f === "classical"; });
+              var licenseFilters = activeFilters.filter(function (f) { return f === "open-source" || f === "proprietary"; });
+              var sizeFilters = activeFilters.filter(function (f) { return f.indexOf("size-") === 0; });
+              var matchesType = typeFilters.length === 0 || rowTypes.some(function (t) { return typeFilters.indexOf(t) !== -1; });
+              var matchesLicense = licenseFilters.length === 0 || rowTypes.some(function (t) { return licenseFilters.indexOf(t) !== -1; });
+              var matchesSize = sizeFilters.length === 0 || sizeFilters.indexOf("size-" + rowSize) !== -1;
+              row.style.display = (matchesType && matchesLicense && matchesSize) ? "" : "none";
             });
-
-            var rowSize = cell.getAttribute("data-size") || "unknown";
-
-            // Row must match at least one active filter in each dimension
-            var typeFilters = activeFilters.filter(function (f) { return f === "vlm" || f === "classical"; });
-            var licenseFilters = activeFilters.filter(function (f) { return f === "open-source" || f === "proprietary"; });
-            var sizeFilters = activeFilters.filter(function (f) { return f.indexOf("size-") === 0; });
-
-            var matchesType = typeFilters.length === 0 || rowTypes.some(function (t) { return typeFilters.indexOf(t) !== -1; });
-            var matchesLicense = licenseFilters.length === 0 || rowTypes.some(function (t) { return licenseFilters.indexOf(t) !== -1; });
-            var matchesSize = sizeFilters.length === 0 || sizeFilters.indexOf("size-" + rowSize) !== -1;
-
-            row.style.display = (matchesType && matchesLicense && matchesSize) ? "" : "none";
           });
-        }
+        };
 
         Array.prototype.forEach.call(buttons, function (btn) {
-          btn.addEventListener("click", function () {
-            btn.classList.toggle("active");
-            applyFilters();
-          });
+          btn.addEventListener("click", function () { btn.classList.toggle("active"); applyFilters(); });
         });
       });
     })();
