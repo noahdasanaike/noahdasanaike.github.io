@@ -1146,7 +1146,7 @@
             <canvas id="cost-perf-chart-main" width="800" height="450"></canvas>
           </div>
           <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
-                                                                                                                                                                                                                                                                                                                                                              <script>
+                                                                                                                                                                                                                                                                                                                                                                        <script>
           (function() {
             const data = [
               [7.000, 0.7067, "Gemini 3.1 Pro (low)", "#4285F4"],
@@ -1399,6 +1399,18 @@
       <details style="margin-top: 1.5em;">
         <summary style="cursor: pointer; font-weight: bold; font-size: 1.1em;">Changelog</summary>
         <div style="margin-top: 1em; font-size: 0.92em; line-height: 1.6;">
+          <p><strong>March 3, 2026:</strong> Added Gemini 3.1 Flash Lite (0.6546), Gemma 3 27B (0.2069),
+            Gemma 3 4B (0.1808), and Nemotron-Nano 12B (0.2071).
+            Re-benchmarked OlmOCR-2 with correct prompt (0.3678, up from 0.223).
+            Re-benchmarked Nemotron-Nano with reasoning disabled (0.2071, up from 0.1359).</p>
+          <p><strong>March 2, 2026:</strong> Added Qwen3.5 small models via HuggingFace Inference Endpoints:
+            Qwen3.5-9B (0.4469), Qwen3.5-4B (0.4108), and Qwen3.5-0.8B (0.3294).
+            All run with reasoning disabled.</p>
+          <p><strong>March 1, 2026:</strong> Added Nano Banana 2 (0.5727), FireRed-OCR (0.2592).
+            Added Gemini 3 Flash (minimal reasoning) variant.</p>
+          <p><strong>February 27, 2026:</strong> Added Seed 2.0 Mini (0.5257), ERNIE 4.5 VL 424B (0.4424),
+            Llama 4 Maverick (0.3730), PaddleOCR-VL (0.2933), GLM-OCR (0.2660), Molmo-2 8B (0.0944).
+            Added LLM post-processing (cleanup) experiments for several models.</p>
           <p><strong>February 26, 2026:</strong> Expanded benchmark with new handwriting and table samples.
             Europe share reduced from 58% to 44% of samples.
             Added Tesseract v5, LayoutParser, EfficientOCR, PP-OCRv5, and Mistral OCR.
