@@ -1041,6 +1041,30 @@
               <td>0.14</td>
             </tr>
             <tr>
+              <td data-sort="Qwen3.5-2B (no reasoning)" data-size="tiny">Qwen3.5-2B (no reasoning) <span class="model-size">2B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.3682</td>
+              <td>0.3682</td>
+              <td class="sub-col" data-group="region">0.5464</td><td class="sub-col" data-group="region">0.6072</td><td class="sub-col" data-group="region">0.3637</td><td class="sub-col" data-group="region">0.2069</td><td class="sub-col" data-group="region">0.3413</td><td class="sub-col" data-group="region">0.0517</td>
+              <td>0.4439</td>
+              <td class="sub-col" data-group="period">0.3423</td><td class="sub-col" data-group="period">0.4957</td><td class="sub-col" data-group="period">0.4841</td>
+              <td>0.5147</td>
+              <td class="sub-col" data-group="format">0.3958</td><td class="sub-col" data-group="format">0.6822</td><td class="sub-col" data-group="format">0.7409</td><td class="sub-col" data-group="format">0.2198</td>
+              <td>/</td>
+              <td>/</td>
+            </tr>
+            <tr>
+              <td data-sort="LightOnOCR-2-1B" data-size="tiny">LightOnOCR-2-1B <span class="model-size">1B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.2185</td>
+              <td>0.2185</td>
+              <td class="sub-col" data-group="region">0.5138</td><td class="sub-col" data-group="region">0.1790</td><td class="sub-col" data-group="region">0.1677</td><td class="sub-col" data-group="region">0.1443</td><td class="sub-col" data-group="region">0.2598</td><td class="sub-col" data-group="region">0.0096</td>
+              <td>0.3452</td>
+              <td class="sub-col" data-group="period">0.2154</td><td class="sub-col" data-group="period">0.4596</td><td class="sub-col" data-group="period">0.3839</td>
+              <td>0.4570</td>
+              <td class="sub-col" data-group="format">0.2946</td><td class="sub-col" data-group="format">0.6500</td><td class="sub-col" data-group="format">0.6974</td><td class="sub-col" data-group="format">0.1638</td>
+              <td>/</td>
+              <td>/</td>
+            </tr>
+            <tr>
               <td data-sort="Gemma 3 27B" data-size="large">Gemma 3 27B <span class="model-size">27B</span> <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
               <td>0.2069</td>
               <td>0.2069</td>
@@ -1367,6 +1391,8 @@
               <tr><td>Nemotron-Nano-12B</td><td>DeepInfra</td><td><code>nvidia/NVIDIA-Nemotron-Nano-12B-v2-VL</code></td></tr>
               <tr><td>OlmOCR-2</td><td>DeepInfra</td><td><code>allenai/olmOCR-2-7B-1025</code>, image-only input</td></tr>
               <tr><td>LightOnOCR-2-1B</td><td>Local (transformers)</td><td><code>lightonai/LightOnOCR-2-1B</code>, bfloat16, CUDA</td></tr>
+              <tr><td>LightOnOCR-2-1B</td><td>Local (Ollama)</td><td><code>maternion/LightOnOCR-2</code>, Q4 GGUF via Ollama</td></tr>
+              <tr><td>Qwen3.5-2B (no reasoning)</td><td>Local (Ollama)</td><td><code>qwen3.5:2b</code>, Q4 GGUF via Ollama, thinking disabled</td></tr>
               <tr><td>FireRed-OCR</td><td>HF Spaces (T4)</td><td><code>FireRedTeam/FireRed-OCR</code>, Gradio API</td></tr>
               <tr><td>DeepSeek-OCR</td><td>DeepInfra</td><td><code>deepseek-ai/DeepSeek-OCR</code></td></tr>
               <tr><td>DeepSeek-OCR2</td><td>Novita AI</td><td><code>deepseek/deepseek-ocr-2</code>, native prompts</td></tr>
@@ -1399,6 +1425,8 @@
       <details style="margin-top: 1.5em;">
         <summary style="cursor: pointer; font-weight: bold; font-size: 1.1em;">Changelog</summary>
         <div style="margin-top: 1em; font-size: 0.92em; line-height: 1.6;">
+          <p><strong>March 5, 2026:</strong> Added LightOnOCR-2-1B via Ollama (0.2185) and Qwen3.5-2B (no reasoning) via Ollama (0.3682).
+            Both run locally with quantized GGUF weights. Small images padded to 224px minimum for Ollama compatibility.</p>
           <p><strong>March 3, 2026:</strong> Added Gemini 3.1 Flash Lite (0.6546), Gemma 3 27B (0.2069),
             Gemma 3 4B (0.1808), and Nemotron-Nano 12B (0.2071).
             Re-benchmarked OlmOCR-2 with correct prompt (0.3678, up from 0.223).
