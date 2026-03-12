@@ -372,8 +372,6 @@
         <button class="filter-btn active filter-size" data-filter="size-medium">10-30B</button>
         <button class="filter-btn active filter-size" data-filter="size-large">30B+</button>
         <button class="filter-btn active filter-size" data-filter="size-unknown">Unknown</button>
-        <span style="border-left: 1px solid #ccc; margin: 0 0.3em;"></span>
-        <button class="filter-btn active" id="toggle-no-ea" data-filter="no-ea">Excl. E. Africa</button>
       </div>
 
       <!-- Version Tabs -->
@@ -566,6 +564,16 @@
               <td>75.00</td>
             </tr>
             <tr>
+              <td data-sort="Seed 2.0 Mini" data-size="unknown">Seed 2.0 Mini <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.5244</td>
+              <td>0.5448</td>
+              <td class="sub-col" data-group="v3region">0.5831</td><td class="sub-col" data-group="v3region">0.5323</td><td class="sub-col" data-group="v3region">0.5283</td><td class="sub-col" data-group="v3region">0.6261</td><td class="sub-col" data-group="v3region">0.4542</td>
+              <td>0.5041</td>
+              <td class="sub-col" data-group="v3format">0.5082</td><td class="sub-col" data-group="v3format">0.6557</td><td class="sub-col" data-group="v3format">0.3483</td>
+              <td>0.10</td>
+              <td>0.40</td>
+            </tr>
+            <tr>
               <td data-sort="GPT-5.4 (high)" data-size="unknown">GPT-5.4 (high) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
               <td>0.5132</td>
               <td>0.5342</td>
@@ -744,6 +752,16 @@
               <td class="sub-col" data-group="v3format">0.1334</td><td class="sub-col" data-group="v3format">0.3018</td><td class="sub-col" data-group="v3format">0.2324</td>
               <td>0.20</td>
               <td>0.20</td>
+            </tr>
+            <tr>
+              <td data-sort="Tesseract v5" data-size="unknown">Tesseract v5 <span class="model-tag open-source">Open Source</span></td>
+              <td>0.1750</td>
+              <td>0.1461</td>
+              <td class="sub-col" data-group="v3region">0.4004</td><td class="sub-col" data-group="v3region">0.0868</td><td class="sub-col" data-group="v3region">0.0434</td><td class="sub-col" data-group="v3region">0.1023</td><td class="sub-col" data-group="v3region">0.0979</td>
+              <td>0.2039</td>
+              <td class="sub-col" data-group="v3format">0.1349</td><td class="sub-col" data-group="v3format">0.3568</td><td class="sub-col" data-group="v3format">0.1199</td>
+              <td>/</td>
+              <td>/</td>
             </tr>
             <tr>
               <td data-sort="PaddleOCR-VL-0.9B" data-size="unknown">PaddleOCR-VL-0.9B <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
@@ -2153,21 +2171,22 @@
               [0.875, 0.6403, 0.6403, "Gemini 3.1 Flash Lite", "#4285F4"],
               [1.750, 0.6267, 0.6267, "Gemini 3 Flash (minimal)", "#4285F4"],
               [1.750, 0.6265, 0.6265, "Gemini 3 Flash (low)", "#4285F4"],
-              [2.100, 0.6252, 0.6252, "Qwen3.5 397B", "#E91E63"],
-              [1.400, 0.6174, 0.6174, "Qwen3.5 Plus", "#E91E63"],
-              [1.800, 0.6004, 0.6004, "Qwen3.5 122B", "#E91E63"],
-              [0.540, 0.5994, 0.5994, "Qwen3 VL 235B", "#E91E63"],
-              [1.350, 0.5856, 0.5856, "Qwen3.5 27B", "#E91E63"],
+              [2.100, 0.6252, 0.6252, "Qwen3.5-397B", "#E91E63"],
+              [1.400, 0.6174, 0.6174, "Qwen3.5-Plus", "#E91E63"],
+              [1.800, 0.6004, 0.6004, "Qwen3.5-122B", "#E91E63"],
+              [0.540, 0.5994, 0.5994, "Qwen3-VL-235B", "#E91E63"],
+              [1.350, 0.5856, 0.5856, "Qwen3.5-27B", "#E91E63"],
               [0.375, 0.5776, 0.5776, "Gemini 2.5 Flash", "#4285F4"],
               [9.000, 0.5701, 0.5701, "Claude Sonnet 4.6", "#B8860B"],
-              [0.250, 0.5691, 0.5691, "Qwen3.5 Flash", "#E91E63"],
-              [1.125, 0.5685, 0.5685, "Qwen3.5 35B", "#E91E63"],
+              [0.250, 0.5691, 0.5691, "Qwen3.5-Flash", "#E91E63"],
+              [1.125, 0.5685, 0.5685, "Qwen3.5-35B", "#E91E63"],
               [0.250, 0.5670, 0.5670, "Gemini 2.0 Flash", "#4285F4"],
               [45.000, 0.5554, 0.5554, "Claude Opus 4.6", "#B8860B"],
+              [0.250, 0.5244, 0.5244, "Seed 2.0 Mini", "#607D8B"],
               [8.750, 0.5132, 0.5132, "GPT-5.4 (high)", "#10a37f"],
-              [8.750, 0.5037, 0.5037, "GPT-5.4 (auto)", "#10a37f"],
-              [0.250, 0.5091, 0.5091, "Qwen3 VL 30B", "#E91E63"],
-              [0.290, 0.5014, 0.5014, "Qwen3 VL 8B", "#E91E63"],
+              [8.750, 0.5037, 0.5037, "GPT-5.4", "#10a37f"],
+              [0.250, 0.5091, 0.5091, "Qwen3-VL-30B", "#E91E63"],
+              [0.290, 0.5014, 0.5014, "Qwen3-VL-8B", "#E91E63"],
               [1.000, 0.4962, 0.4962, "Mistral OCR", "#607D8B"],
               [8.750, 0.4970, 0.4970, "GPT-5.4 (low)", "#10a37f"],
               [8.750, 0.4830, 0.4830, "GPT-5.4 (original)", "#10a37f"],
@@ -2177,9 +2196,9 @@
               [0.115, 0.4560, 0.4560, "Qwen-VL-OCR", "#E91E63"],
               [7.875, 0.4440, 0.4440, "GPT-5.2", "#10a37f"],
               [0.350, 0.4265, 0.4265, "ERNIE 4.5 VL 28B", "#607D8B"],
-              [0.250, 0.3874, 0.3874, "Gemma 3 27B", "#607D8B"],
+              [0.250, 0.3874, 0.3874, "Gemma 3 27B", "#4285F4"],
               [0.030, 0.3680, 0.3680, "GLM-OCR", "#607D8B"],
-              [0.350, 0.2802, 0.2802, "Gemma 3 4B", "#607D8B"],
+              [0.350, 0.2802, 0.2802, "Gemma 3 4B", "#4285F4"],
               [0.030, 0.2355, 0.2355, "DeepSeek-OCR2", "#607D8B"],
               [0.200, 0.1845, 0.1845, "Nemotron-Nano-12B", "#607D8B"],
               [0.130, 0.1704, 0.1704, "PaddleOCR-VL-0.9B", "#607D8B"],
@@ -2198,11 +2217,54 @@
               [0.125, 0.5670, 0.5670, "Gemini 2.0 Flash (batch)", "#4285F4", 0.250]
             ];
 
-            // Track current chart version and score index
-            var currentVersion = "v3";
-            var scoreIdx = 2; // Default to excl. E. Africa (index 2) for v2; index 1 for all
+            // Build a stable model order so points animate between versions
+            const _allModels = [];
+            const _seen = new Set();
+            [v3Data, v2Data, v1Data].forEach(arr => arr.forEach(d => {
+              if (!_seen.has(d[3])) { _seen.add(d[3]); _allModels.push(d[3]); }
+            }));
+            const _allBatch = [];
+            const _seenB = new Set();
+            [v3Batch, v2Batch].forEach(arr => arr.forEach(d => {
+              if (!_seenB.has(d[3])) { _seenB.add(d[3]); _allBatch.push(d[3]); }
+            }));
 
-            function getActiveData() {
+            // For each model, find its position from any version (for initial placement)
+            const _anyPos = {};
+            [v3Data, v2Data, v1Data].forEach(arr => arr.forEach(d => {
+              if (!_anyPos[d[3]]) _anyPos[d[3]] = {x: d[0], y: d[2], color: d[4]};
+            }));
+            const _anyBatchPos = {};
+            [v3Batch, v2Batch].forEach(arr => arr.forEach(d => {
+              if (!_anyBatchPos[d[3]]) _anyBatchPos[d[3]] = {x: d[0], y: d[2], color: d[4], stdX: d[5]};
+            }));
+
+            function buildStableData(src) {
+              const map = {};
+              src.forEach(d => { map[d[3]] = d; });
+              return _allModels.map(label => {
+                const d = map[label];
+                if (d) return {x: d[0], y: d[2], label: d[3], color: d[4], visible: true};
+                var fallback = _anyPos[label] || {x: 1, y: 0.3, color: "transparent"};
+                return {x: fallback.x, y: fallback.y, label: label, color: "transparent", visible: false};
+              });
+            }
+
+            function buildStableBatch(src) {
+              const map = {};
+              src.forEach(d => { map[d[3]] = d; });
+              return _allBatch.map(label => {
+                const d = map[label];
+                if (d) return {x: d[0], y: d[2], label: d[3], color: d[4], stdX: d[5], visible: true};
+                var fb = _anyBatchPos[label] || {x: 1, y: 0.3, color: "#4285F4", stdX: 2};
+                return {x: fb.x, y: fb.y, label: label, color: fb.color, stdX: fb.stdX, visible: false};
+              });
+            }
+
+            var currentVersion = "v3";
+            var scoreIdx = 2;
+
+            function getActiveRaw() {
               if (currentVersion === "v1") return v1Data;
               if (currentVersion === "v3") return v3Data;
               return v2Data;
@@ -2210,15 +2272,15 @@
             function getActiveBatch() {
               if (currentVersion === "v2") return v2Batch;
               if (currentVersion === "v3") return v3Batch;
-              return []; // no batch data for v1
+              return [];
             }
             function getYLabel() {
               return "socOCRbench " + currentVersion + " Score";
             }
 
             const ctx = document.getElementById("cost-perf-chart-main").getContext("2d");
-            var activeData = getActiveData();
-            var activeBatch = getActiveBatch();
+            var stableData = buildStableData(getActiveRaw());
+            var stableBatch = buildStableBatch(getActiveBatch());
 
             window._socChart = new Chart(ctx, {
               type: "scatter",
@@ -2226,19 +2288,19 @@
                 datasets: [
                   {
                     label: "Models",
-                    data: activeData.map(d => ({x: d[0], y: d[scoreIdx], label: d[3]})),
-                    pointBackgroundColor: activeData.map(d => d[4]),
-                    pointBorderColor: activeData.map(d => d[4]),
-                    pointRadius: 6,
-                    pointHoverRadius: 8,
+                    data: stableData.map(d => ({x: d.x, y: d.y, label: d.label})),
+                    pointBackgroundColor: stableData.map(d => d.color),
+                    pointBorderColor: stableData.map(d => d.color),
+                    pointRadius: stableData.map(d => d.visible ? 6 : 0),
+                    pointHoverRadius: stableData.map(d => d.visible ? 8 : 0),
                   },
                   {
                     label: "Batch",
-                    data: activeBatch.map(d => ({x: d[0], y: d[scoreIdx], label: d[3], stdX: d[5]})),
-                    pointBackgroundColor: activeBatch.map(d => d[4] + "40"),
-                    pointBorderColor: activeBatch.map(d => d[4] + "80"),
-                    pointRadius: 5,
-                    pointHoverRadius: 7,
+                    data: stableBatch.map(d => ({x: d.x, y: d.y, label: d.label, stdX: d.stdX})),
+                    pointBackgroundColor: stableBatch.map(d => d.visible ? d.color + "40" : "transparent"),
+                    pointBorderColor: stableBatch.map(d => d.visible ? d.color + "80" : "transparent"),
+                    pointRadius: stableBatch.map(d => d.visible ? 5 : 0),
+                    pointHoverRadius: stableBatch.map(d => d.visible ? 7 : 0),
                     pointStyle: "circle",
                   }
                 ]
@@ -2248,6 +2310,11 @@
                 plugins: {
                   legend: {display: false},
                   tooltip: {
+                    filter: function(item) {
+                      var ds = item.chart.data.datasets[item.datasetIndex];
+                      var r = ds.pointRadius;
+                      return !Array.isArray(r) || r[item.dataIndex] > 0;
+                    },
                     callbacks: {
                       label: function(ctx) {
                         const d = ctx.raw;
@@ -2312,6 +2379,8 @@
                   }
                   chart.data.datasets[0].data.forEach(function(d, i) {
                     if (!show.has(d.label)) return;
+                    var r = chart.data.datasets[0].pointRadius;
+                    if (Array.isArray(r) && r[i] === 0) return;
                     const meta = mainMeta2.data[i];
                     if (!meta) return;
                     ctx2.fillStyle = "#333";
@@ -2321,29 +2390,48 @@
               }]
             });
 
-            // Rebuild chart for a given version
+            // Animate points to new positions when switching versions
             function switchChartVersion(ver) {
               currentVersion = ver;
-              var data = getActiveData();
+              var newStable = buildStableData(getActiveRaw());
               var batch = getActiveBatch();
               var chart = window._socChart;
-              chart.data.datasets[0].data = data.map(d => ({x: d[0], y: d[scoreIdx], label: d[3]}));
-              chart.data.datasets[0].pointBackgroundColor = data.map(d => d[4]);
-              chart.data.datasets[0].pointBorderColor = data.map(d => d[4]);
-              chart.data.datasets[1].data = batch.map(d => ({x: d[0], y: d[scoreIdx], label: d[3], stdX: d[5]}));
-              chart.data.datasets[1].pointBackgroundColor = batch.map(d => d[4] + "40");
-              chart.data.datasets[1].pointBorderColor = batch.map(d => d[4] + "80");
+              var ds = chart.data.datasets[0];
+              // Update each point in-place so Chart.js animates the move
+              newStable.forEach(function(d, i) {
+                if (d.visible) {
+                  // Move to new position
+                  ds.data[i].x = d.x;
+                  ds.data[i].y = d.y;
+                  ds.pointBackgroundColor[i] = d.color;
+                  ds.pointBorderColor[i] = d.color;
+                  ds.pointRadius[i] = 6;
+                  ds.pointHoverRadius[i] = 8;
+                } else {
+                  // Just hide in place — don't move
+                  ds.pointRadius[i] = 0;
+                  ds.pointHoverRadius[i] = 0;
+                }
+              });
+              var newBatch = buildStableBatch(getActiveBatch());
+              var bds = chart.data.datasets[1];
+              newBatch.forEach(function(d, i) {
+                if (d.visible) {
+                  bds.data[i].x = d.x;
+                  bds.data[i].y = d.y;
+                  bds.data[i].stdX = d.stdX;
+                  bds.pointBackgroundColor[i] = d.color + "40";
+                  bds.pointBorderColor[i] = d.color + "80";
+                  bds.pointRadius[i] = 5;
+                  bds.pointHoverRadius[i] = 7;
+                } else {
+                  bds.pointRadius[i] = 0;
+                  bds.pointHoverRadius[i] = 0;
+                }
+              });
               chart.options.scales.y.title.text = getYLabel();
               chart.update();
             }
-
-            // Expose updater for E. Africa toggle
-            window._socChartData = v2Data;
-            window._socChartBatch = v2Batch;
-            window._updateChart = function(useNoEa) {
-              scoreIdx = useNoEa ? 2 : 1;
-              switchChartVersion(currentVersion);
-            };
             window._switchChartVersion = switchChartVersion;
 
             // Chart version tab click handlers
@@ -2387,8 +2475,7 @@
           <h4>v2 Scoring</h4>
           <p>The headline <strong>socOCRbench</strong> score is a region macro-average: the mean of per-region
             dataset means, so that each region counts equally regardless of sample count. Regions: Europe, East Asia,
-            South Asia, Southeast Asia, MENA, East Africa. By default, the table shows scores excluding East Africa
-            (which has only two datasets); use the &ldquo;Excl. E.&nbsp;Africa&rdquo; toggle to include all six regions.
+            South Asia, Southeast Asia, MENA, East Africa.
             Period and format breakdowns are shown as supplementary
             columns. Periods: Pre-modern (&lt;1700), Historical (1700&ndash;1950), Contemporary (post-1950).
             Formats: Handwritten text, Printed text, Printed tables, Handwritten tables.</p>
@@ -2669,6 +2756,13 @@
       <details style="margin-top: 1.5em;">
         <summary style="cursor: pointer; font-weight: bold; font-size: 1.1em;">Changelog</summary>
         <div style="margin-top: 1em; font-size: 0.92em; line-height: 1.6;">
+          <p><strong>March 12, 2026:</strong> Launched <strong>v3</strong> with 280 full-page document images
+            across 5 regions (W. Europe, E. Europe, E. Asia, S. Asia, MENA) and 3 formats
+            (HW Text, Print Text, HW Table). 38 models evaluated so far.
+            Added Mistral OCR, DeepSeek-OCR, DeepSeek-OCR2, OlmOCR-2, PaddleOCR-VL-0.9B,
+            Nemotron-Nano-12B, ERNIE 4.5 VL 28B, and Qwen3 VL 30B.
+            Added batch Gemini pricing to the cost-performance chart.
+            Removed GPT-5.3 Codex (incompatible with chat completions API).</p>
           <p><strong>March 5, 2026:</strong> Added LightOnOCR-2-1B via Ollama (0.2185) and Qwen3.5-2B (no reasoning) via
             Ollama (0.3682).
             Both run locally with quantized GGUF weights. Small images padded to 224px minimum for Ollama compatibility.
@@ -2978,57 +3072,6 @@
       });
     })();
 
-    // Excl. E. Africa toggle
-    (function () {
-      document.addEventListener("DOMContentLoaded", function () {
-        var btn = document.getElementById("toggle-no-ea");
-        if (!btn) return;
-
-        function applyEaToggle() {
-          var useNoEa = btn.classList.contains("active");
-          var attr = useNoEa ? "data-no-ea" : "data-all";
-          var table = document.getElementById("table-v2");
-          if (!table) return;
-          var rows = table.tBodies[0].querySelectorAll("tr");
-          Array.prototype.forEach.call(rows, function (row) {
-            // Column 1 = socOCRbench, Column 2 = Region
-            var cells = row.children;
-            if (cells[1] && cells[1].getAttribute(attr)) {
-              cells[1].textContent = cells[1].getAttribute(attr);
-            }
-            if (cells[2] && cells[2].getAttribute(attr)) {
-              cells[2].textContent = cells[2].getAttribute(attr);
-            }
-          });
-          // Update chart
-          if (typeof window._updateChart === "function") {
-            window._updateChart(useNoEa);
-          }
-          // Re-sort by current sort column
-          var sortCol = table.getAttribute("data-sort-col");
-          var sortDir = table.getAttribute("data-sort-dir");
-          if (sortCol !== null) {
-            var headers = table.querySelectorAll("thead th");
-            var idx = parseInt(sortCol, 10);
-            if (!isNaN(idx) && headers[idx]) {
-              headers[idx].click();
-              // Click toggles direction, so click again if needed
-              if (table.getAttribute("data-sort-dir") !== sortDir) {
-                headers[idx].click();
-              }
-            }
-          }
-        }
-
-        btn.addEventListener("click", function () {
-          btn.classList.toggle("active");
-          applyEaToggle();
-        });
-
-        // Apply default state (active = excl. E. Africa)
-        applyEaToggle();
-      });
-    })();
   </script>
 </body>
 
