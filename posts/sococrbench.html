@@ -378,12 +378,419 @@
 
       <!-- Version Tabs -->
       <div class="version-tabs">
-        <div class="version-tab active" data-version="v2">v2</div>
+        <div class="version-tab active" data-version="v3">v3</div>
+        <div class="version-tab" data-version="v2">v2</div>
         <div class="version-tab" data-version="v1">v1</div>
       </div>
 
+      <!-- V3 Panel -->
+      <div class="version-panel active" id="panel-v3">
+        <table class="results-table sortable" id="table-v3">
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>socOCRbench</th>
+              <th data-group="v3region">Region <span class="expand-btn" data-group="v3region"></span></th>
+              <th class="sub-col" data-group="v3region">W. Europe</th>
+              <th class="sub-col" data-group="v3region">E. Europe</th>
+              <th class="sub-col" data-group="v3region">E. Asia</th>
+              <th class="sub-col" data-group="v3region">S. Asia</th>
+              <th class="sub-col" data-group="v3region">MENA</th>
+              <th data-group="v3format">Format <span class="expand-btn" data-group="v3format"></span></th>
+              <th class="sub-col" data-group="v3format">HW Text</th>
+              <th class="sub-col" data-group="v3format">Print Text</th>
+              <th class="sub-col" data-group="v3format">HW Table</th>
+              <th>$/M In</th>
+              <th>$/M Out</th>
+            </tr>
+          </thead>
+          <tbody id="v3-tbody">
+            <tr>
+              <td data-sort="Gemini 3 Pro (low)" data-size="unknown">Gemini 3 Pro (low) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td class="best">0.6619</td>
+              <td>0.6888</td>
+              <td class="sub-col" data-group="v3region">0.7627</td><td class="sub-col" data-group="v3region">0.7210</td><td class="sub-col" data-group="v3region">0.5704</td><td class="sub-col" data-group="v3region">0.7355</td><td class="sub-col" data-group="v3region">0.6545</td>
+              <td>0.6350</td>
+              <td class="sub-col" data-group="v3format">0.6798</td><td class="sub-col" data-group="v3format">0.8011</td><td class="sub-col" data-group="v3format">0.4241</td>
+              <td>2.00</td>
+              <td>12.00</td>
+            </tr>
+            <tr>
+              <td data-sort="Gemini 3.1 Pro (low)" data-size="unknown">Gemini 3.1 Pro (low) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.6514</td>
+              <td>0.6577</td>
+              <td class="sub-col" data-group="v3region">0.6891</td><td class="sub-col" data-group="v3region">0.6605</td><td class="sub-col" data-group="v3region">0.5695</td><td class="sub-col" data-group="v3region">0.7315</td><td class="sub-col" data-group="v3region">0.6377</td>
+              <td>0.6450</td>
+              <td class="sub-col" data-group="v3format">0.6486</td><td class="sub-col" data-group="v3format">0.7022</td><td class="sub-col" data-group="v3format">0.5843</td>
+              <td>2.00</td>
+              <td>12.00</td>
+            </tr>
+            <tr>
+              <td data-sort="Gemini 3.1 Flash Lite" data-size="unknown">Gemini 3.1 Flash Lite <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.6403</td>
+              <td>0.6520</td>
+              <td class="sub-col" data-group="v3region">0.7364</td><td class="sub-col" data-group="v3region">0.6672</td><td class="sub-col" data-group="v3region">0.5231</td><td class="sub-col" data-group="v3region">0.7436</td><td class="sub-col" data-group="v3region">0.5896</td>
+              <td>0.6286</td>
+              <td class="sub-col" data-group="v3format">0.6329</td><td class="sub-col" data-group="v3format">0.7646</td><td class="sub-col" data-group="v3format">0.4882</td>
+              <td>0.25</td>
+              <td>1.50</td>
+            </tr>
+            <tr>
+              <td data-sort="Gemini 3 Flash (minimal)" data-size="unknown">Gemini 3 Flash (minimal) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.6267</td>
+              <td>0.6390</td>
+              <td class="sub-col" data-group="v3region">0.7287</td><td class="sub-col" data-group="v3region">0.6080</td><td class="sub-col" data-group="v3region">0.5227</td><td class="sub-col" data-group="v3region">0.7209</td><td class="sub-col" data-group="v3region">0.6145</td>
+              <td>0.6145</td>
+              <td class="sub-col" data-group="v3format">0.6334</td><td class="sub-col" data-group="v3format">0.7387</td><td class="sub-col" data-group="v3format">0.4712</td>
+              <td>0.50</td>
+              <td>3.00</td>
+            </tr>
+            <tr>
+              <td data-sort="Gemini 3 Flash (low)" data-size="unknown">Gemini 3 Flash (low) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.6265</td>
+              <td>0.6453</td>
+              <td class="sub-col" data-group="v3region">0.7063</td><td class="sub-col" data-group="v3region">0.6143</td><td class="sub-col" data-group="v3region">0.5446</td><td class="sub-col" data-group="v3region">0.7156</td><td class="sub-col" data-group="v3region">0.6456</td>
+              <td>0.6076</td>
+              <td class="sub-col" data-group="v3format">0.6392</td><td class="sub-col" data-group="v3format">0.7300</td><td class="sub-col" data-group="v3format">0.4537</td>
+              <td>0.50</td>
+              <td>3.00</td>
+            </tr>
+            <tr>
+              <td data-sort="Qwen3.5 397B" data-size="unknown">Qwen3.5 397B <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.6252</td>
+              <td>0.6353</td>
+              <td class="sub-col" data-group="v3region">0.7399</td><td class="sub-col" data-group="v3region">0.6068</td><td class="sub-col" data-group="v3region">0.5781</td><td class="sub-col" data-group="v3region">0.7412</td><td class="sub-col" data-group="v3region">0.5105</td>
+              <td>0.6152</td>
+              <td class="sub-col" data-group="v3format">0.6140</td><td class="sub-col" data-group="v3format">0.7671</td><td class="sub-col" data-group="v3format">0.4644</td>
+              <td>0.60</td>
+              <td>3.60</td>
+            </tr>
+            <tr>
+              <td data-sort="Qwen3.5 Plus" data-size="unknown">Qwen3.5 Plus <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.6174</td>
+              <td>0.6279</td>
+              <td class="sub-col" data-group="v3region">0.7299</td><td class="sub-col" data-group="v3region">0.5812</td><td class="sub-col" data-group="v3region">0.5693</td><td class="sub-col" data-group="v3region">0.7298</td><td class="sub-col" data-group="v3region">0.5293</td>
+              <td>0.6069</td>
+              <td class="sub-col" data-group="v3format">0.6101</td><td class="sub-col" data-group="v3format">0.7533</td><td class="sub-col" data-group="v3format">0.4574</td>
+              <td>0.80</td>
+              <td>2.00</td>
+            </tr>
+            <tr>
+              <td data-sort="Qwen3.5 122B" data-size="unknown">Qwen3.5 122B <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.6004</td>
+              <td>0.6078</td>
+              <td class="sub-col" data-group="v3region">0.7133</td><td class="sub-col" data-group="v3region">0.6014</td><td class="sub-col" data-group="v3region">0.5500</td><td class="sub-col" data-group="v3region">0.6860</td><td class="sub-col" data-group="v3region">0.4884</td>
+              <td>0.5929</td>
+              <td class="sub-col" data-group="v3format">0.5894</td><td class="sub-col" data-group="v3format">0.7342</td><td class="sub-col" data-group="v3format">0.4551</td>
+              <td>0.40</td>
+              <td>3.20</td>
+            </tr>
+            <tr>
+              <td data-sort="Qwen3 VL 235B" data-size="unknown">Qwen3 VL 235B <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.5994</td>
+              <td>0.5967</td>
+              <td class="sub-col" data-group="v3region">0.7115</td><td class="sub-col" data-group="v3region">0.5943</td><td class="sub-col" data-group="v3region">0.5540</td><td class="sub-col" data-group="v3region">0.6905</td><td class="sub-col" data-group="v3region">0.4330</td>
+              <td>0.6021</td>
+              <td class="sub-col" data-group="v3format">0.5627</td><td class="sub-col" data-group="v3format">0.7396</td><td class="sub-col" data-group="v3format">0.5040</td>
+              <td>0.20</td>
+              <td>0.88</td>
+            </tr>
+            <tr>
+              <td data-sort="Qwen3.5 27B" data-size="unknown">Qwen3.5 27B <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.5856</td>
+              <td>0.5926</td>
+              <td class="sub-col" data-group="v3region">0.6984</td><td class="sub-col" data-group="v3region">0.5574</td><td class="sub-col" data-group="v3region">0.5615</td><td class="sub-col" data-group="v3region">0.6686</td><td class="sub-col" data-group="v3region">0.4770</td>
+              <td>0.5786</td>
+              <td class="sub-col" data-group="v3format">0.5831</td><td class="sub-col" data-group="v3format">0.7062</td><td class="sub-col" data-group="v3format">0.4465</td>
+              <td>0.30</td>
+              <td>2.40</td>
+            </tr>
+            <tr>
+              <td data-sort="Gemini 2.5 Flash" data-size="unknown">Gemini 2.5 Flash <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.5776</td>
+              <td>0.5833</td>
+              <td class="sub-col" data-group="v3region">0.6581</td><td class="sub-col" data-group="v3region">0.5489</td><td class="sub-col" data-group="v3region">0.4987</td><td class="sub-col" data-group="v3region">0.6978</td><td class="sub-col" data-group="v3region">0.5131</td>
+              <td>0.5720</td>
+              <td class="sub-col" data-group="v3format">0.5352</td><td class="sub-col" data-group="v3format">0.7219</td><td class="sub-col" data-group="v3format">0.4587</td>
+              <td>0.15</td>
+              <td>0.60</td>
+            </tr>
+            <tr>
+              <td data-sort="Claude Sonnet 4.6" data-size="unknown">Claude Sonnet 4.6 <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.5701</td>
+              <td>0.5634</td>
+              <td class="sub-col" data-group="v3region">0.6938</td><td class="sub-col" data-group="v3region">0.6056</td><td class="sub-col" data-group="v3region">0.3389</td><td class="sub-col" data-group="v3region">0.6695</td><td class="sub-col" data-group="v3region">0.5094</td>
+              <td>0.5767</td>
+              <td class="sub-col" data-group="v3format">0.5368</td><td class="sub-col" data-group="v3format">0.7020</td><td class="sub-col" data-group="v3format">0.4914</td>
+              <td>3.00</td>
+              <td>15.00</td>
+            </tr>
+            <tr>
+              <td data-sort="Qwen3.5 Flash" data-size="unknown">Qwen3.5 Flash <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.5691</td>
+              <td>0.5893</td>
+              <td class="sub-col" data-group="v3region">0.6830</td><td class="sub-col" data-group="v3region">0.5540</td><td class="sub-col" data-group="v3region">0.5463</td><td class="sub-col" data-group="v3region">0.6840</td><td class="sub-col" data-group="v3region">0.4790</td>
+              <td>0.5489</td>
+              <td class="sub-col" data-group="v3format">0.5758</td><td class="sub-col" data-group="v3format">0.7145</td><td class="sub-col" data-group="v3format">0.3563</td>
+              <td>0.10</td>
+              <td>0.40</td>
+            </tr>
+            <tr>
+              <td data-sort="Qwen3.5 35B" data-size="unknown">Qwen3.5 35B <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.5685</td>
+              <td>0.5898</td>
+              <td class="sub-col" data-group="v3region">0.6859</td><td class="sub-col" data-group="v3region">0.5496</td><td class="sub-col" data-group="v3region">0.5479</td><td class="sub-col" data-group="v3region">0.6885</td><td class="sub-col" data-group="v3region">0.4772</td>
+              <td>0.5472</td>
+              <td class="sub-col" data-group="v3format">0.5703</td><td class="sub-col" data-group="v3format">0.7275</td><td class="sub-col" data-group="v3format">0.3440</td>
+              <td>0.25</td>
+              <td>2.00</td>
+            </tr>
+            <tr>
+              <td data-sort="Gemini 2.0 Flash" data-size="unknown">Gemini 2.0 Flash <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.5670</td>
+              <td>0.5777</td>
+              <td class="sub-col" data-group="v3region">0.6356</td><td class="sub-col" data-group="v3region">0.5577</td><td class="sub-col" data-group="v3region">0.4815</td><td class="sub-col" data-group="v3region">0.6977</td><td class="sub-col" data-group="v3region">0.5162</td>
+              <td>0.5562</td>
+              <td class="sub-col" data-group="v3format">0.5218</td><td class="sub-col" data-group="v3format">0.7192</td><td class="sub-col" data-group="v3format">0.4276</td>
+              <td>0.10</td>
+              <td>0.40</td>
+            </tr>
+            <tr>
+              <td data-sort="Claude Opus 4.6" data-size="unknown">Claude Opus 4.6 <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.5554</td>
+              <td>0.5570</td>
+              <td class="sub-col" data-group="v3region">0.6826</td><td class="sub-col" data-group="v3region">0.6016</td><td class="sub-col" data-group="v3region">0.3496</td><td class="sub-col" data-group="v3region">0.6569</td><td class="sub-col" data-group="v3region">0.4944</td>
+              <td>0.5538</td>
+              <td class="sub-col" data-group="v3format">0.5298</td><td class="sub-col" data-group="v3format">0.7038</td><td class="sub-col" data-group="v3format">0.4279</td>
+              <td>15.00</td>
+              <td>75.00</td>
+            </tr>
+            <tr>
+              <td data-sort="GPT-5.4 (high)" data-size="unknown">GPT-5.4 (high) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.5132</td>
+              <td>0.5342</td>
+              <td class="sub-col" data-group="v3region">0.6309</td><td class="sub-col" data-group="v3region">0.5476</td><td class="sub-col" data-group="v3region">0.5024</td><td class="sub-col" data-group="v3region">0.5986</td><td class="sub-col" data-group="v3region">0.3915</td>
+              <td>0.4922</td>
+              <td class="sub-col" data-group="v3format">0.5196</td><td class="sub-col" data-group="v3format">0.6662</td><td class="sub-col" data-group="v3format">0.2909</td>
+              <td>2.50</td>
+              <td>15.00</td>
+            </tr>
+            <tr>
+              <td data-sort="Qwen3 VL 30B" data-size="unknown">Qwen3 VL 30B <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.5091</td>
+              <td>0.5129</td>
+              <td class="sub-col" data-group="v3region">0.6461</td><td class="sub-col" data-group="v3region">0.5245</td><td class="sub-col" data-group="v3region">0.4915</td><td class="sub-col" data-group="v3region">0.5930</td><td class="sub-col" data-group="v3region">0.3097</td>
+              <td>0.5053</td>
+              <td class="sub-col" data-group="v3format">0.4620</td><td class="sub-col" data-group="v3format">0.7074</td><td class="sub-col" data-group="v3format">0.3466</td>
+              <td>0.10</td>
+              <td>0.40</td>
+            </tr>
+            <tr>
+              <td data-sort="GPT-5.4 (auto)" data-size="unknown">GPT-5.4 (auto) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.5037</td>
+              <td>0.5213</td>
+              <td class="sub-col" data-group="v3region">0.6393</td><td class="sub-col" data-group="v3region">0.5543</td><td class="sub-col" data-group="v3region">0.4520</td><td class="sub-col" data-group="v3region">0.5870</td><td class="sub-col" data-group="v3region">0.3739</td>
+              <td>0.4862</td>
+              <td class="sub-col" data-group="v3format">0.5127</td><td class="sub-col" data-group="v3format">0.6580</td><td class="sub-col" data-group="v3format">0.2877</td>
+              <td>2.50</td>
+              <td>15.00</td>
+            </tr>
+            <tr>
+              <td data-sort="Qwen3 VL 8B" data-size="unknown">Qwen3 VL 8B <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.5014</td>
+              <td>0.5233</td>
+              <td class="sub-col" data-group="v3region">0.6322</td><td class="sub-col" data-group="v3region">0.5469</td><td class="sub-col" data-group="v3region">0.4940</td><td class="sub-col" data-group="v3region">0.6270</td><td class="sub-col" data-group="v3region">0.3165</td>
+              <td>0.4794</td>
+              <td class="sub-col" data-group="v3format">0.4803</td><td class="sub-col" data-group="v3format">0.7068</td><td class="sub-col" data-group="v3format">0.2512</td>
+              <td>0.08</td>
+              <td>0.50</td>
+            </tr>
+            <tr>
+              <td data-sort="GPT-5.4 (low)" data-size="unknown">GPT-5.4 (low) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.4970</td>
+              <td>0.5151</td>
+              <td class="sub-col" data-group="v3region">0.6240</td><td class="sub-col" data-group="v3region">0.5321</td><td class="sub-col" data-group="v3region">0.4656</td><td class="sub-col" data-group="v3region">0.5788</td><td class="sub-col" data-group="v3region">0.3750</td>
+              <td>0.4788</td>
+              <td class="sub-col" data-group="v3format">0.5037</td><td class="sub-col" data-group="v3format">0.6492</td><td class="sub-col" data-group="v3format">0.2834</td>
+              <td>2.50</td>
+              <td>15.00</td>
+            </tr>
+            <tr>
+              <td data-sort="Mistral OCR" data-size="unknown">Mistral OCR <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.4962</td>
+              <td>0.4819</td>
+              <td class="sub-col" data-group="v3region">0.6288</td><td class="sub-col" data-group="v3region">0.4404</td><td class="sub-col" data-group="v3region">0.2473</td><td class="sub-col" data-group="v3region">0.6114</td><td class="sub-col" data-group="v3region">0.4815</td>
+              <td>0.5104</td>
+              <td class="sub-col" data-group="v3format">0.4275</td><td class="sub-col" data-group="v3format">0.6666</td><td class="sub-col" data-group="v3format">0.4372</td>
+              <td>1.00</td>
+              <td>1.00</td>
+            </tr>
+            <tr>
+              <td data-sort="GPT-5.4 (original)" data-size="unknown">GPT-5.4 (original) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.4830</td>
+              <td>0.4963</td>
+              <td class="sub-col" data-group="v3region">0.6403</td><td class="sub-col" data-group="v3region">0.5473</td><td class="sub-col" data-group="v3region">0.3635</td><td class="sub-col" data-group="v3region">0.5677</td><td class="sub-col" data-group="v3region">0.3626</td>
+              <td>0.4697</td>
+              <td class="sub-col" data-group="v3format">0.4887</td><td class="sub-col" data-group="v3format">0.6484</td><td class="sub-col" data-group="v3format">0.2719</td>
+              <td>2.50</td>
+              <td>15.00</td>
+            </tr>
+            <tr>
+              <td data-sort="Llama 4 Maverick" data-size="unknown">Llama 4 Maverick <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.4783</td>
+              <td>0.4585</td>
+              <td class="sub-col" data-group="v3region">0.5924</td><td class="sub-col" data-group="v3region">0.4831</td><td class="sub-col" data-group="v3region">0.1956</td><td class="sub-col" data-group="v3region">0.6497</td><td class="sub-col" data-group="v3region">0.3717</td>
+              <td>0.4981</td>
+              <td class="sub-col" data-group="v3format">0.3891</td><td class="sub-col" data-group="v3format">0.6400</td><td class="sub-col" data-group="v3format">0.4651</td>
+              <td>0.27</td>
+              <td>0.85</td>
+            </tr>
+            <tr>
+              <td data-sort="ERNIE 4.5 VL 424B" data-size="unknown">ERNIE 4.5 VL 424B <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.4754</td>
+              <td>0.4575</td>
+              <td class="sub-col" data-group="v3region">0.5868</td><td class="sub-col" data-group="v3region">0.4170</td><td class="sub-col" data-group="v3region">0.4901</td><td class="sub-col" data-group="v3region">0.4971</td><td class="sub-col" data-group="v3region">0.2964</td>
+              <td>0.4932</td>
+              <td class="sub-col" data-group="v3format">0.4373</td><td class="sub-col" data-group="v3format">0.5771</td><td class="sub-col" data-group="v3format">0.4653</td>
+              <td>0.42</td>
+              <td>1.25</td>
+            </tr>
+            <tr>
+              <td data-sort="OlmOCR-2" data-size="unknown">OlmOCR-2 <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.4659</td>
+              <td>0.4849</td>
+              <td class="sub-col" data-group="v3region">0.6267</td><td class="sub-col" data-group="v3region">0.4742</td><td class="sub-col" data-group="v3region">0.4277</td><td class="sub-col" data-group="v3region">0.5938</td><td class="sub-col" data-group="v3region">0.3020</td>
+              <td>0.4469</td>
+              <td class="sub-col" data-group="v3format">0.4431</td><td class="sub-col" data-group="v3format">0.6923</td><td class="sub-col" data-group="v3format">0.2052</td>
+              <td>0.09</td>
+              <td>0.19</td>
+            </tr>
+            <tr>
+              <td data-sort="Qwen-VL-OCR" data-size="unknown">Qwen-VL-OCR <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.4560</td>
+              <td>0.4702</td>
+              <td class="sub-col" data-group="v3region">0.6062</td><td class="sub-col" data-group="v3region">0.5184</td><td class="sub-col" data-group="v3region">0.3844</td><td class="sub-col" data-group="v3region">0.5906</td><td class="sub-col" data-group="v3region">0.2513</td>
+              <td>0.4419</td>
+              <td class="sub-col" data-group="v3format">0.4207</td><td class="sub-col" data-group="v3format">0.6751</td><td class="sub-col" data-group="v3format">0.2298</td>
+              <td>0.07</td>
+              <td>0.16</td>
+            </tr>
+            <tr>
+              <td data-sort="GPT-5.2" data-size="unknown">GPT-5.2 <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.4440</td>
+              <td>0.4509</td>
+              <td class="sub-col" data-group="v3region">0.5827</td><td class="sub-col" data-group="v3region">0.4853</td><td class="sub-col" data-group="v3region">0.3225</td><td class="sub-col" data-group="v3region">0.5388</td><td class="sub-col" data-group="v3region">0.3250</td>
+              <td>0.4371</td>
+              <td class="sub-col" data-group="v3format">0.4329</td><td class="sub-col" data-group="v3format">0.5977</td><td class="sub-col" data-group="v3format">0.2807</td>
+              <td>1.75</td>
+              <td>14.00</td>
+            </tr>
+            <tr>
+              <td data-sort="ERNIE 4.5 VL 28B" data-size="unknown">ERNIE 4.5 VL 28B <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.4265</td>
+              <td>0.4077</td>
+              <td class="sub-col" data-group="v3region">0.6119</td><td class="sub-col" data-group="v3region">0.2804</td><td class="sub-col" data-group="v3region">0.4788</td><td class="sub-col" data-group="v3region">0.4005</td><td class="sub-col" data-group="v3region">0.2667</td>
+              <td>0.4453</td>
+              <td class="sub-col" data-group="v3format">0.4300</td><td class="sub-col" data-group="v3format">0.5353</td><td class="sub-col" data-group="v3format">0.3706</td>
+              <td>0.14</td>
+              <td>0.56</td>
+            </tr>
+            <tr>
+              <td data-sort="Gemma 3 27B" data-size="unknown">Gemma 3 27B <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.3874</td>
+              <td>0.3640</td>
+              <td class="sub-col" data-group="v3region">0.4775</td><td class="sub-col" data-group="v3region">0.4097</td><td class="sub-col" data-group="v3region">0.2436</td><td class="sub-col" data-group="v3region">0.4266</td><td class="sub-col" data-group="v3region">0.2626</td>
+              <td>0.4109</td>
+              <td class="sub-col" data-group="v3format">0.3175</td><td class="sub-col" data-group="v3format">0.4976</td><td class="sub-col" data-group="v3format">0.4176</td>
+              <td>/</td>
+              <td>/</td>
+            </tr>
+            <tr>
+              <td data-sort="GLM-OCR" data-size="unknown">GLM-OCR <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.3680</td>
+              <td>0.3776</td>
+              <td class="sub-col" data-group="v3region">0.6155</td><td class="sub-col" data-group="v3region">0.4788</td><td class="sub-col" data-group="v3region">0.4891</td><td class="sub-col" data-group="v3region">0.2522</td><td class="sub-col" data-group="v3region">0.0522</td>
+              <td>0.3584</td>
+              <td class="sub-col" data-group="v3format">0.3792</td><td class="sub-col" data-group="v3format">0.6095</td><td class="sub-col" data-group="v3format">0.0867</td>
+              <td>0.03</td>
+              <td>0.03</td>
+            </tr>
+            <tr>
+              <td data-sort="Gemma 3 4B" data-size="unknown">Gemma 3 4B <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.2802</td>
+              <td>0.2390</td>
+              <td class="sub-col" data-group="v3region">0.3999</td><td class="sub-col" data-group="v3region">0.2782</td><td class="sub-col" data-group="v3region">0.0522</td><td class="sub-col" data-group="v3region">0.2726</td><td class="sub-col" data-group="v3region">0.1919</td>
+              <td>0.3214</td>
+              <td class="sub-col" data-group="v3format">0.2233</td><td class="sub-col" data-group="v3format">0.3472</td><td class="sub-col" data-group="v3format">0.3939</td>
+              <td>/</td>
+              <td>/</td>
+            </tr>
+            <tr>
+              <td data-sort="DeepSeek-OCR2" data-size="unknown">DeepSeek-OCR2 <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.2355</td>
+              <td>0.2034</td>
+              <td class="sub-col" data-group="v3region">0.3637</td><td class="sub-col" data-group="v3region">0.3022</td><td class="sub-col" data-group="v3region">0.0420</td><td class="sub-col" data-group="v3region">0.1277</td><td class="sub-col" data-group="v3region">0.1815</td>
+              <td>0.2675</td>
+              <td class="sub-col" data-group="v3format">0.1711</td><td class="sub-col" data-group="v3format">0.3559</td><td class="sub-col" data-group="v3format">0.2755</td>
+              <td>0.03</td>
+              <td>0.03</td>
+            </tr>
+            <tr>
+              <td data-sort="Nemotron-Nano-12B" data-size="unknown">Nemotron-Nano-12B <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.1845</td>
+              <td>0.1464</td>
+              <td class="sub-col" data-group="v3region">0.3529</td><td class="sub-col" data-group="v3region">0.1813</td><td class="sub-col" data-group="v3region">0.0265</td><td class="sub-col" data-group="v3region">0.1078</td><td class="sub-col" data-group="v3region">0.0639</td>
+              <td>0.2225</td>
+              <td class="sub-col" data-group="v3format">0.1334</td><td class="sub-col" data-group="v3format">0.3018</td><td class="sub-col" data-group="v3format">0.2324</td>
+              <td>0.20</td>
+              <td>0.20</td>
+            </tr>
+            <tr>
+              <td data-sort="PaddleOCR-VL-0.9B" data-size="unknown">PaddleOCR-VL-0.9B <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.1704</td>
+              <td>0.1422</td>
+              <td class="sub-col" data-group="v3region">0.3165</td><td class="sub-col" data-group="v3region">0.1529</td><td class="sub-col" data-group="v3region">0.0917</td><td class="sub-col" data-group="v3region">0.0686</td><td class="sub-col" data-group="v3region">0.0815</td>
+              <td>0.1986</td>
+              <td class="sub-col" data-group="v3format">0.1343</td><td class="sub-col" data-group="v3format">0.2778</td><td class="sub-col" data-group="v3format">0.1838</td>
+              <td>0.13</td>
+              <td>0.13</td>
+            </tr>
+            <tr>
+              <td data-sort="DeepSeek-OCR" data-size="unknown">DeepSeek-OCR <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.1317</td>
+              <td>0.1033</td>
+              <td class="sub-col" data-group="v3region">0.2182</td><td class="sub-col" data-group="v3region">0.1080</td><td class="sub-col" data-group="v3region">0.0295</td><td class="sub-col" data-group="v3region">0.0771</td><td class="sub-col" data-group="v3region">0.0835</td>
+              <td>0.1601</td>
+              <td class="sub-col" data-group="v3format">0.0947</td><td class="sub-col" data-group="v3format">0.1824</td><td class="sub-col" data-group="v3format">0.2032</td>
+              <td>0.03</td>
+              <td>0.03</td>
+            </tr>
+            <tr>
+              <td data-sort="Molmo 2 8B" data-size="unknown">Molmo 2 8B <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.1278</td>
+              <td>0.0936</td>
+              <td class="sub-col" data-group="v3region">0.2608</td><td class="sub-col" data-group="v3region">0.0740</td><td class="sub-col" data-group="v3region">0.0069</td><td class="sub-col" data-group="v3region">0.0722</td><td class="sub-col" data-group="v3region">0.0542</td>
+              <td>0.1620</td>
+              <td class="sub-col" data-group="v3format">0.0943</td><td class="sub-col" data-group="v3format">0.1982</td><td class="sub-col" data-group="v3format">0.1934</td>
+              <td>/</td>
+              <td>/</td>
+            </tr>
+            <tr>
+              <td data-sort="Kimi K2.5" data-size="unknown">Kimi K2.5 <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.1133</td>
+              <td>0.1033</td>
+              <td class="sub-col" data-group="v3region">0.2083</td><td class="sub-col" data-group="v3region">0.1083</td><td class="sub-col" data-group="v3region">0.0813</td><td class="sub-col" data-group="v3region">0.1047</td><td class="sub-col" data-group="v3region">0.0137</td>
+              <td>0.1233</td>
+              <td class="sub-col" data-group="v3format">0.0649</td><td class="sub-col" data-group="v3format">0.2413</td><td class="sub-col" data-group="v3format">0.0637</td>
+              <td>0.60</td>
+              <td>2.50</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
       <!-- V2 Panel -->
-      <div class="version-panel active" id="panel-v2">
+      <div class="version-panel" id="panel-v2">
         <table class="results-table sortable" id="table-v2">
           <thead>
             <tr>
@@ -1636,14 +2043,19 @@
       <h3 style="margin-top: 2em;">Cost vs Performance</h3>
       <p style="font-size: 0.92em;">Average token cost = (input + output price per 1M tokens) / 2.
         Only models with published API pricing are included. Log scale on x-axis.</p>
-      <div style="max-width: 800px; margin: 1em auto;">
+      <div class="version-tabs" id="chart-version-tabs" style="max-width: 800px; margin: 0.5em auto 0;">
+        <div class="version-tab active" data-chart-version="v3">v3</div>
+        <div class="version-tab" data-chart-version="v2">v2</div>
+        <div class="version-tab" data-chart-version="v1">v1</div>
+      </div>
+      <div style="max-width: 800px; margin: 0 auto 1em;">
         <canvas id="cost-perf-chart-main" width="800" height="450"></canvas>
       </div>
       <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
-                                              <script>
+      <script>
           (function() {
-            // data: [cost, score_all, score_no_ea, label, color]
-            const data = [
+            // v2 data: [cost, score_all, score_no_ea, label, color]
+            const v2Data = [
               [7.000, 0.7067, 0.7009, "Gemini 3.1 Pro (low)", "#4285F4"],
               [7.000, 0.6989, 0.7134, "Gemini 3 Pro (low)", "#4285F4"],
               [1.750, 0.6980, 0.6967, "Gemini 3 Flash (low)", "#4285F4"],
@@ -1686,8 +2098,8 @@
               [0.030, 0.1690, 0.2412, "DeepSeek-OCR2", "#607D8B"],
               [1.550, 0.1138, 0.1231, "Kimi K2.5", "#607D8B"]
             ];
-            // batchData: [cost, score_all, score_no_ea, label, color, std_cost]
-            const batchData = [
+            // v2 batchData: [cost, score_all, score_no_ea, label, color, std_cost]
+            const v2Batch = [
               [3.500, 0.7067, 0.7009, "Gemini 3.1 Pro (low) (batch)", "#4285F4", 7.000],
               [3.500, 0.6989, 0.7134, "Gemini 3 Pro (low) (batch)", "#4285F4", 7.000],
               [0.875, 0.6980, 0.6967, "Gemini 3 Flash (low) (batch)", "#4285F4", 1.750],
@@ -1699,26 +2111,132 @@
               [0.125, 0.5677, 0.6309, "Gemini 2.0 Flash (batch)", "#4285F4", 0.250],
               [0.188, 0.4849, 0.5260, "Gemini 2.5 Flash (batch)", "#4285F4", 0.375]
             ];
-            // Default to excl. E. Africa (index 2); all regions = index 1
-            var scoreIdx = 2;
+
+            // v1 data: [cost, score, score, label, color] (no E. Africa distinction in v1)
+            const v1Data = [
+              [7.000, 0.5965, 0.5965, "Gemini 3.1 Pro (low)", "#4285F4"],
+              [1.750, 0.5522, 0.5522, "Gemini 3 Flash (low)", "#4285F4"],
+              [7.000, 0.5472, 0.5472, "Gemini 3 Pro (low)", "#4285F4"],
+              [7.000, 0.5406, 0.5406, "Gemini 3 Pro (high)", "#4285F4"],
+              [0.250, 0.5100, 0.5100, "Gemini 2.0 Flash", "#4285F4"],
+              [0.250, 0.4882, 0.4882, "Seed 2.0 Mini", "#607D8B"],
+              [1.750, 0.4808, 0.4808, "Gemini 3 Flash (high)", "#4285F4"],
+              [0.375, 0.4670, 0.4670, "Gemini 2.5 Flash", "#4285F4"],
+              [2.100, 0.4598, 0.4598, "Qwen3.5-397B (thinking)", "#E91E63"],
+              [0.540, 0.4581, 0.4581, "Qwen3-VL-235B", "#E91E63"],
+              [2.100, 0.4484, 0.4484, "Qwen3.5-397B", "#E91E63"],
+              [1.350, 0.4340, 0.4340, "Qwen3.5-27B", "#E91E63"],
+              [1.125, 0.4296, 0.4296, "Qwen3.5-35B", "#E91E63"],
+              [0.250, 0.4280, 0.4280, "Qwen3.5-Flash", "#E91E63"],
+              [1.800, 0.4264, 0.4264, "Qwen3.5-122B", "#E91E63"],
+              [0.250, 0.4194, 0.4194, "Qwen3-VL-30B", "#E91E63"],
+              [0.290, 0.4105, 0.4105, "Qwen3-VL-8B", "#E91E63"],
+              [1.420, 0.4058, 0.4058, "Seed 2.0 Pro", "#607D8B"],
+              [1.375, 0.4057, 0.4057, "ERNIE 4.5 VL 424B", "#607D8B"],
+              [7.875, 0.3932, 0.3932, "GPT-5.2 (high)", "#10a37f"],
+              [0.375, 0.3911, 0.3911, "Llama 4 Maverick", "#607D8B"],
+              [1.375, 0.3837, 0.3837, "ERNIE 4.5 VL 28B", "#607D8B"],
+              [7.875, 0.3759, 0.3759, "GPT-5.2 (low)", "#10a37f"],
+              [0.310, 0.3724, 0.3724, "Seed 2.0 Lite", "#607D8B"],
+              [0.115, 0.3525, 0.3525, "Qwen-VL-OCR", "#E91E63"],
+              [0.030, 0.3247, 0.3247, "GLM-OCR", "#607D8B"],
+              [0.200, 0.2177, 0.2177, "Nemotron-Nano-12B", "#607D8B"],
+              [0.030, 0.1997, 0.1997, "DeepSeek-OCR", "#607D8B"],
+              [1.550, 0.1336, 0.1336, "Kimi K2.5", "#607D8B"],
+              [0.030, 0.1181, 0.1181, "DeepSeek-OCR2", "#607D8B"]
+            ];
+
+            // v3 data: [cost, score, score, label, color] (no E. Africa distinction in v3)
+            const v3Data = [
+              [7.000, 0.6619, 0.6619, "Gemini 3 Pro (low)", "#4285F4"],
+              [7.000, 0.6514, 0.6514, "Gemini 3.1 Pro (low)", "#4285F4"],
+              [0.875, 0.6403, 0.6403, "Gemini 3.1 Flash Lite", "#4285F4"],
+              [1.750, 0.6267, 0.6267, "Gemini 3 Flash (minimal)", "#4285F4"],
+              [1.750, 0.6265, 0.6265, "Gemini 3 Flash (low)", "#4285F4"],
+              [2.100, 0.6252, 0.6252, "Qwen3.5 397B", "#E91E63"],
+              [1.400, 0.6174, 0.6174, "Qwen3.5 Plus", "#E91E63"],
+              [1.800, 0.6004, 0.6004, "Qwen3.5 122B", "#E91E63"],
+              [0.540, 0.5994, 0.5994, "Qwen3 VL 235B", "#E91E63"],
+              [1.350, 0.5856, 0.5856, "Qwen3.5 27B", "#E91E63"],
+              [0.375, 0.5776, 0.5776, "Gemini 2.5 Flash", "#4285F4"],
+              [9.000, 0.5701, 0.5701, "Claude Sonnet 4.6", "#B8860B"],
+              [0.250, 0.5691, 0.5691, "Qwen3.5 Flash", "#E91E63"],
+              [1.125, 0.5685, 0.5685, "Qwen3.5 35B", "#E91E63"],
+              [0.250, 0.5670, 0.5670, "Gemini 2.0 Flash", "#4285F4"],
+              [45.000, 0.5554, 0.5554, "Claude Opus 4.6", "#B8860B"],
+              [8.750, 0.5132, 0.5132, "GPT-5.4 (high)", "#10a37f"],
+              [8.750, 0.5037, 0.5037, "GPT-5.4 (auto)", "#10a37f"],
+              [0.250, 0.5091, 0.5091, "Qwen3 VL 30B", "#E91E63"],
+              [0.290, 0.5014, 0.5014, "Qwen3 VL 8B", "#E91E63"],
+              [1.000, 0.4962, 0.4962, "Mistral OCR", "#607D8B"],
+              [8.750, 0.4970, 0.4970, "GPT-5.4 (low)", "#10a37f"],
+              [8.750, 0.4830, 0.4830, "GPT-5.4 (original)", "#10a37f"],
+              [0.560, 0.4783, 0.4783, "Llama 4 Maverick", "#607D8B"],
+              [0.835, 0.4754, 0.4754, "ERNIE 4.5 VL 424B", "#607D8B"],
+              [0.140, 0.4659, 0.4659, "OlmOCR-2", "#607D8B"],
+              [0.115, 0.4560, 0.4560, "Qwen-VL-OCR", "#E91E63"],
+              [7.875, 0.4440, 0.4440, "GPT-5.2", "#10a37f"],
+              [0.350, 0.4265, 0.4265, "ERNIE 4.5 VL 28B", "#607D8B"],
+              [0.250, 0.3874, 0.3874, "Gemma 3 27B", "#607D8B"],
+              [0.030, 0.3680, 0.3680, "GLM-OCR", "#607D8B"],
+              [0.350, 0.2802, 0.2802, "Gemma 3 4B", "#607D8B"],
+              [0.030, 0.2355, 0.2355, "DeepSeek-OCR2", "#607D8B"],
+              [0.200, 0.1845, 0.1845, "Nemotron-Nano-12B", "#607D8B"],
+              [0.130, 0.1704, 0.1704, "PaddleOCR-VL-0.9B", "#607D8B"],
+              [0.030, 0.1317, 0.1317, "DeepSeek-OCR", "#607D8B"],
+              [0.190, 0.1278, 0.1278, "Molmo 2 8B", "#607D8B"],
+              [1.550, 0.1133, 0.1133, "Kimi K2.5", "#607D8B"]
+            ];
+
+            const v3Batch = [
+              [3.500, 0.6619, 0.6619, "Gemini 3 Pro (low) (batch)", "#4285F4", 7.000],
+              [3.500, 0.6514, 0.6514, "Gemini 3.1 Pro (low) (batch)", "#4285F4", 7.000],
+              [0.438, 0.6403, 0.6403, "Gemini 3.1 Flash Lite (batch)", "#4285F4", 0.875],
+              [0.875, 0.6267, 0.6267, "Gemini 3 Flash (minimal) (batch)", "#4285F4", 1.750],
+              [0.875, 0.6265, 0.6265, "Gemini 3 Flash (low) (batch)", "#4285F4", 1.750],
+              [0.188, 0.5776, 0.5776, "Gemini 2.5 Flash (batch)", "#4285F4", 0.375],
+              [0.125, 0.5670, 0.5670, "Gemini 2.0 Flash (batch)", "#4285F4", 0.250]
+            ];
+
+            // Track current chart version and score index
+            var currentVersion = "v3";
+            var scoreIdx = 2; // Default to excl. E. Africa (index 2) for v2; index 1 for all
+
+            function getActiveData() {
+              if (currentVersion === "v1") return v1Data;
+              if (currentVersion === "v3") return v3Data;
+              return v2Data;
+            }
+            function getActiveBatch() {
+              if (currentVersion === "v2") return v2Batch;
+              if (currentVersion === "v3") return v3Batch;
+              return []; // no batch data for v1
+            }
+            function getYLabel() {
+              return "socOCRbench " + currentVersion + " Score";
+            }
+
             const ctx = document.getElementById("cost-perf-chart-main").getContext("2d");
+            var activeData = getActiveData();
+            var activeBatch = getActiveBatch();
+
             window._socChart = new Chart(ctx, {
               type: "scatter",
               data: {
                 datasets: [
                   {
                     label: "Models",
-                    data: data.map(d => ({x: d[0], y: d[scoreIdx], label: d[3]})),
-                    pointBackgroundColor: data.map(d => d[4]),
-                    pointBorderColor: data.map(d => d[4]),
+                    data: activeData.map(d => ({x: d[0], y: d[scoreIdx], label: d[3]})),
+                    pointBackgroundColor: activeData.map(d => d[4]),
+                    pointBorderColor: activeData.map(d => d[4]),
                     pointRadius: 6,
                     pointHoverRadius: 8,
                   },
                   {
                     label: "Batch",
-                    data: batchData.map(d => ({x: d[0], y: d[scoreIdx], label: d[3], stdX: d[5]})),
-                    pointBackgroundColor: batchData.map(d => d[4] + "40"),
-                    pointBorderColor: batchData.map(d => d[4] + "80"),
+                    data: activeBatch.map(d => ({x: d[0], y: d[scoreIdx], label: d[3], stdX: d[5]})),
+                    pointBackgroundColor: activeBatch.map(d => d[4] + "40"),
+                    pointBorderColor: activeBatch.map(d => d[4] + "80"),
                     pointRadius: 5,
                     pointHoverRadius: 7,
                     pointStyle: "circle",
@@ -1749,7 +2267,7 @@
                     ticks: { callback: function(v) { return "$" + v; } }
                   },
                   y: {
-                    title: {display: true, text: "socOCRbench v2 Score", font: {size: 13}},
+                    title: {display: true, text: getYLabel(), font: {size: 13}},
                     min: 0, max: 0.75,
                   }
                 }
@@ -1757,34 +2275,44 @@
               plugins: [{
                 afterDraw: function(chart) {
                   const ctx2 = chart.ctx;
+                  var curBatch = getActiveBatch();
                   // Draw lines connecting batch dots to standard dots
-                  const batchMeta = chart.getDatasetMeta(1);
-                  const mainMeta = chart.getDatasetMeta(0);
-                  batchMeta.data.forEach(function(bPt, i) {
-                    const bd = chart.data.datasets[1].data[i];
-                    // Find matching main point by stdX and same y
-                    for (let j = 0; j < mainMeta.data.length; j++) {
-                      const md = chart.data.datasets[0].data[j];
-                      if (Math.abs(md.x - bd.stdX) < 0.001 && Math.abs(md.y - bd.y) < 0.0001) {
-                        ctx2.beginPath();
-                        ctx2.moveTo(bPt.x, bPt.y);
-                        ctx2.lineTo(mainMeta.data[j].x, mainMeta.data[j].y);
-                        ctx2.strokeStyle = chart.data.datasets[1].pointBorderColor[i];
-                        ctx2.lineWidth = 1.5;
-                        ctx2.setLineDash([4, 3]);
-                        ctx2.stroke();
-                        ctx2.setLineDash([]);
-                        break;
+                  if (curBatch.length > 0) {
+                    const batchMeta = chart.getDatasetMeta(1);
+                    const mainMeta = chart.getDatasetMeta(0);
+                    batchMeta.data.forEach(function(bPt, i) {
+                      const bd = chart.data.datasets[1].data[i];
+                      for (let j = 0; j < mainMeta.data.length; j++) {
+                        const md = chart.data.datasets[0].data[j];
+                        if (Math.abs(md.x - bd.stdX) < 0.001 && Math.abs(md.y - bd.y) < 0.0001) {
+                          ctx2.beginPath();
+                          ctx2.moveTo(bPt.x, bPt.y);
+                          ctx2.lineTo(mainMeta.data[j].x, mainMeta.data[j].y);
+                          ctx2.strokeStyle = chart.data.datasets[1].pointBorderColor[i];
+                          ctx2.lineWidth = 1.5;
+                          ctx2.setLineDash([4, 3]);
+                          ctx2.stroke();
+                          ctx2.setLineDash([]);
+                          break;
+                        }
                       }
-                    }
-                  });
+                    });
+                  }
                   // Draw text labels
                   ctx2.font = "10px sans-serif";
                   ctx2.textAlign = "left";
-                  const show = new Set(["Claude Opus 4.6", "Claude Sonnet 4.6", "DeepSeek-OCR", "ERNIE 4.5 VL 424B", "GPT-5.2 (high)", "Gemini 2.0 Flash", "Gemini 3 Flash (low)", "Gemini 3.1 Pro (low)", "Llama 4 Maverick", "Mistral OCR", "PP-OCRv5", "PaddleOCR-VL-0.9B", "Qwen-VL-OCR", "Qwen3-VL-235B", "Qwen3.5-397B", "Seed 2.0 Pro", "Tesseract v5"]);
+                  const mainMeta2 = chart.getDatasetMeta(0);
+                  var show;
+                  if (currentVersion === "v3") {
+                    show = new Set(["Claude Opus 4.6", "Claude Sonnet 4.6", "ERNIE 4.5 VL 424B", "GPT-5.4 (high)", "Gemini 2.0 Flash", "Gemini 3 Pro (low)", "Gemini 3.1 Flash Lite", "Llama 4 Maverick", "Qwen3-VL-235B", "Qwen3.5-397B", "Qwen3.5-Flash", "Kimi K2.5"]);
+                  } else if (currentVersion === "v1") {
+                    show = new Set(["Gemini 3.1 Pro (low)", "Gemini 2.0 Flash", "Qwen3.5-397B", "Qwen3-VL-235B", "GPT-5.2 (high)", "Llama 4 Maverick", "Seed 2.0 Mini", "Kimi K2.5", "DeepSeek-OCR"]);
+                  } else {
+                    show = new Set(["Claude Opus 4.6", "Claude Sonnet 4.6", "DeepSeek-OCR", "ERNIE 4.5 VL 424B", "GPT-5.2 (high)", "Gemini 2.0 Flash", "Gemini 3 Flash (low)", "Gemini 3.1 Pro (low)", "Llama 4 Maverick", "Mistral OCR", "PP-OCRv5", "PaddleOCR-VL-0.9B", "Qwen-VL-OCR", "Qwen3-VL-235B", "Qwen3.5-397B", "Seed 2.0 Pro", "Tesseract v5"]);
+                  }
                   chart.data.datasets[0].data.forEach(function(d, i) {
                     if (!show.has(d.label)) return;
-                    const meta = mainMeta.data[i];
+                    const meta = mainMeta2.data[i];
                     if (!meta) return;
                     ctx2.fillStyle = "#333";
                     ctx2.fillText(d.label, meta.x + 8, meta.y - 6);
@@ -1792,16 +2320,41 @@
                 }
               }]
             });
-            // Expose updater for E. Africa toggle
-            window._socChartData = data;
-            window._socChartBatch = batchData;
-            window._updateChart = function(useNoEa) {
-              scoreIdx = useNoEa ? 2 : 1;
+
+            // Rebuild chart for a given version
+            function switchChartVersion(ver) {
+              currentVersion = ver;
+              var data = getActiveData();
+              var batch = getActiveBatch();
               var chart = window._socChart;
               chart.data.datasets[0].data = data.map(d => ({x: d[0], y: d[scoreIdx], label: d[3]}));
-              chart.data.datasets[1].data = batchData.map(d => ({x: d[0], y: d[scoreIdx], label: d[3], stdX: d[5]}));
+              chart.data.datasets[0].pointBackgroundColor = data.map(d => d[4]);
+              chart.data.datasets[0].pointBorderColor = data.map(d => d[4]);
+              chart.data.datasets[1].data = batch.map(d => ({x: d[0], y: d[scoreIdx], label: d[3], stdX: d[5]}));
+              chart.data.datasets[1].pointBackgroundColor = batch.map(d => d[4] + "40");
+              chart.data.datasets[1].pointBorderColor = batch.map(d => d[4] + "80");
+              chart.options.scales.y.title.text = getYLabel();
               chart.update();
+            }
+
+            // Expose updater for E. Africa toggle
+            window._socChartData = v2Data;
+            window._socChartBatch = v2Batch;
+            window._updateChart = function(useNoEa) {
+              scoreIdx = useNoEa ? 2 : 1;
+              switchChartVersion(currentVersion);
             };
+            window._switchChartVersion = switchChartVersion;
+
+            // Chart version tab click handlers
+            var chartTabs = document.querySelectorAll("#chart-version-tabs .version-tab");
+            Array.prototype.forEach.call(chartTabs, function(tab) {
+              tab.addEventListener("click", function() {
+                Array.prototype.forEach.call(chartTabs, function(t) { t.classList.remove("active"); });
+                tab.classList.add("active");
+                switchChartVersion(tab.getAttribute("data-chart-version"));
+              });
+            });
           })();
           </script>
       <p style="font-size: 0.85em; color: #666; margin-top: 0.5em;">
@@ -2226,12 +2779,23 @@
         Array.prototype.forEach.call(tabs, function (tab) {
           tab.addEventListener("click", function () {
             var version = tab.getAttribute("data-version");
-            Array.prototype.forEach.call(tabs, function (t) { t.classList.remove("active"); });
+            if (!version) return; // skip chart version tabs
+            Array.prototype.forEach.call(tabs, function (t) {
+              if (t.hasAttribute("data-version")) t.classList.remove("active");
+            });
             tab.classList.add("active");
             Array.prototype.forEach.call(panels, function (p) { p.classList.remove("active"); });
             var panel = document.getElementById("panel-" + version);
             if (panel) panel.classList.add("active");
             if (typeof applyFilters === "function") applyFilters();
+            // Sync chart version tabs
+            if (typeof window._switchChartVersion === "function") {
+              window._switchChartVersion(version);
+              var chartTabs = document.querySelectorAll("#chart-version-tabs .version-tab");
+              Array.prototype.forEach.call(chartTabs, function(ct) {
+                ct.classList.toggle("active", ct.getAttribute("data-chart-version") === version);
+              });
+            }
           });
         });
       });
