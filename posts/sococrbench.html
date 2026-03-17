@@ -794,6 +794,16 @@
               <td>14.00</td>
             </tr>
             <tr>
+              <td data-sort="GPT-5.4 Mini (auto res., no reason.)" data-size="unknown">GPT-5.4 Mini (auto res., no reason.) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.4401</td>
+              <td>0.4385</td>
+              <td class="sub-col" data-group="v3region">0.5998</td><td class="sub-col" data-group="v3region">0.4999</td><td class="sub-col" data-group="v3region">0.2594</td><td class="sub-col" data-group="v3region">0.5196</td><td class="sub-col" data-group="v3region">0.3139</td>
+              <td>0.4416</td>
+              <td class="sub-col" data-group="v3format">0.4087</td><td class="sub-col" data-group="v3format">0.6182</td><td class="sub-col" data-group="v3format">0.2979</td>
+              <td>0.75</td>
+              <td>4.50</td>
+            </tr>
+            <tr>
               <td data-sort="GPT-5.2 (low res., med. reason.)" data-size="unknown">GPT-5.2 (low res., med. reason.) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
               <td>0.4418</td>
               <td>0.4488</td>
@@ -902,6 +912,16 @@
               <td class="sub-col" data-group="v3format">0.2567</td><td class="sub-col" data-group="v3format">0.4337</td><td class="sub-col" data-group="v3format">0.2970</td>
               <td>0.05</td>
               <td>0.40</td>
+            </tr>
+            <tr>
+              <td data-sort="GPT-5.4 Nano (auto res., no reason.)" data-size="unknown">GPT-5.4 Nano (auto res., no reason.) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.2982</td>
+              <td>0.2693</td>
+              <td class="sub-col" data-group="v3region">0.4787</td><td class="sub-col" data-group="v3region">0.3908</td><td class="sub-col" data-group="v3region">0.0923</td><td class="sub-col" data-group="v3region">0.2004</td><td class="sub-col" data-group="v3region">0.1841</td>
+              <td>0.3271</td>
+              <td class="sub-col" data-group="v3format">0.2597</td><td class="sub-col" data-group="v3format">0.4349</td><td class="sub-col" data-group="v3format">0.2865</td>
+              <td>0.20</td>
+              <td>1.25</td>
             </tr>
             <tr>
               <td data-sort="OCRVerse" data-size="small">OCRVerse <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
@@ -2439,8 +2459,10 @@
               [0.030, 0.3897, 0.3897, "PaddleOCR-VL-1.5", "#607D8B"],
               [1.125, 0.3866, 0.3866, "GPT-5 Mini (med. reason.)", "#10a37f"],
               [0.030, 0.3680, 0.3680, "GLM-OCR", "#607D8B"],
+              [2.625, 0.4401, 0.4401, "GPT-5.4 Mini (no reason.)", "#10a37f"],
               [0.375, 0.3140, 0.3140, "Mistral Small 2603", "#607D8B"],
               [0.225, 0.3045, 0.3045, "GPT-5 Nano (min. reason.)", "#10a37f"],
+              [0.725, 0.2982, 0.2982, "GPT-5.4 Nano (no reason.)", "#10a37f"],
               [6.000, 0.2433, 0.2433, "Grok 4.2 Fast", "#607D8B"],
               [0.030, 0.2355, 0.2355, "DeepSeek-OCR2", "#607D8B"],
               [0.030, 0.1881, 0.1881, "PP-OCRv5", "#607D8B"],
@@ -2996,6 +3018,16 @@
                 <td>OpenRouter</td>
                 <td><code>mistralai/mistral-small-2603</code></td>
               </tr>
+              <tr>
+                <td>GPT-5.4 Mini (auto res., no reason.)</td>
+                <td>OpenAI</td>
+                <td><code>gpt-5.4-mini</code>, detail=auto, reasoning_effort=none</td>
+              </tr>
+              <tr>
+                <td>GPT-5.4 Nano (auto res., no reason.)</td>
+                <td>OpenAI</td>
+                <td><code>gpt-5.4-nano</code>, detail=auto, reasoning_effort=none</td>
+              </tr>
             </tbody>
           </table>
 
@@ -3005,7 +3037,8 @@
       <details style="margin-top: 1.5em;">
         <summary style="cursor: pointer; font-weight: bold; font-size: 1.1em;">Changelog</summary>
         <div style="margin-top: 1em; font-size: 0.92em; line-height: 1.6;">
-          <p><strong>March 17, 2026:</strong> 60 models evaluated. Added Mistral Small 2603 (0.3140).</p>
+          <p><strong>March 17, 2026:</strong> 62 models evaluated. Added Mistral Small 2603 (0.3140),
+            GPT-5.4 Mini (0.4401) and GPT-5.4 Nano (0.2982), both with auto resolution and no reasoning.</p>
           <p><strong>March 15, 2026:</strong> 59 models evaluated. Added GPT-5 Mini and GPT-5 Nano
             with both default (medium) and minimal reasoning variants. Clarified all GPT model
             names to show resolution and reasoning settings (e.g. "GPT-5.4 (high res., med. reason.)").
