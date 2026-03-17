@@ -884,6 +884,16 @@
               <td>0.03</td>
             </tr>
             <tr>
+              <td data-sort="Mistral Small 2603" data-size="unknown">Mistral Small 2603 <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.3140</td>
+              <td>0.2729</td>
+              <td class="sub-col" data-group="v3region">0.4825</td><td class="sub-col" data-group="v3region">0.3551</td><td class="sub-col" data-group="v3region">0.0575</td><td class="sub-col" data-group="v3region">0.3246</td><td class="sub-col" data-group="v3region">0.1449</td>
+              <td>0.3550</td>
+              <td class="sub-col" data-group="v3format">0.2248</td><td class="sub-col" data-group="v3format">0.4712</td><td class="sub-col" data-group="v3format">0.3689</td>
+              <td>0.15</td>
+              <td>0.60</td>
+            </tr>
+            <tr>
               <td data-sort="GPT-5 Nano (min. reason.)" data-size="unknown">GPT-5 Nano (min. reason.) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
               <td>0.3045</td>
               <td>0.2799</td>
@@ -2429,6 +2439,7 @@
               [0.030, 0.3897, 0.3897, "PaddleOCR-VL-1.5", "#607D8B"],
               [1.125, 0.3866, 0.3866, "GPT-5 Mini (med. reason.)", "#10a37f"],
               [0.030, 0.3680, 0.3680, "GLM-OCR", "#607D8B"],
+              [0.375, 0.3140, 0.3140, "Mistral Small 2603", "#607D8B"],
               [0.225, 0.3045, 0.3045, "GPT-5 Nano (min. reason.)", "#10a37f"],
               [6.000, 0.2433, 0.2433, "Grok 4.2 Fast", "#607D8B"],
               [0.030, 0.2355, 0.2355, "DeepSeek-OCR2", "#607D8B"],
@@ -2980,6 +2991,11 @@
                 <td>Mistral AI</td>
                 <td><code>mistral-ocr-latest</code> via <code>mistralai</code> SDK, image-only input</td>
               </tr>
+              <tr>
+                <td>Mistral Small 2603</td>
+                <td>OpenRouter</td>
+                <td><code>mistralai/mistral-small-2603</code></td>
+              </tr>
             </tbody>
           </table>
 
@@ -2989,6 +3005,7 @@
       <details style="margin-top: 1.5em;">
         <summary style="cursor: pointer; font-weight: bold; font-size: 1.1em;">Changelog</summary>
         <div style="margin-top: 1em; font-size: 0.92em; line-height: 1.6;">
+          <p><strong>March 17, 2026:</strong> 60 models evaluated. Added Mistral Small 2603 (0.3140).</p>
           <p><strong>March 15, 2026:</strong> 59 models evaluated. Added GPT-5 Mini and GPT-5 Nano
             with both default (medium) and minimal reasoning variants. Clarified all GPT model
             names to show resolution and reasoning settings (e.g. "GPT-5.4 (high res., med. reason.)").
