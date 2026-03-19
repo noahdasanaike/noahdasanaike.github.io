@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>namesbench - Noah Dasanaike</title>
+  <style>
+    body {
+      max-width: 1100px;
+      margin: auto;
+      padding: 1em;
+    }
+
+    a {
+      color: #750014;
+    }
+
+    .left-panel {
+      float: left;
+      width: 200px;
+      padding-right: 2em;
+    }
+
+    .right-panel {
+      margin-left: 250px;
+    }
+
+    .left-panel img {
+      display: block;
+      margin-bottom: 1em;
+    }
+
+    .left-panel h1 {
+      margin: 0 0 1em 0;
+    }
+
+    h2,
+    h3 {
+      margin: 1em 0 0.5em 0;
+      margin-left: 0;
+    }
+
+    ul {
+      margin: 0 0 1em 0;
+      margin-left: 0;
+      padding-left: 2em;
+    }
+
+    li {
+      margin: 0;
+      padding: 0;
+    }
+
+    .post-content p {
+      margin: 1em 0;
+    }
+
+    .post-date {
+      color: #666;
+      font-style: italic;
+      margin-bottom: 1em;
+    }
+
+    .bench-title {
+      text-align: center;
+      font-size: 3em;
+      font-weight: bold;
+      margin: 0.8em 0 0.3em 0;
+      letter-spacing: 0.02em;
+    }
+
+    .bench-subtitle {
+      text-align: center;
+      color: #666;
+      font-size: 1.1em;
+      margin-bottom: 1.5em;
+    }
+
+    .results-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82em;
+      margin: 0.5em 0 1.5em 0;
+      table-layout: auto;
+    }
+
+    .results-table th,
+    .results-table td {
+      border: 1px solid #ddd;
+      padding: 5px 8px;
+      text-align: center;
+    }
+
+    .results-table th {
+      background: #f5f5f5;
+      font-weight: bold;
+    }
+
+    .results-table.sortable th {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .results-table.sortable th.sort-asc::after {
+      content: " ^";
+      font-size: 0.9em;
+      color: #666;
+    }
+
+    .results-table.sortable th.sort-desc::after {
+      content: " v";
+      font-size: 0.9em;
+      color: #666;
+    }
+
+    .results-table td:first-child {
+      text-align: left;
+      font-weight: 500;
+    }
+
+    .results-table tr:hover {
+      background: #fafafa;
+    }
+
+    .best {
+      font-weight: bold;
+      color: #750014;
+    }
+
+    .model-tag {
+      display: inline-block;
+      margin-left: 0.5em;
+      padding: 0.1em 0.5em;
+      border-radius: 999px;
+      font-size: 0.75em;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      vertical-align: baseline;
+      border: 1px solid #ddd;
+      color: #444;
+      background: #f7f7f7;
+      white-space: nowrap;
+    }
+
+    .model-tag.openai {
+      border-color: #b8d4b8;
+      background: #f0f8f0;
+      color: #2d6a2d;
+    }
+
+    .model-tag.google {
+      border-color: #c7d6e2;
+      background: #f2f7fb;
+      color: #1b4f72;
+    }
+
+    .model-tag.reasoning-low {
+      border-color: #ddd;
+      background: #f7f7f7;
+      color: #888;
+    }
+
+    .model-tag.reasoning-high {
+      border-color: #d4c8b8;
+      background: #faf6f0;
+      color: #6a5a2d;
+    }
+
+    .filter-bar {
+      margin-bottom: 1em;
+      display: flex;
+      gap: 0.5em;
+      flex-wrap: nowrap;
+    }
+
+    .filter-btn {
+      padding: 0.3em 0.7em;
+      border-radius: 999px;
+      border: 1px solid #ccc;
+      background: #fff;
+      cursor: pointer;
+      font-size: 0.8em;
+      font-weight: 500;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+
+    .filter-btn:hover {
+      border-color: #999;
+    }
+
+    .filter-btn.active {
+      border-color: #750014;
+      background: #fbf4f6;
+      color: #750014;
+    }
+
+    .filter-btn.active.filter-google {
+      border-color: #1b4f72;
+      background: #f2f7fb;
+      color: #1b4f72;
+    }
+
+    .filter-btn.active.filter-reasoning {
+      border-color: #555;
+      background: #f0f0f0;
+      color: #333;
+    }
+
+    /* Expandable sub-columns */
+    .sub-col {
+      display: none;
+      font-size: 0.92em;
+      color: #555;
+    }
+
+    .sub-col.visible {
+      display: table-cell;
+    }
+
+    th.sub-col {
+      background: #fafafa;
+      font-weight: 600;
+      font-size: 0.85em;
+    }
+
+    .expand-btn {
+      cursor: pointer;
+      display: inline-block;
+      width: 1.2em;
+      text-align: center;
+      font-weight: bold;
+      font-size: 0.85em;
+      color: #750014;
+      vertical-align: middle;
+      margin-left: 2px;
+      border-radius: 3px;
+    }
+
+    .expand-btn::after {
+      content: "+";
+    }
+
+    .expand-btn.expanded::after {
+      content: "\2212";
+    }
+
+    .expand-btn:hover {
+      background: #f0e0e5;
+    }
+
+    .post-updated {
+      color: #666;
+      font-style: italic;
+      margin-top: 2em;
+    }
+
+    .section-header {
+      margin-top: 2em;
+      padding-top: 1em;
+      border-top: 1px solid #eee;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="left-panel">
+    <img src="../pics/noah.png" alt="Noah Dasanaike" width="150">
+    <h1>Noah Dasanaike</h1>
+    <p>PhD Candidate<br>Department of Government<br>Harvard University</p>
+    <a href="../cv/dasanaike_cv.pdf">Curriculum Vitae</a>
+  </div>
+  <div class="right-panel">
+    <hr />
+    <p><a href="../index.html">&larr; Back to Home</a> &nbsp;|&nbsp; <a href="../posts.html">All Posts</a></p>
+
+    <div class="bench-title">namesbench</div>
+    <div class="bench-subtitle">How well can LLMs infer ethnicity from names?</div>
+    <div style="text-align: center; margin-bottom: 0.5em;"><a href="https://www.dropbox.com/scl/fi/2kx17wvydhr3v8m4u59ek/zeroshot_llms_dasanaike.pdf?rlkey=kybmjjnptca1urqcin06ro349&e=1&st=fk6w43uj&dl=0">Paper</a></div>
+    <p class="post-date">March 19, 2026</p>
+
+    <div class="post-content">
+      <p>Ethnicity and race inference from names is a common task in social science, typically handled by
+        algorithms like BISG (Bayesian Improved Surname Geocoding) or dictionary-based classifiers. But how
+        well do large language models perform on this task out of the box? This benchmark evaluates LLMs on
+        name-based ethnicity inference across four datasets with ground-truth labels.</p>
+
+      <p>The benchmark uses 100-person samples from each dataset. Models are given only a person's name and
+        asked to predict a categorical label. All predictions use structured outputs (JSON schema constraints)
+        to ensure valid labels. The metric is macro-averaged accuracy: we compute per-label accuracy within
+        each dataset, then average across labels (correcting for class imbalance), then average across datasets.</p>
+
+      <h3>Datasets</h3>
+      <ul>
+        <li><strong>North Carolina</strong> &mdash; 100 voters from the NC voter file, labeled by self-reported race
+          (WHITE, BLACK, HISPANIC, ASIAN)</li>
+        <li><strong>Florida</strong> &mdash; 100 voters from the FL voter file, same race categories</li>
+        <li><strong>Lebanon</strong> &mdash; 100 individuals from Lebanese voter rolls, labeled by religious sect
+          (Sunni, Shia, Druze, Maronite, Roman Orthodox, Roman Catholic, Armenian Orthodox)</li>
+        <li><strong>India</strong> &mdash; 100 Indian politicians from reserved constituencies, labeled as
+          Scheduled Caste (SC) or Scheduled Tribe (ST)</li>
+      </ul>
+
+      <div class="filter-bar">
+        <button class="filter-btn active filter-openai" data-filter="openai">OpenAI</button>
+        <button class="filter-btn active filter-google" data-filter="google">Google</button>
+        <span style="border-left: 1px solid #ccc; margin: 0 0.3em;"></span>
+        <button class="filter-btn active filter-reasoning" data-filter="reasoning-low">Low Reasoning</button>
+        <button class="filter-btn active filter-reasoning" data-filter="reasoning-high">High Reasoning</button>
+      </div>
+
+      <!-- Main results table -->
+      <h3>Macro-Average Accuracy</h3>
+      <table class="results-table sortable" id="table-main">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>Geo</th>
+            <th>Average</th>
+            <th>NC <span class="expand-btn" data-group="nc"></span></th>
+            <th class="sub-col" data-group="nc">White</th>
+            <th class="sub-col" data-group="nc">Black</th>
+            <th class="sub-col" data-group="nc">Hispanic</th>
+            <th class="sub-col" data-group="nc">Asian</th>
+            <th>FL <span class="expand-btn" data-group="fl"></span></th>
+            <th class="sub-col" data-group="fl">White</th>
+            <th class="sub-col" data-group="fl">Black</th>
+            <th class="sub-col" data-group="fl">Hispanic</th>
+            <th class="sub-col" data-group="fl">Asian</th>
+            <th>Lebanon <span class="expand-btn" data-group="lb"></span></th>
+            <th class="sub-col" data-group="lb">Sunni</th>
+            <th class="sub-col" data-group="lb">Shia</th>
+            <th class="sub-col" data-group="lb">Druze</th>
+            <th class="sub-col" data-group="lb">Maronite</th>
+            <th class="sub-col" data-group="lb">R. Orth.</th>
+            <th class="sub-col" data-group="lb">R. Cath.</th>
+            <th class="sub-col" data-group="lb">Armenian</th>
+            <th>India <span class="expand-btn" data-group="in"></span></th>
+            <th class="sub-col" data-group="in">SC</th>
+            <th class="sub-col" data-group="in">ST</th>
+            <th>$/M In</th>
+            <th>$/M Out</th>
+            <th>$/1M Names</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- GPT-5.4 (low) -->
+          <tr data-provider="openai" data-reasoning="reasoning-low">
+            <td data-sort="GPT-5.4 (low)">
+              GPT-5.4 (low)
+              <span class="model-tag openai">OpenAI</span>
+              <span class="model-tag reasoning-low">Low</span>
+            </td>
+            <td></td>
+            <td>0.622</td>
+            <td>0.702</td>
+            <td class="sub-col" data-group="nc">0.947</td>
+            <td class="sub-col" data-group="nc">0.316</td>
+            <td class="sub-col" data-group="nc">0.929</td>
+            <td class="sub-col" data-group="nc">0.618</td>
+            <td>0.624</td>
+            <td class="sub-col" data-group="fl">0.900</td>
+            <td class="sub-col" data-group="fl">0.200</td>
+            <td class="sub-col" data-group="fl">0.846</td>
+            <td class="sub-col" data-group="fl">0.552</td>
+            <td>0.439</td>
+            <td class="sub-col" data-group="lb">0.706</td>
+            <td class="sub-col" data-group="lb">0.143</td>
+            <td class="sub-col" data-group="lb">0.118</td>
+            <td class="sub-col" data-group="lb">1.000</td>
+            <td class="sub-col" data-group="lb">0.250</td>
+            <td class="sub-col" data-group="lb">0.000</td>
+            <td class="sub-col" data-group="lb">0.857</td>
+            <td>0.723</td>
+            <td class="sub-col" data-group="in">0.905</td>
+            <td class="sub-col" data-group="in">0.541</td>
+            <td>2.50</td>
+            <td>15.00</td>
+            <td>$2,195</td>
+          </tr>
+          <!-- GPT-5.4 (low) +geo -->
+          <tr data-provider="openai" data-reasoning="reasoning-low">
+            <td data-sort="GPT-5.4 (low) +geo">
+              GPT-5.4 (low)
+              <span class="model-tag openai">OpenAI</span>
+              <span class="model-tag reasoning-low">Low</span>
+            </td>
+            <td>+geo</td>
+            <td>0.710</td>
+            <td>0.716</td>
+            <td class="sub-col" data-group="nc">0.947</td>
+            <td class="sub-col" data-group="nc">0.368</td>
+            <td class="sub-col" data-group="nc">0.929</td>
+            <td class="sub-col" data-group="nc">0.618</td>
+            <td>0.726</td>
+            <td class="sub-col" data-group="fl">0.933</td>
+            <td class="sub-col" data-group="fl">0.533</td>
+            <td class="sub-col" data-group="fl">0.885</td>
+            <td class="sub-col" data-group="fl">0.552</td>
+            <td>0.613</td>
+            <td class="sub-col" data-group="lb">0.588</td>
+            <td class="sub-col" data-group="lb">0.571</td>
+            <td class="sub-col" data-group="lb">0.706</td>
+            <td class="sub-col" data-group="lb">0.769</td>
+            <td class="sub-col" data-group="lb">0.500</td>
+            <td class="sub-col" data-group="lb">0.154</td>
+            <td class="sub-col" data-group="lb">1.000</td>
+            <td>0.785</td>
+            <td class="sub-col" data-group="in">0.921</td>
+            <td class="sub-col" data-group="in">0.649</td>
+            <td>2.50</td>
+            <td>15.00</td>
+            <td>$2,195</td>
+          </tr>
+          <!-- GPT-5.4 (high) -->
+          <tr data-provider="openai" data-reasoning="reasoning-high">
+            <td data-sort="GPT-5.4 (high)">
+              GPT-5.4 (high)
+              <span class="model-tag openai">OpenAI</span>
+              <span class="model-tag reasoning-high">High</span>
+            </td>
+            <td></td>
+            <td>0.616</td>
+            <td>0.716</td>
+            <td class="sub-col" data-group="nc">1.000</td>
+            <td class="sub-col" data-group="nc">0.316</td>
+            <td class="sub-col" data-group="nc">0.929</td>
+            <td class="sub-col" data-group="nc">0.618</td>
+            <td>0.616</td>
+            <td class="sub-col" data-group="fl">0.900</td>
+            <td class="sub-col" data-group="fl">0.133</td>
+            <td class="sub-col" data-group="fl">0.846</td>
+            <td class="sub-col" data-group="fl">0.586</td>
+            <td>0.392</td>
+            <td class="sub-col" data-group="lb">0.765</td>
+            <td class="sub-col" data-group="lb">0.071</td>
+            <td class="sub-col" data-group="lb">0.118</td>
+            <td class="sub-col" data-group="lb">0.769</td>
+            <td class="sub-col" data-group="lb">0.167</td>
+            <td class="sub-col" data-group="lb">0.000</td>
+            <td class="sub-col" data-group="lb">0.857</td>
+            <td>0.739</td>
+            <td class="sub-col" data-group="in">0.937</td>
+            <td class="sub-col" data-group="in">0.541</td>
+            <td>2.50</td>
+            <td>15.00</td>
+            <td>$6,425</td>
+          </tr>
+          <!-- GPT-5.4 (high) +geo -->
+          <tr data-provider="openai" data-reasoning="reasoning-high">
+            <td data-sort="GPT-5.4 (high) +geo">
+              GPT-5.4 (high)
+              <span class="model-tag openai">OpenAI</span>
+              <span class="model-tag reasoning-high">High</span>
+            </td>
+            <td>+geo</td>
+            <td>0.695</td>
+            <td>0.719</td>
+            <td class="sub-col" data-group="nc">0.947</td>
+            <td class="sub-col" data-group="nc">0.316</td>
+            <td class="sub-col" data-group="nc">0.964</td>
+            <td class="sub-col" data-group="nc">0.647</td>
+            <td>0.693</td>
+            <td class="sub-col" data-group="fl">0.933</td>
+            <td class="sub-col" data-group="fl">0.333</td>
+            <td class="sub-col" data-group="fl">0.885</td>
+            <td class="sub-col" data-group="fl">0.621</td>
+            <td class="best">0.639</td>
+            <td class="sub-col" data-group="lb">0.588</td>
+            <td class="sub-col" data-group="lb">0.571</td>
+            <td class="sub-col" data-group="lb">0.647</td>
+            <td class="sub-col" data-group="lb">0.692</td>
+            <td class="sub-col" data-group="lb">0.667</td>
+            <td class="sub-col" data-group="lb">0.308</td>
+            <td class="sub-col" data-group="lb">1.000</td>
+            <td>0.728</td>
+            <td class="sub-col" data-group="in">0.889</td>
+            <td class="sub-col" data-group="in">0.568</td>
+            <td>2.50</td>
+            <td>15.00</td>
+            <td>$6,425</td>
+          </tr>
+          <!-- GPT-5.4 Mini (low) -->
+          <tr data-provider="openai" data-reasoning="reasoning-low">
+            <td data-sort="GPT-5.4 Mini (low)">
+              GPT-5.4 Mini (low)
+              <span class="model-tag openai">OpenAI</span>
+              <span class="model-tag reasoning-low">Low</span>
+            </td>
+            <td></td>
+            <td>0.596</td>
+            <td>0.670</td>
+            <td class="sub-col" data-group="nc">1.000</td>
+            <td class="sub-col" data-group="nc">0.263</td>
+            <td class="sub-col" data-group="nc">0.857</td>
+            <td class="sub-col" data-group="nc">0.559</td>
+            <td>0.672</td>
+            <td class="sub-col" data-group="fl">0.900</td>
+            <td class="sub-col" data-group="fl">0.467</td>
+            <td class="sub-col" data-group="fl">0.769</td>
+            <td class="sub-col" data-group="fl">0.552</td>
+            <td>0.391</td>
+            <td class="sub-col" data-group="lb">0.529</td>
+            <td class="sub-col" data-group="lb">0.357</td>
+            <td class="sub-col" data-group="lb">0.059</td>
+            <td class="sub-col" data-group="lb">0.615</td>
+            <td class="sub-col" data-group="lb">0.250</td>
+            <td class="sub-col" data-group="lb">0.000</td>
+            <td class="sub-col" data-group="lb">0.929</td>
+            <td>0.650</td>
+            <td class="sub-col" data-group="in">0.921</td>
+            <td class="sub-col" data-group="in">0.378</td>
+            <td>0.75</td>
+            <td>4.50</td>
+            <td>$528</td>
+          </tr>
+          <!-- GPT-5.4 Mini (low) +geo -->
+          <tr data-provider="openai" data-reasoning="reasoning-low">
+            <td data-sort="GPT-5.4 Mini (low) +geo">
+              GPT-5.4 Mini (low)
+              <span class="model-tag openai">OpenAI</span>
+              <span class="model-tag reasoning-low">Low</span>
+            </td>
+            <td>+geo</td>
+            <td>0.563</td>
+            <td>0.457</td>
+            <td class="sub-col" data-group="nc">0.947</td>
+            <td class="sub-col" data-group="nc">0.105</td>
+            <td class="sub-col" data-group="nc">0.393</td>
+            <td class="sub-col" data-group="nc">0.382</td>
+            <td>0.428</td>
+            <td class="sub-col" data-group="fl">0.967</td>
+            <td class="sub-col" data-group="fl">0.000</td>
+            <td class="sub-col" data-group="fl">0.538</td>
+            <td class="sub-col" data-group="fl">0.207</td>
+            <td>0.607</td>
+            <td class="sub-col" data-group="lb">0.706</td>
+            <td class="sub-col" data-group="lb">0.643</td>
+            <td class="sub-col" data-group="lb">0.706</td>
+            <td class="sub-col" data-group="lb">0.692</td>
+            <td class="sub-col" data-group="lb">0.500</td>
+            <td class="sub-col" data-group="lb">0.077</td>
+            <td class="sub-col" data-group="lb">0.929</td>
+            <td>0.760</td>
+            <td class="sub-col" data-group="in">0.952</td>
+            <td class="sub-col" data-group="in">0.568</td>
+            <td>0.75</td>
+            <td>4.50</td>
+            <td>$528</td>
+          </tr>
+          <!-- GPT-5.4 Mini (high) -->
+          <tr data-provider="openai" data-reasoning="reasoning-high">
+            <td data-sort="GPT-5.4 Mini (high)">
+              GPT-5.4 Mini (high)
+              <span class="model-tag openai">OpenAI</span>
+              <span class="model-tag reasoning-high">High</span>
+            </td>
+            <td></td>
+            <td>0.582</td>
+            <td>0.581</td>
+            <td class="sub-col" data-group="nc">0.947</td>
+            <td class="sub-col" data-group="nc">0.211</td>
+            <td class="sub-col" data-group="nc">0.607</td>
+            <td class="sub-col" data-group="nc">0.559</td>
+            <td>0.652</td>
+            <td class="sub-col" data-group="fl">0.967</td>
+            <td class="sub-col" data-group="fl">0.467</td>
+            <td class="sub-col" data-group="fl">0.692</td>
+            <td class="sub-col" data-group="fl">0.483</td>
+            <td>0.424</td>
+            <td class="sub-col" data-group="lb">0.588</td>
+            <td class="sub-col" data-group="lb">0.357</td>
+            <td class="sub-col" data-group="lb">0.000</td>
+            <td class="sub-col" data-group="lb">0.769</td>
+            <td class="sub-col" data-group="lb">0.250</td>
+            <td class="sub-col" data-group="lb">0.000</td>
+            <td class="sub-col" data-group="lb">1.000</td>
+            <td>0.671</td>
+            <td class="sub-col" data-group="in">0.937</td>
+            <td class="sub-col" data-group="in">0.405</td>
+            <td>0.75</td>
+            <td>4.50</td>
+            <td>$1,406</td>
+          </tr>
+          <!-- GPT-5.4 Nano (low) -->
+          <tr data-provider="openai" data-reasoning="reasoning-low">
+            <td data-sort="GPT-5.4 Nano (low)">
+              GPT-5.4 Nano (low)
+              <span class="model-tag openai">OpenAI</span>
+              <span class="model-tag reasoning-low">Low</span>
+            </td>
+            <td></td>
+            <td>0.636</td>
+            <td>0.755</td>
+            <td class="sub-col" data-group="nc">0.947</td>
+            <td class="sub-col" data-group="nc">0.526</td>
+            <td class="sub-col" data-group="nc">0.929</td>
+            <td class="sub-col" data-group="nc">0.618</td>
+            <td>0.648</td>
+            <td class="sub-col" data-group="fl">0.767</td>
+            <td class="sub-col" data-group="fl">0.467</td>
+            <td class="sub-col" data-group="fl">0.808</td>
+            <td class="sub-col" data-group="fl">0.552</td>
+            <td>0.399</td>
+            <td class="sub-col" data-group="lb">0.588</td>
+            <td class="sub-col" data-group="lb">0.214</td>
+            <td class="sub-col" data-group="lb">0.059</td>
+            <td class="sub-col" data-group="lb">1.000</td>
+            <td class="sub-col" data-group="lb">0.000</td>
+            <td class="sub-col" data-group="lb">0.000</td>
+            <td class="sub-col" data-group="lb">0.929</td>
+            <td>0.743</td>
+            <td class="sub-col" data-group="in">0.810</td>
+            <td class="sub-col" data-group="in">0.676</td>
+            <td>0.20</td>
+            <td>1.25</td>
+            <td>$59</td>
+          </tr>
+          <!-- GPT-5.4 Nano (low) +geo -->
+          <tr data-provider="openai" data-reasoning="reasoning-low">
+            <td data-sort="GPT-5.4 Nano (low) +geo">
+              GPT-5.4 Nano (low)
+              <span class="model-tag openai">OpenAI</span>
+              <span class="model-tag reasoning-low">Low</span>
+            </td>
+            <td>+geo</td>
+            <td class="best">0.719</td>
+            <td>0.761</td>
+            <td class="sub-col" data-group="nc">0.842</td>
+            <td class="sub-col" data-group="nc">0.684</td>
+            <td class="sub-col" data-group="nc">0.929</td>
+            <td class="sub-col" data-group="nc">0.588</td>
+            <td>0.690</td>
+            <td class="sub-col" data-group="fl">0.900</td>
+            <td class="sub-col" data-group="fl">0.533</td>
+            <td class="sub-col" data-group="fl">0.808</td>
+            <td class="sub-col" data-group="fl">0.517</td>
+            <td>0.621</td>
+            <td class="sub-col" data-group="lb">0.647</td>
+            <td class="sub-col" data-group="lb">0.857</td>
+            <td class="sub-col" data-group="lb">0.824</td>
+            <td class="sub-col" data-group="lb">0.923</td>
+            <td class="sub-col" data-group="lb">0.167</td>
+            <td class="sub-col" data-group="lb">0.000</td>
+            <td class="sub-col" data-group="lb">0.929</td>
+            <td class="best">0.804</td>
+            <td class="sub-col" data-group="in">0.905</td>
+            <td class="sub-col" data-group="in">0.703</td>
+            <td>0.20</td>
+            <td>1.25</td>
+            <td>$59</td>
+          </tr>
+          <!-- GPT-5.4 Nano (high) -->
+          <tr data-provider="openai" data-reasoning="reasoning-high">
+            <td data-sort="GPT-5.4 Nano (high)">
+              GPT-5.4 Nano (high)
+              <span class="model-tag openai">OpenAI</span>
+              <span class="model-tag reasoning-high">High</span>
+            </td>
+            <td></td>
+            <td>0.632</td>
+            <td>0.737</td>
+            <td class="sub-col" data-group="nc">0.947</td>
+            <td class="sub-col" data-group="nc">0.526</td>
+            <td class="sub-col" data-group="nc">0.857</td>
+            <td class="sub-col" data-group="nc">0.618</td>
+            <td>0.648</td>
+            <td class="sub-col" data-group="fl">0.933</td>
+            <td class="sub-col" data-group="fl">0.333</td>
+            <td class="sub-col" data-group="fl">0.808</td>
+            <td class="sub-col" data-group="fl">0.517</td>
+            <td>0.435</td>
+            <td class="sub-col" data-group="lb">0.706</td>
+            <td class="sub-col" data-group="lb">0.429</td>
+            <td class="sub-col" data-group="lb">0.059</td>
+            <td class="sub-col" data-group="lb">0.923</td>
+            <td class="sub-col" data-group="lb">0.000</td>
+            <td class="sub-col" data-group="lb">0.000</td>
+            <td class="sub-col" data-group="lb">0.929</td>
+            <td>0.707</td>
+            <td class="sub-col" data-group="in">0.873</td>
+            <td class="sub-col" data-group="in">0.541</td>
+            <td>0.20</td>
+            <td>1.25</td>
+            <td>$83</td>
+          </tr>
+          <!-- GPT-5.4 Nano (high) +geo -->
+          <tr data-provider="openai" data-reasoning="reasoning-high">
+            <td data-sort="GPT-5.4 Nano (high) +geo">
+              GPT-5.4 Nano (high)
+              <span class="model-tag openai">OpenAI</span>
+              <span class="model-tag reasoning-high">High</span>
+            </td>
+            <td>+geo</td>
+            <td>0.682</td>
+            <td>0.671</td>
+            <td class="sub-col" data-group="nc">0.842</td>
+            <td class="sub-col" data-group="nc">0.368</td>
+            <td class="sub-col" data-group="nc">0.857</td>
+            <td class="sub-col" data-group="nc">0.618</td>
+            <td>0.699</td>
+            <td class="sub-col" data-group="fl">0.967</td>
+            <td class="sub-col" data-group="fl">0.400</td>
+            <td class="sub-col" data-group="fl">0.808</td>
+            <td class="sub-col" data-group="fl">0.621</td>
+            <td>0.603</td>
+            <td class="sub-col" data-group="lb">0.588</td>
+            <td class="sub-col" data-group="lb">0.786</td>
+            <td class="sub-col" data-group="lb">0.824</td>
+            <td class="sub-col" data-group="lb">0.846</td>
+            <td class="sub-col" data-group="lb">0.250</td>
+            <td class="sub-col" data-group="lb">0.000</td>
+            <td class="sub-col" data-group="lb">0.929</td>
+            <td>0.753</td>
+            <td class="sub-col" data-group="in">0.857</td>
+            <td class="sub-col" data-group="in">0.649</td>
+            <td>0.20</td>
+            <td>1.25</td>
+            <td>$83</td>
+          </tr>
+          <!-- Gemini 3 Flash (minimal) -->
+          <tr data-provider="google" data-reasoning="reasoning-low">
+            <td data-sort="Gemini 3 Flash (minimal)">
+              Gemini 3 Flash (minimal)
+              <span class="model-tag google">Google</span>
+              <span class="model-tag reasoning-low">Minimal</span>
+            </td>
+            <td></td>
+            <td>0.715</td>
+            <td class="best">0.821</td>
+            <td class="sub-col" data-group="nc">0.789</td>
+            <td class="sub-col" data-group="nc">0.947</td>
+            <td class="sub-col" data-group="nc">0.929</td>
+            <td class="sub-col" data-group="nc">0.618</td>
+            <td class="best">0.758</td>
+            <td class="sub-col" data-group="fl">0.900</td>
+            <td class="sub-col" data-group="fl">0.733</td>
+            <td class="sub-col" data-group="fl">0.846</td>
+            <td class="sub-col" data-group="fl">0.552</td>
+            <td>0.499</td>
+            <td class="sub-col" data-group="lb">0.412</td>
+            <td class="sub-col" data-group="lb">0.714</td>
+            <td class="sub-col" data-group="lb">0.353</td>
+            <td class="sub-col" data-group="lb">0.846</td>
+            <td class="sub-col" data-group="lb">0.167</td>
+            <td class="sub-col" data-group="lb">0.000</td>
+            <td class="sub-col" data-group="lb">1.000</td>
+            <td>0.781</td>
+            <td class="sub-col" data-group="in">0.778</td>
+            <td class="sub-col" data-group="in">0.784</td>
+            <td>0.50</td>
+            <td>3.00</td>
+            <td>$74</td>
+          </tr>
+          <!-- Gemini 3 Flash (high) -->
+          <tr data-provider="google" data-reasoning="reasoning-high">
+            <td data-sort="Gemini 3 Flash (high)">
+              Gemini 3 Flash (high)
+              <span class="model-tag google">Google</span>
+              <span class="model-tag reasoning-high">High</span>
+            </td>
+            <td></td>
+            <td>0.674</td>
+            <td>0.742</td>
+            <td class="sub-col" data-group="nc">0.895</td>
+            <td class="sub-col" data-group="nc">0.526</td>
+            <td class="sub-col" data-group="nc">0.929</td>
+            <td class="sub-col" data-group="nc">0.618</td>
+            <td>0.733</td>
+            <td class="sub-col" data-group="fl">0.933</td>
+            <td class="sub-col" data-group="fl">0.533</td>
+            <td class="sub-col" data-group="fl">0.846</td>
+            <td class="sub-col" data-group="fl">0.621</td>
+            <td>0.508</td>
+            <td class="sub-col" data-group="lb">0.529</td>
+            <td class="sub-col" data-group="lb">0.714</td>
+            <td class="sub-col" data-group="lb">0.294</td>
+            <td class="sub-col" data-group="lb">0.769</td>
+            <td class="sub-col" data-group="lb">0.250</td>
+            <td class="sub-col" data-group="lb">0.000</td>
+            <td class="sub-col" data-group="lb">1.000</td>
+            <td>0.713</td>
+            <td class="sub-col" data-group="in">0.778</td>
+            <td class="sub-col" data-group="in">0.649</td>
+            <td>0.50</td>
+            <td>3.00</td>
+            <td>$629</td>
+          </tr>
+          <!-- Gemini 3.1 Flash Lite (minimal) -->
+          <tr data-provider="google" data-reasoning="reasoning-low">
+            <td data-sort="Gemini 3.1 Flash Lite (minimal)">
+              Gemini 3.1 Flash Lite (minimal)
+              <span class="model-tag google">Google</span>
+              <span class="model-tag reasoning-low">Minimal</span>
+            </td>
+            <td></td>
+            <td>0.669</td>
+            <td>0.774</td>
+            <td class="sub-col" data-group="nc">0.947</td>
+            <td class="sub-col" data-group="nc">0.632</td>
+            <td class="sub-col" data-group="nc">0.929</td>
+            <td class="sub-col" data-group="nc">0.588</td>
+            <td>0.733</td>
+            <td class="sub-col" data-group="fl">0.933</td>
+            <td class="sub-col" data-group="fl">0.533</td>
+            <td class="sub-col" data-group="fl">0.846</td>
+            <td class="sub-col" data-group="fl">0.621</td>
+            <td>0.532</td>
+            <td class="sub-col" data-group="lb">0.588</td>
+            <td class="sub-col" data-group="lb">0.714</td>
+            <td class="sub-col" data-group="lb">0.412</td>
+            <td class="sub-col" data-group="lb">1.000</td>
+            <td class="sub-col" data-group="lb">0.083</td>
+            <td class="sub-col" data-group="lb">0.000</td>
+            <td class="sub-col" data-group="lb">0.929</td>
+            <td>0.637</td>
+            <td class="sub-col" data-group="in">0.571</td>
+            <td class="sub-col" data-group="in">0.703</td>
+            <td>0.25</td>
+            <td>1.50</td>
+            <td>$43</td>
+          </tr>
+          <!-- Gemini 3.1 Flash Lite (high) -->
+          <tr data-provider="google" data-reasoning="reasoning-high">
+            <td data-sort="Gemini 3.1 Flash Lite (high)">
+              Gemini 3.1 Flash Lite (high)
+              <span class="model-tag google">Google</span>
+              <span class="model-tag reasoning-high">High</span>
+            </td>
+            <td></td>
+            <td>0.658</td>
+            <td>0.755</td>
+            <td class="sub-col" data-group="nc">0.947</td>
+            <td class="sub-col" data-group="nc">0.526</td>
+            <td class="sub-col" data-group="nc">0.929</td>
+            <td class="sub-col" data-group="nc">0.618</td>
+            <td>0.734</td>
+            <td class="sub-col" data-group="fl">0.900</td>
+            <td class="sub-col" data-group="fl">0.533</td>
+            <td class="sub-col" data-group="fl">0.846</td>
+            <td class="sub-col" data-group="fl">0.655</td>
+            <td>0.501</td>
+            <td class="sub-col" data-group="lb">0.412</td>
+            <td class="sub-col" data-group="lb">0.714</td>
+            <td class="sub-col" data-group="lb">0.353</td>
+            <td class="sub-col" data-group="lb">0.769</td>
+            <td class="sub-col" data-group="lb">0.333</td>
+            <td class="sub-col" data-group="lb">0.000</td>
+            <td class="sub-col" data-group="lb">0.929</td>
+            <td>0.640</td>
+            <td class="sub-col" data-group="in">0.524</td>
+            <td class="sub-col" data-group="in">0.757</td>
+            <td>0.25</td>
+            <td>1.50</td>
+            <td>$440</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p><em>Cells marked &mdash; indicate runs still in progress. Table will be updated as results complete.</em></p>
+
+      <h3 class="section-header">Cost vs Accuracy</h3>
+      <div style="max-width: 700px; margin: 1em auto;">
+        <canvas id="cost-chart" width="700" height="400"></canvas>
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+      <script>
+        // [cost_per_1m_names, avg_accuracy, label, color]
+        const chartData = [
+          // Name only
+          [2195, 0.622, 'GPT-5.4 (low)', '#10a37f'],
+          [6425, 0.616, 'GPT-5.4 (high)', '#10a37f'],
+          [528, 0.596, 'GPT-5.4 Mini (low)', '#5bc97c'],
+          [1406, 0.582, 'GPT-5.4 Mini (high)', '#5bc97c'],
+          [59, 0.636, 'GPT-5.4 Nano (low)', '#a3e4b8'],
+          [83, 0.632, 'GPT-5.4 Nano (high)', '#a3e4b8'],
+          [74, 0.715, 'Gemini 3 Flash (minimal)', '#4285f4'],
+          [629, 0.674, 'Gemini 3 Flash (high)', '#4285f4'],
+          [43, 0.669, 'Gemini 3.1 FL Lite (min)', '#7baaf7'],
+          [440, 0.658, 'Gemini 3.1 FL Lite (high)', '#7baaf7'],
+          // +geo
+          [2195, 0.710, 'GPT-5.4 (low) +geo', '#0d8c6b'],
+          [6425, 0.695, 'GPT-5.4 (high) +geo', '#0d8c6b'],
+          [528, 0.563, 'Mini (low) +geo', '#4aad68'],
+          [59, 0.719, 'Nano (low) +geo', '#7cc9a0'],
+          [83, 0.682, 'Nano (high) +geo', '#7cc9a0'],
+        ];
+
+        const ctx = document.getElementById('cost-chart').getContext('2d');
+        new Chart(ctx, {
+          type: 'scatter',
+          data: {
+            datasets: [{
+              data: chartData.map(d => ({ x: d[0], y: d[1] })),
+              pointBackgroundColor: chartData.map(d => d[3]),
+              pointBorderColor: chartData.map(d => d[3]),
+              pointRadius: 7,
+              pointHoverRadius: 10,
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: function (ctx) {
+                    const d = chartData[ctx.dataIndex];
+                    return d[2] + ': ' + (d[1] * 100).toFixed(1) + '% avg, $' + d[0].toLocaleString() + '/1M names';
+                  }
+                }
+              }
+            },
+            scales: {
+              x: {
+                type: 'logarithmic',
+                title: { display: true, text: 'Cost per 1M Names ($)', font: { size: 13 } },
+                ticks: {
+                  callback: function (val) { return '$' + val.toLocaleString(); }
+                },
+                min: 20,
+                max: 10000,
+              },
+              y: {
+                title: { display: true, text: 'Average Accuracy', font: { size: 13 } },
+                min: 0.55,
+                max: 0.80,
+                ticks: {
+                  callback: function (val) { return (val * 100).toFixed(0) + '%'; }
+                }
+              }
+            }
+          },
+          plugins: [{
+            afterDraw: function (chart) {
+              const ctx = chart.ctx;
+              ctx.font = '11px sans-serif';
+              ctx.textBaseline = 'bottom';
+              chart.data.datasets[0].data.forEach((pt, i) => {
+                const meta = chart.getDatasetMeta(0).data[i];
+                const label = chartData[i][2];
+                ctx.fillStyle = '#333';
+                ctx.fillText(label, meta.x + 8, meta.y - 4);
+              });
+            }
+          }]
+        });
+      </script>
+
+      <h3 class="section-header">Observations</h3>
+      <ul>
+        <li><strong>Gemini 3 Flash leads</strong> &mdash; 80% on NC, 76% on FL, and 50% on Lebanon, all with minimal thinking and the cheapest pricing.</li>
+        <li><strong>Higher reasoning often hurts</strong> &mdash; GPT-5.4 Mini drops from 67% to 58% on NC when switching from low to high reasoning. The models seem to "overthink" ambiguous cases toward the majority class (WHITE).</li>
+        <li><strong>Nano beats Mini</strong> &mdash; GPT-5.4 Nano (low) scores 75% on NC vs Mini's 67%. The smaller model appears less prone to defaulting to WHITE.</li>
+        <li><strong>BLACK is the hardest US category</strong> &mdash; Accuracy ranges from 21% to 68% across models, compared to 84-100% for WHITE. Models systematically under-predict Black identity for names without strong ethnic markers.</li>
+        <li><strong>Lebanon exposes limits</strong> &mdash; All models score 39-54%. Armenian Orthodox (distinctive names) and Maronite are predicted well, but Druze, Roman Orthodox, and Roman Catholic are near zero for most models.</li>
+        <li><strong>India SC/ST is deceptively high</strong> &mdash; 72-76% accuracy, but models heavily favor SC (the majority class). ST accuracy is much lower (38-68%).</li>
+      </ul>
+
+      <p class="post-updated">Last updated: March 19, 2026. Results are being actively collected.</p>
+
+    </div>
+  </div>
+
+  <script>
+    // Sub-column expansion
+    document.querySelectorAll('.expand-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        const group = btn.dataset.group;
+        const table = btn.closest('table');
+        const cols = table.querySelectorAll(`.sub-col[data-group="${group}"]`);
+        const expanding = !btn.classList.contains('expanded');
+        btn.classList.toggle('expanded');
+        cols.forEach(c => c.classList.toggle('visible', expanding));
+      });
+    });
+
+    // Sortable tables
+    document.querySelectorAll('.results-table.sortable').forEach(table => {
+      const headers = table.querySelectorAll('th');
+      let currentSort = { col: -1, asc: true };
+
+      headers.forEach((th, colIdx) => {
+        th.addEventListener('click', () => {
+          if (th.classList.contains('sub-col') && !th.classList.contains('visible')) return;
+
+          const tbody = table.querySelector('tbody');
+          const rows = Array.from(tbody.querySelectorAll('tr'));
+
+          // Determine sort direction
+          let asc;
+          if (currentSort.col === colIdx) {
+            asc = !currentSort.asc;
+          } else {
+            // Default: descending for numbers, ascending for text
+            const sample = rows.find(r => {
+              const cell = r.cells[colIdx];
+              return cell && cell.textContent.trim() !== '—';
+            });
+            if (sample) {
+              const val = sample.cells[colIdx].textContent.trim();
+              asc = isNaN(parseFloat(val));
+            } else {
+              asc = true;
+            }
+          }
+          currentSort = { col: colIdx, asc };
+
+          // Clear sort indicators
+          headers.forEach(h => h.classList.remove('sort-asc', 'sort-desc'));
+          th.classList.add(asc ? 'sort-asc' : 'sort-desc');
+
+          rows.sort((a, b) => {
+            const aCell = a.cells[colIdx];
+            const bCell = b.cells[colIdx];
+            let aVal = (aCell?.dataset.sort || aCell?.textContent || '').trim();
+            let bVal = (bCell?.dataset.sort || bCell?.textContent || '').trim();
+
+            // Handle dashes as worst value
+            if (aVal === '—') aVal = asc ? '\uffff' : '';
+            if (bVal === '—') bVal = asc ? '\uffff' : '';
+
+            const aNum = parseFloat(aVal);
+            const bNum = parseFloat(bVal);
+            if (!isNaN(aNum) && !isNaN(bNum)) {
+              return asc ? aNum - bNum : bNum - aNum;
+            }
+            return asc ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+          });
+
+          rows.forEach(r => tbody.appendChild(r));
+        });
+      });
+
+      // Default sort: column 2 (Average) descending
+      if (headers.length > 2) headers[2].click();
+    });
+
+    // Filtering
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.classList.toggle('active');
+        applyFilters();
+      });
+    });
+
+    function applyFilters() {
+      const activeProviders = new Set();
+      const activeReasoning = new Set();
+
+      document.querySelectorAll('.filter-btn.active').forEach(btn => {
+        const f = btn.dataset.filter;
+        if (f === 'openai' || f === 'google') activeProviders.add(f);
+        else if (f.startsWith('reasoning-')) activeReasoning.add(f);
+      });
+
+      document.querySelectorAll('#table-main tbody tr').forEach(row => {
+        const provider = row.dataset.provider;
+        const reasoning = row.dataset.reasoning;
+
+        const providerMatch = activeProviders.size === 0 || activeProviders.has(provider);
+        const reasoningMatch = activeReasoning.size === 0 || activeReasoning.has(reasoning);
+
+        row.style.display = (providerMatch && reasoningMatch) ? '' : 'none';
+      });
+    }
+  </script>
+</body>
+
+</html>
