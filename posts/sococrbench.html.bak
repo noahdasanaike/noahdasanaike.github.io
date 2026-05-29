@@ -851,20 +851,6 @@
               <td>0.60</td>
             </tr>
             <tr>
-              <td data-sort="Surya OCR 2 (quantized)" data-size="tiny">Surya OCR 2 (quantized) <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
-              <td>0.4476</td>
-              <td>0.5801</td>
-              <td class="sub-col" data-group="v3region">0.6147</td><td class="sub-col" data-group="v3region">0.5800</td><td class="sub-col" data-group="v3region">0.5105</td><td class="sub-col" data-group="v3region">0.6653</td><td class="sub-col" data-group="v3region">0.5299</td>
-              <td>0.4704</td>
-              <td class="sub-col" data-group="v3format">0.5543</td><td class="sub-col" data-group="v3format">0.7180</td><td class="sub-col" data-group="v3format">0.1389</td>
-              <td>0.5281</td>
-              <td class="sub-col" data-group="v3chrf">0.6563</td><td class="sub-col" data-group="v3chrf">0.4121</td><td class="sub-col" data-group="v3chrf">0.5171</td><td class="sub-col" data-group="v3chrf">0.6846</td><td class="sub-col" data-group="v3chrf">0.3707</td>
-              <td class="sub-col" data-group="v3chrf">0.4607</td><td class="sub-col" data-group="v3chrf">0.6851</td>
-              <td>0.2895</td>
-              <td>/</td>
-              <td>/</td>
-            </tr>
-            <tr>
               <td data-sort="Mistral OCR" data-size="large">Mistral OCR <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
               <td>0.4467</td>
               <td>0.4819</td>
@@ -4200,9 +4186,6 @@
       <details style="margin-top: 1.5em;">
         <summary style="cursor: pointer; font-weight: bold; font-size: 1.1em;">Changelog</summary>
         <div style="margin-top: 1em; font-size: 0.92em; line-height: 1.6;">
-          <p><strong>May 29, 2026:</strong> Added Surya OCR 2 (0.4476), run locally on an RTX 4090
-            via llama.cpp with quantized GGUF weights. Strong on printed text (0.7180) but weak on
-            handwritten tables (0.1389) and right-to-left scripts.</p>
           <p><strong>May 23, 2026:</strong> Added GPT-5.5 with auto resolution + medium reasoning
             (0.4609) and high resolution + low reasoning (0.3924). Both clear the best GPT-5.4
             variant (0.3424). Added Gemini 3.1 Flash Lite at minimal (0.6214) and low (0.5819)
@@ -4334,7 +4317,7 @@
         </div>
       </div>
 
-      <p class="post-updated">Last updated: May 29, 2026</p>
+      <p class="post-updated">Last updated: February 25, 2026</p>
 
     </div>
 
