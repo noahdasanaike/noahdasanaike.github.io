@@ -697,6 +697,34 @@
               <td>1.80</td>
             </tr>
             <tr>
+              <td data-sort="Datalab (accurate)" data-size="unknown">Datalab (accurate) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.5391</td>
+              <td>0.5357</td>
+              <td class="sub-col" data-group="v3region">0.5363</td><td class="sub-col" data-group="v3region">0.6140</td><td class="sub-col" data-group="v3region">0.4877</td><td class="sub-col" data-group="v3region">0.6291</td><td class="sub-col" data-group="v3region">0.4114</td>
+              <td>0.4459</td>
+              <td class="sub-col" data-group="v3format">0.4856</td><td class="sub-col" data-group="v3format">0.6634</td><td class="sub-col" data-group="v3format">0.1888</td>
+              <td>0.5171</td>
+              <td class="sub-col" data-group="v3chrf">0.6106</td><td class="sub-col" data-group="v3chrf">0.4803</td><td class="sub-col" data-group="v3chrf">0.5132</td><td class="sub-col" data-group="v3chrf">0.6748</td><td class="sub-col" data-group="v3chrf">0.3065</td>
+              <td class="sub-col" data-group="v3chrf">0.4436</td><td class="sub-col" data-group="v3chrf">0.6620</td>
+              <td>0.6094</td>
+              <td>0.01</td>
+              <td>0.01</td>
+            </tr>
+            <tr>
+              <td data-sort="Datalab (fast)" data-size="unknown">Datalab (fast) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.5374</td>
+              <td>0.5258</td>
+              <td class="sub-col" data-group="v3region">0.5359</td><td class="sub-col" data-group="v3region">0.5882</td><td class="sub-col" data-group="v3region">0.4860</td><td class="sub-col" data-group="v3region">0.6265</td><td class="sub-col" data-group="v3region">0.3925</td>
+              <td>0.4440</td>
+              <td class="sub-col" data-group="v3format">0.4701</td><td class="sub-col" data-group="v3format">0.6648</td><td class="sub-col" data-group="v3format">0.1971</td>
+              <td>0.5058</td>
+              <td class="sub-col" data-group="v3chrf">0.5987</td><td class="sub-col" data-group="v3chrf">0.4511</td><td class="sub-col" data-group="v3chrf">0.5186</td><td class="sub-col" data-group="v3chrf">0.6702</td><td class="sub-col" data-group="v3chrf">0.2905</td>
+              <td class="sub-col" data-group="v3chrf">0.4257</td><td class="sub-col" data-group="v3chrf">0.6597</td>
+              <td>0.6214</td>
+              <td>0.01</td>
+              <td>0.01</td>
+            </tr>
+            <tr>
               <td data-sort="Gemini 2.0 Flash" data-size="unknown">Gemini 2.0 Flash <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
               <td>0.5295</td>
               <td>0.5777</td>
@@ -711,34 +739,6 @@
               <td>0.40</td>
             </tr>
             <tr>
-              <td data-sort="Datalab (accurate)" data-size="unknown">Datalab (accurate) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
-              <td>0.5213</td>
-              <td>0.5018</td>
-              <td class="sub-col" data-group="v3region">0.5394</td><td class="sub-col" data-group="v3region">0.5543</td><td class="sub-col" data-group="v3region">0.4674</td><td class="sub-col" data-group="v3region">0.6355</td><td class="sub-col" data-group="v3region">0.3122</td>
-              <td>0.4413</td>
-              <td class="sub-col" data-group="v3format">0.4155</td><td class="sub-col" data-group="v3format">0.6943</td><td class="sub-col" data-group="v3format">0.2141</td>
-              <td>0.4961</td>
-              <td class="sub-col" data-group="v3chrf">0.6127</td><td class="sub-col" data-group="v3chrf">0.4307</td><td class="sub-col" data-group="v3chrf">0.5082</td><td class="sub-col" data-group="v3chrf">0.6941</td><td class="sub-col" data-group="v3chrf">0.2347</td>
-              <td class="sub-col" data-group="v3chrf">0.3972</td><td class="sub-col" data-group="v3chrf">0.6874</td>
-              <td>0.5962</td>
-              <td>0.01</td>
-              <td>0.01</td>
-            </tr>
-            <tr>
-              <td data-sort="Datalab (balanced)" data-size="unknown">Datalab (balanced) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
-              <td>0.5167</td>
-              <td>0.5146</td>
-              <td class="sub-col" data-group="v3region">0.5440</td><td class="sub-col" data-group="v3region">0.5703</td><td class="sub-col" data-group="v3region">0.4813</td><td class="sub-col" data-group="v3region">0.6413</td><td class="sub-col" data-group="v3region">0.3362</td>
-              <td>0.4491</td>
-              <td class="sub-col" data-group="v3format">0.4421</td><td class="sub-col" data-group="v3format">0.6831</td><td class="sub-col" data-group="v3format">0.2221</td>
-              <td>0.4971</td>
-              <td class="sub-col" data-group="v3chrf">0.5986</td><td class="sub-col" data-group="v3chrf">0.4207</td><td class="sub-col" data-group="v3chrf">0.5221</td><td class="sub-col" data-group="v3chrf">0.6990</td><td class="sub-col" data-group="v3chrf">0.2451</td>
-              <td class="sub-col" data-group="v3chrf">0.4018</td><td class="sub-col" data-group="v3chrf">0.6750</td>
-              <td>0.5713</td>
-              <td>0.01</td>
-              <td>0.01</td>
-            </tr>
-            <tr>
               <td data-sort="Seed 2.0 Lite" data-size="unknown">Seed 2.0 Lite <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
               <td>0.5160</td>
               <td>0.5747</td>
@@ -751,20 +751,6 @@
               <td>0.4516</td>
               <td>0.09</td>
               <td>0.53</td>
-            </tr>
-            <tr>
-              <td data-sort="Datalab (fast)" data-size="unknown">Datalab (fast) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
-              <td>0.5124</td>
-              <td>0.5151</td>
-              <td class="sub-col" data-group="v3region">0.5456</td><td class="sub-col" data-group="v3region">0.5856</td><td class="sub-col" data-group="v3region">0.4780</td><td class="sub-col" data-group="v3region">0.6374</td><td class="sub-col" data-group="v3region">0.3288</td>
-              <td>0.4492</td>
-              <td class="sub-col" data-group="v3format">0.4419</td><td class="sub-col" data-group="v3format">0.6858</td><td class="sub-col" data-group="v3format">0.2199</td>
-              <td>0.4952</td>
-              <td class="sub-col" data-group="v3chrf">0.5940</td><td class="sub-col" data-group="v3chrf">0.4289</td><td class="sub-col" data-group="v3chrf">0.5166</td><td class="sub-col" data-group="v3chrf">0.6964</td><td class="sub-col" data-group="v3chrf">0.2400</td>
-              <td class="sub-col" data-group="v3chrf">0.3988</td><td class="sub-col" data-group="v3chrf">0.6731</td>
-              <td>0.5598</td>
-              <td>0.01</td>
-              <td>0.01</td>
             </tr>
             <tr>
               <td data-sort="Seed 2.0 Mini" data-size="unknown">Seed 2.0 Mini <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
@@ -1145,20 +1131,6 @@
               <td>0.33</td>
             </tr>
             <tr>
-              <td data-sort="Infinity-Parser2-Pro" data-size="large">Infinity-Parser2-Pro <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
-              <td>0.3541</td>
-              <td>0.5409</td>
-              <td class="sub-col" data-group="v3region">0.6690</td><td class="sub-col" data-group="v3region">0.5198</td><td class="sub-col" data-group="v3region">0.5348</td><td class="sub-col" data-group="v3region">0.6419</td><td class="sub-col" data-group="v3region">0.3390</td>
-              <td>0.4874</td>
-              <td class="sub-col" data-group="v3format">0.5094</td><td class="sub-col" data-group="v3format">0.7321</td><td class="sub-col" data-group="v3format">0.2207</td>
-              <td>0.5057</td>
-              <td class="sub-col" data-group="v3chrf">0.7288</td><td class="sub-col" data-group="v3chrf">0.3897</td><td class="sub-col" data-group="v3chrf">0.5553</td><td class="sub-col" data-group="v3chrf">0.6025</td><td class="sub-col" data-group="v3chrf">0.2523</td>
-              <td class="sub-col" data-group="v3chrf">0.4484</td><td class="sub-col" data-group="v3chrf">0.7042</td>
-              <td>0.0424</td>
-              <td>/</td>
-              <td>/</td>
-            </tr>
-            <tr>
               <td data-sort="GPT-5.4 (low res., med. reason.)" data-size="unknown">GPT-5.4 (low res., med. reason.) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
               <td>0.3486</td>
               <td>0.5151</td>
@@ -1309,20 +1281,6 @@
               <td class="sub-col" data-group="v3chrf">0.5137</td><td class="sub-col" data-group="v3chrf">0.2680</td><td class="sub-col" data-group="v3chrf">0.3166</td><td class="sub-col" data-group="v3chrf">0.3090</td><td class="sub-col" data-group="v3chrf">0.1329</td>
               <td class="sub-col" data-group="v3chrf">0.2764</td><td class="sub-col" data-group="v3chrf">0.4656</td>
               <td>0.2190</td>
-              <td>/</td>
-              <td>/</td>
-            </tr>
-            <tr>
-              <td data-sort="Infinity-Parser2-Flash" data-size="tiny">Infinity-Parser2-Flash <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
-              <td>0.3040</td>
-              <td>0.4692</td>
-              <td class="sub-col" data-group="v3region">0.6218</td><td class="sub-col" data-group="v3region">0.4756</td><td class="sub-col" data-group="v3region">0.4007</td><td class="sub-col" data-group="v3region">0.5791</td><td class="sub-col" data-group="v3region">0.2690</td>
-              <td>0.4355</td>
-              <td class="sub-col" data-group="v3format">0.4355</td><td class="sub-col" data-group="v3format">0.6709</td><td class="sub-col" data-group="v3format">0.2000</td>
-              <td>0.4029</td>
-              <td class="sub-col" data-group="v3chrf">0.6554</td><td class="sub-col" data-group="v3chrf">0.3278</td><td class="sub-col" data-group="v3chrf">0.4149</td><td class="sub-col" data-group="v3chrf">0.4691</td><td class="sub-col" data-group="v3chrf">0.1474</td>
-              <td class="sub-col" data-group="v3chrf">0.3594</td><td class="sub-col" data-group="v3chrf">0.5992</td>
-              <td>0.0567</td>
               <td>/</td>
               <td>/</td>
             </tr>
@@ -3680,11 +3638,10 @@
               [1.350, 0.5417, 0.5417, "Qwen3.5 27B", "#E91E63"],
               [15.000, 0.5416, 0.5416, "Claude Opus 4.6", "#B8860B"],
               [1.050, 0.5392, 0.5392, "Qwen3.5 Plus (2026-04-20)", "#E91E63"],
+              [0.010, 0.5391, 0.5391, "Datalab (accurate)", "#607D8B"],
+              [0.010, 0.5374, 0.5374, "Datalab (fast)", "#607D8B"],
               [0.250, 0.5295, 0.5295, "Gemini 2.0 Flash", "#4285F4"],
-              [0.010, 0.5213, 0.5213, "Datalab (accurate)", "#607D8B"],
-              [0.010, 0.5167, 0.5167, "Datalab (balanced)", "#607D8B"],
               [0.310, 0.5160, 0.5160, "Seed 2.0 Lite", "#FF5722"],
-              [0.010, 0.5124, 0.5124, "Datalab (fast)", "#607D8B"],
               [0.250, 0.4974, 0.4974, "Seed 2.0 Mini", "#FF5722"],
               [0.656, 0.4882, 0.4882, "Qwen3.6 Flash", "#E91E63"],
               [0.030, 0.4778, 0.4778, "dots.ocr 1.5", "#607D8B"],
@@ -4270,19 +4227,9 @@
                 <td><code>datalab-python-sdk</code>, mode=fast</td>
               </tr>
               <tr>
-                <td>Datalab (balanced)</td>
-                <td>Datalab API</td>
-                <td><code>datalab-python-sdk</code>, mode=balanced</td>
-              </tr>
-              <tr>
                 <td>Datalab (accurate)</td>
                 <td>Datalab API</td>
                 <td><code>datalab-python-sdk</code>, mode=accurate</td>
-              </tr>
-              <tr>
-                <td>Infinity-Parser2-Flash / Pro</td>
-                <td>HF Space (infly)</td>
-                <td><code>infly/Infinity-Parser2-Demo</code> via <code>gradio_client</code>, doc2md task</td>
               </tr>
               <tr>
                 <td>Mistral OCR</td>
@@ -4323,13 +4270,7 @@
             Added Surya OCR 2 (0.4476), run locally on an RTX 4090 via llama.cpp with quantized GGUF
             weights &mdash; strong on printed text (0.7180), weak on handwritten tables and right-to-left
             scripts. Added PaddleOCR-VL-1.6 (0.3944) via the Baidu AIStudio job API; handles printed
-            text (0.6584) far better than non-Latin scripts.
-            Added Infinity-Parser2 Pro (0.3541) and Flash (0.3040), run through the public infly
-            Gradio Space; both read printed text well (Pro 0.7321) but linearize handwritten tables
-            in markdown mode, so their table (TEDS) scores are near zero.
-            Re-ran Datalab on a new subscription key and added the balanced mode: fast 0.5124,
-            balanced 0.5167, accurate 0.5213 &mdash; marginally below the prior key (fast 0.5374,
-            accurate 0.5391) across all modes.</p>
+            text (0.6584) far better than non-Latin scripts.</p>
           <p><strong>May 23, 2026:</strong> Added GPT-5.5 with auto resolution + medium reasoning
             (0.4609) and high resolution + low reasoning (0.3924). Both clear the best GPT-5.4
             variant (0.3424). Added Gemini 3.1 Flash Lite at minimal (0.6214) and low (0.5819)
