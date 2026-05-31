@@ -697,6 +697,34 @@
               <td>1.80</td>
             </tr>
             <tr>
+              <td data-sort="Datalab (accurate)" data-size="unknown">Datalab (accurate) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.5391</td>
+              <td>0.5357</td>
+              <td class="sub-col" data-group="v3region">0.5363</td><td class="sub-col" data-group="v3region">0.6140</td><td class="sub-col" data-group="v3region">0.4877</td><td class="sub-col" data-group="v3region">0.6291</td><td class="sub-col" data-group="v3region">0.4114</td>
+              <td>0.4459</td>
+              <td class="sub-col" data-group="v3format">0.4856</td><td class="sub-col" data-group="v3format">0.6634</td><td class="sub-col" data-group="v3format">0.1888</td>
+              <td>0.5171</td>
+              <td class="sub-col" data-group="v3chrf">0.6106</td><td class="sub-col" data-group="v3chrf">0.4803</td><td class="sub-col" data-group="v3chrf">0.5132</td><td class="sub-col" data-group="v3chrf">0.6748</td><td class="sub-col" data-group="v3chrf">0.3065</td>
+              <td class="sub-col" data-group="v3chrf">0.4436</td><td class="sub-col" data-group="v3chrf">0.6620</td>
+              <td>0.6094</td>
+              <td>0.01</td>
+              <td>0.01</td>
+            </tr>
+            <tr>
+              <td data-sort="Datalab (fast)" data-size="unknown">Datalab (fast) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.5374</td>
+              <td>0.5258</td>
+              <td class="sub-col" data-group="v3region">0.5359</td><td class="sub-col" data-group="v3region">0.5882</td><td class="sub-col" data-group="v3region">0.4860</td><td class="sub-col" data-group="v3region">0.6265</td><td class="sub-col" data-group="v3region">0.3925</td>
+              <td>0.4440</td>
+              <td class="sub-col" data-group="v3format">0.4701</td><td class="sub-col" data-group="v3format">0.6648</td><td class="sub-col" data-group="v3format">0.1971</td>
+              <td>0.5058</td>
+              <td class="sub-col" data-group="v3chrf">0.5987</td><td class="sub-col" data-group="v3chrf">0.4511</td><td class="sub-col" data-group="v3chrf">0.5186</td><td class="sub-col" data-group="v3chrf">0.6702</td><td class="sub-col" data-group="v3chrf">0.2905</td>
+              <td class="sub-col" data-group="v3chrf">0.4257</td><td class="sub-col" data-group="v3chrf">0.6597</td>
+              <td>0.6214</td>
+              <td>0.01</td>
+              <td>0.01</td>
+            </tr>
+            <tr>
               <td data-sort="Gemini 2.0 Flash" data-size="unknown">Gemini 2.0 Flash <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
               <td>0.5295</td>
               <td>0.5777</td>
@@ -711,34 +739,6 @@
               <td>0.40</td>
             </tr>
             <tr>
-              <td data-sort="Datalab (accurate)" data-size="unknown">Datalab (accurate) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
-              <td>0.5213</td>
-              <td>0.5018</td>
-              <td class="sub-col" data-group="v3region">0.5394</td><td class="sub-col" data-group="v3region">0.5543</td><td class="sub-col" data-group="v3region">0.4674</td><td class="sub-col" data-group="v3region">0.6355</td><td class="sub-col" data-group="v3region">0.3122</td>
-              <td>0.4413</td>
-              <td class="sub-col" data-group="v3format">0.4155</td><td class="sub-col" data-group="v3format">0.6943</td><td class="sub-col" data-group="v3format">0.2141</td>
-              <td>0.4961</td>
-              <td class="sub-col" data-group="v3chrf">0.6127</td><td class="sub-col" data-group="v3chrf">0.4307</td><td class="sub-col" data-group="v3chrf">0.5082</td><td class="sub-col" data-group="v3chrf">0.6941</td><td class="sub-col" data-group="v3chrf">0.2347</td>
-              <td class="sub-col" data-group="v3chrf">0.3972</td><td class="sub-col" data-group="v3chrf">0.6874</td>
-              <td>0.5962</td>
-              <td>8.65</td>
-              <td>8.65</td>
-            </tr>
-            <tr>
-              <td data-sort="Datalab (balanced)" data-size="unknown">Datalab (balanced) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
-              <td>0.5167</td>
-              <td>0.5146</td>
-              <td class="sub-col" data-group="v3region">0.5440</td><td class="sub-col" data-group="v3region">0.5703</td><td class="sub-col" data-group="v3region">0.4813</td><td class="sub-col" data-group="v3region">0.6413</td><td class="sub-col" data-group="v3region">0.3362</td>
-              <td>0.4491</td>
-              <td class="sub-col" data-group="v3format">0.4421</td><td class="sub-col" data-group="v3format">0.6831</td><td class="sub-col" data-group="v3format">0.2221</td>
-              <td>0.4971</td>
-              <td class="sub-col" data-group="v3chrf">0.5986</td><td class="sub-col" data-group="v3chrf">0.4207</td><td class="sub-col" data-group="v3chrf">0.5221</td><td class="sub-col" data-group="v3chrf">0.6990</td><td class="sub-col" data-group="v3chrf">0.2451</td>
-              <td class="sub-col" data-group="v3chrf">0.4018</td><td class="sub-col" data-group="v3chrf">0.6750</td>
-              <td>0.5713</td>
-              <td>5.91</td>
-              <td>5.91</td>
-            </tr>
-            <tr>
               <td data-sort="Seed 2.0 Lite" data-size="unknown">Seed 2.0 Lite <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
               <td>0.5160</td>
               <td>0.5747</td>
@@ -751,20 +751,6 @@
               <td>0.4516</td>
               <td>0.09</td>
               <td>0.53</td>
-            </tr>
-            <tr>
-              <td data-sort="Datalab (fast)" data-size="unknown">Datalab (fast) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
-              <td>0.5124</td>
-              <td>0.5151</td>
-              <td class="sub-col" data-group="v3region">0.5456</td><td class="sub-col" data-group="v3region">0.5856</td><td class="sub-col" data-group="v3region">0.4780</td><td class="sub-col" data-group="v3region">0.6374</td><td class="sub-col" data-group="v3region">0.3288</td>
-              <td>0.4492</td>
-              <td class="sub-col" data-group="v3format">0.4419</td><td class="sub-col" data-group="v3format">0.6858</td><td class="sub-col" data-group="v3format">0.2199</td>
-              <td>0.4952</td>
-              <td class="sub-col" data-group="v3chrf">0.5940</td><td class="sub-col" data-group="v3chrf">0.4289</td><td class="sub-col" data-group="v3chrf">0.5166</td><td class="sub-col" data-group="v3chrf">0.6964</td><td class="sub-col" data-group="v3chrf">0.2400</td>
-              <td class="sub-col" data-group="v3chrf">0.3988</td><td class="sub-col" data-group="v3chrf">0.6731</td>
-              <td>0.5598</td>
-              <td>5.87</td>
-              <td>5.87</td>
             </tr>
             <tr>
               <td data-sort="Seed 2.0 Mini" data-size="unknown">Seed 2.0 Mini <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
@@ -793,20 +779,6 @@
               <td>0.4609</td>
               <td>0.19</td>
               <td>1.12</td>
-            </tr>
-            <tr>
-              <td data-sort="dots.ocr 1.5" data-size="tiny">dots.ocr 1.5 <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
-              <td>0.4778</td>
-              <td>0.5249</td>
-              <td class="sub-col" data-group="v3region">0.6408</td><td class="sub-col" data-group="v3region">0.5801</td><td class="sub-col" data-group="v3region">0.4369</td><td class="sub-col" data-group="v3region">0.6913</td><td class="sub-col" data-group="v3region">0.2754</td>
-              <td>0.4387</td>
-              <td class="sub-col" data-group="v3format">0.4705</td><td class="sub-col" data-group="v3format">0.7549</td><td class="sub-col" data-group="v3format">0.0907</td>
-              <td>0.4956</td>
-              <td class="sub-col" data-group="v3chrf">0.7172</td><td class="sub-col" data-group="v3chrf">0.4244</td><td class="sub-col" data-group="v3chrf">0.4757</td><td class="sub-col" data-group="v3chrf">0.6861</td><td class="sub-col" data-group="v3chrf">0.1746</td>
-              <td class="sub-col" data-group="v3chrf">0.4067</td><td class="sub-col" data-group="v3chrf">0.7308</td>
-              <td>0.4560</td>
-              <td>0.03</td>
-              <td>0.03</td>
             </tr>
             <tr>
               <td data-sort="Qwen3.5 Flash" data-size="large">Qwen3.5 Flash <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
@@ -865,20 +837,6 @@
               <td>30.00</td>
             </tr>
             <tr>
-              <td data-sort="dots.ocr" data-size="tiny">dots.ocr <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
-              <td>0.4588</td>
-              <td>0.5159</td>
-              <td class="sub-col" data-group="v3region">0.5773</td><td class="sub-col" data-group="v3region">0.5230</td><td class="sub-col" data-group="v3region">0.4955</td><td class="sub-col" data-group="v3region">0.6040</td><td class="sub-col" data-group="v3region">0.3799</td>
-              <td>0.4143</td>
-              <td class="sub-col" data-group="v3format">0.4726</td><td class="sub-col" data-group="v3format">0.6981</td><td class="sub-col" data-group="v3format">0.0723</td>
-              <td>0.4718</td>
-              <td class="sub-col" data-group="v3chrf">0.6320</td><td class="sub-col" data-group="v3chrf">0.3856</td><td class="sub-col" data-group="v3chrf">0.5012</td><td class="sub-col" data-group="v3chrf">0.5914</td><td class="sub-col" data-group="v3chrf">0.2489</td>
-              <td class="sub-col" data-group="v3chrf">0.4006</td><td class="sub-col" data-group="v3chrf">0.6535</td>
-              <td>0.4393</td>
-              <td>0.03</td>
-              <td>0.03</td>
-            </tr>
-            <tr>
               <td data-sort="Llama 4 Maverick" data-size="large">Llama 4 Maverick <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
               <td>0.4501</td>
               <td>0.4585</td>
@@ -917,8 +875,8 @@
               <td class="sub-col" data-group="v3chrf">0.5985</td><td class="sub-col" data-group="v3chrf">0.3076</td><td class="sub-col" data-group="v3chrf">0.1363</td><td class="sub-col" data-group="v3chrf">0.5739</td><td class="sub-col" data-group="v3chrf">0.3052</td>
               <td class="sub-col" data-group="v3chrf">0.3070</td><td class="sub-col" data-group="v3chrf">0.5993</td>
               <td>0.4597</td>
-              <td>3.07</td>
-              <td>3.07</td>
+              <td>1.00</td>
+              <td>1.00</td>
             </tr>
             <tr>
               <td data-sort="GPT-5 Mini (min. reason.)" data-size="unknown">GPT-5 Mini (min. reason.) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
@@ -991,20 +949,6 @@
               <td>0.52</td>
             </tr>
             <tr>
-              <td data-sort="PaddleOCR-VL-1.6" data-size="tiny">PaddleOCR-VL-1.6 <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
-              <td>0.3944</td>
-              <td>0.4332</td>
-              <td class="sub-col" data-group="v3region">0.5801</td><td class="sub-col" data-group="v3region">0.4138</td><td class="sub-col" data-group="v3region">0.5291</td><td class="sub-col" data-group="v3region">0.4139</td><td class="sub-col" data-group="v3region">0.2293</td>
-              <td>0.3728</td>
-              <td class="sub-col" data-group="v3format">0.3998</td><td class="sub-col" data-group="v3format">0.6584</td><td class="sub-col" data-group="v3format">0.0602</td>
-              <td>0.4007</td>
-              <td class="sub-col" data-group="v3chrf">0.6257</td><td class="sub-col" data-group="v3chrf">0.2892</td><td class="sub-col best" data-group="v3chrf">0.5870</td><td class="sub-col" data-group="v3chrf">0.3662</td><td class="sub-col" data-group="v3chrf">0.1355</td>
-              <td class="sub-col" data-group="v3chrf">0.3326</td><td class="sub-col" data-group="v3chrf">0.6237</td>
-              <td>0.3796</td>
-              <td>0.03</td>
-              <td>0.03</td>
-            </tr>
-            <tr>
               <td data-sort="GPT-5.5 (high res., low reason.)" data-size="unknown">GPT-5.5 (high res., low reason.) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
               <td>0.3924</td>
               <td>0.5328</td>
@@ -1031,20 +975,6 @@
               <td>0.3335</td>
               <td>0.15</td>
               <td>1.00</td>
-            </tr>
-            <tr>
-              <td data-sort="OlmOCR-2" data-size="small">OlmOCR-2 <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
-              <td>0.3875</td>
-              <td>0.4849</td>
-              <td class="sub-col" data-group="v3region">0.6267</td><td class="sub-col" data-group="v3region">0.4742</td><td class="sub-col" data-group="v3region">0.4277</td><td class="sub-col" data-group="v3region">0.5938</td><td class="sub-col" data-group="v3region">0.3020</td>
-              <td>0.4469</td>
-              <td class="sub-col" data-group="v3format">0.4431</td><td class="sub-col" data-group="v3format">0.6923</td><td class="sub-col" data-group="v3format">0.2052</td>
-              <td>0.4296</td>
-              <td class="sub-col" data-group="v3chrf">0.6736</td><td class="sub-col" data-group="v3chrf">0.3418</td><td class="sub-col" data-group="v3chrf">0.4430</td><td class="sub-col" data-group="v3chrf">0.5240</td><td class="sub-col" data-group="v3chrf">0.1660</td>
-              <td class="sub-col" data-group="v3chrf">0.3736</td><td class="sub-col" data-group="v3chrf">0.6373</td>
-              <td>0.2668</td>
-              <td>0.09</td>
-              <td>0.19</td>
             </tr>
             <tr>
               <td data-sort="Gemma 3 27B" data-size="medium">Gemma 3 27B <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
@@ -1075,48 +1005,6 @@
               <td>/</td>
             </tr>
             <tr>
-              <td data-sort="FireRed-OCR" data-size="tiny">FireRed-OCR <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
-              <td>0.3782</td>
-              <td>0.3912</td>
-              <td class="sub-col" data-group="v3region">0.5607</td><td class="sub-col" data-group="v3region">0.3649</td><td class="sub-col" data-group="v3region">0.4135</td><td class="sub-col" data-group="v3region">0.4645</td><td class="sub-col" data-group="v3region">0.1524</td>
-              <td>0.3665</td>
-              <td class="sub-col" data-group="v3format">0.3440</td><td class="sub-col" data-group="v3format">0.6257</td><td class="sub-col" data-group="v3format">0.1297</td>
-              <td>0.3445</td>
-              <td class="sub-col" data-group="v3chrf">0.5876</td><td class="sub-col" data-group="v3chrf">0.2543</td><td class="sub-col" data-group="v3chrf">0.4105</td><td class="sub-col" data-group="v3chrf">0.3992</td><td class="sub-col" data-group="v3chrf">0.0708</td>
-              <td class="sub-col" data-group="v3chrf">0.2807</td><td class="sub-col" data-group="v3chrf">0.5652</td>
-              <td>0.4114</td>
-              <td>/</td>
-              <td>/</td>
-            </tr>
-            <tr>
-              <td data-sort="PaddleOCR-VL-1.5" data-size="tiny">PaddleOCR-VL-1.5 <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
-              <td>0.3733</td>
-              <td>0.4172</td>
-              <td class="sub-col" data-group="v3region">0.5503</td><td class="sub-col" data-group="v3region">0.3822</td><td class="sub-col" data-group="v3region">0.5033</td><td class="sub-col" data-group="v3region">0.4134</td><td class="sub-col" data-group="v3region">0.2366</td>
-              <td>0.3622</td>
-              <td class="sub-col" data-group="v3format">0.3647</td><td class="sub-col" data-group="v3format">0.6539</td><td class="sub-col" data-group="v3format">0.0681</td>
-              <td>0.3801</td>
-              <td class="sub-col" data-group="v3chrf">0.5975</td><td class="sub-col" data-group="v3chrf">0.2779</td><td class="sub-col" data-group="v3chrf">0.5358</td><td class="sub-col" data-group="v3chrf">0.3596</td><td class="sub-col" data-group="v3chrf">0.1297</td>
-              <td class="sub-col" data-group="v3chrf">0.3020</td><td class="sub-col" data-group="v3chrf">0.6120</td>
-              <td>0.3502</td>
-              <td>0.03</td>
-              <td>0.03</td>
-            </tr>
-            <tr>
-              <td data-sort="GLM-OCR" data-size="unknown">GLM-OCR <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
-              <td>0.3679</td>
-              <td>0.3776</td>
-              <td class="sub-col" data-group="v3region">0.6155</td><td class="sub-col" data-group="v3region">0.4788</td><td class="sub-col" data-group="v3region">0.4891</td><td class="sub-col" data-group="v3region">0.2522</td><td class="sub-col" data-group="v3region">0.0522</td>
-              <td>0.3584</td>
-              <td class="sub-col" data-group="v3format">0.3792</td><td class="sub-col" data-group="v3format">0.6095</td><td class="sub-col" data-group="v3format">0.0867</td>
-              <td>0.3272</td>
-              <td class="sub-col" data-group="v3chrf">0.6625</td><td class="sub-col" data-group="v3chrf">0.3028</td><td class="sub-col" data-group="v3chrf">0.4739</td><td class="sub-col" data-group="v3chrf">0.1768</td><td class="sub-col" data-group="v3chrf">0.0200</td>
-              <td class="sub-col" data-group="v3chrf">0.3133</td><td class="sub-col" data-group="v3chrf">0.5401</td>
-              <td>0.4085</td>
-              <td>0.03</td>
-              <td>0.03</td>
-            </tr>
-            <tr>
               <td data-sort="Gemma 4 31B" data-size="unknown">Gemma 4 31B <span class="model-tag vlm">VLM</span></td>
               <td>0.3643</td>
               <td>0.4447</td>
@@ -1143,20 +1031,6 @@
               <td>0.3896</td>
               <td>0.06</td>
               <td>0.33</td>
-            </tr>
-            <tr>
-              <td data-sort="Infinity-Parser2-Pro" data-size="large">Infinity-Parser2-Pro <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
-              <td>0.3541</td>
-              <td>0.5409</td>
-              <td class="sub-col" data-group="v3region">0.6690</td><td class="sub-col" data-group="v3region">0.5198</td><td class="sub-col" data-group="v3region">0.5348</td><td class="sub-col" data-group="v3region">0.6419</td><td class="sub-col" data-group="v3region">0.3390</td>
-              <td>0.4874</td>
-              <td class="sub-col" data-group="v3format">0.5094</td><td class="sub-col" data-group="v3format">0.7321</td><td class="sub-col" data-group="v3format">0.2207</td>
-              <td>0.5057</td>
-              <td class="sub-col" data-group="v3chrf">0.7288</td><td class="sub-col" data-group="v3chrf">0.3897</td><td class="sub-col" data-group="v3chrf">0.5553</td><td class="sub-col" data-group="v3chrf">0.6025</td><td class="sub-col" data-group="v3chrf">0.2523</td>
-              <td class="sub-col" data-group="v3chrf">0.4484</td><td class="sub-col" data-group="v3chrf">0.7042</td>
-              <td>0.0424</td>
-              <td>/</td>
-              <td>/</td>
             </tr>
             <tr>
               <td data-sort="GPT-5.4 (low res., med. reason.)" data-size="unknown">GPT-5.4 (low res., med. reason.) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
@@ -1215,6 +1089,20 @@
               <td>15.00</td>
             </tr>
             <tr>
+              <td data-sort="dots.ocr 1.5" data-size="tiny">dots.ocr 1.5 <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.3332</td>
+              <td>0.5249</td>
+              <td class="sub-col" data-group="v3region">0.6408</td><td class="sub-col" data-group="v3region">0.5801</td><td class="sub-col" data-group="v3region">0.4369</td><td class="sub-col" data-group="v3region">0.6913</td><td class="sub-col" data-group="v3region">0.2754</td>
+              <td>0.4387</td>
+              <td class="sub-col" data-group="v3format">0.4705</td><td class="sub-col" data-group="v3format">0.7549</td><td class="sub-col" data-group="v3format">0.0907</td>
+              <td>0.4956</td>
+              <td class="sub-col" data-group="v3chrf">0.7172</td><td class="sub-col" data-group="v3chrf">0.4244</td><td class="sub-col" data-group="v3chrf">0.4757</td><td class="sub-col" data-group="v3chrf">0.6861</td><td class="sub-col" data-group="v3chrf">0.1746</td>
+              <td class="sub-col" data-group="v3chrf">0.4067</td><td class="sub-col" data-group="v3chrf">0.7308</td>
+              <td>0.0220</td>
+              <td>0.03</td>
+              <td>0.03</td>
+            </tr>
+            <tr>
               <td data-sort="ERNIE 4.5 VL 28B" data-size="medium">ERNIE 4.5 VL 28B <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
               <td>0.3321</td>
               <td>0.4077</td>
@@ -1241,6 +1129,20 @@
               <td>0.0307</td>
               <td>2.50</td>
               <td>15.00</td>
+            </tr>
+            <tr>
+              <td data-sort="dots.ocr" data-size="tiny">dots.ocr <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.3245</td>
+              <td>0.5159</td>
+              <td class="sub-col" data-group="v3region">0.5773</td><td class="sub-col" data-group="v3region">0.5230</td><td class="sub-col" data-group="v3region">0.4955</td><td class="sub-col" data-group="v3region">0.6040</td><td class="sub-col" data-group="v3region">0.3799</td>
+              <td>0.4143</td>
+              <td class="sub-col" data-group="v3format">0.4726</td><td class="sub-col" data-group="v3format">0.6981</td><td class="sub-col" data-group="v3format">0.0723</td>
+              <td>0.4718</td>
+              <td class="sub-col" data-group="v3chrf">0.6320</td><td class="sub-col" data-group="v3chrf">0.3856</td><td class="sub-col" data-group="v3chrf">0.5012</td><td class="sub-col" data-group="v3chrf">0.5914</td><td class="sub-col" data-group="v3chrf">0.2489</td>
+              <td class="sub-col" data-group="v3chrf">0.4006</td><td class="sub-col" data-group="v3chrf">0.6535</td>
+              <td>0.0367</td>
+              <td>0.03</td>
+              <td>0.03</td>
             </tr>
             <tr>
               <td data-sort="GPT-5.4 (orig. res., med. reason.)" data-size="unknown">GPT-5.4 (orig. res., med. reason.) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
@@ -1313,20 +1215,6 @@
               <td>/</td>
             </tr>
             <tr>
-              <td data-sort="Infinity-Parser2-Flash" data-size="tiny">Infinity-Parser2-Flash <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
-              <td>0.3040</td>
-              <td>0.4692</td>
-              <td class="sub-col" data-group="v3region">0.6218</td><td class="sub-col" data-group="v3region">0.4756</td><td class="sub-col" data-group="v3region">0.4007</td><td class="sub-col" data-group="v3region">0.5791</td><td class="sub-col" data-group="v3region">0.2690</td>
-              <td>0.4355</td>
-              <td class="sub-col" data-group="v3format">0.4355</td><td class="sub-col" data-group="v3format">0.6709</td><td class="sub-col" data-group="v3format">0.2000</td>
-              <td>0.4029</td>
-              <td class="sub-col" data-group="v3chrf">0.6554</td><td class="sub-col" data-group="v3chrf">0.3278</td><td class="sub-col" data-group="v3chrf">0.4149</td><td class="sub-col" data-group="v3chrf">0.4691</td><td class="sub-col" data-group="v3chrf">0.1474</td>
-              <td class="sub-col" data-group="v3chrf">0.3594</td><td class="sub-col" data-group="v3chrf">0.5992</td>
-              <td>0.0567</td>
-              <td>/</td>
-              <td>/</td>
-            </tr>
-            <tr>
               <td data-sort="GPT-5.2 (auto res., med. reason.)" data-size="unknown">GPT-5.2 (auto res., med. reason.) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
               <td>0.3035</td>
               <td>0.4509</td>
@@ -1341,32 +1229,32 @@
               <td>14.00</td>
             </tr>
             <tr>
-              <td data-sort="OCRVerse" data-size="small">OCRVerse <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
-              <td>0.3020</td>
-              <td>0.2820</td>
-              <td class="sub-col" data-group="v3region">0.5360</td><td class="sub-col" data-group="v3region">0.2086</td><td class="sub-col" data-group="v3region">0.3801</td><td class="sub-col" data-group="v3region">0.2721</td><td class="sub-col" data-group="v3region">0.0133</td>
-              <td>0.2906</td>
-              <td class="sub-col" data-group="v3format">0.2940</td><td class="sub-col" data-group="v3format">0.4886</td><td class="sub-col" data-group="v3format">0.0892</td>
-              <td>0.2625</td>
-              <td class="sub-col" data-group="v3chrf">0.5627</td><td class="sub-col" data-group="v3chrf">0.1124</td><td class="sub-col" data-group="v3chrf">0.4043</td><td class="sub-col" data-group="v3chrf">0.2315</td><td class="sub-col" data-group="v3chrf">0.0015</td>
-              <td class="sub-col" data-group="v3chrf">0.2612</td><td class="sub-col" data-group="v3chrf">0.4330</td>
-              <td>0.3572</td>
-              <td>/</td>
-              <td>/</td>
+              <td data-sort="OlmOCR-2" data-size="small">OlmOCR-2 <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.2985</td>
+              <td>0.4849</td>
+              <td class="sub-col" data-group="v3region">0.6267</td><td class="sub-col" data-group="v3region">0.4742</td><td class="sub-col" data-group="v3region">0.4277</td><td class="sub-col" data-group="v3region">0.5938</td><td class="sub-col" data-group="v3region">0.3020</td>
+              <td>0.4469</td>
+              <td class="sub-col" data-group="v3format">0.4431</td><td class="sub-col" data-group="v3format">0.6923</td><td class="sub-col" data-group="v3format">0.2052</td>
+              <td>0.4296</td>
+              <td class="sub-col" data-group="v3chrf">0.6736</td><td class="sub-col" data-group="v3chrf">0.3418</td><td class="sub-col" data-group="v3chrf">0.4430</td><td class="sub-col" data-group="v3chrf">0.5240</td><td class="sub-col" data-group="v3chrf">0.1660</td>
+              <td class="sub-col" data-group="v3chrf">0.3736</td><td class="sub-col" data-group="v3chrf">0.6373</td>
+              <td>0.0000</td>
+              <td>0.09</td>
+              <td>0.19</td>
             </tr>
             <tr>
-              <td data-sort="Nemotron-3-Nano-Omni" data-size="unknown">Nemotron-3-Nano-Omni <span class="model-tag vlm">VLM</span></td>
-              <td>0.2973</td>
-              <td>0.3138</td>
-              <td class="sub-col" data-group="v3region">0.5214</td><td class="sub-col" data-group="v3region">0.3297</td><td class="sub-col" data-group="v3region">0.2999</td><td class="sub-col" data-group="v3region">0.2937</td><td class="sub-col" data-group="v3region">0.1244</td>
-              <td>0.3439</td>
-              <td class="sub-col" data-group="v3format">0.2979</td><td class="sub-col" data-group="v3format">0.5047</td><td class="sub-col" data-group="v3format">0.2292</td>
-              <td>0.2638</td>
-              <td class="sub-col" data-group="v3chrf">0.5165</td><td class="sub-col" data-group="v3chrf">0.2125</td><td class="sub-col" data-group="v3chrf">0.3247</td><td class="sub-col" data-group="v3chrf">0.1892</td><td class="sub-col" data-group="v3chrf">0.0759</td>
-              <td class="sub-col" data-group="v3chrf">0.2564</td><td class="sub-col" data-group="v3chrf">0.4180</td>
-              <td>0.2992</td>
-              <td>?</td>
-              <td>?</td>
+              <td data-sort="PaddleOCR-VL-1.6" data-size="tiny">PaddleOCR-VL-1.6 <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.2838</td>
+              <td>0.4332</td>
+              <td class="sub-col" data-group="v3region">0.5801</td><td class="sub-col" data-group="v3region">0.4138</td><td class="sub-col" data-group="v3region">0.5291</td><td class="sub-col" data-group="v3region">0.4139</td><td class="sub-col" data-group="v3region">0.2293</td>
+              <td>0.3728</td>
+              <td class="sub-col" data-group="v3format">0.3998</td><td class="sub-col" data-group="v3format">0.6584</td><td class="sub-col" data-group="v3format">0.0602</td>
+              <td>0.4007</td>
+              <td class="sub-col" data-group="v3chrf">0.6257</td><td class="sub-col" data-group="v3chrf">0.2892</td><td class="sub-col best" data-group="v3chrf">0.5870</td><td class="sub-col" data-group="v3chrf">0.3662</td><td class="sub-col" data-group="v3chrf">0.1355</td>
+              <td class="sub-col" data-group="v3chrf">0.3326</td><td class="sub-col" data-group="v3chrf">0.6237</td>
+              <td>0.0478</td>
+              <td>0.03</td>
+              <td>0.03</td>
             </tr>
             <tr>
               <td data-sort="Qwen3.6 27B" data-size="medium">Qwen3.6 27B <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
@@ -1381,6 +1269,20 @@
               <td>0.2573</td>
               <td>0.32</td>
               <td>3.20</td>
+            </tr>
+            <tr>
+              <td data-sort="PaddleOCR-VL-1.5" data-size="tiny">PaddleOCR-VL-1.5 <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.2782</td>
+              <td>0.4172</td>
+              <td class="sub-col" data-group="v3region">0.5503</td><td class="sub-col" data-group="v3region">0.3822</td><td class="sub-col" data-group="v3region">0.5033</td><td class="sub-col" data-group="v3region">0.4134</td><td class="sub-col" data-group="v3region">0.2366</td>
+              <td>0.3622</td>
+              <td class="sub-col" data-group="v3format">0.3647</td><td class="sub-col" data-group="v3format">0.6539</td><td class="sub-col" data-group="v3format">0.0681</td>
+              <td>0.3801</td>
+              <td class="sub-col" data-group="v3chrf">0.5975</td><td class="sub-col" data-group="v3chrf">0.2779</td><td class="sub-col" data-group="v3chrf">0.5358</td><td class="sub-col" data-group="v3chrf">0.3596</td><td class="sub-col" data-group="v3chrf">0.1297</td>
+              <td class="sub-col" data-group="v3chrf">0.3020</td><td class="sub-col" data-group="v3chrf">0.6120</td>
+              <td>0.0648</td>
+              <td>0.03</td>
+              <td>0.03</td>
             </tr>
             <tr>
               <td data-sort="GPT-5.4 Mini (auto res., no reason.)" data-size="unknown">GPT-5.4 Mini (auto res., no reason.) <span class="model-tag vlm">VLM</span></td>
@@ -1411,20 +1313,6 @@
               <td>0.40</td>
             </tr>
             <tr>
-              <td data-sort="Qianfan-OCR Fast" data-size="unknown">Qianfan-OCR Fast <span class="model-tag classical">Classical OCR</span> <span class="model-tag open-source">Open Source</span></td>
-              <td>0.2683</td>
-              <td>0.4244</td>
-              <td class="sub-col" data-group="v3region">0.4748</td><td class="sub-col" data-group="v3region">0.4420</td><td class="sub-col" data-group="v3region">0.5338</td><td class="sub-col" data-group="v3region">0.4336</td><td class="sub-col" data-group="v3region">0.2379</td>
-              <td>0.3505</td>
-              <td class="sub-col" data-group="v3format">0.3897</td><td class="sub-col" data-group="v3format">0.5711</td><td class="sub-col" data-group="v3format">0.0908</td>
-              <td>0.3405</td>
-              <td class="sub-col" data-group="v3chrf">0.4789</td><td class="sub-col" data-group="v3chrf">0.2884</td><td class="sub-col" data-group="v3chrf">0.4951</td><td class="sub-col" data-group="v3chrf">0.3120</td><td class="sub-col" data-group="v3chrf">0.1280</td>
-              <td class="sub-col" data-group="v3chrf">0.3051</td><td class="sub-col" data-group="v3chrf">0.4687</td>
-              <td>0.0768</td>
-              <td>/</td>
-              <td>/</td>
-            </tr>
-            <tr>
               <td data-sort="Gemma 3 4B" data-size="small">Gemma 3 4B <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
               <td>0.2596</td>
               <td>0.2390</td>
@@ -1435,20 +1323,6 @@
               <td class="sub-col" data-group="v3chrf">0.3748</td><td class="sub-col" data-group="v3chrf">0.2064</td><td class="sub-col" data-group="v3chrf">0.0303</td><td class="sub-col" data-group="v3chrf">0.2063</td><td class="sub-col" data-group="v3chrf">0.1425</td>
               <td class="sub-col" data-group="v3chrf">0.1838</td><td class="sub-col" data-group="v3chrf">0.3023</td>
               <td>0.3066</td>
-              <td>/</td>
-              <td>/</td>
-            </tr>
-            <tr>
-              <td data-sort="LightOnOCR-2" data-size="tiny">LightOnOCR-2 <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
-              <td>0.2587</td>
-              <td>0.2708</td>
-              <td class="sub-col" data-group="v3region">0.3978</td><td class="sub-col" data-group="v3region">0.3282</td><td class="sub-col" data-group="v3region">0.1161</td><td class="sub-col" data-group="v3region">0.3201</td><td class="sub-col" data-group="v3region">0.1915</td>
-              <td>0.2733</td>
-              <td class="sub-col" data-group="v3format">0.2062</td><td class="sub-col" data-group="v3format">0.4748</td><td class="sub-col" data-group="v3format">0.1389</td>
-              <td>0.2430</td>
-              <td class="sub-col" data-group="v3chrf">0.4263</td><td class="sub-col" data-group="v3chrf">0.2227</td><td class="sub-col" data-group="v3chrf">0.1127</td><td class="sub-col" data-group="v3chrf">0.3318</td><td class="sub-col" data-group="v3chrf">0.1215</td>
-              <td class="sub-col" data-group="v3chrf">0.1715</td><td class="sub-col" data-group="v3chrf">0.4383</td>
-              <td>0.2610</td>
               <td>/</td>
               <td>/</td>
             </tr>
@@ -1465,6 +1339,76 @@
               <td>0.0438</td>
               <td>0.25</td>
               <td>2.00</td>
+            </tr>
+            <tr>
+              <td data-sort="Qianfan-OCR Fast" data-size="unknown">Qianfan-OCR Fast <span class="model-tag classical">Classical OCR</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.2486</td>
+              <td>0.4244</td>
+              <td class="sub-col" data-group="v3region">0.4748</td><td class="sub-col" data-group="v3region">0.4420</td><td class="sub-col" data-group="v3region">0.5338</td><td class="sub-col" data-group="v3region">0.4336</td><td class="sub-col" data-group="v3region">0.2379</td>
+              <td>0.3505</td>
+              <td class="sub-col" data-group="v3format">0.3897</td><td class="sub-col" data-group="v3format">0.5711</td><td class="sub-col" data-group="v3format">0.0908</td>
+              <td>0.3405</td>
+              <td class="sub-col" data-group="v3chrf">0.4789</td><td class="sub-col" data-group="v3chrf">0.2884</td><td class="sub-col" data-group="v3chrf">0.4951</td><td class="sub-col" data-group="v3chrf">0.3120</td><td class="sub-col" data-group="v3chrf">0.1280</td>
+              <td class="sub-col" data-group="v3chrf">0.3051</td><td class="sub-col" data-group="v3chrf">0.4687</td>
+              <td>0.0180</td>
+              <td>/</td>
+              <td>/</td>
+            </tr>
+            <tr>
+              <td data-sort="GLM-OCR" data-size="unknown">GLM-OCR <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.2474</td>
+              <td>0.3776</td>
+              <td class="sub-col" data-group="v3region">0.6155</td><td class="sub-col" data-group="v3region">0.4788</td><td class="sub-col" data-group="v3region">0.4891</td><td class="sub-col" data-group="v3region">0.2522</td><td class="sub-col" data-group="v3region">0.0522</td>
+              <td>0.3584</td>
+              <td class="sub-col" data-group="v3format">0.3792</td><td class="sub-col" data-group="v3format">0.6095</td><td class="sub-col" data-group="v3format">0.0867</td>
+              <td>0.3272</td>
+              <td class="sub-col" data-group="v3chrf">0.6625</td><td class="sub-col" data-group="v3chrf">0.3028</td><td class="sub-col" data-group="v3chrf">0.4739</td><td class="sub-col" data-group="v3chrf">0.1768</td><td class="sub-col" data-group="v3chrf">0.0200</td>
+              <td class="sub-col" data-group="v3chrf">0.3133</td><td class="sub-col" data-group="v3chrf">0.5401</td>
+              <td>0.0469</td>
+              <td>0.03</td>
+              <td>0.03</td>
+            </tr>
+            <tr>
+              <td data-sort="FireRed-OCR" data-size="tiny">FireRed-OCR <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.2411</td>
+              <td>0.3912</td>
+              <td class="sub-col" data-group="v3region">0.5607</td><td class="sub-col" data-group="v3region">0.3649</td><td class="sub-col" data-group="v3region">0.4135</td><td class="sub-col" data-group="v3region">0.4645</td><td class="sub-col" data-group="v3region">0.1524</td>
+              <td>0.3665</td>
+              <td class="sub-col" data-group="v3format">0.3440</td><td class="sub-col" data-group="v3format">0.6257</td><td class="sub-col" data-group="v3format">0.1297</td>
+              <td>0.3445</td>
+              <td class="sub-col" data-group="v3chrf">0.5876</td><td class="sub-col" data-group="v3chrf">0.2543</td><td class="sub-col" data-group="v3chrf">0.4105</td><td class="sub-col" data-group="v3chrf">0.3992</td><td class="sub-col" data-group="v3chrf">0.0708</td>
+              <td class="sub-col" data-group="v3chrf">0.2807</td><td class="sub-col" data-group="v3chrf">0.5652</td>
+              <td>0.0000</td>
+              <td>/</td>
+              <td>/</td>
+            </tr>
+            <tr>
+              <td data-sort="Nemotron-3-Nano-Omni" data-size="unknown">Nemotron-3-Nano-Omni <span class="model-tag vlm">VLM</span></td>
+              <td>0.2403</td>
+              <td>0.3138</td>
+              <td class="sub-col" data-group="v3region">0.5214</td><td class="sub-col" data-group="v3region">0.3297</td><td class="sub-col" data-group="v3region">0.2999</td><td class="sub-col" data-group="v3region">0.2937</td><td class="sub-col" data-group="v3region">0.1244</td>
+              <td>0.3439</td>
+              <td class="sub-col" data-group="v3format">0.2979</td><td class="sub-col" data-group="v3format">0.5047</td><td class="sub-col" data-group="v3format">0.2292</td>
+              <td>0.2638</td>
+              <td class="sub-col" data-group="v3chrf">0.5165</td><td class="sub-col" data-group="v3chrf">0.2125</td><td class="sub-col" data-group="v3chrf">0.3247</td><td class="sub-col" data-group="v3chrf">0.1892</td><td class="sub-col" data-group="v3chrf">0.0759</td>
+              <td class="sub-col" data-group="v3chrf">0.2564</td><td class="sub-col" data-group="v3chrf">0.4180</td>
+              <td>0.1282</td>
+              <td>?</td>
+              <td>?</td>
+            </tr>
+            <tr>
+              <td data-sort="OCRVerse" data-size="small">OCRVerse <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.2033</td>
+              <td>0.2820</td>
+              <td class="sub-col" data-group="v3region">0.5360</td><td class="sub-col" data-group="v3region">0.2086</td><td class="sub-col" data-group="v3region">0.3801</td><td class="sub-col" data-group="v3region">0.2721</td><td class="sub-col" data-group="v3region">0.0133</td>
+              <td>0.2906</td>
+              <td class="sub-col" data-group="v3format">0.2940</td><td class="sub-col" data-group="v3format">0.4886</td><td class="sub-col" data-group="v3format">0.0892</td>
+              <td>0.2625</td>
+              <td class="sub-col" data-group="v3chrf">0.5627</td><td class="sub-col" data-group="v3chrf">0.1124</td><td class="sub-col" data-group="v3chrf">0.4043</td><td class="sub-col" data-group="v3chrf">0.2315</td><td class="sub-col" data-group="v3chrf">0.0015</td>
+              <td class="sub-col" data-group="v3chrf">0.2612</td><td class="sub-col" data-group="v3chrf">0.4330</td>
+              <td>0.0612</td>
+              <td>/</td>
+              <td>/</td>
             </tr>
             <tr>
               <td data-sort="GPT-5.4 Nano (auto res., no reason.)" data-size="unknown">GPT-5.4 Nano (auto res., no reason.) <span class="model-tag vlm">VLM</span></td>
@@ -1507,6 +1451,20 @@
               <td>0.1373</td>
               <td>0.03</td>
               <td>0.03</td>
+            </tr>
+            <tr>
+              <td data-sort="LightOnOCR-2" data-size="tiny">LightOnOCR-2 <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
+              <td>0.1753</td>
+              <td>0.2708</td>
+              <td class="sub-col" data-group="v3region">0.3978</td><td class="sub-col" data-group="v3region">0.3282</td><td class="sub-col" data-group="v3region">0.1161</td><td class="sub-col" data-group="v3region">0.3201</td><td class="sub-col" data-group="v3region">0.1915</td>
+              <td>0.2733</td>
+              <td class="sub-col" data-group="v3format">0.2062</td><td class="sub-col" data-group="v3format">0.4748</td><td class="sub-col" data-group="v3format">0.1389</td>
+              <td>0.2430</td>
+              <td class="sub-col" data-group="v3chrf">0.4263</td><td class="sub-col" data-group="v3chrf">0.2227</td><td class="sub-col" data-group="v3chrf">0.1127</td><td class="sub-col" data-group="v3chrf">0.3318</td><td class="sub-col" data-group="v3chrf">0.1215</td>
+              <td class="sub-col" data-group="v3chrf">0.1715</td><td class="sub-col" data-group="v3chrf">0.4383</td>
+              <td>0.0109</td>
+              <td>/</td>
+              <td>/</td>
             </tr>
             <tr>
               <td data-sort="Nemotron-Nano-12B" data-size="medium">Nemotron-Nano-12B <span class="model-tag vlm">VLM</span> <span class="model-tag open-source">Open Source</span></td>
@@ -1619,6 +1577,48 @@
               <td>0.0077</td>
               <td>0.05</td>
               <td>0.40</td>
+            </tr>
+            <tr>
+              <td data-sort="GPT-5.5 (high res., med. reason.)" data-size="unknown">GPT-5.5 (high res., med. reason.) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.0000</td>
+              <td>0.0000</td>
+              <td class="sub-col" data-group="v3region">0.0000</td><td class="sub-col" data-group="v3region">0.0000</td><td class="sub-col" data-group="v3region">0.0000</td><td class="sub-col" data-group="v3region">0.0000</td><td class="sub-col" data-group="v3region">0.0000</td>
+              <td>0.0000</td>
+              <td class="sub-col" data-group="v3format">0.0000</td><td class="sub-col" data-group="v3format">0.0000</td><td class="sub-col" data-group="v3format">0.0000</td>
+              <td>0.0000</td>
+              <td class="sub-col" data-group="v3chrf">0.0000</td><td class="sub-col" data-group="v3chrf">0.0000</td><td class="sub-col" data-group="v3chrf">0.0000</td><td class="sub-col" data-group="v3chrf">0.0000</td><td class="sub-col" data-group="v3chrf">0.0000</td>
+              <td class="sub-col" data-group="v3chrf">0.0000</td><td class="sub-col" data-group="v3chrf">0.0000</td>
+              <td>0.0000</td>
+              <td>5.00</td>
+              <td>30.00</td>
+            </tr>
+            <tr>
+              <td data-sort="GPT-5.5 (low res., med. reason.)" data-size="unknown">GPT-5.5 (low res., med. reason.) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.0000</td>
+              <td>0.0000</td>
+              <td class="sub-col" data-group="v3region">0.0000</td><td class="sub-col" data-group="v3region">0.0000</td><td class="sub-col" data-group="v3region">0.0000</td><td class="sub-col" data-group="v3region">0.0000</td><td class="sub-col" data-group="v3region">0.0000</td>
+              <td>0.0000</td>
+              <td class="sub-col" data-group="v3format">0.0000</td><td class="sub-col" data-group="v3format">0.0000</td><td class="sub-col" data-group="v3format">0.0000</td>
+              <td>0.0000</td>
+              <td class="sub-col" data-group="v3chrf">0.0000</td><td class="sub-col" data-group="v3chrf">0.0000</td><td class="sub-col" data-group="v3chrf">0.0000</td><td class="sub-col" data-group="v3chrf">0.0000</td><td class="sub-col" data-group="v3chrf">0.0000</td>
+              <td class="sub-col" data-group="v3chrf">0.0000</td><td class="sub-col" data-group="v3chrf">0.0000</td>
+              <td>0.0000</td>
+              <td>5.00</td>
+              <td>30.00</td>
+            </tr>
+            <tr>
+              <td data-sort="GPT-5.5 (orig. res., med. reason.)" data-size="unknown">GPT-5.5 (orig. res., med. reason.) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.0000</td>
+              <td>0.0000</td>
+              <td class="sub-col" data-group="v3region">0.0000</td><td class="sub-col" data-group="v3region">0.0000</td><td class="sub-col" data-group="v3region">0.0000</td><td class="sub-col" data-group="v3region">0.0000</td><td class="sub-col" data-group="v3region">0.0000</td>
+              <td>0.0000</td>
+              <td class="sub-col" data-group="v3format">0.0000</td><td class="sub-col" data-group="v3format">0.0000</td><td class="sub-col" data-group="v3format">0.0000</td>
+              <td>0.0000</td>
+              <td class="sub-col" data-group="v3chrf">0.0000</td><td class="sub-col" data-group="v3chrf">0.0000</td><td class="sub-col" data-group="v3chrf">0.0000</td><td class="sub-col" data-group="v3chrf">0.0000</td><td class="sub-col" data-group="v3chrf">0.0000</td>
+              <td class="sub-col" data-group="v3chrf">0.0000</td><td class="sub-col" data-group="v3chrf">0.0000</td>
+              <td>0.0000</td>
+              <td>5.00</td>
+              <td>30.00</td>
             </tr>
           </tbody>
         </table>
@@ -3638,48 +3638,47 @@
               [1.350, 0.5417, 0.5417, "Qwen3.5 27B", "#E91E63"],
               [15.000, 0.5416, 0.5416, "Claude Opus 4.6", "#B8860B"],
               [1.050, 0.5392, 0.5392, "Qwen3.5 Plus (2026-04-20)", "#E91E63"],
+              [0.010, 0.5391, 0.5391, "Datalab (accurate)", "#607D8B"],
+              [0.010, 0.5374, 0.5374, "Datalab (fast)", "#607D8B"],
               [0.250, 0.5295, 0.5295, "Gemini 2.0 Flash", "#4285F4"],
-              [8.650, 0.5213, 0.5213, "Datalab (accurate)", "#607D8B"],
-              [5.910, 0.5167, 0.5167, "Datalab (balanced)", "#607D8B"],
               [0.310, 0.5160, 0.5160, "Seed 2.0 Lite", "#FF5722"],
-              [5.870, 0.5124, 0.5124, "Datalab (fast)", "#607D8B"],
               [0.250, 0.4974, 0.4974, "Seed 2.0 Mini", "#FF5722"],
               [0.656, 0.4882, 0.4882, "Qwen3.6 Flash", "#E91E63"],
-              [0.030, 0.4778, 0.4778, "dots.ocr 1.5", "#607D8B"],
               [0.250, 0.4778, 0.4778, "Qwen3.5 Flash", "#E91E63"],
               [0.290, 0.4725, 0.4725, "Qwen3 VL 8B", "#E91E63"],
               [1.125, 0.4720, 0.4720, "Qwen3.5 35B", "#E91E63"],
               [17.500, 0.4609, 0.4609, "GPT-5.5 (auto res., med. reason.)", "#10a37f"],
-              [0.030, 0.4588, 0.4588, "dots.ocr", "#607D8B"],
               [0.375, 0.4501, 0.4501, "Llama 4 Maverick", "#607D8B"],
-              [3.070, 0.4467, 0.4467, "Mistral OCR", "#607D8B"],
+              [1.000, 0.4467, 0.4467, "Mistral OCR", "#607D8B"],
               [1.125, 0.4450, 0.4450, "GPT-5 Mini (min. reason.)", "#10a37f"],
               [0.835, 0.4448, 0.4448, "ERNIE 4.5 VL 424B", "#607D8B"],
               [0.095, 0.4269, 0.4269, "Qwen3.5 9B", "#E91E63"],
               [0.325, 0.4261, 0.4261, "Qwen3 VL 30B", "#E91E63"],
-              [0.030, 0.3944, 0.3944, "PaddleOCR-VL-1.6", "#607D8B"],
               [17.500, 0.3924, 0.3924, "GPT-5.5 (high res., low reason.)", "#10a37f"],
               [0.575, 0.3896, 0.3896, "Qwen3.6 35B", "#E91E63"],
-              [0.140, 0.3875, 0.3875, "OlmOCR-2", "#607D8B"],
-              [0.030, 0.3733, 0.3733, "PaddleOCR-VL-1.5", "#607D8B"],
-              [0.030, 0.3679, 0.3679, "GLM-OCR", "#607D8B"],
               [0.245, 0.3643, 0.3643, "Gemma 4 31B", "#607D8B"],
               [0.195, 0.3560, 0.3560, "Gemma 4 26B", "#607D8B"],
               [8.750, 0.3486, 0.3486, "GPT-5.4 (low res., med. reason.)", "#10a37f"],
               [8.750, 0.3406, 0.3406, "GPT-5.4 (high res., med. reason.)", "#10a37f"],
               [0.115, 0.3366, 0.3366, "Qwen-VL-OCR", "#E91E63"],
               [8.750, 0.3352, 0.3352, "GPT-5.4 (auto res., med. reason.)", "#10a37f"],
+              [0.030, 0.3332, 0.3332, "dots.ocr 1.5", "#607D8B"],
               [0.350, 0.3321, 0.3321, "ERNIE 4.5 VL 28B", "#607D8B"],
               [8.750, 0.3261, 0.3261, "GPT-5.4 (high res., low reason.)", "#10a37f"],
+              [0.030, 0.3245, 0.3245, "dots.ocr", "#607D8B"],
               [8.750, 0.3196, 0.3196, "GPT-5.4 (orig. res., med. reason.)", "#10a37f"],
               [0.375, 0.3187, 0.3187, "Mistral Small 2603", "#607D8B"],
               [7.875, 0.3132, 0.3132, "GPT-5.2 (low res., med. reason.)", "#10a37f"],
               [7.875, 0.3097, 0.3097, "GPT-5.2 (high res., med. reason.)", "#10a37f"],
               [7.875, 0.3035, 0.3035, "GPT-5.2 (auto res., med. reason.)", "#10a37f"],
+              [0.140, 0.2985, 0.2985, "OlmOCR-2", "#607D8B"],
+              [0.030, 0.2838, 0.2838, "PaddleOCR-VL-1.6", "#607D8B"],
               [1.759, 0.2809, 0.2809, "Qwen3.6 27B", "#E91E63"],
+              [0.030, 0.2782, 0.2782, "PaddleOCR-VL-1.5", "#607D8B"],
               [2.625, 0.2764, 0.2764, "GPT-5.4 Mini (auto res., no reason.)", "#10a37f"],
               [0.225, 0.2742, 0.2742, "GPT-5 Nano (min. reason.)", "#10a37f"],
               [1.125, 0.2550, 0.2550, "GPT-5 Mini (med. reason.)", "#10a37f"],
+              [0.030, 0.2474, 0.2474, "GLM-OCR", "#607D8B"],
               [0.725, 0.1939, 0.1939, "GPT-5.4 Nano (auto res., no reason.)", "#10a37f"],
               [6.000, 0.1938, 0.1938, "Grok 4.2 Fast", "#607D8B"],
               [0.030, 0.1759, 0.1759, "DeepSeek-OCR2", "#607D8B"],
@@ -3688,7 +3687,10 @@
               [0.130, 0.1083, 0.1083, "PaddleOCR-VL-0.9B", "#607D8B"],
               [1.150, 0.0969, 0.0969, "Kimi K2.5", "#607D8B"],
               [0.030, 0.0855, 0.0855, "DeepSeek-OCR", "#607D8B"],
-              [0.225, 0.0288, 0.0288, "GPT-5 Nano (med. reason.)", "#10a37f"]
+              [0.225, 0.0288, 0.0288, "GPT-5 Nano (med. reason.)", "#10a37f"],
+              [17.500, 0.0000, 0.0000, "GPT-5.5 (high res., med. reason.)", "#10a37f"],
+              [17.500, 0.0000, 0.0000, "GPT-5.5 (low res., med. reason.)", "#10a37f"],
+              [17.500, 0.0000, 0.0000, "GPT-5.5 (orig. res., med. reason.)", "#10a37f"]
             ];
 
           const v3Batch = [
@@ -4225,19 +4227,9 @@
                 <td><code>datalab-python-sdk</code>, mode=fast</td>
               </tr>
               <tr>
-                <td>Datalab (balanced)</td>
-                <td>Datalab API</td>
-                <td><code>datalab-python-sdk</code>, mode=balanced</td>
-              </tr>
-              <tr>
                 <td>Datalab (accurate)</td>
                 <td>Datalab API</td>
                 <td><code>datalab-python-sdk</code>, mode=accurate</td>
-              </tr>
-              <tr>
-                <td>Infinity-Parser2-Flash / Pro</td>
-                <td>HF Space (infly)</td>
-                <td><code>infly/Infinity-Parser2-Demo</code> via <code>gradio_client</code>, doc2md task</td>
               </tr>
               <tr>
                 <td>Mistral OCR</td>
@@ -4268,23 +4260,11 @@
       <details style="margin-top: 1.5em;">
         <summary style="cursor: pointer; font-weight: bold; font-size: 1.1em;">Changelog</summary>
         <div style="margin-top: 1em; font-size: 0.92em; line-height: 1.6;">
-          <p><strong>May 29, 2026:</strong> Fixed a TEDS scoring bug that systematically penalized
-            OCR models which emit tables as HTML <code>&lt;table&gt;</code> rather than markdown pipes:
-            the parser previously scored their tables near zero even when read correctly. This raised
-            11 open-source OCR specialists on the table category &mdash; dots.ocr 1.5 (+0.145, to 0.478),
-            FireRed-OCR (+0.137), dots.ocr (+0.134), GLM-OCR (+0.121), PaddleOCR-VL-1.6 (+0.111),
-            OCRVerse, PaddleOCR-VL-1.5, OlmOCR-2, LightOnOCR-2, Nemotron-3-Nano-Omni, and Qianfan-OCR.
-            General VLMs were unaffected (they were prompted to output markdown tables).
-            Added Surya OCR 2 (0.4476), run locally on an RTX 4090 via llama.cpp with quantized GGUF
-            weights &mdash; strong on printed text (0.7180), weak on handwritten tables and right-to-left
-            scripts. Added PaddleOCR-VL-1.6 (0.3944) via the Baidu AIStudio job API; handles printed
-            text (0.6584) far better than non-Latin scripts.
-            Added Infinity-Parser2 Pro (0.3541) and Flash (0.3040), run through the public infly
-            Gradio Space; both read printed text well (Pro 0.7321) but linearize handwritten tables
-            in markdown mode, so their table (TEDS) scores are near zero.
-            Re-ran Datalab on a new subscription key and added the balanced mode: fast 0.5124,
-            balanced 0.5167, accurate 0.5213 &mdash; marginally below the prior key (fast 0.5374,
-            accurate 0.5391) across all modes.</p>
+          <p><strong>May 29, 2026:</strong> Added Surya OCR 2 (0.4476), run locally on an RTX 4090
+            via llama.cpp with quantized GGUF weights. Strong on printed text (0.7180) but weak on
+            handwritten tables (0.1389) and right-to-left scripts. Added PaddleOCR-VL-1.6 (0.2838)
+            via the Baidu AIStudio job API; like its 0.9B predecessor it handles printed text
+            (0.6584) far better than handwritten tables (0.0602) or non-Latin scripts.</p>
           <p><strong>May 23, 2026:</strong> Added GPT-5.5 with auto resolution + medium reasoning
             (0.4609) and high resolution + low reasoning (0.3924). Both clear the best GPT-5.4
             variant (0.3424). Added Gemini 3.1 Flash Lite at minimal (0.6214) and low (0.5819)
