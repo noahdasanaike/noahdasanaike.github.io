@@ -529,6 +529,20 @@
               <td>3.00</td>
             </tr>
             <tr>
+              <td data-sort="Qwen3.7 Plus" data-size="unknown">Qwen3.7 Plus <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.5830</td>
+              <td>0.6140</td>
+              <td class="sub-col" data-group="v3region">0.7118</td><td class="sub-col" data-group="v3region">0.5977</td><td class="sub-col" data-group="v3region">0.5656</td><td class="sub-col" data-group="v3region">0.7012</td><td class="sub-col" data-group="v3region">0.4936</td>
+              <td>0.5919</td>
+              <td class="sub-col" data-group="v3format">0.5906</td><td class="sub-col" data-group="v3format">0.7453</td><td class="sub-col" data-group="v3format">0.4399</td>
+              <td>0.5402</td>
+              <td class="sub-col" data-group="v3chrf">0.7220</td><td class="sub-col" data-group="v3chrf">0.4260</td><td class="sub-col" data-group="v3chrf">0.5565</td><td class="sub-col" data-group="v3chrf">0.6634</td><td class="sub-col" data-group="v3chrf">0.3330</td>
+              <td class="sub-col" data-group="v3chrf">0.4893</td><td class="sub-col" data-group="v3chrf">0.7052</td>
+              <td>0.6059</td>
+              <td>0.32</td>
+              <td>1.28</td>
+            </tr>
+            <tr>
               <td data-sort="Gemini 3.1 Flash Lite (low)" data-size="unknown">Gemini 3.1 Flash Lite (low) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
               <td>0.5819</td>
               <td>0.6359</td>
@@ -849,6 +863,20 @@
               <td>0.3186</td>
               <td>0.25</td>
               <td>2.00</td>
+            </tr>
+            <tr>
+              <td data-sort="Step 3.7 Flash (medium)" data-size="large">Step 3.7 Flash (medium) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.4668</td>
+              <td>0.4705</td>
+              <td class="sub-col" data-group="v3region">0.6492</td><td class="sub-col" data-group="v3region">0.5121</td><td class="sub-col" data-group="v3region">0.4277</td><td class="sub-col" data-group="v3region">0.4794</td><td class="sub-col" data-group="v3region">0.2842</td>
+              <td>0.5016</td>
+              <td class="sub-col" data-group="v3format">0.4441</td><td class="sub-col" data-group="v3format">0.6477</td><td class="sub-col" data-group="v3format">0.4129</td>
+              <td>0.4237</td>
+              <td class="sub-col" data-group="v3chrf">0.6580</td><td class="sub-col" data-group="v3chrf">0.3858</td><td class="sub-col" data-group="v3chrf">0.4550</td><td class="sub-col" data-group="v3chrf">0.4002</td><td class="sub-col" data-group="v3chrf">0.2197</td>
+              <td class="sub-col" data-group="v3chrf">0.4002</td><td class="sub-col" data-group="v3chrf">0.5871</td>
+              <td>0.4906</td>
+              <td>0.20</td>
+              <td>1.15</td>
             </tr>
             <tr>
               <td data-sort="GPT-5.5 (auto res., med. reason.)" data-size="unknown">GPT-5.5 (auto res., med. reason.) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
@@ -3626,6 +3654,7 @@
               [1.750, 0.5995, 0.5995, "Gemini 3 Flash (low)", "#4285F4"],
               [9.000, 0.5982, 0.5982, "Claude Sonnet 4.6", "#B8860B"],
               [1.750, 0.5920, 0.5920, "Gemini 3 Flash (minimal)", "#4285F4"],
+              [0.800, 0.5830, 0.5830, "Qwen3.7 Plus", "#E91E63"],
               [0.875, 0.5819, 0.5819, "Gemini 3.1 Flash Lite (low)", "#4285F4"],
               [1.800, 0.5753, 0.5753, "Qwen3.5 122B", "#E91E63"],
               [1.420, 0.5632, 0.5632, "Seed 2.0 Pro", "#FF5722"],
@@ -3649,6 +3678,7 @@
               [0.250, 0.4778, 0.4778, "Qwen3.5 Flash", "#E91E63"],
               [0.290, 0.4725, 0.4725, "Qwen3 VL 8B", "#E91E63"],
               [1.125, 0.4720, 0.4720, "Qwen3.5 35B", "#E91E63"],
+              [0.675, 0.4668, 0.4668, "Step 3.7 Flash (medium)", "#607D8B"],
               [17.500, 0.4609, 0.4609, "GPT-5.5 (auto res., med. reason.)", "#10a37f"],
               [0.030, 0.4588, 0.4588, "dots.ocr", "#607D8B"],
               [0.375, 0.4501, 0.4501, "Llama 4 Maverick", "#607D8B"],
@@ -4259,6 +4289,16 @@
                 <td>OpenAI</td>
                 <td><code>gpt-5.4-nano</code>, detail=auto, reasoning_effort=none</td>
               </tr>
+              <tr>
+                <td>Qwen3.7 Plus</td>
+                <td>OpenRouter</td>
+                <td><code>qwen/qwen3.7-plus</code></td>
+              </tr>
+              <tr>
+                <td>Step 3.7 Flash (medium)</td>
+                <td>OpenRouter</td>
+                <td><code>stepfun/step-3.7-flash</code>, reasoning mandatory (default medium), max_tokens up to 65536</td>
+              </tr>
             </tbody>
           </table>
 
@@ -4268,6 +4308,11 @@
       <details style="margin-top: 1.5em;">
         <summary style="cursor: pointer; font-weight: bold; font-size: 1.1em;">Changelog</summary>
         <div style="margin-top: 1em; font-size: 0.92em; line-height: 1.6;">
+          <p><strong>June 11, 2026:</strong> Added Qwen3.7 Plus (0.5830) via OpenRouter at
+            $0.32/$1.28 per million tokens &mdash; ninth overall, the best Qwen result to date.
+            Added Step 3.7 Flash (0.4668), StepFun's 196B-A11B MoE at $0.20/$1.15, scored at its
+            default (medium) reasoning effort; reasoning cannot be disabled, and half the samples
+            needed a 32K completion budget (~30 needed 64K) to emit any output.</p>
           <p><strong>June 8, 2026:</strong> Corrected the Infinity-Parser2 scores. Both models had
             been run through the infly Gradio Space in <code>doc2md</code> mode, which linearizes
             every document to plain prose with no table structure &mdash; so their near-zero table
