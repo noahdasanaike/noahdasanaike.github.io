@@ -781,6 +781,20 @@
               <td>5.87</td>
             </tr>
             <tr>
+              <td data-sort="Mistral OCR 4" data-size="unknown">Mistral OCR 4 <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.5055</td>
+              <td>0.5608</td>
+              <td class="sub-col" data-group="v3region">0.6790</td><td class="sub-col" data-group="v3region">0.5485</td><td class="sub-col" data-group="v3region">0.4889</td><td class="sub-col" data-group="v3region">0.6334</td><td class="sub-col" data-group="v3region">0.4545</td>
+              <td>0.5701</td>
+              <td class="sub-col" data-group="v3format">0.5203</td><td class="sub-col" data-group="v3format">0.7159</td><td class="sub-col" data-group="v3format">0.4740</td>
+              <td>0.5002</td>
+              <td class="sub-col" data-group="v3chrf">0.6670</td><td class="sub-col" data-group="v3chrf">0.3831</td><td class="sub-col" data-group="v3chrf">0.4430</td><td class="sub-col" data-group="v3chrf">0.6456</td><td class="sub-col" data-group="v3chrf">0.3622</td>
+              <td class="sub-col" data-group="v3chrf">0.4332</td><td class="sub-col" data-group="v3chrf">0.6783</td>
+              <td>0.4509</td>
+              <td>3.70</td>
+              <td>3.70</td>
+            </tr>
+            <tr>
               <td data-sort="Seed 2.0 Mini" data-size="unknown">Seed 2.0 Mini <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
               <td>0.4974</td>
               <td>0.5448</td>
@@ -3686,6 +3700,7 @@
               [5.910, 0.5167, 0.5167, "Datalab (balanced)", "#607D8B"],
               [0.310, 0.5160, 0.5160, "Seed 2.0 Lite", "#FF5722"],
               [5.870, 0.5124, 0.5124, "Datalab (fast)", "#607D8B"],
+              [3.700, 0.5055, 0.5055, "Mistral OCR 4", "#607D8B"],
               [0.250, 0.4974, 0.4974, "Seed 2.0 Mini", "#FF5722"],
               [0.656, 0.4882, 0.4882, "Qwen3.6 Flash", "#E91E63"],
               [0.030, 0.4778, 0.4778, "dots.ocr 1.5", "#607D8B"],
@@ -4290,6 +4305,11 @@
                 <td><code>mistral-ocr-latest</code> via <code>mistralai</code> SDK, image-only input</td>
               </tr>
               <tr>
+                <td>Mistral OCR 4</td>
+                <td>Mistral AI</td>
+                <td><code>mistral-ocr-4-0</code> via <code>mistralai</code> SDK, image-only input</td>
+              </tr>
+              <tr>
                 <td>Mistral Small 2603</td>
                 <td>OpenRouter</td>
                 <td><code>mistralai/mistral-small-2603</code></td>
@@ -4328,6 +4348,10 @@
       <details style="margin-top: 1.5em;">
         <summary style="cursor: pointer; font-weight: bold; font-size: 1.1em;">Changelog</summary>
         <div style="margin-top: 1em; font-size: 0.92em; line-height: 1.6;">
+          <p><strong>June 23, 2026:</strong> Added Mistral OCR 4 (0.5055) via the Mistral API at
+            $4/1000 pages, a clear gain over the previous Mistral OCR (0.4467), with much stronger
+            tables (TEDS 0.45 vs 0.13). Strong on printed text (0.7159) and the best Mistral result
+            on handwriting to date.</p>
           <p><strong>June 18, 2026:</strong> Added MiniMax M3 (0.4605) via OpenRouter at
             $0.30/$1.20 per million tokens. Also hardened the OCR prompt and added an eval-time
             preamble stripper: some vision models prefix their output with meta-commentary
@@ -4502,7 +4526,7 @@
       </div>
       -->
 
-      <p class="post-updated">Last updated: June 18, 2026</p>
+      <p class="post-updated">Last updated: June 23, 2026</p>
 
     </div>
 
