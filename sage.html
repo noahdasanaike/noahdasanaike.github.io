@@ -234,50 +234,46 @@
     </header>
 
     <p>SAGE collects lower-house parliamentary and presidential election returns for 110 countries at the
-        smallest unit each electoral authority publishes &mdash; for most countries a polling station with fewer
-        than a thousand voters &mdash; geocodes the units, and harmonizes party and candidate identifiers across
-        languages. The full release carries roughly ten billion votes cast across more than eight million units.</p>
+        smallest unit each electoral authority publishes, which for most countries is a polling station with fewer
+        than a thousand voters. It geocodes the units and harmonizes party and candidate identifiers across
+        languages. In total the data contain roughly ten billion votes cast across more than eight million units.</p>
 
-    <div class="actions">
-        <a class="action-card" id="dataverse-btn" href="#" target="_blank" rel="noopener">
-            <span class="big">Download the dataset</span>
-            <span class="sub">Harvard Dataverse &middot; permanent DOI &middot; cite this</span>
-        </a>
-        <a class="action-card" id="explore-btn" href="#">
-            <span class="big">Explore on the map</span>
-            <span class="sub">Interactive viewer &middot; browse and download any slice</span>
-        </a>
-    </div>
+    <p class="toplinks">
+        [<a id="dataverse-btn" href="#" target="_blank" rel="noopener">download the dataset</a>]
+        [<a id="explore-btn" href="#">explore on the map</a>]
+        [<a href="https://www.dropbox.com/scl/fi/pxa00r4kklr06j40w477p/Small_Area_Global_Elections_Database.pdf?rlkey=b9gb62g4en7h4v3d1w9ccnc88&st=3y8015mi&dl=0"
+            target="_blank" rel="noopener">paper</a>]
+        [<a href="https://github.com/noahdasanaike/sage">R/Python packages</a>]
+    </p>
 
     <div class="formats">
         <h3>Formats &amp; access</h3>
-        <p><strong>Tabular (Parquet)</strong>, partitioned by country and year, with coordinates &mdash; ~1&nbsp;GB,
-            the entry point for most analyses. <strong>Polygons (GeoParquet)</strong>, one file per country &mdash;
-            for choropleth mapping. Companion R and Python packages pull a country-and-year slice in one line:</p>
+        <p><strong>Tabular (Parquet)</strong>, partitioned by country and year, with coordinates (about 1&nbsp;GB);
+            this is what most analyses use. <strong>Polygons (GeoParquet)</strong>, one file per country, for
+            choropleth mapping. Companion R and Python packages load a country-and-year slice in one line:</p>
         <pre>R:      remotes::install_github("noahdasanaike/sage", subdir = "sage_R")
         sage_load("Germany", years = 2021)
 
-Python: pip install sage-elections
+Python: pip install "git+https://github.com/noahdasanaike/sage.git#subdirectory=sage_python"
         import sage; sage.sage_load("Germany", years=2021)</pre>
         <p style="font-size:0.9em;color:#666;">The codebook documents per-country coverage, sources, and every
             column. R users who want polygon geometry joined to vote rows inline can load the native
             <code>sf</code> objects; see the <a href="https://github.com/noahdasanaike/sage">code repository</a>.</p>
     </div>
 
-    <div class="email-form">
-        <h3>Get release announcements</h3>
-        <p>New countries, election years, and corrections are released periodically. Sign up to hear about them
-            (no other email; unsubscribe anytime).</p>
-        <form id="signup-form" onsubmit="return submitSignup(event)">
-            <input type="email" id="signup-email" placeholder="your.email@university.edu" required>
-            <button type="submit">Sign up</button>
-        </form>
-        <p class="email-note" id="signup-status"></p>
-    </div>
+    <p style="color:#555; font-size:0.95em; margin-top:1.5em; margin-bottom:0.6em;">Releases happen periodically as
+        countries, election years, and corrections are added. Sign up for announcements:</p>
+    <form action="https://buttondown.com/api/emails/embed-subscribe/dasanaike" method="post" target="_blank"
+        style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:2em;">
+        <input type="email" name="email" placeholder="you@university.edu" required
+            style="padding:8px 10px; border:1px solid #ddd; border-radius:4px; font-size:0.95em; width:260px; max-width:60%;">
+        <button type="submit"
+            style="padding:8px 16px; background:#750014; color:#fff; border:none; border-radius:4px; cursor:pointer; font-size:0.95em;">Subscribe</button>
+    </form>
 
     <h2>Download by country</h2>
     <p>Each link downloads that country's results as a Parquet bundle (votes, coordinates, and party
-        identifiers, partitioned by year). Polygon boundaries are large and distributed separately &mdash; load
+        identifiers, partitioned by year). Polygon boundaries are large and distributed separately; load
         them through the R and Python packages, the <code>polygons/</code> tree, or the interactive map. The
         canonical, citable copy of the entire dataset is the <a id="dataverse-inline" href="#" target="_blank"
             rel="noopener">Harvard Dataverse deposit</a>.</p>
@@ -288,13 +284,15 @@ Python: pip install sage-elections
     <div class="version-section">
         <div class="version-header">
             <h3 class="version-title">Release V1.0</h3>
-            <span class="version-date">September 30th, 2025</span>
+            <span class="version-date">June 30, 2026</span>
         </div>
         <p>[<button class="abstract-toggle" onclick="toggleAbstract('changelog-abstract')">changelog</button>] [<a
                 href="https://storage.googleapis.com/sage-archive/codebook.pdf">codebook</a>] [<a
                 href="https://github.com/noahdasanaike/sage">country-level coverage</a>]</p>
         <div id="changelog-abstract" class="abstract-content">
             <p class="abstract-text">
+                <strong>v1.0 (June 30, 2026):</strong> Public release; conditionally accepted at Nature Scientific
+                Data<br>
                 <strong>v0.895 (September 30th, 2025):</strong> Fixed Croatian vote-share aggregation<br>
                 <strong>v0.89 (August 25th, 2025):</strong> Fixed party names in Chile and Slovakia; minor party name
                 adjustments elsewhere<br>
@@ -334,7 +332,7 @@ Python: pip install sage-elections
     <p>If you use SAGE, please cite both the dataset and the accompanying paper:</p>
     <blockquote id="cite-data">
         Dasanaike, Noah. <em>The Small-Area Global Elections (SAGE) Dataset.</em> Harvard Dataverse,
-        <span id="cite-doi">https://doi.org/10.7910/DVN/PLACEHOLDER</span> (2026).
+        <span id="cite-doi">https://doi.org/10.7910/DVN/YGJR1L</span> (2026).
     </blockquote>
     <blockquote>
         Dasanaike, Noah. &ldquo;The Small-Area Global Elections (SAGE) Dataset.&rdquo; <em>Scientific Data</em>
@@ -350,9 +348,9 @@ Python: pip install sage-elections
     <script>
         // ---- CONFIG: fill these in -------------------------------------------
         // 1. The live Harvard Dataverse DOI URL (canonical, citable download).
-        const DATAVERSE_URL = "https://doi.org/10.7910/DVN/PLACEHOLDER"; // TODO
+        const DATAVERSE_URL = "https://doi.org/10.7910/DVN/YGJR1L"; // TODO
         // 2. The deployed interactive map page (the Vite/WASM explorer).
-        const EXPLORER_URL = "explore.html"; // TODO: point at the deployed app
+        const EXPLORER_URL = "explore/"; // deployed Vite/MapLibre explorer
         // 3. Public GCS base. Per-country bundles live at  <base>/zip/<Country>.zip
         //    (produce these with release.py; country name is URL-encoded).
         const GCS_BASE = "https://storage.googleapis.com/sage-archive";
@@ -431,7 +429,7 @@ Python: pip install sage-elections
             body.append(EMAIL_ENTRY_ID, email);
             fetch(GOOGLE_FORM_POST, { method: 'POST', mode: 'no-cors', body })
                 .finally(() => {
-                    status.textContent = 'Thanks — you’re on the list.';
+                    status.textContent = 'Thanks, you are on the list.';
                     document.getElementById('signup-form').reset();
                 });
             return false;
