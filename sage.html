@@ -4,7 +4,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>SAGE Archive - Noah Dasanaike</title>
+    <title>Small-Area Global Elections (SAGE) Dataset - Noah Dasanaike</title>
+    <meta name="description"
+        content="SAGE: small-area, mostly polling-station-level election results with polygon geometry for 110 countries." />
     <style>
         body {
             max-width: 800px;
@@ -20,84 +22,109 @@
             margin-bottom: 2em;
         }
 
-        h1 {
-            color: #750014;
-        }
-
-        h2 {
-            color: #750014;
-        }
-
-        h3 {
-            color: #A0522D;
-        }
+        h1 { color: #750014; }
+        h2 { color: #750014; }
+        h3 { color: #A0522D; }
 
         a {
             color: #750014;
             text-decoration: none;
         }
 
-        a:hover {
-            text-decoration: underline;
-        }
-
-        .version-section {
-            margin: 2em 0;
-        }
-
-        .version-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1em;
-            padding-bottom: 0.5em;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .version-title {
-            margin: 0;
-            color: #750014;
-        }
-
-        .version-date {
-            font-style: italic;
-            color: #666;
-            font-size: 0.9em;
-        }
-
-        .country-list {
-            margin-top: 1em;
-            line-height: 1.6;
-        }
-
-        .country-link {
-            color: #333;
-            text-decoration: none;
-            margin-right: 8px;
-            display: inline-block;
-        }
-
-        .country-link:hover {
-            text-decoration: underline;
-        }
-
-
-        footer {
-            text-align: center;
-            border-top: 2px solid black;
-            margin-top: 2em;
-            padding: 1em;
-        }
-
-        .back-link {
-            margin-bottom: 2em;
-        }
+        a:hover { text-decoration: underline; }
 
         header p {
             font-size: 1.1em;
             margin-top: 0.5em;
         }
 
+        .back-link { margin-bottom: 2em; }
+
+        /* Hero actions */
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1em;
+            justify-content: center;
+            margin: 2em 0;
+        }
+
+        .action-card {
+            flex: 1 1 260px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1.2em;
+            text-align: center;
+            display: block;
+            color: #333;
+        }
+
+        .action-card:hover {
+            text-decoration: none;
+            border-color: #750014;
+        }
+
+        .action-card .big {
+            display: block;
+            font-size: 1.15em;
+            font-weight: bold;
+            color: #750014;
+            margin-bottom: 0.3em;
+        }
+
+        .action-card .sub {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        /* Format / package blocks */
+        .formats {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 0.5em 1.2em;
+            margin: 1.5em 0;
+            background: #fcfcfc;
+        }
+
+        pre {
+            background: #f5f5f5;
+            border-radius: 4px;
+            padding: 0.8em;
+            overflow-x: auto;
+            font-size: 0.85em;
+        }
+
+        /* Country download grid */
+        .country-search {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 8px 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1em;
+            margin: 0.5em 0 1em;
+        }
+
+        .country-list {
+            line-height: 1.7;
+            columns: 2;
+            column-gap: 2em;
+        }
+
+        .country-row {
+            break-inside: avoid;
+            display: block;
+        }
+
+        .country-row .name { color: #333; }
+
+        .country-row .dl {
+            font-size: 0.8em;
+            color: #750014;
+            margin-left: 6px;
+        }
+
+        /* Announcements */
         .email-form {
             background-color: #f9f9f9;
             border: 1px solid #ddd;
@@ -105,7 +132,7 @@
             padding: 1.5em;
             margin: 2em auto;
             text-align: center;
-            max-width: 500px;
+            max-width: 520px;
         }
 
         .email-form h3 {
@@ -117,16 +144,9 @@
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 4px;
-            width: 300px;
-            margin: 1em;
+            width: 280px;
+            max-width: 70%;
             font-size: 1em;
-        }
-
-        .email-form input[type="checkbox"] {
-            width: auto;
-            padding: 0;
-            margin: 0;
-            border: none;
         }
 
         .email-form button {
@@ -137,42 +157,48 @@
             border-radius: 4px;
             cursor: pointer;
             font-size: 1em;
-            margin-left: 10px;
+            margin-left: 8px;
         }
 
-        .email-form button:hover {
-            background-color: #5a0010;
-        }
+        .email-form button:hover { background-color: #5a0010; }
 
         .email-note {
-            font-size: 0.9em;
+            font-size: 0.85em;
             color: #666;
             margin-top: 1em;
             font-style: italic;
         }
 
-        .downloads-locked {
-            opacity: 0.3;
-            pointer-events: none;
+        /* Changelog toggle */
+        .version-section { margin: 2em 0; }
+
+        .version-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1em;
+            padding-bottom: 0.5em;
+            border-bottom: 1px solid #ddd;
         }
 
+        .version-title { margin: 0; color: #750014; }
 
-        /* Abstract toggle styles */
+        .version-date {
+            font-style: italic;
+            color: #666;
+            font-size: 0.9em;
+        }
+
         .abstract-toggle {
             color: #750014;
-            text-decoration: none;
-            font-size: inherit;
-            font-family: inherit;
             background: none;
             border: none;
             cursor: pointer;
             padding: 0;
-            margin: 0;
+            font: inherit;
         }
 
-        .abstract-toggle:hover {
-            text-decoration: underline;
-        }
+        .abstract-toggle:hover { text-decoration: underline; }
 
         .abstract-content {
             max-height: 0;
@@ -183,43 +209,81 @@
         }
 
         .abstract-content.expanded {
-            max-height: 500px;
+            max-height: 600px;
             margin: 8px 0;
             padding-left: 20px;
         }
 
-        .abstract-text {
-            margin: 0;
-            padding: 0;
+        footer {
+            text-align: center;
+            border-top: 2px solid black;
+            margin-top: 2em;
+            padding: 1em;
         }
     </style>
 </head>
 
 <body>
     <div class="back-link">
-        <a href="index.html">← Back to Home</a>
+        <a href="index.html">&larr; Back to Home</a>
     </div>
 
     <header>
-        <h1>Small-Area Global Elections (SAGE) Archive</h1>
+        <h1>Small-Area Global Elections (SAGE) Dataset</h1>
         <p><a href="index.html">by Noah Dasanaike</a></p>
     </header>
 
-    <p>The Small-Area Global Elections (SAGE) Archive comprises small-area, mostly polling station-level, election
-        results with polygon geometry for national elections across 110 countries. This dataset supports the working
-        paper "Why Urban-Rural Political Cleavages Do Not Generalize."</p>
+    <p>SAGE collects lower-house parliamentary and presidential election returns for 110 countries at the
+        smallest unit each electoral authority publishes &mdash; for most countries a polling station with fewer
+        than a thousand voters &mdash; geocodes the units, and harmonizes party and candidate identifiers across
+        languages. The full release carries roughly ten billion votes cast across more than eight million units.</p>
 
-    <div id="email-gate" class="email-form">
-        <h3>Request Access</h3>
-        <p>To download SAGE data, please provide your email address:</p>
-        <input type="email" id="user-email" placeholder="your.email@university.edu" required>
-        <div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin: 1em 0;">
-            <input type="checkbox" id="receive-updates" checked>
-            <label for="receive-updates" style="font-size: 0.9em; color: #333;">I would like to receive updates about
-                SAGE dataset releases</label>
-        </div>
-        <button onclick="unlockDownloads()">Submit</button>
+    <div class="actions">
+        <a class="action-card" id="dataverse-btn" href="#" target="_blank" rel="noopener">
+            <span class="big">Download the dataset</span>
+            <span class="sub">Harvard Dataverse &middot; permanent DOI &middot; cite this</span>
+        </a>
+        <a class="action-card" id="explore-btn" href="#">
+            <span class="big">Explore on the map</span>
+            <span class="sub">Interactive viewer &middot; browse and download any slice</span>
+        </a>
     </div>
+
+    <div class="formats">
+        <h3>Formats &amp; access</h3>
+        <p><strong>Tabular (Parquet)</strong>, partitioned by country and year, with coordinates &mdash; ~1&nbsp;GB,
+            the entry point for most analyses. <strong>Polygons (GeoParquet)</strong>, one file per country &mdash;
+            for choropleth mapping. Companion R and Python packages pull a country-and-year slice in one line:</p>
+        <pre>R:      remotes::install_github("noahdasanaike/sage", subdir = "sage_R")
+        sage_load("Germany", years = 2021)
+
+Python: pip install sage-elections
+        import sage; sage.sage_load("Germany", years=2021)</pre>
+        <p style="font-size:0.9em;color:#666;">The codebook documents per-country coverage, sources, and every
+            column. R users who want polygon geometry joined to vote rows inline can load the native
+            <code>sf</code> objects; see the <a href="https://github.com/noahdasanaike/sage">code repository</a>.</p>
+    </div>
+
+    <div class="email-form">
+        <h3>Get release announcements</h3>
+        <p>New countries, election years, and corrections are released periodically. Sign up to hear about them
+            (no other email; unsubscribe anytime).</p>
+        <form id="signup-form" onsubmit="return submitSignup(event)">
+            <input type="email" id="signup-email" placeholder="your.email@university.edu" required>
+            <button type="submit">Sign up</button>
+        </form>
+        <p class="email-note" id="signup-status"></p>
+    </div>
+
+    <h2>Download by country</h2>
+    <p>Each link downloads that country's results as a Parquet bundle (votes, coordinates, and party
+        identifiers, partitioned by year). Polygon boundaries are large and distributed separately &mdash; load
+        them through the R and Python packages, the <code>polygons/</code> tree, or the interactive map. The
+        canonical, citable copy of the entire dataset is the <a id="dataverse-inline" href="#" target="_blank"
+            rel="noopener">Harvard Dataverse deposit</a>.</p>
+    <input type="text" class="country-search" id="country-search" placeholder="Filter countries&hellip;"
+        oninput="filterCountries()">
+    <div class="country-list" id="sage-countries"></div>
 
     <div class="version-section">
         <div class="version-header">
@@ -227,8 +291,8 @@
             <span class="version-date">September 30th, 2025</span>
         </div>
         <p>[<button class="abstract-toggle" onclick="toggleAbstract('changelog-abstract')">changelog</button>] [<a
-                href="codebook.pdf">codebook</a>] [<a href="https://github.com/noahdasanaike/sage">country-level
-                coverage</a>]</p>
+                href="https://storage.googleapis.com/sage-archive/codebook.pdf">codebook</a>] [<a
+                href="https://github.com/noahdasanaike/sage">country-level coverage</a>]</p>
         <div id="changelog-abstract" class="abstract-content">
             <p class="abstract-text">
                 <strong>v0.895 (September 30th, 2025):</strong> Fixed Croatian vote-share aggregation<br>
@@ -264,15 +328,17 @@
                 <strong>v0.0 (August 6th, 2024):</strong> Initial completion of the data
             </p>
         </div>
-        <div class="country-list" id="sage-countries">
-            <!-- SAGE countries will be populated by JavaScript -->
-        </div>
     </div>
 
     <h2>Citation</h2>
-    <p>If you use SAGE data in your research, please cite:</p>
+    <p>If you use SAGE, please cite both the dataset and the accompanying paper:</p>
+    <blockquote id="cite-data">
+        Dasanaike, Noah. <em>The Small-Area Global Elections (SAGE) Dataset.</em> Harvard Dataverse,
+        <span id="cite-doi">https://doi.org/10.7910/DVN/PLACEHOLDER</span> (2026).
+    </blockquote>
     <blockquote>
-        Dasanaike, Noah. "Why Urban-Rural Political Cleavages Do Not Generalize." Working Paper, 2025.
+        Dasanaike, Noah. &ldquo;The Small-Area Global Elections (SAGE) Dataset.&rdquo; <em>Scientific Data</em>
+        (forthcoming).
     </blockquote>
 
     <footer>
@@ -282,7 +348,22 @@
     </footer>
 
     <script>
-        // SAGE Countries (110 total)
+        // ---- CONFIG: fill these in -------------------------------------------
+        // 1. The live Harvard Dataverse DOI URL (canonical, citable download).
+        const DATAVERSE_URL = "https://doi.org/10.7910/DVN/PLACEHOLDER"; // TODO
+        // 2. The deployed interactive map page (the Vite/WASM explorer).
+        const EXPLORER_URL = "explore.html"; // TODO: point at the deployed app
+        // 3. Public GCS base. Per-country bundles live at  <base>/zip/<Country>.zip
+        //    (produce these with release.py; country name is URL-encoded).
+        const GCS_BASE = "https://storage.googleapis.com/sage-archive";
+        // 4. Google Form for announcements. Set EMAIL_ENTRY_ID to the form's
+        //    email field id (open the form, "Get pre-filled link", inspect the
+        //    entry.NNNNN in the resulting URL). Until set, Sign up opens the form.
+        const GOOGLE_FORM_VIEW = "https://docs.google.com/forms/d/e/1FAIpQLSdI-6RFTr5pq1o8HCEysohnG-58RbaP2jGUkmBFONZ-8zlkYg/viewform";
+        const GOOGLE_FORM_POST = "https://docs.google.com/forms/d/e/1FAIpQLSdI-6RFTr5pq1o8HCEysohnG-58RbaP2jGUkmBFONZ-8zlkYg/formResponse";
+        const EMAIL_ENTRY_ID = "entry.PLACEHOLDER"; // TODO
+        // ----------------------------------------------------------------------
+
         const sageCountries = [
             'Afghanistan', 'Albania', 'Argentina', 'Armenia', 'Australia', 'Austria', 'Bangladesh', 'Belgium', 'Bhutan', 'Bolivia',
             'Bosnia and Herzegovina', 'Botswana', 'Brazil', 'Bulgaria', 'Cabo Verde', 'Canada', 'Colombia', 'Costa Rica', 'Chile', 'Croatia',
@@ -295,35 +376,71 @@
             'Philippines', 'Poland', 'Portugal', 'Romania', 'Russia', 'Senegal', 'Serbia', 'Singapore', 'Slovakia', 'Slovenia',
             'Solomon Islands', 'South Africa', 'South Korea', 'Spain', 'Sri Lanka', 'Sweden', 'Switzerland', 'Taiwan', 'Thailand', 'Trinidad and Tobago',
             'Tunisia', 'Turkey', 'Uganda', 'Ukraine', 'United Kingdom', 'United States of America', 'Uruguay', 'Vanuatu', 'Venezuela', 'Zambia'
-        ];
+        ].sort((a, b) => a.localeCompare(b));
 
-        function createCountryLink(country) {
-            const fileName = country.replace(/[^a-zA-Z0-9]/g, '_').toLowerCase();
-            const bucketPath = `https://your-bucket-url.s3.amazonaws.com/sage/${fileName}.zip`;
-
-            const link = document.createElement('a');
-            link.className = 'country-link';
-            link.href = bucketPath;
-            link.textContent = country;
-            link.download = `sage_${fileName}.zip`;
-            link.target = '_blank';
-
-            return link;
+        function countryZipUrl(country) {
+            return `${GCS_BASE}/zip/${encodeURIComponent(country)}.zip`;
         }
 
-        function populateCountries(containerId, countries) {
-            const container = document.getElementById(containerId);
-            countries.forEach(country => {
-                container.appendChild(createCountryLink(country));
+        function populateCountries() {
+            const container = document.getElementById('sage-countries');
+            sageCountries.forEach(country => {
+                const row = document.createElement('div');
+                row.className = 'country-row';
+                row.dataset.name = country.toLowerCase();
+
+                const name = document.createElement('span');
+                name.className = 'name';
+                name.textContent = country;
+
+                const dl = document.createElement('a');
+                dl.className = 'dl';
+                dl.href = countryZipUrl(country);
+                dl.textContent = '[download]';
+                dl.setAttribute('download', '');
+
+                row.appendChild(name);
+                row.appendChild(dl);
+                container.appendChild(row);
             });
+        }
+
+        function filterCountries() {
+            const q = document.getElementById('country-search').value.trim().toLowerCase();
+            document.querySelectorAll('.country-row').forEach(row => {
+                row.style.display = row.dataset.name.includes(q) ? '' : 'none';
+            });
+        }
+
+        function submitSignup(e) {
+            e.preventDefault();
+            const email = document.getElementById('signup-email').value.trim();
+            const status = document.getElementById('signup-status');
+            if (!email || !email.includes('@')) {
+                status.textContent = 'Please enter a valid email address.';
+                return false;
+            }
+            if (EMAIL_ENTRY_ID === 'entry.PLACEHOLDER') {
+                // Form field id not configured yet: open the Google Form instead.
+                window.open(GOOGLE_FORM_VIEW, '_blank', 'noopener');
+                status.textContent = 'Opening the signup form…';
+                return false;
+            }
+            // Fire-and-forget POST to the Google Form (no-cors; response is opaque).
+            const body = new URLSearchParams();
+            body.append(EMAIL_ENTRY_ID, email);
+            fetch(GOOGLE_FORM_POST, { method: 'POST', mode: 'no-cors', body })
+                .finally(() => {
+                    status.textContent = 'Thanks — you’re on the list.';
+                    document.getElementById('signup-form').reset();
+                });
+            return false;
         }
 
         function toggleAbstract(abstractId) {
             const abstract = document.getElementById(abstractId);
             const button = document.querySelector(`[onclick="toggleAbstract('${abstractId}')"]`);
-
             if (abstract.classList.contains('expanded')) {
-                // Smooth collapse: set to current height, then to 0
                 abstract.style.maxHeight = abstract.scrollHeight + 'px';
                 requestAnimationFrame(() => {
                     abstract.style.maxHeight = '0px';
@@ -331,88 +448,25 @@
                     button.textContent = 'changelog';
                 });
             } else {
-                // Prepare expansion
                 abstract.classList.add('expanded');
-                // Set to content height for smooth expand
                 abstract.style.maxHeight = abstract.scrollHeight + 'px';
                 button.textContent = 'hide changelog';
             }
-
-            // After transition ends on collapse, clean inline style
-            abstract.addEventListener('transitionend', function handleEnd(e) {
-                if (e.propertyName === 'max-height') {
-                    if (!abstract.classList.contains('expanded')) {
-                        abstract.style.maxHeight = '';
-                    }
+            abstract.addEventListener('transitionend', function handleEnd(ev) {
+                if (ev.propertyName === 'max-height') {
+                    if (!abstract.classList.contains('expanded')) abstract.style.maxHeight = '';
                     abstract.removeEventListener('transitionend', handleEnd);
                 }
             });
         }
 
-        function unlockDownloads() {
-            const email = document.getElementById('user-email').value.trim();
-            const receiveUpdates = document.getElementById('receive-updates').checked;
-
-            if (!email || !email.includes('@')) {
-                alert('Please enter a valid email address.');
-                return;
-            }
-
-            // Store email and preferences in localStorage
-            const userData = {
-                email: email,
-                receiveUpdates: receiveUpdates,
-                timestamp: new Date().toISOString()
-            };
-            localStorage.setItem('sage-user-data', JSON.stringify(userData));
-
-            // Hide email form
-            document.getElementById('email-gate').style.display = 'none';
-
-            // Show downloads
-            document.getElementById('sage-countries').classList.remove('downloads-locked');
-
-            // Log download access (you can replace this with actual analytics)
-            console.log('SAGE access granted to:', email, 'Updates:', receiveUpdates ? 'Yes' : 'No');
-        }
-
-        function checkEmailGate() {
-            const storedData = localStorage.getItem('sage-user-data');
-            if (storedData) {
-                try {
-                    const userData = JSON.parse(storedData);
-                    // User has already provided email
-                    document.getElementById('email-gate').style.display = 'none';
-                    document.getElementById('sage-countries').classList.remove('downloads-locked');
-                    console.log('SAGE access restored for:', userData.email, 'Updates:', userData.receiveUpdates ? 'Yes' : 'No');
-                } catch (e) {
-                    // Fallback for old localStorage format
-                    const storedEmail = localStorage.getItem('sage-user-email');
-                    if (storedEmail) {
-                        document.getElementById('email-gate').style.display = 'none';
-                        document.getElementById('sage-countries').classList.remove('downloads-locked');
-                        console.log('SAGE access restored for:', storedEmail);
-                    } else {
-                        document.getElementById('sage-countries').classList.add('downloads-locked');
-                    }
-                }
-            } else {
-                // Lock downloads until email is provided
-                document.getElementById('sage-countries').classList.add('downloads-locked');
-            }
-        }
-
-        // Initialize the page
-        function initializePage() {
-            // Check if user has already provided email
-            checkEmailGate();
-
-            // Populate SAGE section
-            populateCountries('sage-countries', sageCountries);
-        }
-
-        // Initialize when page loads
-        document.addEventListener('DOMContentLoaded', initializePage);
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('dataverse-btn').href = DATAVERSE_URL;
+            document.getElementById('dataverse-inline').href = DATAVERSE_URL;
+            document.getElementById('explore-btn').href = EXPLORER_URL;
+            document.getElementById('cite-doi').textContent = DATAVERSE_URL;
+            populateCountries();
+        });
     </script>
 </body>
 
