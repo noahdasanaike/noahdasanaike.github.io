@@ -7,6 +7,38 @@
     <title>Small-Area Global Elections (SAGE) Dataset - Noah Dasanaike</title>
     <meta name="description"
         content="SAGE: small-area, mostly polling-station-level election results with polygon geometry for 110 countries." />
+
+    <!-- schema.org/Dataset markup -> Google Dataset Search indexing.
+         TODO: confirm the "license" URL matches the license set on the Dataverse deposit. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org/",
+      "@type": "Dataset",
+      "name": "The Small-Area Global Elections (SAGE) Dataset",
+      "alternateName": "SAGE",
+      "description": "Lower-house parliamentary and presidential election returns for 110 countries and territories at the smallest unit each electoral authority publishes — for most countries a polling station with fewer than a thousand voters. SAGE geocodes the units and harmonizes party and candidate identifiers across languages, covering roughly ten billion votes across more than eight million units between 1948 and 2025. Distributed as partitioned Parquet, GeoParquet polygons, and native R sf objects, with companion R and Python packages.",
+      "url": "https://noahdasanaike.github.io/sage.html",
+      "sameAs": "https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/YGJR1L",
+      "identifier": "https://doi.org/10.7910/DVN/YGJR1L",
+      "keywords": ["elections", "polling stations", "precincts", "electoral returns", "comparative politics", "political geography", "geocoded", "cross-national", "voting", "turnout"],
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "isAccessibleForFree": true,
+      "creator": {
+        "@type": "Person",
+        "name": "Noah Dasanaike",
+        "affiliation": { "@type": "Organization", "name": "Harvard University" }
+      },
+      "includedInDataCatalog": { "@type": "DataCatalog", "name": "Harvard Dataverse" },
+      "temporalCoverage": "1948/2025",
+      "spatialCoverage": "Global (110 countries and territories)",
+      "distribution": [
+        { "@type": "DataDownload", "encodingFormat": "application/vnd.apache.parquet", "contentUrl": "https://storage.googleapis.com/sage-archive/parquet/" },
+        { "@type": "DataDownload", "encodingFormat": "application/zip", "contentUrl": "https://storage.googleapis.com/sage-archive/zip/" }
+      ],
+      "citation": "Dasanaike, N. The Small-Area Global Elections (SAGE) Dataset. Nature Scientific Data (2026)."
+    }
+    </script>
+
     <style>
         body {
             max-width: 800px;
@@ -278,11 +310,16 @@ Python: pip install "git+https://github.com/noahdasanaike/sage.git#subdirectory=
             style="padding:8px 16px; background:#750014; color:#fff; border:none; border-radius:4px; cursor:pointer; font-size:0.95em;">Subscribe</button>
     </form>
 
-    <h2 id="download">Download by country</h2>
-    <p>Each country offers two downloads: a <strong>bundle</strong> (a ZIP of the Parquet vote partitions together
-        with the GeoParquet polygon boundaries) and the native R <code>sf</code> object, with geometry joined to the
-        vote rows. The canonical, citable copy of the entire dataset will be the <a id="dataverse-inline" href="#"
-            target="_blank" rel="noopener">Harvard Dataverse deposit</a> (forthcoming).</p>
+    <h2 id="download">Download</h2>
+    <p><strong>Everything at once:</strong> the full tabular dataset (all countries and years, votes and coordinates)
+        as a single Parquet file, <a href="https://storage.googleapis.com/sage-archive/sage.parquet" download
+            data-gc="full-parquet">sage.parquet</a> (~755&nbsp;MB), readable with Arrow, DuckDB, GeoPandas, pandas, or
+        R&nbsp;<code>arrow</code>. Polygon boundaries are not in this file; use the per-country bundles below or the
+        <code>polygons/</code> tree for geometry.</p>
+    <p><strong>By country:</strong> each country offers a <strong>bundle</strong> (a ZIP of the Parquet vote partitions
+        together with the GeoParquet polygon boundaries) and the native R <code>sf</code> object, with geometry joined
+        to the vote rows. The canonical, citable copy of the entire dataset will be the <a id="dataverse-inline"
+            href="#" target="_blank" rel="noopener">Harvard Dataverse deposit</a> (forthcoming).</p>
     <input type="text" class="country-search" id="country-search" placeholder="Filter countries&hellip;"
         oninput="filterCountries()">
     <div class="country-list" id="sage-countries"></div>
