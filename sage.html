@@ -248,9 +248,9 @@
         [<a id="dataverse-btn" href="#download">download the dataset</a>]
         [<a id="explore-btn" href="#">explore on the map</a>]
         [<a href="https://www.dropbox.com/scl/fi/pxa00r4kklr06j40w477p/Small_Area_Global_Elections_Database.pdf?rlkey=b9gb62g4en7h4v3d1w9ccnc88&st=3y8015mi&dl=0"
-            target="_blank" rel="noopener">paper</a>]
-        [<a href="https://github.com/noahdasanaike/sage">R/Python packages</a>]
-        [<a href="https://storage.googleapis.com/sage-archive/codebook.pdf" target="_blank" rel="noopener">codebook</a>]
+            target="_blank" rel="noopener" data-gc="paper">paper</a>]
+        [<a href="https://github.com/noahdasanaike/sage" data-gc="packages">R/Python packages</a>]
+        [<a href="https://storage.googleapis.com/sage-archive/codebook.pdf" target="_blank" rel="noopener" data-gc="codebook">codebook</a>]
     </p>
 
     <div class="formats">
@@ -352,7 +352,21 @@ Python: pip install "git+https://github.com/noahdasanaike/sage.git#subdirectory=
                 GitHub</a>.</p>
     </footer>
 
+    <!-- GoatCounter (cookieless analytics). Register a free site at goatcounter.com,
+         then replace YOURCODE below with your site code. -->
+    <script data-goatcounter="https://noahdasanaike.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+
     <script>
+        // GoatCounter: count clicks on download / outbound links tagged with data-gc
+        // (e.g. zip/France, rds/France, codebook, paper, packages).
+        document.addEventListener('click', function (e) {
+            const a = e.target.closest('a[data-gc]');
+            if (a && window.goatcounter && window.goatcounter.count) {
+                window.goatcounter.count({ path: a.dataset.gc, title: a.dataset.gc, event: true });
+            }
+        });
+
         // ---- CONFIG: fill these in -------------------------------------------
         // 1. The live Harvard Dataverse DOI URL (canonical, citable download).
         const DATAVERSE_URL = "https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/YGJR1L";
@@ -404,15 +418,17 @@ Python: pip install "git+https://github.com/noahdasanaike/sage.git#subdirectory=
                 const dl = document.createElement('a');
                 dl.className = 'dl';
                 dl.href = countryZipUrl(country);
-                dl.textContent = '[bundle]';
+                dl.textContent = '[zip/parquet]';
                 dl.setAttribute('download', '');
+                dl.dataset.gc = 'zip/' + country;
 
                 const rds = document.createElement('a');
                 rds.className = 'dl';
                 rds.href = countryRdsUrl(country);
-                rds.textContent = '[sf]';
+                rds.textContent = '[RDS/sf]';
                 rds.setAttribute('download', '');
                 rds.style.marginLeft = '8px';
+                rds.dataset.gc = 'rds/' + country;
 
                 row.appendChild(name);
                 row.appendChild(dl);
