@@ -348,7 +348,7 @@ Python: pip install "git+https://github.com/noahdasanaike/sage.git#subdirectory=
     <script>
         // ---- CONFIG: fill these in -------------------------------------------
         // 1. The live Harvard Dataverse DOI URL (canonical, citable download).
-        const DATAVERSE_URL = "https://doi.org/10.7910/DVN/YGJR1L"; // TODO
+        const DATAVERSE_URL = "https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/YGJR1L";
         // 2. The deployed interactive map page (the Vite/WASM explorer).
         const EXPLORER_URL = "explore/"; // deployed Vite/MapLibre explorer
         // 3. Public GCS base. Per-country bundles live at  <base>/zip/<Country>.zip
@@ -462,7 +462,7 @@ Python: pip install "git+https://github.com/noahdasanaike/sage.git#subdirectory=
             document.getElementById('dataverse-btn').href = DATAVERSE_URL;
             document.getElementById('dataverse-inline').href = DATAVERSE_URL;
             document.getElementById('explore-btn').href = EXPLORER_URL;
-            document.getElementById('cite-doi').textContent = DATAVERSE_URL;
+            document.getElementById('cite-doi').textContent = "https://doi.org/10.7910/DVN/YGJR1L";
             populateCountries();
         });
     </script>

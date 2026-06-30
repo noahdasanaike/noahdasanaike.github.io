@@ -1,0 +1,6 @@
+# backup / editor cruft
+*.bak
+*.bak*
+
+# OS cruft
+.DS_Store
