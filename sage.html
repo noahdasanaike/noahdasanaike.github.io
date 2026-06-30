@@ -238,8 +238,14 @@
         than a thousand voters. It geocodes the units and harmonizes party and candidate identifiers across
         languages. In total the data contain roughly ten billion votes cast across more than eight million units.</p>
 
+    <div style="background:#fbf3d0; border:1px solid #e6d9a0; border-radius:6px; padding:11px 15px; margin:1.2em 0; font-size:0.93em; color:#5c4a00; line-height:1.5;">
+        <strong>The Harvard Dataverse repository is being finalized.</strong> Until it goes live, you can download the
+        data by country below, or load it directly through the
+        <a href="https://github.com/noahdasanaike/sage" style="color:#750014;">R and Python packages</a>.
+    </div>
+
     <p class="toplinks">
-        [<a id="dataverse-btn" href="#" target="_blank" rel="noopener">download the dataset</a>]
+        [<a id="dataverse-btn" href="#download">download the dataset</a>]
         [<a id="explore-btn" href="#">explore on the map</a>]
         [<a href="https://www.dropbox.com/scl/fi/pxa00r4kklr06j40w477p/Small_Area_Global_Elections_Database.pdf?rlkey=b9gb62g4en7h4v3d1w9ccnc88&st=3y8015mi&dl=0"
             target="_blank" rel="noopener">paper</a>]
@@ -272,12 +278,11 @@ Python: pip install "git+https://github.com/noahdasanaike/sage.git#subdirectory=
             style="padding:8px 16px; background:#750014; color:#fff; border:none; border-radius:4px; cursor:pointer; font-size:0.95em;">Subscribe</button>
     </form>
 
-    <h2>Download by country</h2>
-    <p>Each link downloads that country's results as a Parquet bundle (votes, coordinates, and party
-        identifiers, partitioned by year). Polygon boundaries are large and distributed separately; load
-        them through the R and Python packages, the <code>polygons/</code> tree, or the interactive map. The
-        canonical, citable copy of the entire dataset is the <a id="dataverse-inline" href="#" target="_blank"
-            rel="noopener">Harvard Dataverse deposit</a>.</p>
+    <h2 id="download">Download by country</h2>
+    <p>Each country offers two downloads: a <strong>bundle</strong> (a ZIP of the Parquet vote partitions together
+        with the GeoParquet polygon boundaries) and the native R <code>sf</code> object, with geometry joined to the
+        vote rows. The canonical, citable copy of the entire dataset will be the <a id="dataverse-inline" href="#"
+            target="_blank" rel="noopener">Harvard Dataverse deposit</a> (forthcoming).</p>
     <input type="text" class="country-search" id="country-search" placeholder="Filter countries&hellip;"
         oninput="filterCountries()">
     <div class="country-list" id="sage-countries"></div>
@@ -381,6 +386,9 @@ Python: pip install "git+https://github.com/noahdasanaike/sage.git#subdirectory=
         function countryZipUrl(country) {
             return `${GCS_BASE}/zip/${encodeURIComponent(country)}.zip`;
         }
+        function countryRdsUrl(country) {
+            return `${GCS_BASE}/rds/${encodeURIComponent(country)}.RDS`;
+        }
 
         function populateCountries() {
             const container = document.getElementById('sage-countries');
@@ -396,11 +404,19 @@ Python: pip install "git+https://github.com/noahdasanaike/sage.git#subdirectory=
                 const dl = document.createElement('a');
                 dl.className = 'dl';
                 dl.href = countryZipUrl(country);
-                dl.textContent = '[download]';
+                dl.textContent = '[bundle]';
                 dl.setAttribute('download', '');
+
+                const rds = document.createElement('a');
+                rds.className = 'dl';
+                rds.href = countryRdsUrl(country);
+                rds.textContent = '[sf]';
+                rds.setAttribute('download', '');
+                rds.style.marginLeft = '8px';
 
                 row.appendChild(name);
                 row.appendChild(dl);
+                row.appendChild(rds);
                 container.appendChild(row);
             });
         }
@@ -461,7 +477,6 @@ Python: pip install "git+https://github.com/noahdasanaike/sage.git#subdirectory=
         }
 
         document.addEventListener('DOMContentLoaded', function () {
-            document.getElementById('dataverse-btn').href = DATAVERSE_URL;
             document.getElementById('dataverse-inline').href = DATAVERSE_URL;
             document.getElementById('explore-btn').href = EXPLORER_URL;
             document.getElementById('cite-doi').textContent = "https://doi.org/10.7910/DVN/YGJR1L";
