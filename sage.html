@@ -270,11 +270,10 @@
         than a thousand voters. It geocodes the units and harmonizes party and candidate identifiers across
         languages. In total the data contain roughly ten billion votes cast across more than eight million units.</p>
 
-    <div style="background:#fbf3d0; border:1px solid #e6d9a0; border-radius:6px; padding:11px 15px; margin:1.2em 0; font-size:0.93em; color:#5c4a00; line-height:1.5;">
-        <strong>The Harvard Dataverse repository is being finalized.</strong> Until it goes live, you can download the
-        data by country below, or load it directly through the
-        <a href="https://github.com/noahdasanaike/sage" style="color:#750014;">R and Python packages</a>.
-    </div>
+    <p style="font-size:0.93em; color:#555; margin:1em 0;">
+        Now archived and citable at Harvard Dataverse:
+        <a href="https://doi.org/10.7910/DVN/YGJR1L">doi.org/10.7910/DVN/YGJR1L</a>.
+    </p>
 
     <p class="toplinks">
         [<a id="dataverse-btn" href="#download">download the dataset</a>]
@@ -318,8 +317,8 @@ Python: pip install "git+https://github.com/noahdasanaike/sage.git#subdirectory=
         <code>polygons/</code> tree for geometry.</p>
     <p><strong>By country:</strong> each country offers a <strong>bundle</strong> (a ZIP of the Parquet vote partitions
         together with the GeoParquet polygon boundaries) and the native R <code>sf</code> object, with geometry joined
-        to the vote rows. The canonical, citable copy of the entire dataset will be the <a id="dataverse-inline"
-            href="#" target="_blank" rel="noopener">Harvard Dataverse deposit</a> (forthcoming).</p>
+        to the vote rows. The canonical, citable copy of the entire dataset is the <a id="dataverse-inline"
+            href="#" target="_blank" rel="noopener">Harvard Dataverse deposit</a>.</p>
     <input type="text" class="country-search" id="country-search" placeholder="Filter countries&hellip;"
         oninput="filterCountries()">
     <div class="country-list" id="sage-countries"></div>
