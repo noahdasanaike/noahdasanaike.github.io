@@ -16,7 +16,7 @@
       "@type": "Dataset",
       "name": "The Small-Area Global Elections (SAGE) Dataset",
       "alternateName": "SAGE",
-      "description": "Lower-house parliamentary and presidential election returns for 110 countries and territories at the smallest unit each electoral authority publishes — for most countries a polling station with fewer than a thousand voters. SAGE geocodes the units and harmonizes party and candidate identifiers across languages, covering roughly ten billion votes across more than eight million units between 1948 and 2025. Distributed as partitioned Parquet, GeoParquet polygons, and native R sf objects, with companion R and Python packages.",
+      "description": "Lower-house parliamentary and presidential election returns for 110 countries and territories at the smallest unit each electoral authority publishes — for most countries a polling station with fewer than a thousand voters. SAGE geocodes the units and harmonizes party and candidate identifiers across languages, covering roughly ten billion votes across more than eight million units between 1948 and 2026. Distributed as partitioned Parquet, GeoParquet polygons, and native R sf objects, with companion R and Python packages.",
       "url": "https://noahdasanaike.github.io/sage.html",
       "sameAs": "https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/YGJR1L",
       "identifier": "https://doi.org/10.7910/DVN/YGJR1L",
@@ -29,7 +29,7 @@
         "affiliation": { "@type": "Organization", "name": "Harvard University" }
       },
       "includedInDataCatalog": { "@type": "DataCatalog", "name": "Harvard Dataverse" },
-      "temporalCoverage": "1948/2025",
+      "temporalCoverage": "1948/2026",
       "spatialCoverage": "Global (110 countries and territories)",
       "distribution": [
         { "@type": "DataDownload", "encodingFormat": "application/vnd.apache.parquet", "contentUrl": "https://storage.googleapis.com/sage-archive/parquet/" },
@@ -325,14 +325,20 @@ Python: pip install "git+https://github.com/noahdasanaike/sage.git#subdirectory=
 
     <div class="version-section">
         <div class="version-header">
-            <h3 class="version-title">Release V1.0</h3>
-            <span class="version-date">June 30, 2026</span>
+            <h3 class="version-title">Release V1.1</h3>
+            <span class="version-date">July 7, 2026</span>
         </div>
         <p>[<button class="abstract-toggle" onclick="toggleAbstract('changelog-abstract')">changelog</button>] [<a
                 href="https://storage.googleapis.com/sage-archive/codebook.pdf">codebook</a>] [<a
                 href="https://github.com/noahdasanaike/sage">country-level coverage</a>]</p>
         <div id="changelog-abstract" class="abstract-content">
             <p class="abstract-text">
+                <strong>v1.1 (July 7th, 2026):</strong> Added 2025 national elections (Germany, Vanuatu, Ecuador,
+                Australia, Philippines, Portugal, Singapore, Poland, Kosovo, Bolivia, Norway, Moldova, Argentina,
+                Netherlands, Kyrgyzstan) and 2026 national elections (Portugal, Japan, Thailand, Nepal, Colombia,
+                Slovenia, Denmark, Hungary, Peru, Bulgaria, Cyprus, Armenia, Kosovo); expanded Taiwan to full
+                legislative coverage; switched Malaysia to per-election parliamentary boundaries; refreshed the 2024
+                United States presidential precincts<br>
                 <strong>v1.0 (June 30, 2026):</strong> Public release; conditionally accepted at Nature Scientific
                 Data<br>
                 <strong>v0.895 (September 30th, 2025):</strong> Fixed Croatian vote-share aggregation<br>
