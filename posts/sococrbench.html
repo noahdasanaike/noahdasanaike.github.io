@@ -529,6 +529,20 @@
               <td>3.00</td>
             </tr>
             <tr>
+              <td data-sort="Muse Spark 1.1 (min. reason.)" data-size="unknown">Muse Spark 1.1 (min. reason.) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.5906</td>
+              <td>0.6567</td>
+              <td class="sub-col" data-group="v3region">0.7361</td><td class="sub-col" data-group="v3region">0.6580</td><td class="sub-col" data-group="v3region">0.5569</td><td class="sub-col" data-group="v3region">0.7268</td><td class="sub-col" data-group="v3region">0.6059</td>
+              <td>0.6191</td>
+              <td class="sub-col" data-group="v3format">0.6354</td><td class="sub-col" data-group="v3format">0.7800</td><td class="sub-col" data-group="v3format">0.4420</td>
+              <td>0.6104</td>
+              <td class="sub-col" data-group="v3chrf">0.7829</td><td class="sub-col" data-group="v3chrf">0.4832</td><td class="sub-col" data-group="v3chrf">0.5460</td><td class="sub-col" data-group="v3chrf">0.7503</td><td class="sub-col" data-group="v3chrf">0.4897</td>
+              <td class="sub-col" data-group="v3chrf">0.5612</td><td class="sub-col" data-group="v3chrf">0.7672</td>
+              <td>0.5236</td>
+              <td>1.25</td>
+              <td>4.25</td>
+            </tr>
+            <tr>
               <td data-sort="Qwen3.7 Plus" data-size="unknown">Qwen3.7 Plus <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
               <td>0.5830</td>
               <td>0.6140</td>
@@ -3696,6 +3710,7 @@
               [1.750, 0.5995, 0.5995, "Gemini 3 Flash (low)", "#4285F4"],
               [9.000, 0.5980, 0.5980, "Claude Sonnet 4.6", "#B8860B"],
               [1.750, 0.5920, 0.5920, "Gemini 3 Flash (minimal)", "#4285F4"],
+              [2.750, 0.5906, 0.5906, "Muse Spark 1.1 (min. reason.)", "#607D8B"],
               [0.800, 0.5830, 0.5830, "Qwen3.7 Plus", "#E91E63"],
               [0.875, 0.5819, 0.5819, "Gemini 3.1 Flash Lite (low)", "#4285F4"],
               [1.800, 0.5753, 0.5753, "Qwen3.5 122B", "#E91E63"],
@@ -4349,6 +4364,11 @@
                 <td><code>minimax/minimax-m3</code></td>
               </tr>
               <tr>
+                <td>Muse Spark 1.1 (min. reason.)</td>
+                <td>Meta Model API</td>
+                <td><code>muse-spark-1.1</code> via <code>api.meta.ai</code>, minimal reasoning effort</td>
+              </tr>
+              <tr>
                 <td>Qwen3.7 Plus</td>
                 <td>OpenRouter</td>
                 <td><code>qwen/qwen3.7-plus</code></td>
@@ -4367,6 +4387,9 @@
       <details style="margin-top: 1.5em;">
         <summary style="cursor: pointer; font-weight: bold; font-size: 1.1em;">Changelog</summary>
         <div style="margin-top: 1em; font-size: 0.92em; line-height: 1.6;">
+          <p><strong>July 9, 2026:</strong> Added Muse Spark 1.1 (0.5906) via the Meta Model API at
+            $1.25/$4.25 per million tokens, scored at minimal reasoning effort (the model does not
+            support disabling reasoning).</p>
           <p><strong>June 24, 2026:</strong> Added MinerU2.5-Pro (0.1647), a 1.2B local parser that
             tops OmniDocBench v1.6 but handles only Latin and CJK print, returning almost nothing on
             the non-Latin historical scripts that fill much of this benchmark. Corrected Kimi K2.5
@@ -4554,7 +4577,7 @@
       </div>
       -->
 
-      <p class="post-updated">Last updated: June 24, 2026</p>
+      <p class="post-updated">Last updated: July 9, 2026</p>
 
     </div>
 
