@@ -4,3 +4,9 @@
 
 # OS cruft
 .DS_Store
+
+# LaTeX aux
+*.aux
+*.log
+*.out
+*.synctex.gz
