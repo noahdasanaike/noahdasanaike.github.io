@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Small-Area Global Elections (SAGE) Dataset - Noah Dasanaike</title>
     <meta name="description"
-        content="SAGE: small-area, mostly polling-station-level election results with polygon geometry for 110 countries." />
+        content="SAGE: small-area, mostly polling-station-level election results with polygon geometry for 131 countries." />
 
     <!-- schema.org/Dataset markup -> Google Dataset Search indexing.
          TODO: confirm the "license" URL matches the license set on the Dataverse deposit. -->
@@ -16,7 +16,7 @@
       "@type": "Dataset",
       "name": "The Small-Area Global Elections (SAGE) Dataset",
       "alternateName": "SAGE",
-      "description": "Lower-house parliamentary and presidential election returns for 110 countries and territories at the smallest unit each electoral authority publishes — for most countries a polling station with fewer than a thousand voters. SAGE geocodes the units and harmonizes party and candidate identifiers across languages, covering roughly ten billion votes across more than eight million units between 1948 and 2026. Distributed as partitioned Parquet, GeoParquet polygons, and native R sf objects, with companion R and Python packages.",
+      "description": "Lower-house parliamentary and presidential election returns for 131 countries and territories at the smallest unit each electoral authority publishes — for most countries a polling station with fewer than a thousand voters. SAGE geocodes the units and harmonizes party and candidate identifiers across languages, covering roughly ten billion votes across more than eight million units between 1948 and 2026. Distributed as partitioned Parquet, GeoParquet polygons, and native R sf objects, with companion R and Python packages.",
       "url": "https://noahdasanaike.github.io/sage.html",
       "sameAs": "https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/YGJR1L",
       "identifier": "https://doi.org/10.7910/DVN/YGJR1L",
@@ -30,7 +30,7 @@
       },
       "includedInDataCatalog": { "@type": "DataCatalog", "name": "Harvard Dataverse" },
       "temporalCoverage": "1948/2026",
-      "spatialCoverage": "Global (110 countries and territories)",
+      "spatialCoverage": "Global (131 countries and territories)",
       "distribution": [
         { "@type": "DataDownload", "encodingFormat": "application/vnd.apache.parquet", "contentUrl": "https://storage.googleapis.com/sage-archive/parquet/" },
         { "@type": "DataDownload", "encodingFormat": "application/zip", "contentUrl": "https://storage.googleapis.com/sage-archive/zip/" }
@@ -265,7 +265,7 @@
         <p><a href="index.html">by Noah Dasanaike</a></p>
     </header>
 
-    <p>SAGE collects lower-house parliamentary and presidential election returns for 110 countries at the
+    <p>SAGE collects lower-house parliamentary and presidential election returns for 131 countries at the
         smallest unit each electoral authority publishes, which for most countries is a polling station with fewer
         than a thousand voters. It geocodes the units and harmonizes party and candidate identifiers across
         languages. In total the data contain roughly ten billion votes cast across more than eight million units.</p>
@@ -312,7 +312,7 @@ Python: pip install "git+https://github.com/noahdasanaike/sage.git#subdirectory=
     <h2 id="download">Download</h2>
     <p><strong>Everything at once:</strong> the full tabular dataset (all countries and years, votes and coordinates)
         as a single Parquet file, <a href="https://storage.googleapis.com/sage-archive/sage.parquet" download
-            data-gc="full-parquet">sage.parquet</a> (~755&nbsp;MB), readable with Arrow, DuckDB, GeoPandas, pandas, or
+            data-gc="full-parquet">sage.parquet</a> (~830&nbsp;MB), readable with Arrow, DuckDB, GeoPandas, pandas, or
         R&nbsp;<code>arrow</code>. Polygon boundaries are not in this file; use the per-country bundles below or the
         <code>polygons/</code> tree for geometry.</p>
     <p><strong>By country:</strong> each country offers a <strong>bundle</strong> (a ZIP of the Parquet vote partitions
@@ -325,20 +325,86 @@ Python: pip install "git+https://github.com/noahdasanaike/sage.git#subdirectory=
 
     <div class="version-section">
         <div class="version-header">
+            <h3 class="version-title">Release V1.2</h3>
+            <span class="version-date">July 24, 2026</span>
+        </div>
+        <p>[<button class="abstract-toggle" onclick="toggleAbstract('changelog-v12')">changelog</button>] [<a
+                href="https://storage.googleapis.com/sage-archive/codebook.pdf">codebook</a>] [<a
+                href="https://github.com/noahdasanaike/sage">country-level coverage</a>]</p>
+        <div id="changelog-v12" class="abstract-content">
+            <ul class="abstract-text" style="margin:0; padding-left:1.1em;">
+                <li>Added 21 new countries — Barbados, Belize, Benin, Cambodia, Democratic Republic of the Congo,
+                    Egypt, Gambia, Grenada, Iraq, Ivory Coast, Liberia, Maldives, Mozambique, Nicaragua, Palestine,
+                    Saint Lucia, Samoa, Seychelles, Suriname, Timor-Leste, Zimbabwe — bringing total coverage to 131
+                    countries</li>
+                <li>Added Brazil's 1998&ndash;2010 presidential and legislative elections at electoral-zone level,
+                    extending Brazil's coverage back from 2014 to 1998</li>
+                <li>Added two-candidate-preferred results by polling place for every Australian House of
+                    Representatives election, 2004&ndash;2025</li>
+                <li>Added the Madagascar 2024 legislative election at polling-station level with resolved
+                    candidate-party correspondence</li>
+                <li>Deepened Malaysia's 2013, 2018, and 2022 elections from constituency to polling-district (daerah
+                    mengundi) level</li>
+                <li>Added Austrian presidential elections (2010, 2016, 2022) at municipality level</li>
+                <li>Added Dominica's 2014 general election, extending coverage back from 2019</li>
+                <li>Added Argentina's 2023 presidential election, both rounds, at polling-table level</li>
+                <li>Extended Danish parliamentary coverage back to 1979</li>
+                <li>Added the older Icelandic presidential elections, 1952&ndash;1996</li>
+                <li>Added Bangladesh's 2024 general election</li>
+                <li>Added Ireland's 2024 general and 2025 presidential elections</li>
+                <li>Added Hungary's 2010 parliamentary election</li>
+                <li>Added Trinidad and Tobago's 2025 general election</li>
+                <li>Added the Czech Republic's 2025 parliamentary election</li>
+                <li>Extended Luxembourg back to 2013 and 2018</li>
+                <li>Extended Montenegro back to 2020, the election that ended 30 years of single-party rule</li>
+                <li>Extended Liberia to three presidential elections (2011, 2017, 2023)</li>
+                <li>Added Cabo Verde's 2026 legislative election</li>
+                <li>Fixed a bug that corrupted the "other"/third-party vote column in the 2024 USA presidential
+                    results across 27 states</li>
+                <li>Fixed Mongolia's polling-station geocoding, which had silently fallen back to a coarse
+                    district-level approximation despite finer official boundary data being available</li>
+                <li>Filled in candidate party affiliation for Kyrgyzstan's 2025 election, previously entirely
+                    missing</li>
+                <li>Fixed a geometry-alignment bug in the shared polygon-generation code that could silently
+                    misassign Thiessen polygons near a country's boundary or across disjoint territories (e.g.
+                    offshore islands)</li>
+                <li>Fixed Lebanon's 2022 election, which had no geometry at all: every polling
+                    station now carries a location, 80% of them at station level</li>
+                <li>Fixed missing 2024 presidential-election geometry in Lithuania</li>
+                <li>Finished harmonizing Spanish party names, resolving 912 previously-unmatched codes</li>
+                <li>Switched Brazil's polling-station coordinates to a more accurate independent geocoding source</li>
+                <li>Standardized election-type labels across the dataset</li>
+                <li>Hardened the packaging pipeline against whole-dataset rewrites during single-country updates</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="version-section">
+        <div class="version-header">
             <h3 class="version-title">Release V1.1</h3>
             <span class="version-date">July 7, 2026</span>
         </div>
-        <p>[<button class="abstract-toggle" onclick="toggleAbstract('changelog-abstract')">changelog</button>] [<a
-                href="https://storage.googleapis.com/sage-archive/codebook.pdf">codebook</a>] [<a
-                href="https://github.com/noahdasanaike/sage">country-level coverage</a>]</p>
-        <div id="changelog-abstract" class="abstract-content">
+        <p>[<button class="abstract-toggle" onclick="toggleAbstract('changelog-v11')">changelog</button>]</p>
+        <div id="changelog-v11" class="abstract-content">
             <p class="abstract-text">
-                <strong>v1.1 (July 7th, 2026):</strong> Added 2025 national elections (Germany, Vanuatu, Ecuador,
+                Added 2025 national elections (Germany, Vanuatu, Ecuador,
                 Australia, Philippines, Portugal, Singapore, Poland, Kosovo, Bolivia, Norway, Moldova, Argentina,
                 Netherlands, Kyrgyzstan) and 2026 national elections (Portugal, Japan, Thailand, Nepal, Colombia,
                 Slovenia, Denmark, Hungary, Peru, Bulgaria, Cyprus, Armenia, Kosovo); expanded Taiwan to full
                 legislative coverage; switched Malaysia to per-election parliamentary boundaries; refreshed the 2024
-                United States presidential precincts<br>
+                United States presidential precincts.
+            </p>
+        </div>
+    </div>
+
+    <div class="version-section">
+        <div class="version-header">
+            <h3 class="version-title">Earlier releases</h3>
+            <span class="version-date">v1.0 and before</span>
+        </div>
+        <p>[<button class="abstract-toggle" onclick="toggleAbstract('changelog-earlier')">changelog</button>]</p>
+        <div id="changelog-earlier" class="abstract-content">
+            <p class="abstract-text">
                 <strong>v1.0 (June 30, 2026):</strong> Public release; conditionally accepted at Nature Scientific
                 Data<br>
                 <strong>v0.895 (September 30th, 2025):</strong> Fixed Croatian vote-share aggregation<br>
@@ -426,17 +492,20 @@ Python: pip install "git+https://github.com/noahdasanaike/sage.git#subdirectory=
         // ----------------------------------------------------------------------
 
         const sageCountries = [
-            'Afghanistan', 'Albania', 'Argentina', 'Armenia', 'Australia', 'Austria', 'Bangladesh', 'Belgium', 'Bhutan', 'Bolivia',
-            'Bosnia and Herzegovina', 'Botswana', 'Brazil', 'Bulgaria', 'Cabo Verde', 'Canada', 'Colombia', 'Costa Rica', 'Chile', 'Croatia',
-            'Cyprus', 'Czechia', 'Denmark', 'Dominica', 'Dominican Republic', 'Ecuador', 'El Salvador', 'Estonia', 'Fiji', 'Finland',
-            'France', 'Georgia', 'Germany', 'Ghana', 'Greece', 'Greenland', 'Guatemala', 'Guyana', 'Honduras', 'Hong Kong',
-            'Hungary', 'Iceland', 'Indonesia', 'India', 'Iran', 'Ireland', 'Israel', 'Italy', 'Jamaica', 'Japan',
-            'Kenya', 'Kosovo', 'Kyrgyz Republic', 'Latvia', 'Lebanon', 'Lesotho', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'Madagascar',
-            'Malaysia', 'Malawi', 'Mauritania', 'Mexico', 'Moldova', 'Mongolia', 'Montenegro', 'Myanmar', 'Namibia', 'Nepal',
-            'Netherlands', 'New Zealand', 'Nigeria', 'North Macedonia', 'Norway', 'Pakistan', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru',
-            'Philippines', 'Poland', 'Portugal', 'Romania', 'Russia', 'Senegal', 'Serbia', 'Singapore', 'Slovakia', 'Slovenia',
-            'Solomon Islands', 'South Africa', 'South Korea', 'Spain', 'Sri Lanka', 'Sweden', 'Switzerland', 'Taiwan', 'Thailand', 'Trinidad and Tobago',
-            'Tunisia', 'Turkey', 'Uganda', 'Ukraine', 'United Kingdom', 'United States of America', 'Uruguay', 'Vanuatu', 'Venezuela', 'Zambia'
+            'Afghanistan', 'Albania', 'Argentina', 'Armenia', 'Australia', 'Austria', 'Bangladesh', 'Barbados', 'Belgium', 'Belize',
+            'Benin', 'Bhutan', 'Bolivia', 'Bosnia and Herzegovina', 'Botswana', 'Brazil', 'Bulgaria', 'Cabo Verde', 'Cambodia', 'Canada',
+            'Colombia', 'Costa Rica', 'Chile', 'Croatia', 'Cyprus', 'Czechia', 'Democratic Republic of the Congo', 'Denmark', 'Dominica', 'Dominican Republic',
+            'Ecuador', 'Egypt', 'El Salvador', 'Estonia', 'Fiji', 'Finland', 'France', 'Gambia', 'Georgia', 'Germany',
+            'Ghana', 'Greece', 'Greenland', 'Grenada', 'Guatemala', 'Guyana', 'Honduras', 'Hong Kong', 'Hungary', 'Iceland',
+            'Indonesia', 'India', 'Iran', 'Iraq', 'Ireland', 'Israel', 'Italy', 'Ivory Coast', 'Jamaica', 'Japan',
+            'Kenya', 'Kosovo', 'Kyrgyzstan', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Liechtenstein', 'Lithuania', 'Luxembourg',
+            'Madagascar', 'Malaysia', 'Malawi', 'Maldives', 'Mauritania', 'Mexico', 'Moldova', 'Mongolia', 'Montenegro', 'Mozambique',
+            'Myanmar', 'Namibia', 'Nepal', 'Netherlands', 'New Zealand', 'Nicaragua', 'Nigeria', 'North Macedonia', 'Norway', 'Pakistan',
+            'Palestine', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 'Poland', 'Portugal', 'Romania', 'Russia',
+            'Saint Lucia', 'Samoa', 'Senegal', 'Serbia', 'Seychelles', 'Singapore', 'Slovakia', 'Slovenia', 'Solomon Islands', 'South Africa',
+            'South Korea', 'Spain', 'Sri Lanka', 'Suriname', 'Sweden', 'Switzerland', 'Taiwan', 'Thailand', 'Timor-Leste', 'Trinidad and Tobago',
+            'Tunisia', 'Turkey', 'Uganda', 'Ukraine', 'United Kingdom', 'United States of America', 'Uruguay', 'Vanuatu', 'Venezuela', 'Zambia',
+            'Zimbabwe'
         ].sort((a, b) => a.localeCompare(b));
 
         function countryZipUrl(country) {

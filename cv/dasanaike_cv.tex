@@ -17,12 +17,16 @@
     urlcolor=Maroon
 }
 
-\renewcommand{\labelitemii}{\tiny$\bullet$}
-
-\newcommand{\cvsection}[1]{\noindent{\bf {\normalsize #1}}\par\nopagebreak\vspace{3mm}}
+\newcommand{\cvsection}[1]{\noindent{\bf {\normalsize #1}}\par\nopagebreak\vspace{1.2mm}}
 
 \thispagestyle{empty}
-\setlist[itemize]{noitemsep}
+
+% bullet-free lists, hanging indent on wrapped lines.
+% entries need visible separation now that bullets are gone; sub-lines hug their parent.
+\setlist[itemize,1]{label={},leftmargin=4mm,itemindent=-4mm,labelsep=0pt,
+                    itemsep=1.1mm,topsep=0pt,partopsep=0pt,parsep=0pt}
+\setlist[itemize,2]{label={},leftmargin=8mm,itemindent=-4mm,labelsep=0pt,
+                    itemsep=0.2mm,topsep=0.2mm,partopsep=0pt,parsep=0pt}
 
 \begin{document}
 
@@ -39,48 +43,27 @@ Department of Government, Harvard University
 \href{mailto:noahdasanaike@g.harvard.edu}{noahdasanaike@g.harvard.edu} — \href{https://noahdasanaike.github.io}{noahdasanaike.github.io}
 \end{center}
 
-\vspace{5mm}
+\vspace{2.4mm}
 
 \cvsection{Education}
 
-\begin{itemize}[noitemsep,nolistsep]
+\begin{itemize}
     \item Ph.D., \textit{Political Science}, Harvard University, expected May 2027
-    \vspace{-1.5mm}
     \begin{itemize}
         \item Committee: Ryan Enos (co-chair), Gary King (co-chair), Grzegorz Ekiert, Torben Iversen
     \end{itemize}
     \item B.A. (2022), M.A. (2024), \textit{Political Science}, Harvard University
-    \vspace{-1.5mm}
     \begin{itemize}
         \item Passed doctoral general examination with excellence (highest distinction)
     \end{itemize}
 \end{itemize}
 
-\vspace{3.5mm}
-
-\cvsection{Employment}
-
-\begin{itemize}[noitemsep,nolistsep]
-    \item Quantitative Research Intern, \textit{Two Sigma}
-    \vspace{-1.5mm}
-    \begin{itemize}
-        \item Summer 2025 (New York); Fall 2025, Spring 2026 (Remote)
-         \end{itemize}
-\end{itemize}
-
-\vspace{5mm}
-
-\cvsection{Job Market Paper}
-
-\begin{itemize}[noitemsep,nolistsep]
-    \item Only When Economic Life Runs Along the Ethnic Line.
-\end{itemize}
-
-\vspace{5mm}
+\vspace{2.4mm}
 
 \cvsection{Working Papers}
 
-\begin{itemize}[noitemsep,nolistsep]
+\begin{itemize}
+\item Ethnicity Divides the Vote Where It Determines Economic Role. (JMP)
 \item Absorbers, Concentrators, and the Urban-Rural Divide. R\&R, \emph{British Journal of Political Science}.
 \item The Urban-Rural Political Divide Is the Exception, Not the Rule. R\&R,
     \emph{Journal of Politics}.
@@ -89,34 +72,22 @@ Department of Government, Harvard University
     \item Pre-Trained Language Models as Zero-Shot Tools for Social Science Research. R\&R, \emph{Political Analysis}.
 \end{itemize}
 
-\vspace{5mm}
+\vspace{2.4mm}
 
 \cvsection{Publications}
 
-\begin{itemize}[noitemsep,nolistsep]
+\begin{itemize}
     \item Dasanaike, Noah. ``The Small-Area Global Elections (SAGE) Dataset." \emph{Nature Scientific Data} (2026).
 % \item Dasanaike, Noah and Grzegorz Ekiert. ``Autorytarne preferencje wyborców jako przyczyna erozji demokracji." \emph{Almanachy Concilium Civitas} (2025).
     \item Ekiert, Grzegorz, and Noah Dasanaike. ``The Return of Dictatorship." \emph{Journal of Democracy} (2024). \href{https://noahdasanaike.github.io/research/dasanaike_ekiert_2024.pdf}{https://doi.org/\allowbreak 10.1353/\allowbreak jod.2024.\allowbreak a937742}
     \item Dasanaike, Noah. ``Businessperson Deputies and Party Cohesion: Evidence from the Russian State Duma." \emph{Party Politics} 28, no. 5 (2021): 879-888. \href{https://noahdasanaike.github.io/research/dasanaike_2021_duma.pdf}{https://doi.org/10.1177/13540688211025176}.
 \end{itemize}
 
-\vspace{5mm}
-
-\cvsection{Teaching Experience}
-
-\begin{itemize}[noitemsep,nolistsep]
-    \item Gov 2020: The Hidden Curriculum (PhD-level, methods), Teaching Fellow for Gary King, 2024, 2025 (evaluations: 4.86 and 5.00, of 5.00)
-    \item Math Prefresher (PhD-level, methods), Instructor, 2024, 2025
-    \item STAT 186: Causal Inference (undergraduate), Teaching Fellow for Susan Murphy, 2025
-    \item GOV 97: Political Geography (undergraduate), Instructor of Record, 2025 (evaluations: 4.80 and 5.00, of 5.00)
-    \item Gov 50: Data (Undergraduate, methods), Course Assistant for Adeline Lo, 2022
-\end{itemize}
-
-\vspace{5mm}
+\vspace{2.4mm}
 
 \cvsection{Major Grants}
 
-\begin{itemize}[noitemsep,nolistsep]
+\begin{itemize}
     \item Bloomberg Center for Cities Grant (with Ryan Enos), \$40,000, 2026
     \item Dissertation Writing Grant, Harvard Weatherhead Center for International Affairs, \$21,500, 2026
     \item Canada Program Fellowship, Harvard Weatherhead Center for International Affairs, \$10,000, 2026
@@ -124,21 +95,46 @@ Department of Government, Harvard University
     \item Graduate Prize Fellowship, Harvard University, 2022-24
 \end{itemize}
 
-\vspace{5mm}
+\vspace{2.4mm}
 
+\noindent\begin{minipage}{\textwidth}
 \cvsection{Additional Grants and Awards}
 
-\begin{itemize}[noitemsep,nolistsep]
-    \item Mid-Dissertation Grant, Harvard Weatherhead Center for International Affairs, 2025
-    \item Graduate Research Grant, King's Graduate Research Funding, 2025
-    \item Graduate Research Grant, Victor and William Fung Foundation, 2024
-    \item Research Grant, Harvard Davis Center for Russian and Eurasian Studies, 2024
-    \item Best Poster, Harvard Government Graduate Student Poster Session, 2023, 2026
-    \item Seed Grant, Harvard Center for American Political Studies, 2023
-    \item Graduate Research Grant, Harvard Center for European Studies, 2022, 2023
+\begin{itemize}
+    \item Mid-Dissertation Grant, Harvard Weatherhead Center for International Affairs, \$4,000, 2025
+    \item Graduate Research Grant, King's Graduate Research Funding, \$3,000, 2025
+    \item Graduate Research Grant, Victor and William Fung Foundation, \$5,000, 2024
+    \item Research Grant, Harvard Davis Center for Russian and Eurasian Studies, \$5,000, 2024
+    \item Best Poster, Harvard Government Graduate Student Poster Session, \$500 each, 2023, 2026
+    \item Seed Grant, Harvard Center for American Political Studies, \$1,000, 2023
+    \item Graduate Research Grant, Harvard Center for European Studies, \$3,000 each, 2022, 2023
+\end{itemize}
+\end{minipage}
+
+\vspace{2.4mm}
+
+\cvsection{Teaching Experience}
+
+\begin{itemize}
+    \item Gov 2020: The Hidden Curriculum (PhD-level, methods), Teaching Fellow for Gary King, 2024, 2025, 2026 (evaluations: 4.86 and 5.00, of 5.00)
+    \item Math Prefresher (PhD-level, methods), Instructor, 2024, 2025
+    \item STAT 186: Causal Inference (undergraduate), Teaching Fellow for Susan Murphy, 2025
+    \item GOV 97: Political Geography (undergraduate), Instructor of Record, 2025 (evaluations: 4.80 and 5.00, of 5.00)
+    \item Gov 50: Data (Undergraduate, methods), Course Assistant for Adeline Lo, 2022
 \end{itemize}
 
-\vspace{5mm}
+\vspace{2.4mm}
+
+\cvsection{Employment}
+
+\begin{itemize}
+    \item Quantitative Research Intern, \textit{Two Sigma}
+    \begin{itemize}
+        \item Summer 2025 (New York); Fall 2025, Spring 2026 (Remote)
+    \end{itemize}
+\end{itemize}
+
+\vspace{2.4mm}
 
 \cvsection{External Presentations}
 
@@ -146,16 +142,16 @@ Department of Government, Harvard University
 American Political Science Association (2025, 2026); Political Economy of Europe APSA Pre-Conference (2026); Midwest Political Science Association (2026); European Political Science Society (2026); Society for Political Methodology (2024, 2026); International Conference of Europeanists (2024); Graduate Workshop on Comparative Historical Research on Europe (2022, 2023); American Association of Geographers (2023); Saint Louis Area Methods Meeting (2021)
 \end{minipage}
 
-\vspace{5mm}
+\vspace{2.4mm}
 
 \cvsection{Service}
 
 \begin{itemize}[noitemsep,nolistsep]
     \item Referee: American Political Science Review, Journal of Politics, Political Analysis, Nature Scientific Data, Sociological Methods and Research
-    \item Harvard Government Department: Concentration Advisor, Graduate Peer Advisor
+    \item Harvard Government Department: Concentration Advisor, Graduate Peer Advisor, Senior Thesis Advisor (one Hoopes Prize winner)
 \end{itemize}
 
-\vspace{5mm}
+\vspace{2.4mm}
 
 \cvsection{References}
 
