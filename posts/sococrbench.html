@@ -781,6 +781,20 @@
               <td>8.65</td>
             </tr>
             <tr>
+              <td data-sort="Qwen3.7 Flash" data-size="unknown">Qwen3.7 Flash <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
+              <td>0.5193</td>
+              <td>0.5615</td>
+              <td class="sub-col" data-group="v3region">0.6509</td><td class="sub-col" data-group="v3region">0.5493</td><td class="sub-col" data-group="v3region">0.4950</td><td class="sub-col" data-group="v3region">0.6337</td><td class="sub-col" data-group="v3region">0.4786</td>
+              <td>0.5431</td>
+              <td class="sub-col" data-group="v3format">0.5552</td><td class="sub-col" data-group="v3format">0.6581</td><td class="sub-col" data-group="v3format">0.4160</td>
+              <td>0.4925</td>
+              <td class="sub-col" data-group="v3chrf">0.6500</td><td class="sub-col" data-group="v3chrf">0.3902</td><td class="sub-col" data-group="v3chrf">0.4796</td><td class="sub-col" data-group="v3chrf">0.6200</td><td class="sub-col" data-group="v3chrf">0.3229</td>
+              <td class="sub-col" data-group="v3chrf">0.4548</td><td class="sub-col" data-group="v3chrf">0.6253</td>
+              <td>0.5131</td>
+              <td>0.03</td>
+              <td>0.13</td>
+            </tr>
+            <tr>
               <td data-sort="Datalab (balanced)" data-size="unknown">Datalab (balanced) <span class="model-tag vlm">VLM</span> <span class="model-tag proprietary">Proprietary</span></td>
               <td>0.5167</td>
               <td>0.5146</td>
@@ -3798,6 +3812,7 @@
               [1.050, 0.5392, 0.5392, "Qwen3.5 Plus (2026-04-20)", "#E91E63"],
               [0.250, 0.5295, 0.5295, "Gemini 2.0 Flash", "#4285F4"],
               [8.650, 0.5213, 0.5213, "Datalab (accurate)", "#607D8B"],
+              [0.080, 0.5193, 0.5193, "Qwen3.7 Flash", "#E91E63"],
               [5.910, 0.5167, 0.5167, "Datalab (balanced)", "#607D8B"],
               [0.310, 0.5160, 0.5160, "Seed 2.0 Lite", "#FF5722"],
               [5.870, 0.5124, 0.5124, "Datalab (fast)", "#607D8B"],
@@ -4459,6 +4474,11 @@
                 <td><code>qwen/qwen3.7-plus</code></td>
               </tr>
               <tr>
+                <td>Qwen3.7 Flash</td>
+                <td>OpenRouter</td>
+                <td><code>qwen/qwen3.7-flash</code></td>
+              </tr>
+              <tr>
                 <td>Step 3.7 Flash (medium)</td>
                 <td>OpenRouter</td>
                 <td><code>stepfun/step-3.7-flash</code>, reasoning mandatory (default medium), max_tokens up to 65536</td>
@@ -4472,6 +4492,8 @@
       <details style="margin-top: 1.5em;">
         <summary style="cursor: pointer; font-weight: bold; font-size: 1.1em;">Changelog</summary>
         <div style="margin-top: 1em; font-size: 0.92em; line-height: 1.6;">
+          <p><strong>July 31, 2026:</strong> Added Qwen3.7 Flash (0.5193) at $0.03/$0.13 per million
+            tokens, the cheapest model on the board to clear 0.50.</p>
           <p><strong>July 21, 2026:</strong> Added Gemini 3.6 Flash (0.6225) and Gemini 3.5 Flash Lite
             (0.5898) at minimal reasoning; Gemini 3.6 Flash takes third overall. Added GPT-5.6 Luna
             (0.3130), Terra (0.3079), and Sol (0.3758) at no reasoning.</p>
@@ -4665,7 +4687,7 @@
       </div>
       -->
 
-      <p class="post-updated">Last updated: July 21, 2026</p>
+      <p class="post-updated">Last updated: July 31, 2026</p>
 
     </div>
 
