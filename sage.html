@@ -485,8 +485,8 @@ Python: pip install "git+https://github.com/noahdasanaike/sage.git#subdirectory=
     </blockquote>
 
     <h2 id="attribution">Please also cite</h2>
-    <p>Nearly every SAGE country was scraped, collected, and geocoded from scratch, but several rest on data that other
-        researchers gathered and released first. If your
+    <p>Nearly every SAGE country was scraped from scratch from official government sources, then geocoded and
+        harmonized here. Several, though, rest on data that other researchers gathered and released first. If your
         analysis uses one of these countries, please cite the underlying source alongside SAGE.</p>
 
     <div class="formats">
@@ -542,11 +542,14 @@ Python: pip install "git+https://github.com/noahdasanaike/sage.git#subdirectory=
             <dd style="margin:0.2em 0 0 0;">Constituency results compiled by Terence Wood (2019).</dd>
 
             <dt style="font-weight:600; margin-top:0.9em;">Russia</dt>
-            <dd style="margin:0.2em 0 0 0;">Polling-station returns rest on Sergey Shpilkin&rsquo;s compilations
-                of Central Election Commission data, distributed through the
-                <a href="https://gis-lab.info/qa/cik-data.html">GIS-Lab CIK archive</a>; the 2021 Duma and 2024
-                presidential returns come from dekoder. Station coordinates partly draw on
-                <a href="http://uikgeo.ru/uik/export">uikgeo.ru</a>.
+            <dd style="margin:0.2em 0 0 0;">Polling-station returns come from the compilations of Sergey
+                Shpilkin and Ivan Shukshin, scraped from the Central Election Commission and distributed at
+                <a href="https://github.com/dkobak/elections">dkobak/elections</a>. The Commission has never
+                released station-level results in bulk, and has progressively closed off its results pages, so
+                this collection is not reproducible from the official source. Station addresses used for
+                geocoding come partly from the
+                <a href="https://gis-lab.info/qa/cik-data.html">GIS-Lab CIK commission directory</a> and the UIK
+                GEO crowdsourcing project.
             </dd>
 
             <dt style="font-weight:600; margin-top:0.9em;">South Africa</dt>
@@ -554,12 +557,11 @@ Python: pip install "git+https://github.com/noahdasanaike/sage.git#subdirectory=
                 <a href="https://github.com/j-norwood-young/SA-Maps">SA-Maps</a>.
             </dd>
 
-            <dt style="font-weight:600; margin-top:0.9em;">Belgium, DR Congo, Indonesia, Myanmar, Uruguay</dt>
+            <dt style="font-weight:600; margin-top:0.9em;">Belgium, DR Congo, Myanmar, Uruguay</dt>
             <dd style="margin:0.2em 0 0 0;">Built on openly released compilations by
                 <a href="https://github.com/joseparreiras/resultatselection">Jos&eacute; Parreiras</a> (Belgium),
                 <a href="https://github.com/bernard-ng/drc-election-2023">Bernard Ng&rsquo;andu</a> (DR Congo
                 2023),
-                <a href="https://github.com/terryds/pemilu-2024-scraper">terryds</a> (Indonesia),
                 <a href="https://github.com/thomasc6/myanmar-elections-results">Thomas Cunningham</a> (Myanmar
                 2015), and
                 <a href="https://github.com/ale-uy/EleccionesUy-2019">ale-uy</a> (Uruguay 2019).
