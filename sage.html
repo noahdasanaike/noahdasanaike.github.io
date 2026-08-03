@@ -54,23 +54,35 @@
             margin-bottom: 2em;
         }
 
-        h1 { color: #750014; }
-        h2 { color: #750014; }
-        h3 { color: #A0522D; }
+        h1 {
+            color: #750014;
+        }
+
+        h2 {
+            color: #750014;
+        }
+
+        h3 {
+            color: #A0522D;
+        }
 
         a {
             color: #750014;
             text-decoration: none;
         }
 
-        a:hover { text-decoration: underline; }
+        a:hover {
+            text-decoration: underline;
+        }
 
         header p {
             font-size: 1.1em;
             margin-top: 0.5em;
         }
 
-        .back-link { margin-bottom: 2em; }
+        .back-link {
+            margin-bottom: 2em;
+        }
 
         /* Hero actions */
         .actions {
@@ -148,7 +160,9 @@
             display: block;
         }
 
-        .country-row .name { color: #333; }
+        .country-row .name {
+            color: #333;
+        }
 
         .country-row .dl {
             font-size: 0.8em;
@@ -192,7 +206,9 @@
             margin-left: 8px;
         }
 
-        .email-form button:hover { background-color: #5a0010; }
+        .email-form button:hover {
+            background-color: #5a0010;
+        }
 
         .email-note {
             font-size: 0.85em;
@@ -202,7 +218,9 @@
         }
 
         /* Changelog toggle */
-        .version-section { margin: 2em 0; }
+        .version-section {
+            margin: 2em 0;
+        }
 
         .version-header {
             display: flex;
@@ -213,7 +231,10 @@
             border-bottom: 1px solid #ddd;
         }
 
-        .version-title { margin: 0; color: #750014; }
+        .version-title {
+            margin: 0;
+            color: #750014;
+        }
 
         .version-date {
             font-style: italic;
@@ -230,7 +251,9 @@
             font: inherit;
         }
 
-        .abstract-toggle:hover { text-decoration: underline; }
+        .abstract-toggle:hover {
+            text-decoration: underline;
+        }
 
         .abstract-content {
             max-height: 0;
@@ -281,7 +304,8 @@
         [<a href="https://www.dropbox.com/scl/fi/pxa00r4kklr06j40w477p/Small_Area_Global_Elections_Database.pdf?rlkey=b9gb62g4en7h4v3d1w9ccnc88&st=3y8015mi&dl=0"
             target="_blank" rel="noopener" data-gc="paper">paper</a>]
         [<a href="https://github.com/noahdasanaike/sage" data-gc="packages">R/Python packages</a>]
-        [<a href="https://storage.googleapis.com/sage-archive/codebook.pdf" target="_blank" rel="noopener" data-gc="codebook">codebook</a>]
+        [<a href="https://storage.googleapis.com/sage-archive/codebook.pdf" target="_blank" rel="noopener"
+            data-gc="codebook">codebook</a>]
     </p>
 
     <div class="formats">
@@ -296,7 +320,8 @@ Python: pip install "git+https://github.com/noahdasanaike/sage.git#subdirectory=
         import sage; sage.sage_load("Germany", years=2021)</pre>
         <p style="font-size:0.9em;color:#666;">The codebook documents per-country coverage, sources, and every
             column. R users who want polygon geometry joined to vote rows inline can load the native
-            <code>sf</code> objects; see the <a href="https://github.com/noahdasanaike/sage">code repository</a>.</p>
+            <code>sf</code> objects; see the <a href="https://github.com/noahdasanaike/sage">code repository</a>.
+        </p>
     </div>
 
     <p style="color:#555; font-size:0.95em; margin-top:1.5em; margin-bottom:0.6em;">Releases happen periodically as
@@ -314,14 +339,20 @@ Python: pip install "git+https://github.com/noahdasanaike/sage.git#subdirectory=
         as a single Parquet file, <a href="https://storage.googleapis.com/sage-archive/sage.parquet" download
             data-gc="full-parquet">sage.parquet</a> (~830&nbsp;MB), readable with Arrow, DuckDB, GeoPandas, pandas, or
         R&nbsp;<code>arrow</code>. Polygon boundaries are not in this file; use the per-country bundles below or the
-        <code>polygons/</code> tree for geometry.</p>
+        <code>polygons/</code> tree for geometry.
+    </p>
     <p><strong>By country:</strong> each country offers a <strong>bundle</strong> (a ZIP of the Parquet vote partitions
         together with the GeoParquet polygon boundaries) and the native R <code>sf</code> object, with geometry joined
-        to the vote rows. The canonical, citable copy of the entire dataset is the <a id="dataverse-inline"
-            href="#" target="_blank" rel="noopener">Harvard Dataverse deposit</a>.</p>
-    <input type="text" class="country-search" id="country-search" placeholder="Filter countries&hellip;"
-        oninput="filterCountries()">
-    <div class="country-list" id="sage-countries"></div>
+        to the vote rows. The canonical, citable copy of the entire dataset is the <a id="dataverse-inline" href="#"
+            target="_blank" rel="noopener">Harvard Dataverse deposit</a>.</p>
+    <p>[<button class="abstract-toggle"
+            onclick="toggleAbstract('country-downloads', 'country downloads', 'hide country downloads')">country
+            downloads</button>] <span style="color:#666; font-size:0.9em;">131 countries</span></p>
+    <div id="country-downloads" class="abstract-content">
+        <input type="text" class="country-search" id="country-search" placeholder="Filter countries&hellip;"
+            oninput="filterCountries()">
+        <div class="country-list" id="sage-countries"></div>
+    </div>
 
     <div class="version-section">
         <div class="version-header">
@@ -453,6 +484,145 @@ Python: pip install "git+https://github.com/noahdasanaike/sage.git#subdirectory=
         (forthcoming).
     </blockquote>
 
+    <h2 id="attribution">Please also cite</h2>
+    <p>Nearly every SAGE country was scraped, collected, and geocoded from scratch, but several rest on data that other
+        researchers gathered and released first. If your
+        analysis uses one of these countries, please cite the underlying source alongside SAGE.</p>
+
+    <div class="formats">
+        <dl style="margin:0;">
+            <dt style="font-weight:600; margin-top:0.9em;">Brazil (polling-station coordinates)</dt>
+            <dd style="margin:0.2em 0 0 0;">As of release 1.2, SAGE uses
+                <a href="https://github.com/fdhidalgo/geocode_br_polling_stations">F. Daniel Hidalgo&rsquo;s
+                    geocoded Brazilian polling stations</a> as the coordinate source for every year (2014, 2018,
+                2022), replacing the official TSE coordinates.
+            </dd>
+
+            <dt style="font-weight:600; margin-top:0.9em;">Afghanistan</dt>
+            <dd style="margin:0.2em 0 0 0;">Results compiled by Colin Cookman from the Independent Election
+                Commission:
+                <a href="https://github.com/colincookman/afghanistan_election_results_2018">2018 parliamentary</a>
+                and
+                <a href="https://github.com/colincookman/afghanistan_presidential_election_2019">2019
+                    presidential</a>.
+            </dd>
+
+            <dt style="font-weight:600; margin-top:0.9em;">Pakistan</dt>
+            <dd style="margin:0.2em 0 0 0;">Polling-station data for the 2018 general election, transcribed from
+                Election Commission of Pakistan scans by Colin Cookman and team:
+                <a
+                    href="https://github.com/colincookman/pakistan_polling_stations_2018">pakistan_polling_stations_2018</a>.
+            </dd>
+
+            <dt style="font-weight:600; margin-top:0.9em;">Uganda</dt>
+            <dd style="margin:0.2em 0 0 0;">2006, 2011 and 2016 polling-station results from the
+                <a href="https://github.com/bt-IRI/UEDP">Uganda Elections Data Portal</a>, a project of the
+                International Republican Institute, which converted the Electoral Commission&rsquo;s PDFs into
+                machine-readable form.
+            </dd>
+
+            <dt style="font-weight:600; margin-top:0.9em;">United States</dt>
+            <dd style="margin:0.2em 0 0 0;">Precinct returns and boundaries from
+                <a href="https://dataverse.harvard.edu/dataverse/electionscience">VEST</a> (Voting and Election
+                Science Team), Joshua Metcalf, and Jonathan Rodden, as well as original collection; see also
+                Baltz et al. under related projects below.
+            </dd>
+
+            <dt style="font-weight:600; margin-top:0.9em;">Malaysia</dt>
+            <dd style="margin:0.2em 0 0 0;">Polling-district results and boundaries from
+                <a href="https://electiondata.my/">ElectionData.MY</a> (Thevesh Theva) and Tindak Malaysia.
+            </dd>
+
+            <dt style="font-weight:600; margin-top:0.9em;">Mexico</dt>
+            <dd style="margin:0.2em 0 0 0;">Elections from 1991 through 2021 draw on Eric Magar&rsquo;s compiled
+                returns (Magar 2019), <a href="https://github.com/emagar/elecRetrns">elecRetrns</a>, with
+                coordinates added by SAGE. The 2024 election was collected directly from INE.</dd>
+
+            <dt style="font-weight:600; margin-top:0.9em;">Papua New Guinea and Solomon Islands</dt>
+            <dd style="margin:0.2em 0 0 0;">Constituency results compiled by Terence Wood (2019).</dd>
+
+            <dt style="font-weight:600; margin-top:0.9em;">Russia</dt>
+            <dd style="margin:0.2em 0 0 0;">Polling-station returns rest on Sergey Shpilkin&rsquo;s compilations
+                of Central Election Commission data, distributed through the
+                <a href="https://gis-lab.info/qa/cik-data.html">GIS-Lab CIK archive</a>; the 2021 Duma and 2024
+                presidential returns come from dekoder. Station coordinates partly draw on
+                <a href="http://uikgeo.ru/uik/export">uikgeo.ru</a>.
+            </dd>
+
+            <dt style="font-weight:600; margin-top:0.9em;">South Africa</dt>
+            <dd style="margin:0.2em 0 0 0;">Voting-district records scraped by Adrian Firth; boundary files from
+                <a href="https://github.com/j-norwood-young/SA-Maps">SA-Maps</a>.
+            </dd>
+
+            <dt style="font-weight:600; margin-top:0.9em;">Belgium, DR Congo, Indonesia, Myanmar, Uruguay</dt>
+            <dd style="margin:0.2em 0 0 0;">Built on openly released compilations by
+                <a href="https://github.com/joseparreiras/resultatselection">Jos&eacute; Parreiras</a> (Belgium),
+                <a href="https://github.com/bernard-ng/drc-election-2023">Bernard Ng&rsquo;andu</a> (DR Congo
+                2023),
+                <a href="https://github.com/terryds/pemilu-2024-scraper">terryds</a> (Indonesia),
+                <a href="https://github.com/thomasc6/myanmar-elections-results">Thomas Cunningham</a> (Myanmar
+                2015), and
+                <a href="https://github.com/ale-uy/EleccionesUy-2019">ale-uy</a> (Uruguay 2019).
+            </dd>
+
+            <dt style="font-weight:600; margin-top:0.9em;">Boundary files</dt>
+            <dd style="margin:0.2em 0 0 0;">Electoral geographies for Brazil, Finland, Panama, Singapore,
+                Sri Lanka and Thailand come from openly published community shapefiles; the per-country notes in
+                the <a href="https://storage.googleapis.com/sage-archive/codebook.pdf">codebook</a> name each
+                one.</dd>
+        </dl>
+    </div>
+
+    <h2 id="related">Related projects</h2>
+    <p>SAGE is one of several efforts to make election returns comparable across places. These are worth knowing
+        about, and in some cases are a better fit than SAGE for a given question:</p>
+    <div class="formats">
+        <dl style="margin:0;">
+            <dt style="font-weight:600; margin-top:0.9em;">
+                <a href="https://electiondataarchive.org/">Constituency-Level Elections Archive (CLEA)</a>
+            </dt>
+            <dd style="margin:0.2em 0 0 0;">Constituency-level lower- and upper-chamber results for 183 countries,
+                reaching much further back in time than SAGE. SAGE uses this to validate country totals.</dd>
+
+            <dt style="font-weight:600; margin-top:0.9em;">
+                <a href="https://www.german-elections.com/">GERDA: The German Election Database</a>
+            </dt>
+            <dd style="margin:0.2em 0 0 0;">Local, state and federal German results at municipality and county
+                level over three decades, harmonized across boundary changes and mail-in districts. Much deeper on
+                Germany than SAGE with respect to multilevel elections, with its own R package.</dd>
+
+            <dt style="font-weight:600; margin-top:0.9em;">
+                <a href="https://www.nature.com/articles/s41597-022-01745-0">American election results at the
+                    precinct level</a> (Baltz et al. 2022)
+            </dt>
+            <dd style="margin:0.2em 0 0 0;">Nearly all available US precinct-level results for 2016, 2018 and
+                2020, across offices from president down to ballot initiatives. Broader in office coverage than
+                SAGE&rsquo;s US returns.</dd>
+
+            <dt style="font-weight:600; margin-top:0.9em;">
+                <a href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/YN4TLR">Precinct-Level
+                    Election Data</a> (Ansolabehere, Palmer and Lee)
+            </dt>
+            <dd style="margin:0.2em 0 0 0;">US precinct-level returns by state for elections from 2002 to 2012,
+                covering years that sit before the precinct data SAGE carries.</dd>
+
+            <dt style="font-weight:600; margin-top:0.9em;">
+                <a href="https://github.com/emagar/elecRetrns">elecRetrns</a> (Eric Magar)
+            </dt>
+            <dd style="margin:0.2em 0 0 0;">Mexican federal and state electoral returns, maintained over many
+                years, and reaching beyond the federal races SAGE carries.</dd>
+
+            <dt style="font-weight:600; margin-top:0.9em;">
+                <a href="https://www.nature.com/articles/s41597-025-04918-9">Electoral precinct-level database for
+                    Mexican municipal elections</a> (Calder&oacute;n-Hern&aacute;ndez, Larreguy, Marshall and
+                P&eacute;rez-Castellanos 2025)
+            </dt>
+            <dd style="margin:0.2em 0 0 0;">Precinct-level returns for Mexican <em>municipal</em> elections,
+                1994 to 2019, with incumbent-coalition identifiers, registration and turnout. SAGE carries
+                federal elections only, so this is the reference for local Mexican contests.</dd>
+        </dl>
+    </div>
+
     <footer>
         <p>For questions about SAGE, contact <a
                 href="mailto:noahdasanaike@g.harvard.edu">noahdasanaike@g.harvard.edu</a></p>
@@ -462,8 +632,7 @@ Python: pip install "git+https://github.com/noahdasanaike/sage.git#subdirectory=
 
     <!-- GoatCounter (cookieless analytics). Register a free site at goatcounter.com,
          then replace YOURCODE below with your site code. -->
-    <script data-goatcounter="https://noahdasanaike.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
+    <script data-goatcounter="https://noahdasanaike.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 
     <script>
         // GoatCounter: count clicks on download / outbound links tagged with data-gc
@@ -580,24 +749,32 @@ Python: pip install "git+https://github.com/noahdasanaike/sage.git#subdirectory=
             return false;
         }
 
-        function toggleAbstract(abstractId) {
+        // labelClosed/labelOpen let non-changelog panels (e.g. the country
+        // download list) reuse this toggle with their own button text.
+        function toggleAbstract(abstractId, labelClosed, labelOpen) {
+            labelClosed = labelClosed || 'changelog';
+            labelOpen = labelOpen || 'hide changelog';
             const abstract = document.getElementById(abstractId);
-            const button = document.querySelector(`[onclick="toggleAbstract('${abstractId}')"]`);
+            const button = document.querySelector(`[onclick*="toggleAbstract('${abstractId}'"]`);
             if (abstract.classList.contains('expanded')) {
                 abstract.style.maxHeight = abstract.scrollHeight + 'px';
                 requestAnimationFrame(() => {
                     abstract.style.maxHeight = '0px';
                     abstract.classList.remove('expanded');
-                    button.textContent = 'changelog';
+                    button.textContent = labelClosed;
                 });
             } else {
                 abstract.classList.add('expanded');
                 abstract.style.maxHeight = abstract.scrollHeight + 'px';
-                button.textContent = 'hide changelog';
+                button.textContent = labelOpen;
             }
             abstract.addEventListener('transitionend', function handleEnd(ev) {
                 if (ev.propertyName === 'max-height') {
-                    if (!abstract.classList.contains('expanded')) abstract.style.maxHeight = '';
+                    // Once open, drop the pixel cap. The country list changes
+                    // height as the filter box narrows it, and a stale cap
+                    // measured against a filtered list would clip the full one.
+                    if (abstract.classList.contains('expanded')) abstract.style.maxHeight = 'none';
+                    else abstract.style.maxHeight = '';
                     abstract.removeEventListener('transitionend', handleEnd);
                 }
             });
