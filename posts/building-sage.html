@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Building SAGE - Noah Dasanaike</title>
+  <meta name="description"
+    content="Every country in the SAGE election dataset, with the build history inferred from 227,438 file timestamps." />
+  <style>
+    body {
+      max-width: 1040px;
+      margin: auto;
+      padding: 1em;
+      color: #333;
+      line-height: 1.5;
+    }
+
+    a {
+      color: #750014;
+    }
+
+    h1 {
+      color: #750014;
+      margin-bottom: 0.2em;
+    }
+
+    .post-date {
+      color: #666;
+      font-style: italic;
+      margin-top: 0;
+    }
+
+    .back-link {
+      margin-bottom: 2em;
+    }
+
+    p {
+      margin: 1em 0;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8em;
+      align-items: center;
+      margin: 2em 0 0.4em 0;
+      font-size: 0.9em;
+    }
+
+    .controls label {
+      color: #666;
+    }
+
+    .controls select,
+    .controls input {
+      font: inherit;
+      font-size: 0.95em;
+      padding: 0.25em 0.4em;
+      border: 1px solid #ccc;
+      background: #fff;
+      color: #333;
+    }
+
+    .controls input {
+      width: 11em;
+    }
+
+    .controls .count {
+      color: #888;
+    }
+
+    .chart-wrap {
+      overflow-x: auto;
+      margin: 0.6em 0;
+    }
+
+    #lanes .lane-bg {
+      fill: transparent;
+    }
+
+    #lanes .lane:hover .lane-bg,
+    #lanes .lane.sel .lane-bg {
+      fill: #f4f0f0;
+    }
+
+    #lanes .name {
+      fill: #333;
+      font-size: 10.5px;
+    }
+
+    #lanes .name.unreleased {
+      fill: #999;
+      font-style: italic;
+    }
+
+    #lanes .lane.sel .name {
+      fill: #750014;
+      font-weight: bold;
+    }
+
+    #lanes .span {
+      stroke: #e6e2e2;
+      stroke-width: 1;
+    }
+
+    #lanes .act {
+      fill: #9a8a8c;
+    }
+
+    #lanes .act.script {
+      fill: #750014;
+    }
+
+    #lanes .meta {
+      fill: #aaa;
+      font-size: 9.5px;
+      text-anchor: end;
+    }
+
+    #lanes .lane {
+      cursor: pointer;
+    }
+
+    #lanes .lane:focus {
+      outline: none;
+    }
+
+    #lanes .lane:focus .lane-bg {
+      fill: #f0eaea;
+    }
+
+    #lanes .month-grid {
+      stroke: #f4f4f4;
+    }
+
+    #lanes .year-grid {
+      stroke: #e2e2e2;
+    }
+
+    #lanes .year-label {
+      font: 10px ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      fill: #888;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.4em;
+      font-size: 0.85em;
+      color: #666;
+      margin: 0.4em 0 0 0;
+    }
+
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4em;
+    }
+
+    .swatch {
+      display: inline-block;
+      width: 11px;
+      height: 11px;
+    }
+
+    .detail {
+      border: 1px solid #ddd;
+      border-left: 3px solid #750014;
+      padding: 1em 1.2em;
+      margin: 1.4em 0;
+      background: #fcfcfc;
+    }
+
+    .detail h4 {
+      margin: 0 0 0.6em 0;
+      color: #750014;
+      font-size: 1.1em;
+    }
+
+    .detail dl {
+      display: grid;
+      grid-template-columns: max-content 1fr;
+      gap: 0.28em 1.2em;
+      margin: 0;
+      font-size: 0.9em;
+    }
+
+    .detail dt {
+      color: #777;
+    }
+
+    .detail dd {
+      margin: 0;
+    }
+
+    .detail .hint {
+      color: #888;
+      font-size: 0.88em;
+      margin: 0;
+    }
+
+    .note {
+      border-top: 1px solid #ddd;
+      margin-top: 2.5em;
+      padding-top: 1em;
+      font-size: 0.92em;
+      color: #555;
+    }
+
+    .note h2 {
+      font-size: 1.1em;
+      color: #750014;
+      margin: 0 0 0.4em 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="back-link"><a href="../index.html">&larr; Back to homepage</a></div>
+
+  <h1>Building SAGE</h1>
+  <p class="post-date">A country-by-country build log</p>
+
+  <p>The <a href="../sage.html">Small-Area Global Elections dataset</a> covers 131 countries at the smallest unit each
+    electoral authority publishes, which for most of them is a polling station of a few hundred voters. Building the
+    dataset was almost entirely a manual process that spanned several years. Using time-stamped files, I can roughly
+    recover the timeline
+    for each
+    country's build process. </p>
+
+  <div class="controls">
+    <label for="sort">Order by</label>
+    <select id="sort">
+      <option value="first">when work started</option>
+      <option value="name">country name</option>
+      <option value="last">most recently touched</option>
+      <option value="files">files on disk</option>
+      <option value="active">months worked on</option>
+    </select>
+    <label for="filter">Filter</label>
+    <input id="filter" type="search" placeholder="country name" autocomplete="off" />
+    <span class="count" id="lane-count"></span>
+  </div>
+
+  <div class="chart-wrap">
+    <svg id="lanes" role="img" aria-label="Per-country build timeline, 2022 to 2026"></svg>
+  </div>
+
+  <div class="legend">
+    <span><span class="swatch" style="background:#9a8a8c"></span> files written that month</span>
+    <span><span class="swatch" style="background:#750014"></span> build script written or revised</span>
+    <span><span class="swatch" style="background:#e6e2e2;height:2px;align-self:center"></span> span of recorded
+      work</span>
+    <span><em style="color:#999">italic</em> &nbsp;in the tree, in no release yet</span>
+  </div>
+
+  <div id="country-detail"></div>
+
+  <div class="note">
+    <p>Built from the dataset tree as of <span id="asof"></span>. The dataset itself is at
+      <a href="../sage.html">the project page</a> and on
+      <a href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/YGJR1L">Harvard Dataverse</a>.
+    </p>
+  </div>
+
+  <script type="application/json"
+    id="data">{"generated":"2026-08-09","start":"2022-01","end":"2026-08","totals":{"countries":139,"released":131,"unreleased":8,"files":227438,"dropped":59246,"gb":141.8,"scripts":421,"first":"2022-01-03","last":"2026-08-07"},"months":[{"month":"2022-01","files":107},{"month":"2022-02","files":694},{"month":"2022-03","files":62},{"month":"2022-04","files":44},{"month":"2022-05","files":87},{"month":"2022-06","files":24},{"month":"2022-07","files":36},{"month":"2022-08","files":24},{"month":"2022-09","files":81},{"month":"2022-10","files":10954},{"month":"2022-11","files":30},{"month":"2022-12","files":4},{"month":"2023-01","files":698},{"month":"2023-02","files":503},{"month":"2023-03","files":15},{"month":"2023-04","files":9964},{"month":"2023-05","files":52},{"month":"2023-06","files":1072},{"month":"2023-07","files":34},{"month":"2023-08","files":649},{"month":"2023-09","files":645},{"month":"2023-10","files":13220},{"month":"2023-11","files":4138},{"month":"2023-12","files":1222},{"month":"2024-01","files":1227},{"month":"2024-02","files":38},{"month":"2024-03","files":197},{"month":"2024-04","files":180},{"month":"2024-05","files":4498},{"month":"2024-06","files":10942},{"month":"2024-07","files":663},{"month":"2024-08","files":20},{"month":"2024-09","files":84},{"month":"2024-10","files":9457},{"month":"2024-11","files":55},{"month":"2024-12","files":433},{"month":"2025-01","files":392},{"month":"2025-02","files":77},{"month":"2025-03","files":355},{"month":"2025-04","files":96},{"month":"2025-05","files":208},{"month":"2025-06","files":9},{"month":"2025-07","files":9},{"month":"2025-08","files":7},{"month":"2025-09","files":13},{"month":"2025-10","files":730},{"month":"2025-11","files":20},{"month":"2025-12","files":1},{"month":"2026-01","files":3},{"month":"2026-03","files":2},{"month":"2026-04","files":3},{"month":"2026-05","files":60},{"month":"2026-06","files":13},{"month":"2026-07","files":139853},{"month":"2026-08","files":13434}],"countries":[{"name":"Afghanistan","released":true,"files":53,"mb":1320.7,"dropped":109,"first":"2023-11-19","last":"2025-05-14","scripts":1,"months":{"2023-11":6,"2024-04":4,"2025-01":1,"2025-05":42},"scriptMonths":["2025-05"],"activeMonths":4,"firstScript":"2025-05-14","lastScript":"2025-05-14","years":"2018, 2019","types":"Legislative, Presidential","unit":"Polling Station","unitsPerYear":"20,000","polygonYears":"All","geoCoverage":".999","source":"Colin Cookman","partial":false,"lsage":false},{"name":"Albania","released":true,"files":13,"mb":16.2,"dropped":0,"first":"2023-12-06","last":"2025-03-16","scripts":1,"months":{"2023-12":10,"2025-03":3},"scriptMonths":["2025-03"],"activeMonths":2,"firstScript":"2025-03-16","lastScript":"2025-03-16","years":"2017, 2021","types":"Legislative","unit":"Polling Station","unitsPerYear":"5,200","polygonYears":"2021","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Argentina","released":true,"files":34,"mb":5131.2,"dropped":41,"first":"2022-06-27","last":"2026-07-10","scripts":1,"months":{"2022-06":2,"2023-06":4,"2023-08":11,"2023-09":1,"2023-10":4,"2023-11":4,"2025-01":1,"2025-03":1,"2025-05":1,"2026-07":5},"scriptMonths":["2026-07"],"activeMonths":10,"firstScript":"2026-07-10","lastScript":"2026-07-10","years":"2011 to 2025","types":"Legislative, Presidential","unit":"Polling Station","unitsPerYear":"100,000","polygonYears":"2023, 2025","geoCoverage":".98","source":"","partial":false,"lsage":false},{"name":"Armenia","released":true,"files":25,"mb":13.5,"dropped":0,"first":"2023-12-06","last":"2025-01-20","scripts":1,"months":{"2023-12":22,"2025-01":3},"scriptMonths":["2025-01"],"activeMonths":2,"firstScript":"2025-01-20","lastScript":"2025-01-20","years":"2012, 2013, 2018, 2021, 2026","types":"Legislative, Presidential","unit":"Polling Station","unitsPerYear":"2,000","polygonYears":"All","geoCoverage":".999","source":"","partial":false,"lsage":false},{"name":"Australia","released":true,"files":134,"mb":245.1,"dropped":0,"first":"2023-06-17","last":"2026-07-11","scripts":2,"months":{"2023-06":55,"2024-07":15,"2024-08":1,"2025-01":3,"2025-02":1,"2026-05":40,"2026-06":11,"2026-07":8},"scriptMonths":["2025-01"],"activeMonths":8,"firstScript":"2025-01-02","lastScript":"2025-01-02","years":"2004 to 2025","types":"Legislative","unit":"Polling Station","unitsPerYear":"8,000","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Austria","released":true,"files":29,"mb":131.4,"dropped":23,"first":"2022-01-27","last":"2026-07-11","scripts":1,"months":{"2022-01":5,"2023-06":5,"2023-11":8,"2024-02":5,"2024-11":1,"2024-12":3,"2025-01":1,"2026-07":1},"scriptMonths":["2026-07"],"activeMonths":8,"firstScript":"2026-07-11","lastScript":"2026-07-11","years":"1999 to 2024","types":"Legislative","unit":"Municipality (gemeinde)","unitsPerYear":"2,000","polygonYears":">= 2013","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Bahamas","released":false,"files":3,"mb":0.8,"dropped":0,"first":"2026-07-17","last":"2026-07-18","scripts":0,"months":{"2026-07":3},"scriptMonths":[],"activeMonths":1},{"name":"Bangladesh","released":true,"files":359,"mb":21.7,"dropped":0,"first":"2023-12-12","last":"2026-07-08","scripts":1,"months":{"2023-12":6,"2024-01":3,"2024-05":47,"2025-01":2,"2025-05":1,"2026-07":300},"scriptMonths":["2025-01"],"activeMonths":6,"firstScript":"2025-01-02","lastScript":"2025-01-02","years":"2018","types":"Legislative","unit":"Polling Station","unitsPerYear":"40,000","polygonYears":"All","geoCoverage":".991","source":"","partial":false,"lsage":false},{"name":"Barbados","released":true,"files":3,"mb":0.1,"dropped":0,"first":"2026-07-23","last":"2026-07-23","scripts":1,"months":{"2026-07":3},"scriptMonths":["2026-07"],"activeMonths":1,"firstScript":"2026-07-23","lastScript":"2026-07-23","years":"2022","types":"Legislative","unit":"Constituency","unitsPerYear":"30","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Belarus","released":false,"files":3,"mb":0.4,"dropped":0,"first":"2026-07-24","last":"2026-07-24","scripts":1,"months":{"2026-07":3},"scriptMonths":["2026-07"],"activeMonths":1,"firstScript":"2026-07-24","lastScript":"2026-07-24"},{"name":"Belgium","released":true,"files":8,"mb":215.0,"dropped":0,"first":"2023-05-25","last":"2025-02-27","scripts":1,"months":{"2023-05":1,"2024-03":5,"2025-01":1,"2025-02":1},"scriptMonths":["2025-02"],"activeMonths":4,"firstScript":"2025-02-27","lastScript":"2025-02-27","years":"2014, 2019, 2024","types":"Legislative","unit":"Municipality (gemeente)","unitsPerYear":"590","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Belize","released":true,"files":3,"mb":2.9,"dropped":0,"first":"2026-07-17","last":"2026-07-17","scripts":0,"months":{"2026-07":3},"scriptMonths":[],"activeMonths":1,"years":"1984 to 2020","types":"Legislative","unit":"Constituency","unitsPerYear":"30","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Benin","released":true,"files":6,"mb":2.2,"dropped":0,"first":"2026-07-24","last":"2026-07-24","scripts":1,"months":{"2026-07":6},"scriptMonths":["2026-07"],"activeMonths":1,"firstScript":"2026-07-24","lastScript":"2026-07-24","years":"2023","types":"Legislative","unit":"Constituency","unitsPerYear":"24","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Bhutan","released":true,"files":19,"mb":16.4,"dropped":0,"first":"2024-06-04","last":"2025-01-22","scripts":2,"months":{"2024-06":16,"2025-01":3},"scriptMonths":["2024-06","2025-01"],"activeMonths":2,"firstScript":"2024-06-05","lastScript":"2025-01-02","years":"2018","types":"Legislative","unit":"Polling Station","unitsPerYear":"865","polygonYears":"All","geoCoverage":".999","source":"","partial":false,"lsage":false},{"name":"Bolivia","released":true,"files":13,"mb":63.0,"dropped":0,"first":"2023-11-09","last":"2025-01-02","scripts":1,"months":{"2023-11":11,"2025-01":2},"scriptMonths":["2025-01"],"activeMonths":2,"firstScript":"2025-01-02","lastScript":"2025-01-02","years":"2019, 2020, 2025","types":"Legislative, Presidential","unit":"Polling Station","unitsPerYear":"68,000 (geocode level: 6,600)","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Bosnia and Herzegovina","released":true,"files":20,"mb":30.9,"dropped":0,"first":"2023-06-24","last":"2025-01-15","scripts":3,"months":{"2023-06":1,"2024-03":15,"2024-05":1,"2024-10":1,"2025-01":2},"scriptMonths":["2023-06","2024-03","2025-01"],"activeMonths":5,"firstScript":"2023-06-24","lastScript":"2025-01-15","years":"2018, 2022","types":"Legislative","unit":"Polling Station","unitsPerYear":"3,000","polygonYears":"All","geoCoverage":".999","source":"","partial":false,"lsage":false},{"name":"Botswana","released":true,"files":7,"mb":0.3,"dropped":8,"first":"2024-01-11","last":"2024-06-03","scripts":1,"months":{"2024-01":6,"2024-06":1},"scriptMonths":["2024-01"],"activeMonths":2,"firstScript":"2024-01-11","lastScript":"2024-01-11","years":"2014, 2019","types":"Legislative","unit":"Parliamentary Constituency","unitsPerYear":"57","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Brazil","released":true,"files":151,"mb":13968.9,"dropped":60,"first":"2022-03-17","last":"2026-07-11","scripts":4,"months":{"2022-03":30,"2022-04":29,"2022-05":29,"2022-11":1,"2023-03":2,"2023-04":29,"2023-06":1,"2023-11":18,"2024-06":1,"2025-01":2,"2025-08":1,"2025-09":4,"2026-07":4},"scriptMonths":["2023-11","2025-08","2026-07"],"activeMonths":13,"firstScript":"2023-11-02","lastScript":"2026-07-11","years":"2014, 2018, 2022","types":"Legislative, Presidential","unit":"Polling Station","unitsPerYear":"93,000","polygonYears":"All","geoCoverage":".989","source":"","partial":false,"lsage":false},{"name":"Bulgaria","released":true,"files":39443,"mb":984.1,"dropped":34436,"first":"2022-09-27","last":"2025-01-02","scripts":1,"months":{"2022-09":1,"2022-10":10948,"2023-03":1,"2023-04":9507,"2023-07":1,"2023-12":15,"2024-05":3,"2024-06":9504,"2024-10":9455,"2024-12":6,"2025-01":2},"scriptMonths":["2025-01"],"activeMonths":11,"firstScript":"2025-01-02","lastScript":"2025-01-02","years":"2013 to 2026","types":"Legislative, Presidential","unit":"Polling Station","unitsPerYear":"12,000","polygonYears":"2022, 2023, 2026","geoCoverage":".999","source":"","partial":false,"lsage":false},{"name":"Cabo Verde","released":true,"files":6,"mb":1.7,"dropped":0,"first":"2025-01-02","last":"2026-07-15","scripts":1,"months":{"2025-01":4,"2026-07":2},"scriptMonths":["2025-01"],"activeMonths":2,"firstScript":"2025-01-02","lastScript":"2025-01-02","years":"2021","types":"Presidential","unit":"Polling Station","unitsPerYear":"1,000","polygonYears":"All","geoCoverage":".966","source":"","partial":false,"lsage":false},{"name":"Cambodia","released":true,"files":3,"mb":15.7,"dropped":0,"first":"2026-07-24","last":"2026-07-24","scripts":1,"months":{"2026-07":3},"scriptMonths":["2026-07"],"activeMonths":1,"firstScript":"2026-07-24","lastScript":"2026-07-24","years":"2013","types":"Legislative","unit":"Commune","unitsPerYear":"1,600","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Canada","released":true,"files":1789,"mb":12917.9,"dropped":2103,"first":"2022-02-15","last":"2025-11-19","scripts":2,"months":{"2022-02":678,"2022-03":13,"2023-01":323,"2023-04":1,"2023-05":44,"2023-08":5,"2023-11":1,"2024-07":1,"2025-05":30,"2025-10":686,"2025-11":7},"scriptMonths":["2025-05","2025-11"],"activeMonths":11,"firstScript":"2025-05-21","lastScript":"2025-11-18","years":"1997 to 2021","types":"Legislative, Presidential","unit":"Polling Station","unitsPerYear":"70,000","polygonYears":">= 2000","geoCoverage":".990","source":"","partial":false,"lsage":true},{"name":"Chile","released":true,"files":28,"mb":1863.6,"dropped":0,"first":"2022-12-21","last":"2025-05-18","scripts":1,"months":{"2022-12":3,"2023-02":1,"2023-04":4,"2023-09":1,"2023-10":4,"2023-11":11,"2024-05":1,"2024-06":1,"2025-01":1,"2025-05":1},"scriptMonths":["2025-05"],"activeMonths":10,"firstScript":"2025-05-18","lastScript":"2025-05-18","years":"2013, 2017, 2021","types":"Legislative, Presidential","unit":"Polling Station","unitsPerYear":"90,000 (geocode level: 7,000)","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":true},{"name":"Colombia","released":true,"files":49,"mb":781.1,"dropped":9,"first":"2023-11-09","last":"2025-01-02","scripts":1,"months":{"2023-11":38,"2024-03":4,"2024-05":4,"2024-06":1,"2025-01":2},"scriptMonths":["2025-01"],"activeMonths":5,"firstScript":"2025-01-02","lastScript":"2025-01-02","years":"2018, 2026","types":"Legislative","unit":"Polling Station","unitsPerYear":"102,000 (ballot boxes; 11,000 unique places)","polygonYears":"All","geoCoverage":".993","source":"","partial":false,"lsage":false},{"name":"Costa Rica","released":true,"files":15,"mb":19.3,"dropped":33,"first":"2022-10-19","last":"2025-03-12","scripts":1,"months":{"2022-10":1,"2023-06":1,"2023-11":8,"2024-05":1,"2025-01":3,"2025-03":1},"scriptMonths":["2025-01"],"activeMonths":6,"firstScript":"2025-01-23","lastScript":"2025-01-23","years":"2018, 2022","types":"Legislative, Presidential","unit":"Polling Station","unitsPerYear":"2,101","polygonYears":"All","geoCoverage":".999","source":"","partial":false,"lsage":false},{"name":"Croatia","released":true,"files":100,"mb":95.9,"dropped":508,"first":"2023-06-23","last":"2025-09-30","scripts":1,"months":{"2023-06":2,"2023-11":10,"2024-04":14,"2024-05":4,"2024-06":3,"2024-07":52,"2024-08":2,"2025-03":4,"2025-04":4,"2025-05":4,"2025-09":1},"scriptMonths":["2025-09"],"activeMonths":11,"firstScript":"2025-09-30","lastScript":"2025-09-30","years":"2011 to 2025","types":"Legislative, Presidential","unit":"Polling Station","unitsPerYear":"6,100","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":true},{"name":"Cyprus","released":true,"files":7,"mb":4.0,"dropped":0,"first":"2024-06-11","last":"2025-01-06","scripts":1,"months":{"2024-06":5,"2025-01":2},"scriptMonths":["2025-01"],"activeMonths":2,"firstScript":"2025-01-06","lastScript":"2025-01-06","years":"2001 to 2026","types":"Legislative, Presidential","unit":"Polling Station","unitsPerYear":"1,000 (geocode leve: 400)","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Czechia","released":true,"files":129,"mb":196.8,"dropped":38,"first":"2022-10-04","last":"2026-07-13","scripts":1,"months":{"2022-10":5,"2023-01":13,"2023-02":49,"2023-04":4,"2023-06":2,"2023-10":4,"2023-11":2,"2024-05":1,"2024-06":1,"2025-01":1,"2025-10":42,"2026-07":5},"scriptMonths":["2025-01"],"activeMonths":12,"firstScript":"2025-01-22","lastScript":"2025-01-22","years":"2002 to 2021","types":"Legislative","unit":"Election Precinct (okrsek)","unitsPerYear":"14,800","polygonYears":"2017, 2021","geoCoverage":".989","source":"","partial":false,"lsage":false},{"name":"Democratic Republic of the Congo","released":true,"files":6,"mb":44.0,"dropped":0,"first":"2025-05-14","last":"2025-05-15","scripts":1,"months":{"2025-05":6},"scriptMonths":["2025-05"],"activeMonths":1,"firstScript":"2025-05-15","lastScript":"2025-05-15","years":"2023","types":"Presidential","unit":"Polling Station","unitsPerYear":"20,000","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Denmark","released":true,"files":16,"mb":47.7,"dropped":0,"first":"2023-06-11","last":"2025-07-14","scripts":3,"months":{"2023-06":1,"2023-09":4,"2025-02":4,"2025-03":5,"2025-07":2},"scriptMonths":["2023-09","2025-07"],"activeMonths":5,"firstScript":"2023-09-25","lastScript":"2025-07-14","years":"2011 to 2026","types":"Legislative","unit":"Polling Station","unitsPerYear":"1,300","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":true},{"name":"Dominica","released":true,"files":48,"mb":0.3,"dropped":0,"first":"2024-06-04","last":"2026-07-11","scripts":1,"months":{"2024-06":2,"2025-01":2,"2026-07":44},"scriptMonths":["2025-01"],"activeMonths":3,"firstScript":"2025-01-06","lastScript":"2025-01-06","years":"2019, 2022","types":"Legislative","unit":"Polling Station","unitsPerYear":"230","polygonYears":"All","geoCoverage":".986","source":"","partial":false,"lsage":false},{"name":"Dominican Republic","released":true,"files":33,"mb":132.6,"dropped":0,"first":"2023-11-17","last":"2025-03-12","scripts":1,"months":{"2023-11":1,"2024-05":17,"2024-06":1,"2024-12":11,"2025-01":2,"2025-03":1},"scriptMonths":["2025-01"],"activeMonths":6,"firstScript":"2025-01-06","lastScript":"2025-01-06","years":"2000 to 2024","types":"Legislative, Presidential","unit":"Polling Station","unitsPerYear":"12,000","polygonYears":"!(2000, 2010, 2016)","geoCoverage":".995","source":"","partial":false,"lsage":false},{"name":"Ecuador","released":true,"files":91,"mb":355.4,"dropped":33,"first":"2023-11-17","last":"2026-07-02","scripts":2,"months":{"2023-11":28,"2024-03":52,"2024-06":1,"2025-01":8,"2026-07":2},"scriptMonths":["2023-11","2025-01"],"activeMonths":5,"firstScript":"2023-11-18","lastScript":"2025-01-07","years":"2002 to 2025","types":"Legislative, Presidential","unit":"Parish","unitsPerYear":"1,220","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Egypt","released":true,"files":12,"mb":221.9,"dropped":0,"first":"2025-05-14","last":"2026-03-30","scripts":3,"months":{"2025-05":11,"2026-03":1},"scriptMonths":["2025-05"],"activeMonths":2,"firstScript":"2025-05-14","lastScript":"2025-05-15","years":"2014","types":"Presidential","unit":"Polling Station","unitsPerYear":"14,000","polygonYears":"All","geoCoverage":".95","source":"","partial":false,"lsage":false},{"name":"El Salvador","released":true,"files":14,"mb":6.4,"dropped":0,"first":"2024-01-22","last":"2025-01-07","scripts":1,"months":{"2024-01":11,"2025-01":3},"scriptMonths":["2025-01"],"activeMonths":2,"firstScript":"2025-01-07","lastScript":"2025-01-07","years":"2014, 2018","types":"Legislative, Presidential","unit":"Polling Station","unitsPerYear":"1,600","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Estonia","released":true,"files":15,"mb":13.0,"dropped":312,"first":"2023-12-15","last":"2025-01-07","scripts":1,"months":{"2023-12":2,"2024-02":8,"2024-05":3,"2024-06":1,"2025-01":1},"scriptMonths":["2024-05"],"activeMonths":5,"firstScript":"2024-05-29","lastScript":"2024-05-29","years":"2015, 2019","types":"Legislative","unit":"Polling Station","unitsPerYear":"500","polygonYears":"2019","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Fiji","released":true,"files":13,"mb":6.5,"dropped":0,"first":"2023-08-21","last":"2025-01-07","scripts":6,"months":{"2023-08":10,"2024-05":1,"2025-01":2},"scriptMonths":["2023-08","2025-01"],"activeMonths":3,"firstScript":"2023-08-21","lastScript":"2025-01-07","years":"2022","types":"Legislative","unit":"Polling Station","unitsPerYear":"991","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Finland","released":true,"files":33,"mb":534.8,"dropped":68,"first":"2023-05-15","last":"2025-03-12","scripts":3,"months":{"2023-05":2,"2023-06":1,"2023-09":10,"2023-10":6,"2024-01":2,"2024-02":2,"2024-06":3,"2024-12":4,"2025-03":3},"scriptMonths":["2023-10","2025-03"],"activeMonths":9,"firstScript":"2023-10-25","lastScript":"2025-03-12","years":"2011 to 2024","types":"Legislative, Presidential","unit":"Voting Districts (2019), Municipality","unitsPerYear":"1,900 (2019); 310 (>= 2015)","polygonYears":">= 2015","geoCoverage":".996","source":"","partial":false,"lsage":false},{"name":"France","released":true,"files":138,"mb":15881.0,"dropped":501,"first":"2022-05-09","last":"2025-03-17","scripts":3,"months":{"2022-05":58,"2023-10":47,"2024-08":1,"2024-12":10,"2025-01":12,"2025-03":10},"scriptMonths":["2025-01","2025-03"],"activeMonths":6,"firstScript":"2025-01-02","lastScript":"2025-03-17","years":"2002 to 2024","types":"Legislative, Presidential","unit":"Polling Station","unitsPerYear":"70,000 (> 2017); 35,000 (<=2017)","polygonYears":"All","geoCoverage":".95 (>= 2022); .988 (<= 2017)","source":"","partial":false,"lsage":true},{"name":"Gambia","released":true,"files":4,"mb":1.2,"dropped":0,"first":"2026-07-15","last":"2026-07-15","scripts":0,"months":{"2026-07":4},"scriptMonths":[],"activeMonths":1,"years":"2021","types":"Presidential","unit":"Constituency","unitsPerYear":"53","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Georgia","released":true,"files":127,"mb":29.6,"dropped":0,"first":"2023-11-27","last":"2025-03-12","scripts":2,"months":{"2023-11":15,"2024-02":9,"2024-03":10,"2024-12":90,"2025-01":2,"2025-03":1},"scriptMonths":["2023-11","2025-01"],"activeMonths":6,"firstScript":"2023-11-27","lastScript":"2025-01-07","years":"2012 to 2024","types":"Legislative","unit":"Polling Station","unitsPerYear":"2,000","polygonYears":"All","geoCoverage":".985","source":"","partial":false,"lsage":false},{"name":"Germany","released":true,"files":153,"mb":386.0,"dropped":251,"first":"2022-09-01","last":"2026-08-03","scripts":3,"months":{"2022-09":2,"2023-06":65,"2023-09":43,"2023-10":17,"2024-05":1,"2024-12":3,"2025-04":4,"2025-05":1,"2025-10":2,"2026-06":2,"2026-08":13},"scriptMonths":["2026-06","2026-08"],"activeMonths":11,"firstScript":"2026-06-30","lastScript":"2026-08-03","years":"1983 to 2025","types":"Legislative","unit":"Polling Station","unitsPerYear":"80,000 (geocode level: 11,000)","polygonYears":">= 1998","geoCoverage":".989","source":"","partial":false,"lsage":false},{"name":"Ghana","released":true,"files":4,"mb":0.2,"dropped":8,"first":"2024-04-07","last":"2024-06-03","scripts":1,"months":{"2024-04":3,"2024-06":1},"scriptMonths":["2024-04"],"activeMonths":2,"firstScript":"2024-04-08","lastScript":"2024-04-08","years":"2012, 2016, 2020","types":"Legislative, Presidential","unit":"Parliamentary Constituency","unitsPerYear":"275","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Greece","released":true,"files":493,"mb":289.5,"dropped":0,"first":"2023-06-20","last":"2025-03-25","scripts":1,"months":{"2023-06":285,"2023-10":75,"2025-03":133},"scriptMonths":["2025-03"],"activeMonths":3,"firstScript":"2025-03-24","lastScript":"2025-03-24","years":"2012 to 2023","types":"Legislative","unit":"Polling Station","unitsPerYear":"20,000","polygonYears":"All","geoCoverage":".973","source":"","partial":false,"lsage":false},{"name":"Greenland","released":true,"files":8,"mb":125.2,"dropped":0,"first":"2024-05-27","last":"2025-03-13","scripts":2,"months":{"2024-05":2,"2024-10":1,"2025-03":5},"scriptMonths":["2025-03"],"activeMonths":3,"firstScript":"2025-03-13","lastScript":"2025-03-13","years":"2002 to 2022","types":"Legislative","unit":"Settlements","unitsPerYear":"72","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Grenada","released":true,"files":3,"mb":2.0,"dropped":0,"first":"2026-07-23","last":"2026-07-23","scripts":1,"months":{"2026-07":3},"scriptMonths":["2026-07"],"activeMonths":1,"firstScript":"2026-07-23","lastScript":"2026-07-23","years":"2022","types":"Legislative","unit":"Constituency","unitsPerYear":"15","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Guatemala","released":true,"files":396,"mb":45.5,"dropped":0,"first":"2023-06-29","last":"2025-01-07","scripts":1,"months":{"2023-06":366,"2023-08":13,"2024-01":14,"2024-05":1,"2025-01":2},"scriptMonths":["2025-01"],"activeMonths":5,"firstScript":"2025-01-07","lastScript":"2025-01-07","years":"2023","types":"Legislative","unit":"Polling Station","unitsPerYear":"24,000 (geocode level: 3,500)","polygonYears":"All","geoCoverage":".928","source":"","partial":false,"lsage":false},{"name":"Guinea-Bissau","released":false,"files":4,"mb":3.5,"dropped":0,"first":"2026-07-24","last":"2026-07-24","scripts":0,"months":{"2026-07":4},"scriptMonths":[],"activeMonths":1},{"name":"Guyana","released":true,"files":26,"mb":2.1,"dropped":0,"first":"2024-01-04","last":"2025-01-22","scripts":1,"months":{"2024-01":23,"2024-05":1,"2025-01":2},"scriptMonths":["2025-01"],"activeMonths":3,"firstScript":"2025-01-22","lastScript":"2025-01-22","years":"2015","types":"Legislative","unit":"Polling Station","unitsPerYear":"2,000","polygonYears":"All","geoCoverage":".999","source":"","partial":false,"lsage":false},{"name":"Honduras","released":true,"files":7,"mb":6.7,"dropped":0,"first":"2024-06-04","last":"2025-01-07","scripts":1,"months":{"2024-06":4,"2025-01":3},"scriptMonths":["2025-01"],"activeMonths":2,"firstScript":"2025-01-07","lastScript":"2025-01-07","years":"2021","types":"Legislative, Presidential","unit":"Polling Station","unitsPerYear":"18,300 (geocode level: 5,700)","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Hong Kong","released":true,"files":10,"mb":0.4,"dropped":0,"first":"2024-05-31","last":"2025-01-07","scripts":1,"months":{"2024-05":8,"2025-01":2},"scriptMonths":["2025-01"],"activeMonths":2,"firstScript":"2025-01-07","lastScript":"2025-01-07","years":"2016, 2021","types":"Legislative","unit":"Polling Station","unitsPerYear":"(2021: 650, 2016: 100)","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Hungary","released":true,"files":73,"mb":357.6,"dropped":63,"first":"2022-04-21","last":"2026-07-11","scripts":3,"months":{"2022-04":1,"2023-06":1,"2023-10":13,"2023-11":1,"2024-05":1,"2024-12":2,"2025-01":1,"2025-03":9,"2025-04":32,"2025-05":6,"2026-07":6},"scriptMonths":["2025-05","2026-07"],"activeMonths":11,"firstScript":"2025-05-13","lastScript":"2026-07-11","years":"2014, 2018, 2022, 2026","types":"Legislative","unit":"Polling Station","unitsPerYear":"10,000","polygonYears":"All","geoCoverage":".999","source":"","partial":false,"lsage":false},{"name":"Iceland","released":true,"files":23,"mb":6.4,"dropped":6,"first":"2023-06-17","last":"2024-12-20","scripts":1,"months":{"2023-06":8,"2023-11":1,"2024-05":1,"2024-06":5,"2024-12":8},"scriptMonths":["2024-12"],"activeMonths":5,"firstScript":"2024-12-20","lastScript":"2024-12-20","years":"1959 to 2021","types":"Legislative, Presidential","unit":"Parliamentary Constituency","unitsPerYear":"(8 < 2003, 6  >= 2003)","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"India","released":true,"files":8883,"mb":13252.5,"dropped":77,"first":"2023-10-10","last":"2026-01-05","scripts":8,"months":{"2023-10":5719,"2023-11":1,"2023-12":889,"2024-01":1,"2024-04":1,"2024-05":1514,"2024-06":175,"2024-07":577,"2024-08":3,"2026-01":3},"scriptMonths":["2023-10","2024-07"],"activeMonths":10,"firstScript":"2023-10-12","lastScript":"2024-07-24","years":"2019","types":"Legislative","unit":"Polling Station","unitsPerYear":"867,000","polygonYears":"All","geoCoverage":".944","source":"","partial":false,"lsage":false},{"name":"Indonesia","released":true,"files":80,"mb":410.2,"dropped":81,"first":"2023-12-10","last":"2025-01-11","scripts":2,"months":{"2023-12":74,"2024-06":1,"2025-01":5},"scriptMonths":["2025-01"],"activeMonths":3,"firstScript":"2025-01-10","lastScript":"2025-01-10","years":"2019","types":"Legislative, Presidential","unit":"Polling Station","unitsPerYear":"800,000 (geocode level: 80,000)","polygonYears":"All","geoCoverage":".997","source":"","partial":false,"lsage":false},{"name":"Iran","released":true,"files":13,"mb":0.5,"dropped":0,"first":"2024-01-23","last":"2025-01-07","scripts":1,"months":{"2024-01":10,"2024-06":1,"2025-01":2},"scriptMonths":["2025-01"],"activeMonths":3,"firstScript":"2025-01-07","lastScript":"2025-01-07","years":"2017","types":"Presidential","unit":"City","unitsPerYear":"380","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Iraq","released":true,"files":226,"mb":34.0,"dropped":0,"first":"2024-06-09","last":"2026-07-14","scripts":12,"months":{"2024-06":37,"2024-08":1,"2026-07":188},"scriptMonths":["2024-06","2026-07"],"activeMonths":3,"firstScript":"2024-06-09","lastScript":"2026-07-14","years":"2021","types":"Legislative","unit":"Constituency","unitsPerYear":"92","polygonYears":"All","geoCoverage":".902","source":"","partial":false,"lsage":false},{"name":"Ireland","released":true,"files":25,"mb":5.9,"dropped":0,"first":"2023-03-31","last":"2026-07-13","scripts":1,"months":{"2023-03":6,"2023-04":6,"2023-06":7,"2023-11":2,"2024-05":1,"2024-06":1,"2024-12":1,"2026-07":1},"scriptMonths":["2024-12"],"activeMonths":8,"firstScript":"2024-12-21","lastScript":"2024-12-21","years":"2002 to 2020","types":"Legislative","unit":"Parliamentary Constituency","unitsPerYear":"40","polygonYears":"2016, 2020","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Israel","released":true,"files":32,"mb":45.1,"dropped":0,"first":"2023-07-10","last":"2025-01-07","scripts":1,"months":{"2023-07":9,"2023-11":16,"2024-05":6,"2025-01":1},"scriptMonths":["2024-05"],"activeMonths":4,"firstScript":"2024-05-06","lastScript":"2024-05-06","years":"2006 to 2022","types":"Legislative","unit":"Polling Station","unitsPerYear":"11,000","polygonYears":"2020, 2021","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Italy","released":true,"files":61,"mb":215.6,"dropped":109,"first":"2022-01-12","last":"2025-01-22","scripts":2,"months":{"2022-01":7,"2022-02":16,"2022-07":6,"2022-08":3,"2022-09":14,"2023-04":2,"2023-06":1,"2023-07":1,"2023-10":9,"2024-05":1,"2025-01":1},"scriptMonths":["2023-10","2025-01"],"activeMonths":11,"firstScript":"2023-10-27","lastScript":"2025-01-22","years":"1953 to 2022","types":"Legislative","unit":"Municipality (commune)","unitsPerYear":"8,000","polygonYears":">= 2002","geoCoverage":".96","source":"","partial":false,"lsage":false},{"name":"Ivory Coast","released":true,"files":19,"mb":43.7,"dropped":0,"first":"2026-07-19","last":"2026-07-19","scripts":3,"months":{"2026-07":19},"scriptMonths":["2026-07"],"activeMonths":1,"firstScript":"2026-07-19","lastScript":"2026-07-19","years":"2025","types":"Legislative","unit":"Constituency","unitsPerYear":"200","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Jamaica","released":true,"files":19,"mb":21.6,"dropped":0,"first":"2024-06-12","last":"2025-01-07","scripts":2,"months":{"2024-06":17,"2025-01":2},"scriptMonths":["2024-06","2025-01"],"activeMonths":2,"firstScript":"2024-06-12","lastScript":"2025-01-07","years":"2007, 2011, 2016, 2020","types":"Legislative","unit":"Polling Station","unitsPerYear":"6,500","polygonYears":"All","geoCoverage":".965","source":"","partial":false,"lsage":false},{"name":"Japan","released":true,"files":7780,"mb":16738.6,"dropped":1286,"first":"2022-07-18","last":"2024-12-17","scripts":3,"months":{"2022-07":15,"2023-01":4,"2023-05":3,"2023-06":2,"2023-09":475,"2023-10":7177,"2023-11":1,"2024-05":1,"2024-06":3,"2024-12":99},"scriptMonths":["2023-09","2023-10","2024-12"],"activeMonths":10,"firstScript":"2023-09-28","lastScript":"2024-12-17","years":"2009 to 2026","types":"Legislative","unit":"Municipality (市区町村)","unitsPerYear":"2,000","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Jordan","released":false,"files":9,"mb":16.6,"dropped":0,"first":"2025-05-14","last":"2026-07-13","scripts":0,"months":{"2025-05":2,"2026-07":7},"scriptMonths":[],"activeMonths":2},{"name":"Kenya","released":true,"files":9,"mb":10.0,"dropped":10937,"first":"2022-09-16","last":"2026-04-24","scripts":1,"months":{"2022-09":1,"2025-01":5,"2026-04":3},"scriptMonths":["2025-01"],"activeMonths":3,"firstScript":"2025-01-14","lastScript":"2025-01-14","years":"2022","types":"Presidential","unit":"Polling Station","unitsPerYear":"46,000","polygonYears":"All","geoCoverage":".996","source":"","partial":false,"lsage":false},{"name":"Kosovo","released":true,"files":28,"mb":38.2,"dropped":0,"first":"2023-12-07","last":"2025-01-07","scripts":1,"months":{"2023-12":25,"2024-05":1,"2025-01":2},"scriptMonths":["2025-01"],"activeMonths":3,"firstScript":"2025-01-07","lastScript":"2025-01-07","years":"2017, 2019, 2021, 2025, 2026","types":"Legislative","unit":"Polling Station","unitsPerYear":"2,500","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Kuwait","released":false,"files":2,"mb":0.0,"dropped":0,"first":"2026-07-24","last":"2026-07-24","scripts":0,"months":{"2026-07":2},"scriptMonths":[],"activeMonths":1},{"name":"Kyrgyzstan","released":true,"files":29,"mb":18.8,"dropped":0,"first":"2025-05-20","last":"2026-07-24","scripts":11,"months":{"2025-05":25,"2025-08":2,"2026-07":2},"scriptMonths":["2025-05","2026-07"],"activeMonths":3,"firstScript":"2025-05-20","lastScript":"2026-07-24","years":"2015 to 2025","types":"Legislative, Presidential","unit":"Polling Station","unitsPerYear":"2,500","polygonYears":">= 2017","geoCoverage":".975","source":"","partial":false,"lsage":false},{"name":"Latvia","released":true,"files":20,"mb":5.3,"dropped":0,"first":"2023-10-29","last":"2025-01-22","scripts":1,"months":{"2023-10":14,"2024-05":4,"2025-01":2},"scriptMonths":["2025-01"],"activeMonths":3,"firstScript":"2025-01-22","lastScript":"2025-01-22","years":"2014, 2018, 2022","types":"Legislative","unit":"Polling Station","unitsPerYear":"2,000","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Lebanon","released":true,"files":378,"mb":105.5,"dropped":25,"first":"2023-06-17","last":"2026-07-26","scripts":2,"months":{"2023-06":1,"2023-07":23,"2023-08":2,"2024-01":1,"2024-06":341,"2024-08":7,"2025-01":1,"2026-07":2},"scriptMonths":["2026-07"],"activeMonths":8,"firstScript":"2026-07-26","lastScript":"2026-07-26","years":"2018, 2022","types":"Legislative","unit":"Polling Station","unitsPerYear":"6,800","polygonYears":"All","geoCoverage":".998","source":"","partial":false,"lsage":false},{"name":"Lesotho","released":true,"files":479,"mb":31.8,"dropped":0,"first":"2024-01-09","last":"2025-01-09","scripts":1,"months":{"2024-01":477,"2024-05":1,"2025-01":1},"scriptMonths":["2025-01"],"activeMonths":3,"firstScript":"2025-01-09","lastScript":"2025-01-09","years":"2017, 2022","types":"Legislative","unit":"Parliamentary Constituency","unitsPerYear":"80 (geocode level: 10)","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Liberia","released":true,"files":219,"mb":51.4,"dropped":0,"first":"2026-07-15","last":"2026-07-15","scripts":33,"months":{"2026-07":219},"scriptMonths":["2026-07"],"activeMonths":1,"firstScript":"2026-07-15","lastScript":"2026-07-15","years":"2011, 2017, 2023","types":"Presidential","unit":"Polling Station","unitsPerYear":"5,200","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Libya","released":false,"files":7,"mb":28.5,"dropped":8,"first":"2025-05-22","last":"2025-05-23","scripts":2,"months":{"2025-05":7},"scriptMonths":["2025-05"],"activeMonths":1,"firstScript":"2025-05-22","lastScript":"2025-05-23"},{"name":"Liechtenstein","released":true,"files":3,"mb":0.3,"dropped":0,"first":"2025-05-13","last":"2025-05-13","scripts":1,"months":{"2025-05":3},"scriptMonths":["2025-05"],"activeMonths":1,"firstScript":"2025-05-13","lastScript":"2025-05-13","years":"2001 to 2025","types":"Legislative","unit":"Municipality","unitsPerYear":"11","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Lithuania","released":true,"files":32,"mb":56.1,"dropped":18,"first":"2023-12-04","last":"2026-07-09","scripts":1,"months":{"2023-12":14,"2024-07":10,"2024-12":6,"2025-03":1,"2026-07":1},"scriptMonths":["2026-07"],"activeMonths":5,"firstScript":"2026-07-09","lastScript":"2026-07-09","years":"2016 to 2024","types":"Legislative, Presidential","unit":"Precinct (apylinkės)","unitsPerYear":"2,000","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Luxembourg","released":true,"files":5,"mb":1.1,"dropped":0,"first":"2024-06-12","last":"2026-07-24","scripts":2,"months":{"2024-06":2,"2026-07":3},"scriptMonths":["2024-06","2026-07"],"activeMonths":2,"firstScript":"2024-06-12","lastScript":"2026-07-24","years":"2013, 2018, 2023","types":"Legislative","unit":"Municipality (commune)","unitsPerYear":"100-106","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Madagascar","released":true,"files":12,"mb":210.3,"dropped":0,"first":"2024-01-07","last":"2025-01-25","scripts":1,"months":{"2024-01":5,"2024-12":5,"2025-01":2},"scriptMonths":["2025-01"],"activeMonths":3,"firstScript":"2025-01-25","lastScript":"2025-01-25","years":"2018, 2023","types":"Presidential","unit":"Polling Station","unitsPerYear":"25,000","polygonYears":"All","geoCoverage":".997","source":"","partial":false,"lsage":false},{"name":"Malawi","released":true,"files":6,"mb":11.6,"dropped":0,"first":"2024-01-09","last":"2025-01-07","scripts":1,"months":{"2024-01":4,"2025-01":2},"scriptMonths":["2025-01"],"activeMonths":2,"firstScript":"2025-01-07","lastScript":"2025-01-07","years":"2019","types":"Legislative, Presidential","unit":"Polling Station","unitsPerYear":"11,000","polygonYears":"All","geoCoverage":".997","source":"","partial":false,"lsage":false},{"name":"Malaysia","released":true,"files":131,"mb":181.5,"dropped":0,"first":"2024-01-06","last":"2026-08-06","scripts":29,"months":{"2024-01":6,"2025-11":2,"2026-07":43,"2026-08":80},"scriptMonths":["2026-08"],"activeMonths":4,"firstScript":"2026-08-04","lastScript":"2026-08-06","years":"2008, 2013, 2018, 2022","types":"Legislative","unit":"Polling District","unitsPerYear":"6,300","polygonYears":"All","geoCoverage":".97","source":"ElectionData.MY; Tindak Malaysia","partial":false,"lsage":false},{"name":"Maldives","released":true,"files":13,"mb":17.1,"dropped":0,"first":"2025-03-10","last":"2025-05-18","scripts":2,"months":{"2025-03":8,"2025-05":5},"scriptMonths":["2025-05"],"activeMonths":2,"firstScript":"2025-05-18","lastScript":"2025-05-18","years":"2024","types":"Legislative","unit":"Ballot Box","unitsPerYear":"8,800","polygonYears":"All","geoCoverage":".986","source":"","partial":false,"lsage":false},{"name":"Malta","released":false,"files":1,"mb":0.0,"dropped":0,"first":"2026-07-15","last":"2026-07-15","scripts":0,"months":{"2026-07":1},"scriptMonths":[],"activeMonths":1},{"name":"Mauritania","released":true,"files":55,"mb":12.0,"dropped":0,"first":"2024-03-27","last":"2025-05-19","scripts":1,"months":{"2024-03":51,"2025-05":4},"scriptMonths":["2025-05"],"activeMonths":2,"firstScript":"2025-05-19","lastScript":"2025-05-19","years":"2024","types":"Presidential","unit":"Polling Station","unitsPerYear":"4,500 (geocode level: 250)","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Mauritius","released":false,"files":13,"mb":2.1,"dropped":0,"first":"2023-06-24","last":"2023-06-24","scripts":0,"months":{"2023-06":13},"scriptMonths":[],"activeMonths":1},{"name":"Mexico","released":true,"files":237,"mb":2179.3,"dropped":0,"first":"2023-06-17","last":"2026-08-03","scripts":18,"months":{"2023-06":15,"2023-08":1,"2024-05":1,"2024-06":7,"2024-12":73,"2025-01":4,"2025-03":4,"2025-05":1,"2026-08":131},"scriptMonths":["2024-12","2025-01","2026-08"],"activeMonths":9,"firstScript":"2024-12-19","lastScript":"2026-08-03","years":"1991 to 2024","types":"Legislative, Presidential","unit":"Polling Station","unitsPerYear":"150,000","polygonYears":"2006, 2009, 2015, 2018, 2024","geoCoverage":".999","source":"","partial":false,"lsage":false},{"name":"Moldova","released":true,"files":15,"mb":8.0,"dropped":0,"first":"2023-11-28","last":"2026-07-13","scripts":1,"months":{"2023-11":6,"2023-12":1,"2024-05":1,"2025-01":5,"2026-07":2},"scriptMonths":["2026-07"],"activeMonths":5,"firstScript":"2026-07-13","lastScript":"2026-07-13","years":"2014 to 2025","types":"Legislative, Presidential","unit":"Polling Station","unitsPerYear":"2,000","polygonYears":"2020, 2021, 2024, 2025","geoCoverage":".999","source":"","partial":false,"lsage":false},{"name":"Mongolia","released":true,"files":9,"mb":61.2,"dropped":0,"first":"2023-12-16","last":"2026-07-24","scripts":3,"months":{"2023-12":6,"2026-07":3},"scriptMonths":["2023-12","2026-07"],"activeMonths":2,"firstScript":"2023-12-18","lastScript":"2026-07-24","years":"2021","types":"Presidential","unit":"Polling Station","unitsPerYear":"1,700 (geocode level: 1,631, 92.9% bag/horoo, rest soum/missing)","polygonYears":"All","geoCoverage":".948","source":"","partial":false,"lsage":false},{"name":"Montenegro","released":true,"files":9,"mb":4.1,"dropped":0,"first":"2024-09-14","last":"2026-07-24","scripts":2,"months":{"2024-09":4,"2025-01":2,"2026-07":3},"scriptMonths":["2025-01","2026-07"],"activeMonths":3,"firstScript":"2025-01-22","lastScript":"2026-07-24","years":"2020, 2023","types":"Legislative","unit":"Polling Station","unitsPerYear":"824-1,000","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Mozambique","released":true,"files":12,"mb":8.7,"dropped":52,"first":"2025-05-14","last":"2025-05-15","scripts":1,"months":{"2025-05":12},"scriptMonths":["2025-05"],"activeMonths":1,"firstScript":"2025-05-14","lastScript":"2025-05-14","years":"1994, 1999, 2004, 2009","types":"Legislative, Presidential","unit":"Polling Station","unitsPerYear":"4,800","polygonYears":"All","geoCoverage":".994","source":"","partial":false,"lsage":false},{"name":"Myanmar","released":true,"files":14,"mb":6.8,"dropped":10,"first":"2024-02-21","last":"2024-05-31","scripts":1,"months":{"2024-02":13,"2024-05":1},"scriptMonths":["2024-02"],"activeMonths":2,"firstScript":"2024-02-21","lastScript":"2024-02-21","years":"2010, 2015","types":"Legislative","unit":"Parliamentary Constituency","unitsPerYear":"320","polygonYears":"All","geoCoverage":".980","source":"","partial":false,"lsage":false},{"name":"Namibia","released":true,"files":10,"mb":1.0,"dropped":52,"first":"2024-01-11","last":"2025-01-07","scripts":1,"months":{"2024-01":3,"2024-04":4,"2024-06":1,"2025-01":2},"scriptMonths":["2025-01"],"activeMonths":4,"firstScript":"2025-01-07","lastScript":"2025-01-07","years":"2014, 2019","types":"Legislative, Presidential","unit":"Parliamentary Constituency","unitsPerYear":"120","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Nepal","released":true,"files":10,"mb":20.1,"dropped":6,"first":"2024-05-29","last":"2024-06-03","scripts":1,"months":{"2024-05":7,"2024-06":3},"scriptMonths":["2024-06"],"activeMonths":2,"firstScript":"2024-06-01","lastScript":"2024-06-01","years":"2017, 2021, 2026","types":"Legislative","unit":"Parliamentary Constituency","unitsPerYear":"165","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Netherlands","released":true,"files":1777,"mb":888.6,"dropped":2292,"first":"2022-01-28","last":"2025-12-06","scripts":4,"months":{"2022-01":2,"2023-06":28,"2023-11":245,"2024-05":1498,"2024-06":1,"2025-01":2,"2025-12":1},"scriptMonths":["2023-11","2024-05","2025-01"],"activeMonths":7,"firstScript":"2023-11-02","lastScript":"2025-01-07","years":"2010 to 2025","types":"Legislative","unit":"Polling Station","unitsPerYear":"400 (2017), 10,000 (others)","polygonYears":"All","geoCoverage":".999","source":"","partial":false,"lsage":false},{"name":"New Zealand","released":true,"files":802,"mb":5938.4,"dropped":0,"first":"2023-06-17","last":"2026-07-09","scripts":3,"months":{"2023-06":4,"2023-08":570,"2024-05":1,"2024-07":7,"2024-08":1,"2024-09":80,"2025-01":2,"2025-09":2,"2026-07":135},"scriptMonths":["2025-01","2026-07"],"activeMonths":9,"firstScript":"2025-01-07","lastScript":"2026-07-09","years":"1999 to 2023","types":"Legislative","unit":"Polling Station","unitsPerYear":"5,000","polygonYears":"All","geoCoverage":".999","source":"","partial":false,"lsage":false},{"name":"Nicaragua","released":true,"files":9,"mb":16.0,"dropped":0,"first":"2026-07-24","last":"2026-07-24","scripts":3,"months":{"2026-07":9},"scriptMonths":["2026-07"],"activeMonths":1,"firstScript":"2026-07-24","lastScript":"2026-07-24","years":"2001","types":"Presidential","unit":"Polling Station","unitsPerYear":"9,500","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Nigeria","released":true,"files":1570,"mb":271.4,"dropped":9,"first":"2024-04-16","last":"2024-06-07","scripts":2,"months":{"2024-04":1,"2024-05":860,"2024-06":709},"scriptMonths":["2024-06"],"activeMonths":3,"firstScript":"2024-06-01","lastScript":"2024-06-04","years":"2019","types":"Legislative","unit":"Parliamentary Constituency","unitsPerYear":"350","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"North Macedonia","released":true,"files":11,"mb":3.2,"dropped":0,"first":"2024-06-11","last":"2025-01-07","scripts":1,"months":{"2024-06":8,"2025-01":3},"scriptMonths":["2025-01"],"activeMonths":2,"firstScript":"2025-01-07","lastScript":"2025-01-07","years":"2016, 2024","types":"Legislative, Presidential","unit":"Polling Station","unitsPerYear":"3,500","polygonYears":"All","geoCoverage":".999","source":"","partial":false,"lsage":false},{"name":"Norway","released":true,"files":3472,"mb":243.7,"dropped":437,"first":"2022-12-14","last":"2025-03-13","scripts":1,"months":{"2022-12":1,"2023-06":3,"2023-11":3450,"2024-05":1,"2025-03":17},"scriptMonths":["2025-03"],"activeMonths":5,"firstScript":"2025-03-13","lastScript":"2025-03-13","years":"2009, 2013, 2017, 2021, 2025","types":"Legislative","unit":"Municipality (<= 2013), Electoral District (>= 2017)","unitsPerYear":"650 (<= 2013), 1,250 (>= 2017)","polygonYears":"All","geoCoverage":".993","source":"","partial":false,"lsage":true},{"name":"Pakistan","released":true,"files":134,"mb":559.0,"dropped":68,"first":"2023-11-18","last":"2025-01-14","scripts":4,"months":{"2023-11":115,"2024-05":9,"2025-01":10},"scriptMonths":["2025-01"],"activeMonths":3,"firstScript":"2025-01-14","lastScript":"2025-01-14","years":"2018","types":"Legislative","unit":"Polling Station","unitsPerYear":"72,000 (geocode level: 250)","polygonYears":"All","geoCoverage":"1","source":"Colin Cookman","partial":false,"lsage":false},{"name":"Palestine","released":true,"files":59,"mb":3.4,"dropped":24,"first":"2026-07-14","last":"2026-07-14","scripts":0,"months":{"2026-07":59},"scriptMonths":[],"activeMonths":1,"years":"2006","types":"Legislative","unit":"Polling Station","unitsPerYear":"1,000","polygonYears":"All","geoCoverage":".956","source":"","partial":false,"lsage":false},{"name":"Panama","released":true,"files":18,"mb":8.7,"dropped":0,"first":"2024-03-23","last":"2024-06-03","scripts":1,"months":{"2024-03":17,"2024-06":1},"scriptMonths":["2024-03"],"activeMonths":2,"firstScript":"2024-03-23","lastScript":"2024-03-23","years":"2004, 2009","types":"Legislative","unit":"District (corregimiento)","unitsPerYear":"620","polygonYears":"All","geoCoverage":".950","source":"","partial":false,"lsage":false},{"name":"Papua New Guinea","released":true,"files":3,"mb":8.2,"dropped":52,"first":"2023-08-23","last":"2023-08-24","scripts":1,"months":{"2023-08":3},"scriptMonths":["2023-08"],"activeMonths":1,"firstScript":"2023-08-24","lastScript":"2023-08-24","years":"1987 to 2017","types":"Legislative","unit":"Electorate","unitsPerYear":"100","polygonYears":"All","geoCoverage":"1","source":"Wood (2019)","partial":false,"lsage":false},{"name":"Paraguay","released":true,"files":13,"mb":59.7,"dropped":0,"first":"2023-11-08","last":"2025-01-07","scripts":1,"months":{"2023-11":11,"2025-01":2},"scriptMonths":["2025-01"],"activeMonths":2,"firstScript":"2025-01-07","lastScript":"2025-01-07","years":"2003, 2008, 2013, 2018","types":"Legislative, Presidential","unit":"Polling Station","unitsPerYear":"17,000","polygonYears":"All","geoCoverage":".999","source":"","partial":false,"lsage":false},{"name":"Peru","released":true,"files":69,"mb":2141.7,"dropped":11,"first":"2023-03-09","last":"2026-05-31","scripts":2,"months":{"2023-03":6,"2023-05":2,"2023-11":21,"2024-05":7,"2025-05":13,"2026-05":20},"scriptMonths":["2025-05"],"activeMonths":6,"firstScript":"2025-05-29","lastScript":"2025-05-30","years":"2006, 2011, 2016, 2021, 2026","types":"Legislative, Presidential","unit":"Polling Station","unitsPerYear":"150,000 (<= 2016), 83,000 (2021)","polygonYears":"2021, 2026","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Philippines","released":true,"files":138862,"mb":2278.1,"dropped":0,"first":"2023-12-06","last":"2026-07-03","scripts":12,"months":{"2023-12":107,"2024-05":34,"2024-06":58,"2025-01":1,"2025-08":2,"2026-07":138660},"scriptMonths":["2024-05","2025-08","2026-07"],"activeMonths":6,"firstScript":"2024-05-29","lastScript":"2026-07-03","years":"2022, 2025","types":"Legislative, Presidential","unit":"Polling Station","unitsPerYear":"104,000 (geocode level: 50,000)","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Poland","released":true,"files":275,"mb":406.7,"dropped":143,"first":"2023-06-17","last":"2026-07-03","scripts":7,"months":{"2023-06":125,"2023-09":104,"2023-10":5,"2023-11":1,"2024-03":8,"2024-08":1,"2025-01":16,"2025-03":3,"2025-09":6,"2026-07":6},"scriptMonths":["2023-09","2025-01"],"activeMonths":10,"firstScript":"2023-09-07","lastScript":"2025-01-09","years":"1990 to 2025","types":"Legislative, Presidential","unit":"Polling Station","unitsPerYear":"27,000","polygonYears":"All","geoCoverage":".999","source":"","partial":false,"lsage":true},{"name":"Portugal","released":true,"files":49,"mb":99.7,"dropped":121,"first":"2022-03-01","last":"2026-07-03","scripts":1,"months":{"2022-03":5,"2023-06":27,"2023-10":6,"2024-12":3,"2025-03":1,"2025-06":2,"2025-07":4,"2026-07":1},"scriptMonths":["2025-07"],"activeMonths":8,"firstScript":"2025-07-07","lastScript":"2025-07-07","years":"1976 to 2026","types":"Legislative, Presidential","unit":"Parish","unitsPerYear":"4,000","polygonYears":"All","geoCoverage":".997 (>= 2009), .950 (< 2009)","source":"","partial":false,"lsage":true},{"name":"Romania","released":true,"files":34,"mb":126.7,"dropped":23,"first":"2022-01-25","last":"2025-08-26","scripts":1,"months":{"2022-01":4,"2023-06":8,"2023-11":11,"2024-12":1,"2025-01":3,"2025-05":6,"2025-08":1},"scriptMonths":["2025-08"],"activeMonths":7,"firstScript":"2025-08-26","lastScript":"2025-08-26","years":"2014 to 2025","types":"Legislative, Presidential","unit":"Polling Station","unitsPerYear":"18,500","polygonYears":"!= 2016","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Russia","released":true,"files":38,"mb":984.3,"dropped":63,"first":"2023-06-11","last":"2025-03-12","scripts":5,"months":{"2023-06":1,"2023-08":2,"2023-09":7,"2024-03":1,"2024-05":1,"2024-06":9,"2025-01":10,"2025-02":6,"2025-03":1},"scriptMonths":["2023-09","2025-01","2025-02"],"activeMonths":9,"firstScript":"2023-09-09","lastScript":"2025-02-04","years":"2000 to 2024","types":"Legislative, Presidential","unit":"Polling Station","unitsPerYear":"95,000","polygonYears":">= 2012","geoCoverage":"1 (2012), .893 (2016, 2018)","source":"","partial":false,"lsage":false},{"name":"Saint Lucia","released":true,"files":42,"mb":9.5,"dropped":0,"first":"2026-07-20","last":"2026-07-20","scripts":2,"months":{"2026-07":42},"scriptMonths":["2026-07"],"activeMonths":1,"firstScript":"2026-07-20","lastScript":"2026-07-20","years":"2021","types":"Legislative","unit":"Polling District","unitsPerYear":"110","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Samoa","released":true,"files":38,"mb":1.9,"dropped":0,"first":"2022-07-18","last":"2026-07-19","scripts":6,"months":{"2022-07":15,"2023-08":13,"2026-07":10},"scriptMonths":["2023-08","2026-07"],"activeMonths":3,"firstScript":"2023-08-25","lastScript":"2026-07-19","years":"2025","types":"Legislative","unit":"Constituency","unitsPerYear":"50","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Senegal","released":true,"files":125,"mb":52.6,"dropped":0,"first":"2024-05-22","last":"2025-03-12","scripts":1,"months":{"2024-05":52,"2025-01":72,"2025-03":1},"scriptMonths":["2025-01"],"activeMonths":3,"firstScript":"2025-01-17","lastScript":"2025-01-17","years":"2024","types":"Legislative","unit":"Polling Station","unitsPerYear":"10,000 (incomplete data)","polygonYears":"All","geoCoverage":".996","source":"","partial":true,"lsage":false},{"name":"Serbia","released":true,"files":31,"mb":65.4,"dropped":0,"first":"2023-12-17","last":"2025-01-08","scripts":1,"months":{"2023-12":28,"2024-05":1,"2025-01":2},"scriptMonths":["2025-01"],"activeMonths":3,"firstScript":"2025-01-08","lastScript":"2025-01-08","years":"2000 to 2022","types":"Legislative, Presidential","unit":"Polling Station","unitsPerYear":"8,000","polygonYears":"2017","geoCoverage":".987","source":"","partial":false,"lsage":false},{"name":"Seychelles","released":true,"files":4,"mb":0.6,"dropped":0,"first":"2026-07-15","last":"2026-07-15","scripts":0,"months":{"2026-07":4},"scriptMonths":[],"activeMonths":1,"years":"2020","types":"Presidential","unit":"District","unitsPerYear":"26","polygonYears":"All","geoCoverage":".962","source":"","partial":false,"lsage":false},{"name":"Singapore","released":true,"files":3,"mb":0.7,"dropped":0,"first":"2024-06-12","last":"2024-06-12","scripts":1,"months":{"2024-06":3},"scriptMonths":["2024-06"],"activeMonths":1,"firstScript":"2024-06-12","lastScript":"2024-06-12","years":"2020, 2025","types":"Legislative","unit":"Constituency","unitsPerYear":"31","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Slovakia","released":true,"files":52,"mb":69.6,"dropped":2,"first":"2023-06-23","last":"2025-03-12","scripts":1,"months":{"2023-06":1,"2023-11":6,"2024-03":16,"2024-04":16,"2024-05":7,"2024-06":1,"2025-01":4,"2025-03":1},"scriptMonths":["2025-01"],"activeMonths":8,"firstScript":"2025-01-09","lastScript":"2025-01-09","years":"2016 to 2024","types":"Legislative, Presidential","unit":"Polling Station","unitsPerYear":"6,000 (geocode level: 1,500)","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Slovenia","released":true,"files":26,"mb":27.5,"dropped":0,"first":"2023-10-25","last":"2025-03-12","scripts":1,"months":{"2023-10":12,"2025-01":13,"2025-03":1},"scriptMonths":["2025-01"],"activeMonths":3,"firstScript":"2025-01-24","lastScript":"2025-01-24","years":"2012 to 2026","types":"Legislative, Presidential","unit":"Polling Station","unitsPerYear":"3,700","polygonYears":"All","geoCoverage":".995","source":"","partial":false,"lsage":false},{"name":"Solomon Islands","released":true,"files":3,"mb":1.6,"dropped":8,"first":"2023-08-24","last":"2024-05-31","scripts":1,"months":{"2023-08":1,"2024-05":2},"scriptMonths":["2024-05"],"activeMonths":2,"firstScript":"2024-05-15","lastScript":"2024-05-15","years":"2006, 2010, 2014, 2019","types":"Legislative","unit":"Parliamentary Constituency","unitsPerYear":"50","polygonYears":"All","geoCoverage":"1","source":"Wood (2019)","partial":false,"lsage":false},{"name":"South Africa","released":true,"files":8,"mb":281.0,"dropped":94,"first":"2024-06-06","last":"2026-03-10","scripts":1,"months":{"2024-06":1,"2025-01":6,"2026-03":1},"scriptMonths":["2026-03"],"activeMonths":3,"firstScript":"2026-03-10","lastScript":"2026-03-10","years":"2004 to 2024","types":"Legislative","unit":"Voting Districts","unitsPerYear":"20,000","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"South Korea","released":true,"files":114,"mb":288.1,"dropped":1791,"first":"2023-06-22","last":"2025-08-19","scripts":5,"months":{"2023-06":6,"2023-10":78,"2024-04":5,"2024-07":1,"2024-12":8,"2025-01":3,"2025-03":2,"2025-06":7,"2025-07":3,"2025-08":1},"scriptMonths":["2023-10","2024-12","2025-07","2025-08"],"activeMonths":10,"firstScript":"2023-10-22","lastScript":"2025-08-19","years":"2002 to 2025","types":"Legislative, Presidential","unit":"Polling Station","unitsPerYear":"13,000 to 34,000","polygonYears":">= 2007","geoCoverage":".99","source":"","partial":false,"lsage":true},{"name":"Spain","released":true,"files":75,"mb":957.2,"dropped":232,"first":"2023-04-03","last":"2026-08-03","scripts":3,"months":{"2023-04":4,"2023-06":20,"2023-10":12,"2023-11":10,"2024-05":1,"2025-01":14,"2025-03":2,"2025-11":11,"2026-08":1},"scriptMonths":["2025-03","2025-11"],"activeMonths":9,"firstScript":"2025-03-17","lastScript":"2025-11-15","years":"1982 to 2023","types":"Legislative","unit":"Polling Station","unitsPerYear":"36,000","polygonYears":">= 2004","geoCoverage":".998","source":"","partial":false,"lsage":true},{"name":"Sri Lanka","released":true,"files":688,"mb":272.3,"dropped":0,"first":"2024-01-09","last":"2024-08-25","scripts":2,"months":{"2024-01":310,"2024-05":377,"2024-08":1},"scriptMonths":["2024-05"],"activeMonths":3,"firstScript":"2024-05-06","lastScript":"2024-05-29","years":"2020","types":"Legislative","unit":"Polling Division","unitsPerYear":"150","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Suriname","released":true,"files":17,"mb":33.8,"dropped":0,"first":"2024-05-31","last":"2026-07-19","scripts":4,"months":{"2024-05":2,"2026-07":15},"scriptMonths":["2024-05","2026-07"],"activeMonths":2,"firstScript":"2024-05-31","lastScript":"2026-07-19","years":"2025","types":"Legislative","unit":"Polling Station","unitsPerYear":"430","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Sweden","released":true,"files":35,"mb":94.7,"dropped":29,"first":"2022-09-10","last":"2024-06-03","scripts":1,"months":{"2022-09":21,"2023-06":4,"2023-10":7,"2024-01":1,"2024-05":1,"2024-06":1},"scriptMonths":["2024-01"],"activeMonths":6,"firstScript":"2024-01-28","lastScript":"2024-01-28","years":"2006 to 2022","types":"Legislative","unit":"Electoral District","unitsPerYear":"6,100","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":true},{"name":"Switzerland","released":true,"files":419,"mb":63.0,"dropped":1023,"first":"2022-01-24","last":"2024-06-03","scripts":1,"months":{"2022-01":5,"2022-06":22,"2023-01":358,"2023-06":4,"2023-11":28,"2024-05":1,"2024-06":1},"scriptMonths":["2023-11"],"activeMonths":7,"firstScript":"2023-11-18","lastScript":"2023-11-18","years":"1971 to 2023","types":"Legislative","unit":"Municipality","unitsPerYear":"2,400","polygonYears":">= 2011","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Taiwan","released":true,"files":183,"mb":63.9,"dropped":909,"first":"2023-06-21","last":"2025-03-12","scripts":1,"months":{"2023-06":3,"2023-08":1,"2023-11":13,"2024-01":23,"2024-04":132,"2024-12":5,"2025-01":5,"2025-03":1},"scriptMonths":["2025-01"],"activeMonths":8,"firstScript":"2025-01-08","lastScript":"2025-01-08","years":"1996 to 2024","types":"Legislative, Presidential","unit":"Polling Station","unitsPerYear":"15,000","polygonYears":">= 2020","geoCoverage":".989","source":"","partial":false,"lsage":true},{"name":"Thailand","released":true,"files":412,"mb":279.4,"dropped":4,"first":"2023-04-26","last":"2024-06-03","scripts":1,"months":{"2023-04":407,"2023-12":2,"2024-05":2,"2024-06":1},"scriptMonths":["2024-05"],"activeMonths":4,"firstScript":"2024-05-29","lastScript":"2024-05-29","years":"2023, 2026","types":"Legislative","unit":"Parliamentary Constituency","unitsPerYear":"400","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Timor-Leste","released":true,"files":2,"mb":0.0,"dropped":0,"first":"2026-07-15","last":"2026-07-15","scripts":0,"months":{"2026-07":2},"scriptMonths":[],"activeMonths":1,"years":"2018","types":"Legislative","unit":"Administrative Post","unitsPerYear":"67","polygonYears":"All","geoCoverage":".97","source":"","partial":false,"lsage":false},{"name":"Trinidad and Tobago","released":true,"files":6,"mb":1.0,"dropped":0,"first":"2024-06-12","last":"2026-07-13","scripts":1,"months":{"2024-06":5,"2026-07":1},"scriptMonths":["2024-06"],"activeMonths":2,"firstScript":"2024-06-12","lastScript":"2024-06-12","years":"2015, 2020","types":"Legislative","unit":"Parliamentary Constituency","unitsPerYear":"40","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Tunisia","released":true,"files":13,"mb":34.7,"dropped":0,"first":"2023-11-25","last":"2025-01-08","scripts":1,"months":{"2023-11":9,"2024-06":1,"2025-01":3},"scriptMonths":["2025-01"],"activeMonths":3,"firstScript":"2025-01-08","lastScript":"2025-01-08","years":"2014","types":"Presidential","unit":"Polling Station","unitsPerYear":"19,000","polygonYears":"All","geoCoverage":".999","source":"","partial":false,"lsage":false},{"name":"Turkey","released":true,"files":37,"mb":487.6,"dropped":0,"first":"2023-12-15","last":"2025-03-12","scripts":4,"months":{"2023-12":11,"2024-01":6,"2024-03":17,"2024-11":1,"2025-01":1,"2025-03":1},"scriptMonths":["2024-01","2024-03"],"activeMonths":6,"firstScript":"2024-01-02","lastScript":"2024-03-22","years":"2011, 2014, 2015, 2018, 2023","types":"Legislative, Presidential","unit":"Polling Station","unitsPerYear":"190,000 (geocode level: 50,000)","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Uganda","released":true,"files":6,"mb":110.5,"dropped":5,"first":"2025-05-13","last":"2025-05-13","scripts":1,"months":{"2025-05":6},"scriptMonths":["2025-05"],"activeMonths":1,"firstScript":"2025-05-13","lastScript":"2025-05-13","years":"2006 to 2021","types":"Presidential","unit":"Polling Station","unitsPerYear":"26,000 (geocode level: 7,200)","polygonYears":"All","geoCoverage":"1","source":"Uganda Elections Data Portal","partial":false,"lsage":false},{"name":"Ukraine","released":true,"files":8,"mb":23.1,"dropped":0,"first":"2023-11-18","last":"2025-01-08","scripts":1,"months":{"2023-11":4,"2025-01":4},"scriptMonths":["2025-01"],"activeMonths":2,"firstScript":"2025-01-08","lastScript":"2025-01-08","years":"2019","types":"Legislative, Presidential","unit":"Polling Station","unitsPerYear":"30,000","polygonYears":"All","geoCoverage":".996","source":"","partial":false,"lsage":false},{"name":"United Kingdom","released":true,"files":30,"mb":1059.7,"dropped":15,"first":"2023-10-26","last":"2025-03-12","scripts":1,"months":{"2023-10":11,"2024-12":18,"2025-03":1},"scriptMonths":["2024-12"],"activeMonths":3,"firstScript":"2024-12-16","lastScript":"2024-12-16","years":"2005 to 2024","types":"Legislative","unit":"Parliamentary Constituency","unitsPerYear":"650","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":true},{"name":"United States of America","released":true,"files":14661,"mb":32876.2,"dropped":556,"first":"2022-01-03","last":"2026-08-07","scripts":94,"months":{"2022-01":84,"2022-03":14,"2022-04":14,"2022-08":21,"2022-09":42,"2022-11":29,"2023-02":453,"2023-06":1,"2024-01":321,"2024-02":1,"2024-03":1,"2024-08":2,"2024-11":53,"2024-12":77,"2025-01":80,"2025-02":65,"2025-03":133,"2025-04":56,"2025-05":2,"2026-07":3,"2026-08":13209},"scriptMonths":["2023-02","2025-04","2026-07","2026-08"],"activeMonths":21,"firstScript":"2023-02-20","lastScript":"2026-08-07","years":"2016, 2020, 2024","types":"Presidential","unit":"Precinct","unitsPerYear":"170,000","polygonYears":"All","geoCoverage":".999","source":"VEST, Joshua Metcalf, Jonathan Rodden","partial":false,"lsage":false},{"name":"Uruguay","released":true,"files":34,"mb":100.9,"dropped":0,"first":"2023-11-08","last":"2025-03-12","scripts":1,"months":{"2023-11":17,"2025-01":16,"2025-03":1},"scriptMonths":["2025-01"],"activeMonths":3,"firstScript":"2025-01-08","lastScript":"2025-01-08","years":"2014, 2019, 2024","types":"Legislative","unit":"Polling Station","unitsPerYear":"7,200","polygonYears":"All","geoCoverage":".991","source":"","partial":false,"lsage":false},{"name":"Vanuatu","released":true,"files":19,"mb":0.4,"dropped":6,"first":"2023-08-24","last":"2026-07-13","scripts":2,"months":{"2023-08":17,"2024-05":1,"2026-07":1},"scriptMonths":["2023-08","2026-07"],"activeMonths":3,"firstScript":"2023-08-24","lastScript":"2026-07-13","years":"2002 to 2020, 2025","types":"Legislative","unit":"Parliamentary Constituency","unitsPerYear":"17","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Venezuela","released":true,"files":13,"mb":21.9,"dropped":0,"first":"2023-12-08","last":"2025-01-09","scripts":1,"months":{"2023-12":10,"2025-01":3},"scriptMonths":["2025-01"],"activeMonths":2,"firstScript":"2025-01-09","lastScript":"2025-01-09","years":"2013","types":"Presidential","unit":"Polling Station","unitsPerYear":"40,000","polygonYears":"All","geoCoverage":".991","source":"","partial":false,"lsage":false},{"name":"Zambia","released":true,"files":13,"mb":2.2,"dropped":58,"first":"2023-11-18","last":"2024-06-03","scripts":1,"months":{"2023-11":8,"2024-05":3,"2024-06":2},"scriptMonths":["2024-05"],"activeMonths":3,"firstScript":"2024-05-29","lastScript":"2024-05-29","years":"2021","types":"Presidential","unit":"Parliamentary Constituency","unitsPerYear":"150","polygonYears":"All","geoCoverage":"1","source":"","partial":false,"lsage":false},{"name":"Zimbabwe","released":true,"files":19,"mb":16.6,"dropped":0,"first":"2025-05-14","last":"2025-05-23","scripts":1,"months":{"2025-05":19},"scriptMonths":["2025-05"],"activeMonths":1,"firstScript":"2025-05-23","lastScript":"2025-05-23","years":"2018","types":"Presidential","unit":"Ward","unitsPerYear":"1,900","polygonYears":"All","geoCoverage":".999","source":"","partial":false,"lsage":false}]}</script>
+  <script>
+    (function () {
+      "use strict";
+
+      var D = JSON.parse(document.getElementById("data").textContent);
+      var SVG = "http://www.w3.org/2000/svg";
+
+      function el(tag, attrs, text) {
+        var n = document.createElementNS(SVG, tag);
+        for (var k in attrs) n.setAttribute(k, attrs[k]);
+        if (text != null) n.textContent = text;
+        return n;
+      }
+
+      function esc(s) {
+        return String(s).replace(/[&<>"]/g, function (c) {
+          return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+        });
+      }
+
+      function num(n) { return n.toLocaleString("en-US"); }
+
+      var MONTHS = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"];
+
+      function prettyDate(iso) {
+        if (!iso) return "—";
+        var p = iso.split("-");
+        return (+p[2]) + " " + MONTHS[+p[1] - 1] + " " + p[0];
+      }
+
+      function prettyMonth(ym) {
+        var p = ym.split("-");
+        return MONTHS[+p[1] - 1] + " " + p[0];
+      }
+
+      function mIndex(ym) {
+        var p = ym.split("-");
+        return (+p[0]) * 12 + (+p[1]) - 1;
+      }
+
+      var M0 = mIndex(D.start), M1 = mIndex(D.end), NM = M1 - M0 + 1;
+
+      // These spans are optional: the prose may or may not quote the figures.
+      function fill(id, text) {
+        var n = document.getElementById(id);
+        if (n) n.textContent = text;
+      }
+      fill("n-files", num(D.totals.files));
+      fill("n-dropped", num(D.totals.dropped));
+      fill("asof", prettyDate(D.generated));
+
+      var svg = document.getElementById("lanes");
+      var LH = 13, P = { t: 26, r: 74, b: 10, l: 152 };
+      var W = 1000, iw = W - P.l - P.r, cw = iw / NM;
+      var detail = document.getElementById("country-detail");
+      var countEl = document.getElementById("lane-count");
+      var selName = null;
+
+      var rows = D.countries.map(function (c) {
+        var keys = Object.keys(c.months);
+        var peak = keys.reduce(function (a, k) {
+          return Math.max(a, c.months[k]);
+        }, 0);
+        var scripts = {};
+        c.scriptMonths.forEach(function (k) { scripts[k] = 1; });
+        return {
+          c: c, keys: keys, peak: peak, scripts: scripts,
+          firstM: keys[0], lastM: keys[keys.length - 1]
+        };
+      });
+
+      function sortRows(mode) {
+        var s = rows.slice();
+        var byName = function (a, b) {
+          return a.c.name.localeCompare(b.c.name);
+        };
+        if (mode === "name") s.sort(byName);
+        else if (mode === "last") {
+          s.sort(function (a, b) {
+            return b.lastM.localeCompare(a.lastM) || byName(a, b);
+          });
+        } else if (mode === "files") {
+          s.sort(function (a, b) { return b.c.files - a.c.files || byName(a, b); });
+        } else if (mode === "active") {
+          s.sort(function (a, b) {
+            return b.c.activeMonths - a.c.activeMonths || byName(a, b);
+          });
+        } else {
+          s.sort(function (a, b) {
+            return a.firstM.localeCompare(b.firstM) || byName(a, b);
+          });
+        }
+        return s;
+      }
+
+      function draw() {
+        var mode = document.getElementById("sort").value;
+        var q = document.getElementById("filter").value.trim().toLowerCase();
+        var s = sortRows(mode).filter(function (r) {
+          return !q || r.c.name.toLowerCase().indexOf(q) >= 0;
+        });
+
+        countEl.textContent = s.length === rows.length ?
+          rows.length + " countries" : s.length + " of " + rows.length;
+
+        var H = P.t + s.length * LH + P.b;
+        while (svg.firstChild) svg.removeChild(svg.firstChild);
+        svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+        svg.setAttribute("width", W);
+        svg.setAttribute("height", H);
+        svg.style.maxWidth = "100%";
+
+        var bottom = P.t + s.length * LH;
+        for (var m = M0; m <= M1 + 1; m++) {
+          var px = P.l + (m - M0) * cw;
+          if (m % 12 === 0) {
+            svg.appendChild(el("line", {
+              class: "year-grid", x1: px, x2: px, y1: P.t - 13, y2: bottom
+            }));
+            if (m <= M1) {
+              svg.appendChild(el("text", {
+                class: "year-label", x: px + 4, y: P.t - 16
+              }, Math.floor(m / 12)));
+            }
+          } else if (m % 3 === 0) {
+            svg.appendChild(el("line", {
+              class: "month-grid", x1: px, x2: px, y1: P.t - 5, y2: bottom
+            }));
+          }
+        }
+
+        s.forEach(function (r, i) {
+          var yTop = P.t + i * LH, mid = yTop + LH / 2;
+          var g = el("g", {
+            class: "lane" + (r.c.name === selName ? " sel" : ""),
+            tabindex: "0", role: "button",
+            "aria-label": r.c.name + ", " + r.c.activeMonths + " months of work"
+          });
+          g.appendChild(el("rect", {
+            class: "lane-bg", x: 0, y: yTop, width: W, height: LH
+          }));
+          g.appendChild(el("text", {
+            class: "name" + (r.c.released ? "" : " unreleased"),
+            x: P.l - 8, y: mid + 3.5, "text-anchor": "end"
+          }, r.c.name));
+
+          var x0 = P.l + (mIndex(r.firstM) - M0) * cw;
+          var x1 = P.l + (mIndex(r.lastM) - M0) * cw + cw;
+          if (x1 > x0) {
+            g.appendChild(el("line", {
+              class: "span", x1: x0, x2: x1, y1: mid, y2: mid
+            }));
+          }
+
+          r.keys.forEach(function (k) {
+            var v = r.c.months[k];
+            // scaled within the country, so each lane shows its own rhythm
+            var frac = r.peak > 1 ? Math.sqrt(v) / Math.sqrt(r.peak) : 1;
+            var hh = Math.max(2.5, frac * (LH - 3));
+            var bx = P.l + (mIndex(k) - M0) * cw;
+            var isScript = !!r.scripts[k];
+            var b = el("rect", {
+              class: "act" + (isScript ? " script" : ""),
+              x: bx + 0.4, y: mid - hh / 2,
+              width: Math.max(1.6, cw - 0.8), height: hh
+            });
+            b.appendChild(el("title", {}, r.c.name + " · " +
+              prettyMonth(k) + ": " + num(v) + " file" + (v === 1 ? "" : "s") +
+              (isScript ? ", build script written or revised" : "")));
+            g.appendChild(b);
+          });
+
+          g.appendChild(el("text", {
+            class: "meta", x: W - 6, y: mid + 3.5
+          }, num(r.c.files)));
+
+          function pick() { selName = r.c.name; show(r); draw(); }
+          g.addEventListener("click", pick);
+          g.addEventListener("keydown", function (ev) {
+            if (ev.key === "Enter" || ev.key === " ") {
+              ev.preventDefault(); pick();
+            }
+          });
+          svg.appendChild(g);
+        });
+      }
+
+      function show(r) {
+        var c = r.c;
+        var h = '<div class="detail"><h4>' + esc(c.name) + "</h4><dl>";
+        function row(k, v) {
+          if (v == null || v === "") return;
+          h += "<dt>" + esc(k) + "</dt><dd>" + v + "</dd>";
+        }
+        if (c.released) {
+          row("Election years", esc(c.years));
+          row("Election types", esc(c.types));
+          row("Smallest unit", esc(c.unit));
+          row("Units per year", esc(c.unitsPerYear));
+          row("Polygon years", esc(c.polygonYears));
+          row("Geographic coverage", esc(c.geoCoverage));
+          if (c.source) row("Built on work by", esc(c.source));
+          if (c.lsage) row("Local elections", "also covered in LSAGE");
+          if (c.partial) row("Status", "flagged incomplete");
+        } else {
+          row("Status", "in the working tree, in no release yet");
+        }
+        row("Work recorded", prettyDate(c.first) + " to " + prettyDate(c.last) +
+          ", across " + c.activeMonths + " month" +
+          (c.activeMonths === 1 ? "" : "s"));
+        row("On disk", num(c.files) + " files, " +
+          (c.mb >= 1000 ? (c.mb / 1000).toFixed(1) + " GB" : c.mb + " MB"));
+        row("Build scripts", c.scripts ?
+          c.scripts + (c.lastScript ?
+            ", last revised " + prettyDate(c.lastScript) : "") :
+          "none in the tree");
+        if (c.dropped) {
+          row("Not shown", num(c.dropped) + " file" +
+            (c.dropped === 1 ? "" : "s") + " dated before 2022");
+        }
+        h += "</dl></div>";
+        detail.innerHTML = h;
+      }
+
+      document.getElementById("sort").addEventListener("change", draw);
+      document.getElementById("filter").addEventListener("input", draw);
+      draw();
+    })();
+  </script>
+</body>
+
+</html>
