@@ -848,6 +848,38 @@ function dlLabel() {
   const n = dlSize(Y.year);
   b.textContent = 'Download ' + Y.year + ' units (CSV' +
     (n ? ' — ' + Math.round(n / 1048576) + ' MB' : '') + ')';
+  gisLabel();
+}
+
+// The CSV above is built in the page from the shards, so it carries only what
+// the shards carry: one row per unit, no boundaries. The bundles below hold the
+// same year as an actual shapefile plus the complete long vote table, and are
+// far too large to assemble client-side, so they are fetched from the archive.
+const GIS_BASE = 'https://storage.googleapis.com/sage-archive/dev/gis';
+let GIS = null;   // null until the index loads; [] if it cannot be reached
+
+async function loadGisIndex() {
+  try {
+    const r = await fetch(GIS_BASE + '/index.json', { cache: 'no-cache' });
+    if (!r.ok) throw new Error(String(r.status));
+    GIS = await r.json();
+  } catch (e) {
+    // The viewer works without this; the row simply stays hidden rather than
+    // offering a link that would 404.
+    GIS = [];
+  }
+  gisLabel();
+}
+
+function gisLabel() {
+  const row = $('#gisrow'), a = $('#gisdl');
+  if (!row || !a) return;
+  const rec = (GIS || []).find((q) => String(q.year) === String(Y && Y.year));
+  if (Y === EMPTY || !rec) { row.hidden = true; return; }
+  row.hidden = false;
+  a.href = GIS_BASE + '/' + rec.file;
+  a.textContent = 'Download ' + rec.year + ' shapefile + votes (' +
+    Math.round(rec.bytes / 1048576) + ' MB)';
 }
 
 // Built here rather than shipped as a file: the shards already hold every
@@ -1204,5 +1236,8 @@ function wire() {
   CELLS = [last];
   await applyCells();
   fitTo(FITS['48']);
+  // Not awaited: the archive index is optional, and blocking readiness on a
+  // cross-origin fetch would stall the whole viewer if the bucket were slow.
+  loadGisIndex();
   window.__ready = true;
 })();

@@ -91,6 +91,18 @@ select, button.act {
 button.act { cursor: pointer; }
 button.act:hover { border-color: #55554e; }
 
+/* The shapefile download is an <a>, not a <button>, because it points at a
+   file on the archive rather than building one in the page. Match the button
+   rule above so the two read as one pair of controls. */
+a.act {
+  background: var(--surface-2); color: var(--text-primary);
+  border: 1px solid var(--line); border-radius: 5px;
+  padding: 5px 7px; font: inherit; width: 100%;
+  box-sizing: border-box; display: block; text-align: center;
+  text-decoration: none; cursor: pointer;
+}
+a.act:hover { border-color: #55554e; }
+
 /* ---- legend ---------------------------------------------------------- */
 
 .legend { display: flex; flex-direction: column; gap: 5px; }
