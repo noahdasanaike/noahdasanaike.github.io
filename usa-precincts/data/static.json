@@ -1,0 +1,113 @@
+{
+ "built": "2026-08-19T14:27:23Z",
+ "shard": 2048,
+ "rec": [
+  "uid",
+  "NAME3",
+  "NAME3_b",
+  "NAME1_b",
+  "NAME2",
+  "NAME2_b",
+  "tidy_county",
+  "lvl",
+  "lvl_tier",
+  "unit_kind",
+  "geom_source",
+  "geom_vintage",
+  "geom_method",
+  "geom_matched",
+  "boundary_tier",
+  "geometry_type",
+  "geometry_type_b",
+  "source_class",
+  "source_url",
+  "dem",
+  "rep",
+  "oth",
+  "tot",
+  "votes"
+ ],
+ "dl_cols": [
+  "year",
+  "uid",
+  "state",
+  "county_fips",
+  "county_name",
+  "tidy_county",
+  "unit_name",
+  "unit_level",
+  "grain_tier",
+  "unit_kind",
+  "boundary_key",
+  "boundary_tier",
+  "geom_source",
+  "geom_vintage",
+  "geom_method",
+  "geom_matched",
+  "geometry_type",
+  "source_class",
+  "source_url",
+  "dem_votes",
+  "rep_votes",
+  "other_votes",
+  "total_votes",
+  "latitude",
+  "longitude"
+ ],
+ "years": [
+  {
+   "year": 1992,
+   "n_units": 70923,
+   "shards": 35,
+   "csv_bytes": 22898722
+  },
+  {
+   "year": 1996,
+   "n_units": 108867,
+   "shards": 54,
+   "csv_bytes": 33303211
+  },
+  {
+   "year": 2000,
+   "n_units": 141178,
+   "shards": 69,
+   "csv_bytes": 43156438
+  },
+  {
+   "year": 2004,
+   "n_units": 148545,
+   "shards": 73,
+   "csv_bytes": 45935122
+  },
+  {
+   "year": 2008,
+   "n_units": 167165,
+   "shards": 82,
+   "csv_bytes": 49317652
+  },
+  {
+   "year": 2012,
+   "n_units": 167510,
+   "shards": 82,
+   "csv_bytes": 51895188
+  },
+  {
+   "year": 2016,
+   "n_units": 173393,
+   "shards": 85,
+   "csv_bytes": 53370814
+  },
+  {
+   "year": 2020,
+   "n_units": 169775,
+   "shards": 83,
+   "csv_bytes": 54584874
+  },
+  {
+   "year": 2024,
+   "n_units": 177872,
+   "shards": 87,
+   "csv_bytes": 57943445
+  }
+ ]
+}

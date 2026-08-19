@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>USA precincts — reporting grain, 1992–2024</title>
+<meta name="description" content="Every US presidential vote-reporting unit from 1992 to 2024, one point each, coloured by reporting grain, party margin, boundary source or unit size.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+
+  <aside class="panel left">
+    <h1>USA precincts</h1>
+    <p class="sub">every presidential vote-reporting unit, 1992–2024, one point each ·
+      <a href="/">noahdasanaike.github.io</a></p>
+
+    <h2>Year · sub-county share of votes</h2>
+    <div id="years"></div>
+
+    <h2>View</h2>
+    <div class="ctl">
+      <select id="layout">
+        <option value="1x1">Single year</option>
+        <option value="1x2">Two years — 1 × 2</option>
+        <option value="2x2">Four years — 2 × 2</option>
+        <option value="2x3">Six years — 2 × 3</option>
+        <option value="3x3">All nine — 3 × 3</option>
+      </select>
+      <div id="cells"></div>
+      <p class="note" id="gridnote" style="display:none">All panels share one
+        viewport: pan or zoom anywhere and they all move together.</p>
+    </div>
+
+    <h2>Colour by</h2>
+    <div class="ctl">
+      <select id="mode">
+        <option value="margin">Party margin (D − R)</option>
+        <option value="grain">Reporting grain — tier</option>
+        <option value="level">Reporting grain — unit_level</option>
+        <option value="tier">Boundary source tier</option>
+        <option value="size">Unit size (total votes)</option>
+      </select>
+      <label><input type="checkbox" id="coarseTop" checked> draw county-tier units on top</label>
+      <label><input type="checkbox" id="labels" checked> state labels</label>
+      <label><input type="checkbox" id="big"> fat points</label>
+    </div>
+
+    <h2>Legend</h2>
+    <div class="legend" id="legend"></div>
+
+    <h2>Filter</h2>
+    <div class="ctl">
+      <select id="state"><option value="">All states</option></select>
+      <select id="grainfilter">
+        <option value="">All grains</option>
+        <option value="1">Sub-county only</option>
+        <option value="2">County tier only</option>
+        <option value="3">Coarser than county only</option>
+        <option value="0">Grain not established</option>
+      </select>
+    </div>
+
+    <h2>Download</h2>
+    <div class="ctl">
+      <button class="act" id="download">Download this year (CSV)</button>
+    </div>
+    <p class="note" id="dlnote"></p>
+
+    <h2>Memory check</h2>
+    <button class="act" id="stress">Step through all years</button>
+    <div id="stresslog"></div>
+  </aside>
+
+  <main id="map">
+    <canvas id="pts"></canvas>
+    <canvas id="over"></canvas>
+    <div id="hud"></div>
+    <div id="zoombar">
+      <button data-fit="48">48</button>
+      <button data-fit="ak">AK</button>
+      <button data-fit="hi">HI</button>
+      <button data-fit="all">All</button>
+    </div>
+    <div id="tip"></div>
+    <div id="status">loading…</div>
+  </main>
+
+  <aside class="panel right" id="detail"></aside>
+
+</div>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,3171 @@
+{
+ "built": "2026-08-19T13:48:22Z",
+ "source": "G:/Elections Dataset/Processed/United States/own_usa_precincts/sage/national",
+ "years": [
+  {
+   "year": 1992,
+   "rows": 411450,
+   "units": 70923,
+   "mapped_units": 57965,
+   "geographic_units": 65213,
+   "units_with_polygon": 57965,
+   "polygon_rate_geographic": 0.8888565163387668,
+   "sub_county_share": 0.38949049292963295,
+   "votes_sub_county": 40601615.0,
+   "votes_county_tier": 62136228.0,
+   "votes_coarser": 1310981.0,
+   "votes_unknown_grain": 194067.0,
+   "votes_total": 104242891.0,
+   "states_all_county_tier": [
+    "CO",
+    "GA",
+    "HI",
+    "IA",
+    "IN",
+    "KS",
+    "KY",
+    "MD",
+    "MI",
+    "MO",
+    "MS",
+    "NC",
+    "ND",
+    "NE",
+    "NM",
+    "NV",
+    "NY",
+    "OK",
+    "OR",
+    "SD",
+    "TN",
+    "TX",
+    "UT",
+    "VA",
+    "WA",
+    "WV"
+   ],
+   "level_counts": {
+    "precinct": 55951,
+    "ward": 6760,
+    "county pool": 3008,
+    "county": 2379,
+    "town": 1223,
+    "election district": 893,
+    "municipality": 351,
+    "municipality pool": 109,
+    "district pool": 96,
+    "county residual": 87,
+    "assembly district": 41,
+    "state pool": 21,
+    "(not joined)": 4
+   },
+   "tier_counts": {
+    "census": 34733,
+    "official (SWDB, California's statutorily designated database)": 16084,
+    "unmatched": 12958,
+    "official": 7148
+   },
+   "bin_bytes": 1623020,
+   "state_counts": [
+    {
+     "NAME1_b": "AK",
+     "units": 551,
+     "mapped": 396,
+     "sub": 469
+    },
+    {
+     "NAME1_b": "AL",
+     "units": 2237,
+     "mapped": 1454,
+     "sub": 2106
+    },
+    {
+     "NAME1_b": "AR",
+     "units": 2362,
+     "mapped": 1626,
+     "sub": 2208
+    },
+    {
+     "NAME1_b": "AZ",
+     "units": 667,
+     "mapped": 655,
+     "sub": 655
+    },
+    {
+     "NAME1_b": "CA",
+     "units": 23635,
+     "mapped": 17603,
+     "sub": 21017
+    },
+    {
+     "NAME1_b": "CO",
+     "units": 63,
+     "mapped": 63,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "CT",
+     "units": 170,
+     "mapped": 169,
+     "sub": 169
+    },
+    {
+     "NAME1_b": "DC",
+     "units": 157,
+     "mapped": 140,
+     "sub": 140
+    },
+    {
+     "NAME1_b": "DE",
+     "units": 42,
+     "mapped": 41,
+     "sub": 41
+    },
+    {
+     "NAME1_b": "FL",
+     "units": 5486,
+     "mapped": 4193,
+     "sub": 5419
+    },
+    {
+     "NAME1_b": "GA",
+     "units": 160,
+     "mapped": 159,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "HI",
+     "units": 5,
+     "mapped": 5,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "IA",
+     "units": 99,
+     "mapped": 99,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "ID",
+     "units": 901,
+     "mapped": 808,
+     "sub": 873
+    },
+    {
+     "NAME1_b": "IL",
+     "units": 272,
+     "mapped": 187,
+     "sub": 167
+    },
+    {
+     "NAME1_b": "IN",
+     "units": 92,
+     "mapped": 92,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "KS",
+     "units": 106,
+     "mapped": 105,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "KY",
+     "units": 120,
+     "mapped": 120,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "LA",
+     "units": 4086,
+     "mapped": 3349,
+     "sub": 4022
+    },
+    {
+     "NAME1_b": "MA",
+     "units": 351,
+     "mapped": 351,
+     "sub": 351
+    },
+    {
+     "NAME1_b": "MD",
+     "units": 24,
+     "mapped": 24,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "ME",
+     "units": 511,
+     "mapped": 494,
+     "sub": 511
+    },
+    {
+     "NAME1_b": "MI",
+     "units": 83,
+     "mapped": 83,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "MN",
+     "units": 4033,
+     "mapped": 4001,
+     "sub": 4032
+    },
+    {
+     "NAME1_b": "MO",
+     "units": 116,
+     "mapped": 115,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "MS",
+     "units": 82,
+     "mapped": 82,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "MT",
+     "units": 943,
+     "mapped": 551,
+     "sub": 943
+    },
+    {
+     "NAME1_b": "NC",
+     "units": 100,
+     "mapped": 100,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "ND",
+     "units": 54,
+     "mapped": 53,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "NE",
+     "units": 92,
+     "mapped": 89,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "NH",
+     "units": 305,
+     "mapped": 301,
+     "sub": 304
+    },
+    {
+     "NAME1_b": "NJ",
+     "units": 1023,
+     "mapped": 733,
+     "sub": 1002
+    },
+    {
+     "NAME1_b": "NM",
+     "units": 33,
+     "mapped": 33,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "NV",
+     "units": 17,
+     "mapped": 17,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "NY",
+     "units": 63,
+     "mapped": 62,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "OH",
+     "units": 2903,
+     "mapped": 1237,
+     "sub": 2816
+    },
+    {
+     "NAME1_b": "OK",
+     "units": 77,
+     "mapped": 77,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "OR",
+     "units": 36,
+     "mapped": 36,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "PA",
+     "units": 9443,
+     "mapped": 9442,
+     "sub": 9442
+    },
+    {
+     "NAME1_b": "RI",
+     "units": 40,
+     "mapped": 39,
+     "sub": 39
+    },
+    {
+     "NAME1_b": "SC",
+     "units": 1831,
+     "mapped": 1252,
+     "sub": 1722
+    },
+    {
+     "NAME1_b": "SD",
+     "units": 66,
+     "mapped": 65,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "TN",
+     "units": 95,
+     "mapped": 95,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "TX",
+     "units": 254,
+     "mapped": 254,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "UT",
+     "units": 30,
+     "mapped": 29,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "VA",
+     "units": 130,
+     "mapped": 124,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "VT",
+     "units": 246,
+     "mapped": 234,
+     "sub": 246
+    },
+    {
+     "NAME1_b": "WA",
+     "units": 40,
+     "mapped": 39,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "WI",
+     "units": 6635,
+     "mapped": 6634,
+     "sub": 6634
+    },
+    {
+     "NAME1_b": "WV",
+     "units": 56,
+     "mapped": 55,
+     "sub": 0
+    }
+   ]
+  },
+  {
+   "year": 1996,
+   "rows": 672969,
+   "units": 108867,
+   "mapped_units": 94173,
+   "geographic_units": 102979,
+   "units_with_polygon": 94173,
+   "polygon_rate_geographic": 0.9144874197651949,
+   "sub_county_share": 0.6117224453200282,
+   "votes_sub_county": 56454107.0,
+   "votes_county_tier": 32981300.0,
+   "votes_coarser": 2808993.0,
+   "votes_unknown_grain": 42727.0,
+   "votes_total": 92287127.0,
+   "states_all_county_tier": [
+    "CO",
+    "DC",
+    "GA",
+    "KY",
+    "MD",
+    "MI",
+    "MO",
+    "MS",
+    "NC",
+    "ND",
+    "NE",
+    "NM",
+    "NV",
+    "OK",
+    "OR",
+    "SD",
+    "UT",
+    "WA",
+    "WV"
+   ],
+   "level_counts": {
+    "precinct": 73229,
+    "vtd": 21169,
+    "ward": 6760,
+    "county pool": 3094,
+    "county": 2079,
+    "election district": 912,
+    "town": 713,
+    "municipality": 351,
+    "district pool": 271,
+    "municipality pool": 257,
+    "county residual": 23,
+    "(not joined)": 5,
+    "state pool": 4
+   },
+   "tier_counts": {
+    "census": 60700,
+    "official (SWDB, California's statutorily designated database)": 22968,
+    "unmatched": 14694,
+    "official": 10505
+   },
+   "bin_bytes": 2636844,
+   "state_counts": [
+    {
+     "NAME1_b": "AK",
+     "units": 544,
+     "mapped": 444,
+     "sub": 463
+    },
+    {
+     "NAME1_b": "AL",
+     "units": 2340,
+     "mapped": 1463,
+     "sub": 2324
+    },
+    {
+     "NAME1_b": "AR",
+     "units": 2388,
+     "mapped": 1727,
+     "sub": 2246
+    },
+    {
+     "NAME1_b": "AZ",
+     "units": 1575,
+     "mapped": 1568,
+     "sub": 1563
+    },
+    {
+     "NAME1_b": "CA",
+     "units": 28401,
+     "mapped": 23109,
+     "sub": 25880
+    },
+    {
+     "NAME1_b": "CO",
+     "units": 63,
+     "mapped": 63,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "CT",
+     "units": 169,
+     "mapped": 169,
+     "sub": 169
+    },
+    {
+     "NAME1_b": "DC",
+     "units": 1,
+     "mapped": 0,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "DE",
+     "units": 375,
+     "mapped": 375,
+     "sub": 375
+    },
+    {
+     "NAME1_b": "FL",
+     "units": 5883,
+     "mapped": 4432,
+     "sub": 5816
+    },
+    {
+     "NAME1_b": "GA",
+     "units": 159,
+     "mapped": 159,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "HI",
+     "units": 520,
+     "mapped": 328,
+     "sub": 328
+    },
+    {
+     "NAME1_b": "IA",
+     "units": 2306,
+     "mapped": 1931,
+     "sub": 2110
+    },
+    {
+     "NAME1_b": "ID",
+     "units": 922,
+     "mapped": 867,
+     "sub": 890
+    },
+    {
+     "NAME1_b": "IL",
+     "units": 373,
+     "mapped": 291,
+     "sub": 270
+    },
+    {
+     "NAME1_b": "KS",
+     "units": 3668,
+     "mapped": 3263,
+     "sub": 3451
+    },
+    {
+     "NAME1_b": "KY",
+     "units": 120,
+     "mapped": 120,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "LA",
+     "units": 4101,
+     "mapped": 3354,
+     "sub": 4037
+    },
+    {
+     "NAME1_b": "MA",
+     "units": 351,
+     "mapped": 351,
+     "sub": 351
+    },
+    {
+     "NAME1_b": "MD",
+     "units": 24,
+     "mapped": 24,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "ME",
+     "units": 664,
+     "mapped": 499,
+     "sub": 664
+    },
+    {
+     "NAME1_b": "MI",
+     "units": 83,
+     "mapped": 83,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "MN",
+     "units": 4048,
+     "mapped": 3689,
+     "sub": 4047
+    },
+    {
+     "NAME1_b": "MO",
+     "units": 116,
+     "mapped": 114,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "MS",
+     "units": 82,
+     "mapped": 82,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "MT",
+     "units": 870,
+     "mapped": 577,
+     "sub": 870
+    },
+    {
+     "NAME1_b": "NC",
+     "units": 100,
+     "mapped": 100,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "ND",
+     "units": 53,
+     "mapped": 53,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "NE",
+     "units": 94,
+     "mapped": 93,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "NH",
+     "units": 306,
+     "mapped": 303,
+     "sub": 305
+    },
+    {
+     "NAME1_b": "NJ",
+     "units": 1170,
+     "mapped": 737,
+     "sub": 1169
+    },
+    {
+     "NAME1_b": "NM",
+     "units": 33,
+     "mapped": 33,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "NV",
+     "units": 17,
+     "mapped": 17,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "NY",
+     "units": 13023,
+     "mapped": 13021,
+     "sub": 13023
+    },
+    {
+     "NAME1_b": "OH",
+     "units": 3967,
+     "mapped": 1463,
+     "sub": 3848
+    },
+    {
+     "NAME1_b": "OK",
+     "units": 77,
+     "mapped": 77,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "OR",
+     "units": 36,
+     "mapped": 36,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "PA",
+     "units": 9484,
+     "mapped": 9477,
+     "sub": 9483
+    },
+    {
+     "NAME1_b": "RI",
+     "units": 39,
+     "mapped": 39,
+     "sub": 39
+    },
+    {
+     "NAME1_b": "SC",
+     "units": 2036,
+     "mapped": 1701,
+     "sub": 1887
+    },
+    {
+     "NAME1_b": "SD",
+     "units": 66,
+     "mapped": 65,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "TX",
+     "units": 8400,
+     "mapped": 8273,
+     "sub": 8146
+    },
+    {
+     "NAME1_b": "UT",
+     "units": 29,
+     "mapped": 29,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "VA",
+     "units": 2341,
+     "mapped": 2141,
+     "sub": 2282
+    },
+    {
+     "NAME1_b": "VT",
+     "units": 246,
+     "mapped": 234,
+     "sub": 246
+    },
+    {
+     "NAME1_b": "WA",
+     "units": 39,
+     "mapped": 39,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "WI",
+     "units": 6635,
+     "mapped": 6634,
+     "sub": 6634
+    },
+    {
+     "NAME1_b": "WV",
+     "units": 55,
+     "mapped": 55,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "WY",
+     "units": 475,
+     "mapped": 471,
+     "sub": 475
+    }
+   ]
+  },
+  {
+   "year": 2000,
+   "rows": 839975,
+   "units": 141178,
+   "mapped_units": 119961,
+   "geographic_units": 136021,
+   "units_with_polygon": 119961,
+   "polygon_rate_geographic": 0.8819299961035428,
+   "sub_county_share": 0.7883072353362299,
+   "votes_sub_county": 83114348.0,
+   "votes_county_tier": 22101181.0,
+   "votes_coarser": 175411.0,
+   "votes_unknown_grain": 43013.0,
+   "votes_total": 105433953.0,
+   "states_all_county_tier": [
+    "CO",
+    "GA",
+    "KY",
+    "MS",
+    "ND",
+    "NM",
+    "NV",
+    "OK",
+    "SD",
+    "WV"
+   ],
+   "level_counts": {
+    "precinct": 112748,
+    "vtd": 21107,
+    "election district": 2259,
+    "county pool": 1715,
+    "county": 1434,
+    "town": 683,
+    "municipality pool": 416,
+    "municipality": 351,
+    "district pool": 304,
+    "ward": 76,
+    "county residual": 73,
+    "(not joined)": 10,
+    "state pool": 2
+   },
+   "tier_counts": {
+    "census": 86463,
+    "official (SWDB, California's statutorily designated database)": 21926,
+    "unmatched": 21217,
+    "official": 11035,
+    "third-party": 537
+   },
+   "bin_bytes": 3358908,
+   "state_counts": [
+    {
+     "NAME1_b": "AK",
+     "units": 531,
+     "mapped": 441,
+     "sub": 451
+    },
+    {
+     "NAME1_b": "AL",
+     "units": 2118,
+     "mapped": 1446,
+     "sub": 2105
+    },
+    {
+     "NAME1_b": "AR",
+     "units": 2481,
+     "mapped": 1631,
+     "sub": 2299
+    },
+    {
+     "NAME1_b": "AZ",
+     "units": 1899,
+     "mapped": 1838,
+     "sub": 1896
+    },
+    {
+     "NAME1_b": "CA",
+     "units": 22247,
+     "mapped": 21930,
+     "sub": 22247
+    },
+    {
+     "NAME1_b": "CO",
+     "units": 63,
+     "mapped": 63,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "CT",
+     "units": 169,
+     "mapped": 169,
+     "sub": 169
+    },
+    {
+     "NAME1_b": "DC",
+     "units": 157,
+     "mapped": 140,
+     "sub": 140
+    },
+    {
+     "NAME1_b": "DE",
+     "units": 403,
+     "mapped": 401,
+     "sub": 403
+    },
+    {
+     "NAME1_b": "FL",
+     "units": 6045,
+     "mapped": 4459,
+     "sub": 6045
+    },
+    {
+     "NAME1_b": "GA",
+     "units": 160,
+     "mapped": 159,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "HI",
+     "units": 544,
+     "mapped": 335,
+     "sub": 335
+    },
+    {
+     "NAME1_b": "IA",
+     "units": 2251,
+     "mapped": 1854,
+     "sub": 2124
+    },
+    {
+     "NAME1_b": "ID",
+     "units": 934,
+     "mapped": 852,
+     "sub": 881
+    },
+    {
+     "NAME1_b": "IL",
+     "units": 6310,
+     "mapped": 6063,
+     "sub": 6208
+    },
+    {
+     "NAME1_b": "IN",
+     "units": 1285,
+     "mapped": 1205,
+     "sub": 1194
+    },
+    {
+     "NAME1_b": "KS",
+     "units": 3963,
+     "mapped": 3536,
+     "sub": 3750
+    },
+    {
+     "NAME1_b": "KY",
+     "units": 120,
+     "mapped": 120,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "LA",
+     "units": 3962,
+     "mapped": 3262,
+     "sub": 3898
+    },
+    {
+     "NAME1_b": "MA",
+     "units": 351,
+     "mapped": 351,
+     "sub": 351
+    },
+    {
+     "NAME1_b": "MD",
+     "units": 1690,
+     "mapped": 1666,
+     "sub": 1666
+    },
+    {
+     "NAME1_b": "ME",
+     "units": 661,
+     "mapped": 501,
+     "sub": 661
+    },
+    {
+     "NAME1_b": "MI",
+     "units": 6010,
+     "mapped": 5402,
+     "sub": 5994
+    },
+    {
+     "NAME1_b": "MN",
+     "units": 4076,
+     "mapped": 3725,
+     "sub": 4076
+    },
+    {
+     "NAME1_b": "MO",
+     "units": 4916,
+     "mapped": 3776,
+     "sub": 4822
+    },
+    {
+     "NAME1_b": "MS",
+     "units": 82,
+     "mapped": 82,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "MT",
+     "units": 865,
+     "mapped": 580,
+     "sub": 865
+    },
+    {
+     "NAME1_b": "NC",
+     "units": 3145,
+     "mapped": 2297,
+     "sub": 2740
+    },
+    {
+     "NAME1_b": "ND",
+     "units": 53,
+     "mapped": 53,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "NE",
+     "units": 306,
+     "mapped": 304,
+     "sub": 213
+    },
+    {
+     "NAME1_b": "NH",
+     "units": 315,
+     "mapped": 304,
+     "sub": 305
+    },
+    {
+     "NAME1_b": "NJ",
+     "units": 2697,
+     "mapped": 1728,
+     "sub": 2675
+    },
+    {
+     "NAME1_b": "NM",
+     "units": 33,
+     "mapped": 33,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "NV",
+     "units": 17,
+     "mapped": 17,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "NY",
+     "units": 12971,
+     "mapped": 12968,
+     "sub": 12970
+    },
+    {
+     "NAME1_b": "OH",
+     "units": 12201,
+     "mapped": 3401,
+     "sub": 12112
+    },
+    {
+     "NAME1_b": "OK",
+     "units": 77,
+     "mapped": 77,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "OR",
+     "units": 1246,
+     "mapped": 672,
+     "sub": 1222
+    },
+    {
+     "NAME1_b": "PA",
+     "units": 9412,
+     "mapped": 9400,
+     "sub": 9411
+    },
+    {
+     "NAME1_b": "RI",
+     "units": 40,
+     "mapped": 39,
+     "sub": 39
+    },
+    {
+     "NAME1_b": "SC",
+     "units": 2052,
+     "mapped": 1710,
+     "sub": 1910
+    },
+    {
+     "NAME1_b": "SD",
+     "units": 66,
+     "mapped": 65,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "TN",
+     "units": 2558,
+     "mapped": 2118,
+     "sub": 2369
+    },
+    {
+     "NAME1_b": "TX",
+     "units": 8391,
+     "mapped": 8262,
+     "sub": 8137
+    },
+    {
+     "NAME1_b": "UT",
+     "units": 248,
+     "mapped": 228,
+     "sub": 219
+    },
+    {
+     "NAME1_b": "VA",
+     "units": 2435,
+     "mapped": 2188,
+     "sub": 2204
+    },
+    {
+     "NAME1_b": "VT",
+     "units": 246,
+     "mapped": 234,
+     "sub": 246
+    },
+    {
+     "NAME1_b": "WA",
+     "units": 4253,
+     "mapped": 3997,
+     "sub": 4223
+    },
+    {
+     "NAME1_b": "WI",
+     "units": 3597,
+     "mapped": 3360,
+     "sub": 3597
+    },
+    {
+     "NAME1_b": "WV",
+     "units": 55,
+     "mapped": 55,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "WY",
+     "units": 471,
+     "mapped": 464,
+     "sub": 468
+    }
+   ]
+  },
+  {
+   "year": 2004,
+   "rows": 679401,
+   "units": 148545,
+   "mapped_units": 126471,
+   "geographic_units": 142769,
+   "units_with_polygon": 126471,
+   "polygon_rate_geographic": 0.8858435654799011,
+   "sub_county_share": 0.8267325497277084,
+   "votes_sub_county": 101109495.0,
+   "votes_county_tier": 20909215.0,
+   "votes_coarser": 228522.0,
+   "votes_unknown_grain": 52894.0,
+   "votes_total": 122300126.0,
+   "states_all_county_tier": [
+    "KY",
+    "MS",
+    "SD"
+   ],
+   "level_counts": {
+    "precinct": 131035,
+    "vtd": 8074,
+    "election district": 3781,
+    "county pool": 2188,
+    "county": 1062,
+    "district pool": 761,
+    "town": 660,
+    "municipality": 569,
+    "region pool": 189,
+    "ward": 77,
+    "county residual": 75,
+    "assembly district": 66,
+    "(not joined)": 7,
+    "state pool": 1
+   },
+   "tier_counts": {
+    "census": 90436,
+    "unmatched": 22074,
+    "official (SWDB, California's statutorily designated database)": 21224,
+    "official": 13926,
+    "third-party": 885
+   },
+   "bin_bytes": 3541188,
+   "state_counts": [
+    {
+     "NAME1_b": "AK",
+     "units": 1186,
+     "mapped": 411,
+     "sub": 437
+    },
+    {
+     "NAME1_b": "AL",
+     "units": 2411,
+     "mapped": 1492,
+     "sub": 2398
+    },
+    {
+     "NAME1_b": "AR",
+     "units": 2314,
+     "mapped": 1556,
+     "sub": 2149
+    },
+    {
+     "NAME1_b": "AZ",
+     "units": 2111,
+     "mapped": 1956,
+     "sub": 2110
+    },
+    {
+     "NAME1_b": "CA",
+     "units": 24459,
+     "mapped": 21279,
+     "sub": 24458
+    },
+    {
+     "NAME1_b": "CO",
+     "units": 3185,
+     "mapped": 2780,
+     "sub": 3126
+    },
+    {
+     "NAME1_b": "CT",
+     "units": 169,
+     "mapped": 169,
+     "sub": 169
+    },
+    {
+     "NAME1_b": "DC",
+     "units": 143,
+     "mapped": 140,
+     "sub": 142
+    },
+    {
+     "NAME1_b": "DE",
+     "units": 438,
+     "mapped": 434,
+     "sub": 437
+    },
+    {
+     "NAME1_b": "FL",
+     "units": 4941,
+     "mapped": 1732,
+     "sub": 4891
+    },
+    {
+     "NAME1_b": "GA",
+     "units": 3311,
+     "mapped": 2643,
+     "sub": 2992
+    },
+    {
+     "NAME1_b": "HI",
+     "units": 554,
+     "mapped": 339,
+     "sub": 353
+    },
+    {
+     "NAME1_b": "IA",
+     "units": 2077,
+     "mapped": 1668,
+     "sub": 1978
+    },
+    {
+     "NAME1_b": "ID",
+     "units": 948,
+     "mapped": 884,
+     "sub": 899
+    },
+    {
+     "NAME1_b": "IL",
+     "units": 6425,
+     "mapped": 6135,
+     "sub": 6323
+    },
+    {
+     "NAME1_b": "IN",
+     "units": 1404,
+     "mapped": 1331,
+     "sub": 1312
+    },
+    {
+     "NAME1_b": "KS",
+     "units": 3350,
+     "mapped": 3125,
+     "sub": 3153
+    },
+    {
+     "NAME1_b": "KY",
+     "units": 120,
+     "mapped": 120,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "LA",
+     "units": 4252,
+     "mapped": 3732,
+     "sub": 4124
+    },
+    {
+     "NAME1_b": "MA",
+     "units": 2166,
+     "mapped": 2136,
+     "sub": 2166
+    },
+    {
+     "NAME1_b": "MD",
+     "units": 1811,
+     "mapped": 1760,
+     "sub": 1787
+    },
+    {
+     "NAME1_b": "ME",
+     "units": 645,
+     "mapped": 503,
+     "sub": 645
+    },
+    {
+     "NAME1_b": "MI",
+     "units": 5823,
+     "mapped": 5166,
+     "sub": 5814
+    },
+    {
+     "NAME1_b": "MN",
+     "units": 4108,
+     "mapped": 4108,
+     "sub": 4108
+    },
+    {
+     "NAME1_b": "MO",
+     "units": 4464,
+     "mapped": 2963,
+     "sub": 4280
+    },
+    {
+     "NAME1_b": "MS",
+     "units": 82,
+     "mapped": 82,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "MT",
+     "units": 873,
+     "mapped": 700,
+     "sub": 873
+    },
+    {
+     "NAME1_b": "NC",
+     "units": 2992,
+     "mapped": 2631,
+     "sub": 2750
+    },
+    {
+     "NAME1_b": "ND",
+     "units": 607,
+     "mapped": 488,
+     "sub": 607
+    },
+    {
+     "NAME1_b": "NE",
+     "units": 644,
+     "mapped": 633,
+     "sub": 551
+    },
+    {
+     "NAME1_b": "NH",
+     "units": 305,
+     "mapped": 303,
+     "sub": 305
+    },
+    {
+     "NAME1_b": "NJ",
+     "units": 574,
+     "mapped": 566,
+     "sub": 569
+    },
+    {
+     "NAME1_b": "NM",
+     "units": 1451,
+     "mapped": 1345,
+     "sub": 1430
+    },
+    {
+     "NAME1_b": "NV",
+     "units": 1829,
+     "mapped": 1501,
+     "sub": 1827
+    },
+    {
+     "NAME1_b": "NY",
+     "units": 3921,
+     "mapped": 114,
+     "sub": 3864
+    },
+    {
+     "NAME1_b": "OH",
+     "units": 11406,
+     "mapped": 10793,
+     "sub": 11372
+    },
+    {
+     "NAME1_b": "OK",
+     "units": 2244,
+     "mapped": 2148,
+     "sub": 2152
+    },
+    {
+     "NAME1_b": "OR",
+     "units": 1258,
+     "mapped": 969,
+     "sub": 1245
+    },
+    {
+     "NAME1_b": "PA",
+     "units": 9447,
+     "mapped": 9387,
+     "sub": 9446
+    },
+    {
+     "NAME1_b": "RI",
+     "units": 617,
+     "mapped": 555,
+     "sub": 617
+    },
+    {
+     "NAME1_b": "SC",
+     "units": 2168,
+     "mapped": 1792,
+     "sub": 1981
+    },
+    {
+     "NAME1_b": "SD",
+     "units": 66,
+     "mapped": 65,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "TN",
+     "units": 2498,
+     "mapped": 2162,
+     "sub": 2302
+    },
+    {
+     "NAME1_b": "TX",
+     "units": 8328,
+     "mapped": 8203,
+     "sub": 8074
+    },
+    {
+     "NAME1_b": "UT",
+     "units": 1232,
+     "mapped": 1219,
+     "sub": 1203
+    },
+    {
+     "NAME1_b": "VA",
+     "units": 2567,
+     "mapped": 2257,
+     "sub": 2317
+    },
+    {
+     "NAME1_b": "VT",
+     "units": 246,
+     "mapped": 235,
+     "sub": 246
+    },
+    {
+     "NAME1_b": "WA",
+     "units": 6266,
+     "mapped": 5873,
+     "sub": 6227
+    },
+    {
+     "NAME1_b": "WI",
+     "units": 3544,
+     "mapped": 3357,
+     "sub": 3544
+    },
+    {
+     "NAME1_b": "WV",
+     "units": 83,
+     "mapped": 73,
+     "sub": 29
+    },
+    {
+     "NAME1_b": "WY",
+     "units": 482,
+     "mapped": 458,
+     "sub": 480
+    }
+   ]
+  },
+  {
+   "year": 2008,
+   "rows": 802443,
+   "units": 167165,
+   "mapped_units": 146093,
+   "geographic_units": 162803,
+   "units_with_polygon": 146093,
+   "polygon_rate_geographic": 0.8973606137479039,
+   "sub_county_share": 0.883593333876926,
+   "votes_sub_county": 116036859.0,
+   "votes_county_tier": 14976234.0,
+   "votes_coarser": 292125.0,
+   "votes_unknown_grain": 18610.0,
+   "votes_total": 131323828.0,
+   "states_all_county_tier": [
+    "WV"
+   ],
+   "level_counts": {
+    "precinct": 133279,
+    "vtd": 22638,
+    "ward": 6634,
+    "county pool": 1680,
+    "county": 1089,
+    "town": 740,
+    "municipality": 566,
+    "county residual": 311,
+    "district pool": 219,
+    "(not joined)": 7,
+    "state pool": 2
+   },
+   "tier_counts": {
+    "census": 110567,
+    "official (SWDB, California's statutorily designated database)": 22133,
+    "unmatched": 21072,
+    "official": 10945,
+    "third-party": 1569,
+    "census layer, third-party crosswalk": 879
+   },
+   "bin_bytes": 4090604,
+   "state_counts": [
+    {
+     "NAME1_b": "AK",
+     "units": 558,
+     "mapped": 432,
+     "sub": 438
+    },
+    {
+     "NAME1_b": "AL",
+     "units": 2306,
+     "mapped": 1648,
+     "sub": 2290
+    },
+    {
+     "NAME1_b": "AR",
+     "units": 2188,
+     "mapped": 1245,
+     "sub": 2024
+    },
+    {
+     "NAME1_b": "AZ",
+     "units": 2240,
+     "mapped": 2171,
+     "sub": 2239
+    },
+    {
+     "NAME1_b": "CA",
+     "units": 24836,
+     "mapped": 22141,
+     "sub": 24781
+    },
+    {
+     "NAME1_b": "CO",
+     "units": 3324,
+     "mapped": 3277,
+     "sub": 3260
+    },
+    {
+     "NAME1_b": "CT",
+     "units": 169,
+     "mapped": 168,
+     "sub": 169
+    },
+    {
+     "NAME1_b": "DC",
+     "units": 144,
+     "mapped": 143,
+     "sub": 144
+    },
+    {
+     "NAME1_b": "DE",
+     "units": 439,
+     "mapped": 435,
+     "sub": 438
+    },
+    {
+     "NAME1_b": "FL",
+     "units": 6106,
+     "mapped": 2260,
+     "sub": 6076
+    },
+    {
+     "NAME1_b": "GA",
+     "units": 514,
+     "mapped": 353,
+     "sub": 346
+    },
+    {
+     "NAME1_b": "HI",
+     "units": 441,
+     "mapped": 339,
+     "sub": 340
+    },
+    {
+     "NAME1_b": "IA",
+     "units": 1600,
+     "mapped": 1285,
+     "sub": 1500
+    },
+    {
+     "NAME1_b": "ID",
+     "units": 956,
+     "mapped": 876,
+     "sub": 921
+    },
+    {
+     "NAME1_b": "IL",
+     "units": 5503,
+     "mapped": 4488,
+     "sub": 5400
+    },
+    {
+     "NAME1_b": "IN",
+     "units": 1847,
+     "mapped": 1830,
+     "sub": 1755
+    },
+    {
+     "NAME1_b": "KS",
+     "units": 3253,
+     "mapped": 3165,
+     "sub": 3235
+    },
+    {
+     "NAME1_b": "KY",
+     "units": 3489,
+     "mapped": 120,
+     "sub": 3238
+    },
+    {
+     "NAME1_b": "LA",
+     "units": 4084,
+     "mapped": 3559,
+     "sub": 3956
+    },
+    {
+     "NAME1_b": "MA",
+     "units": 2172,
+     "mapped": 2146,
+     "sub": 2172
+    },
+    {
+     "NAME1_b": "MD",
+     "units": 1854,
+     "mapped": 1819,
+     "sub": 1830
+    },
+    {
+     "NAME1_b": "ME",
+     "units": 623,
+     "mapped": 499,
+     "sub": 622
+    },
+    {
+     "NAME1_b": "MI",
+     "units": 5707,
+     "mapped": 5071,
+     "sub": 5684
+    },
+    {
+     "NAME1_b": "MN",
+     "units": 4131,
+     "mapped": 3902,
+     "sub": 4131
+    },
+    {
+     "NAME1_b": "MO",
+     "units": 3654,
+     "mapped": 2716,
+     "sub": 3402
+    },
+    {
+     "NAME1_b": "MS",
+     "units": 1899,
+     "mapped": 1657,
+     "sub": 1899
+    },
+    {
+     "NAME1_b": "MT",
+     "units": 847,
+     "mapped": 704,
+     "sub": 847
+    },
+    {
+     "NAME1_b": "NC",
+     "units": 3105,
+     "mapped": 2438,
+     "sub": 2770
+    },
+    {
+     "NAME1_b": "ND",
+     "units": 528,
+     "mapped": 478,
+     "sub": 528
+    },
+    {
+     "NAME1_b": "NE",
+     "units": 2643,
+     "mapped": 1698,
+     "sub": 2463
+    },
+    {
+     "NAME1_b": "NH",
+     "units": 324,
+     "mapped": 321,
+     "sub": 323
+    },
+    {
+     "NAME1_b": "NJ",
+     "units": 569,
+     "mapped": 564,
+     "sub": 566
+    },
+    {
+     "NAME1_b": "NM",
+     "units": 1508,
+     "mapped": 1408,
+     "sub": 1487
+    },
+    {
+     "NAME1_b": "NV",
+     "units": 2053,
+     "mapped": 1926,
+     "sub": 2051
+    },
+    {
+     "NAME1_b": "NY",
+     "units": 14567,
+     "mapped": 14567,
+     "sub": 14567
+    },
+    {
+     "NAME1_b": "OH",
+     "units": 11107,
+     "mapped": 11012,
+     "sub": 11107
+    },
+    {
+     "NAME1_b": "OK",
+     "units": 2182,
+     "mapped": 2101,
+     "sub": 2105
+    },
+    {
+     "NAME1_b": "OR",
+     "units": 1538,
+     "mapped": 1172,
+     "sub": 1529
+    },
+    {
+     "NAME1_b": "PA",
+     "units": 9325,
+     "mapped": 9232,
+     "sub": 9310
+    },
+    {
+     "NAME1_b": "RI",
+     "units": 621,
+     "mapped": 523,
+     "sub": 620
+    },
+    {
+     "NAME1_b": "SC",
+     "units": 2289,
+     "mapped": 1934,
+     "sub": 2059
+    },
+    {
+     "NAME1_b": "SD",
+     "units": 798,
+     "mapped": 644,
+     "sub": 797
+    },
+    {
+     "NAME1_b": "TN",
+     "units": 2296,
+     "mapped": 2034,
+     "sub": 2253
+    },
+    {
+     "NAME1_b": "TX",
+     "units": 8325,
+     "mapped": 8189,
+     "sub": 8071
+    },
+    {
+     "NAME1_b": "UT",
+     "units": 2178,
+     "mapped": 1791,
+     "sub": 2152
+    },
+    {
+     "NAME1_b": "VA",
+     "units": 2655,
+     "mapped": 2335,
+     "sub": 2363
+    },
+    {
+     "NAME1_b": "VT",
+     "units": 246,
+     "mapped": 236,
+     "sub": 246
+    },
+    {
+     "NAME1_b": "WA",
+     "units": 6249,
+     "mapped": 5888,
+     "sub": 6235
+    },
+    {
+     "NAME1_b": "WI",
+     "units": 6634,
+     "mapped": 6634,
+     "sub": 6634
+    },
+    {
+     "NAME1_b": "WV",
+     "units": 55,
+     "mapped": 55,
+     "sub": 0
+    },
+    {
+     "NAME1_b": "WY",
+     "units": 486,
+     "mapped": 464,
+     "sub": 484
+    }
+   ]
+  },
+  {
+   "year": 2012,
+   "rows": 806516,
+   "units": 167510,
+   "mapped_units": 153759,
+   "geographic_units": 164119,
+   "units_with_polygon": 153759,
+   "polygon_rate_geographic": 0.9368750723560343,
+   "sub_county_share": 0.9298532203386155,
+   "votes_sub_county": 120077916.0,
+   "votes_county_tier": 8902052.0,
+   "votes_coarser": 121079.0,
+   "votes_unknown_grain": 35373.0,
+   "votes_total": 129136420.0,
+   "states_all_county_tier": [],
+   "level_counts": {
+    "precinct": 135539,
+    "election district": 10958,
+    "vtd": 9712,
+    "ward": 6634,
+    "county pool": 1999,
+    "municipality": 1111,
+    "town": 735,
+    "county": 504,
+    "county residual": 184,
+    "district pool": 120,
+    "(not joined)": 8,
+    "state pool": 6
+   },
+   "tier_counts": {
+    "census": 78028,
+    "official": 41878,
+    "official (SWDB, California's statutorily designated database)": 21507,
+    "unmatched": 13751,
+    "third-party": 12340,
+    "unclassified": 6
+   },
+   "bin_bytes": 4305252,
+   "state_counts": [
+    {
+     "NAME1_b": "AK",
+     "units": 558,
+     "mapped": 415,
+     "sub": 438
+    },
+    {
+     "NAME1_b": "AL",
+     "units": 2109,
+     "mapped": 1634,
+     "sub": 2043
+    },
+    {
+     "NAME1_b": "AR",
+     "units": 2334,
+     "mapped": 2135,
+     "sub": 2319
+    },
+    {
+     "NAME1_b": "AZ",
+     "units": 1668,
+     "mapped": 1633,
+     "sub": 1667
+    },
+    {
+     "NAME1_b": "CA",
+     "units": 23827,
+     "mapped": 21513,
+     "sub": 23770
+    },
+    {
+     "NAME1_b": "CO",
+     "units": 2935,
+     "mapped": 2934,
+     "sub": 2915
+    },
+    {
+     "NAME1_b": "CT",
+     "units": 170,
+     "mapped": 168,
+     "sub": 169
+    },
+    {
+     "NAME1_b": "DC",
+     "units": 143,
+     "mapped": 143,
+     "sub": 143
+    },
+    {
+     "NAME1_b": "DE",
+     "units": 433,
+     "mapped": 416,
+     "sub": 433
+    },
+    {
+     "NAME1_b": "FL",
+     "units": 6320,
+     "mapped": 5591,
+     "sub": 6319
+    },
+    {
+     "NAME1_b": "GA",
+     "units": 2910,
+     "mapped": 2812,
+     "sub": 2819
+    },
+    {
+     "NAME1_b": "HI",
+     "units": 253,
+     "mapped": 250,
+     "sub": 251
+    },
+    {
+     "NAME1_b": "IA",
+     "units": 1686,
+     "mapped": 1409,
+     "sub": 1686
+    },
+    {
+     "NAME1_b": "ID",
+     "units": 967,
+     "mapped": 850,
+     "sub": 924
+    },
+    {
+     "NAME1_b": "IL",
+     "units": 5389,
+     "mapped": 5386,
+     "sub": 5286
+    },
+    {
+     "NAME1_b": "IN",
+     "units": 5173,
+     "mapped": 4481,
+     "sub": 5081
+    },
+    {
+     "NAME1_b": "KS",
+     "units": 3892,
+     "mapped": 3791,
+     "sub": 3873
+    },
+    {
+     "NAME1_b": "KY",
+     "units": 3729,
+     "mapped": 3175,
+     "sub": 3482
+    },
+    {
+     "NAME1_b": "LA",
+     "units": 4395,
+     "mapped": 3864,
+     "sub": 4267
+    },
+    {
+     "NAME1_b": "MA",
+     "units": 2174,
+     "mapped": 2101,
+     "sub": 2174
+    },
+    {
+     "NAME1_b": "MD",
+     "units": 1889,
+     "mapped": 1824,
+     "sub": 1865
+    },
+    {
+     "NAME1_b": "ME",
+     "units": 546,
+     "mapped": 495,
+     "sub": 545
+    },
+    {
+     "NAME1_b": "MI",
+     "units": 5238,
+     "mapped": 4846,
+     "sub": 5221
+    },
+    {
+     "NAME1_b": "MN",
+     "units": 4102,
+     "mapped": 3936,
+     "sub": 4102
+    },
+    {
+     "NAME1_b": "MO",
+     "units": 3451,
+     "mapped": 2720,
+     "sub": 3299
+    },
+    {
+     "NAME1_b": "MS",
+     "units": 1873,
+     "mapped": 1515,
+     "sub": 1873
+    },
+    {
+     "NAME1_b": "MT",
+     "units": 794,
+     "mapped": 643,
+     "sub": 794
+    },
+    {
+     "NAME1_b": "NC",
+     "units": 3054,
+     "mapped": 2714,
+     "sub": 2769
+    },
+    {
+     "NAME1_b": "ND",
+     "units": 426,
+     "mapped": 358,
+     "sub": 426
+    },
+    {
+     "NAME1_b": "NE",
+     "units": 2041,
+     "mapped": 1084,
+     "sub": 1585
+    },
+    {
+     "NAME1_b": "NH",
+     "units": 320,
+     "mapped": 318,
+     "sub": 320
+    },
+    {
+     "NAME1_b": "NJ",
+     "units": 572,
+     "mapped": 565,
+     "sub": 566
+    },
+    {
+     "NAME1_b": "NM",
+     "units": 1564,
+     "mapped": 1476,
+     "sub": 1511
+    },
+    {
+     "NAME1_b": "NV",
+     "units": 2024,
+     "mapped": 1954,
+     "sub": 2017
+    },
+    {
+     "NAME1_b": "NY",
+     "units": 11012,
+     "mapped": 8734,
+     "sub": 10958
+    },
+    {
+     "NAME1_b": "OH",
+     "units": 9229,
+     "mapped": 9102,
+     "sub": 9229
+    },
+    {
+     "NAME1_b": "OK",
+     "units": 1960,
+     "mapped": 1957,
+     "sub": 1958
+    },
+    {
+     "NAME1_b": "OR",
+     "units": 914,
+     "mapped": 888,
+     "sub": 888
+    },
+    {
+     "NAME1_b": "PA",
+     "units": 9260,
+     "mapped": 9189,
+     "sub": 9246
+    },
+    {
+     "NAME1_b": "RI",
+     "units": 494,
+     "mapped": 413,
+     "sub": 454
+    },
+    {
+     "NAME1_b": "SC",
+     "units": 2477,
+     "mapped": 2094,
+     "sub": 2140
+    },
+    {
+     "NAME1_b": "SD",
+     "units": 686,
+     "mapped": 549,
+     "sub": 681
+    },
+    {
+     "NAME1_b": "TN",
+     "units": 2104,
+     "mapped": 1928,
+     "sub": 2068
+    },
+    {
+     "NAME1_b": "TX",
+     "units": 9713,
+     "mapped": 9712,
+     "sub": 9712
+    },
+    {
+     "NAME1_b": "UT",
+     "units": 1778,
+     "mapped": 1644,
+     "sub": 1760
+    },
+    {
+     "NAME1_b": "VA",
+     "units": 2720,
+     "mapped": 2379,
+     "sub": 2456
+    },
+    {
+     "NAME1_b": "VT",
+     "units": 246,
+     "mapped": 236,
+     "sub": 246
+    },
+    {
+     "NAME1_b": "WA",
+     "units": 6996,
+     "mapped": 6971,
+     "sub": 6979
+    },
+    {
+     "NAME1_b": "WI",
+     "units": 6634,
+     "mapped": 6634,
+     "sub": 6634
+    },
+    {
+     "NAME1_b": "WV",
+     "units": 1846,
+     "mapped": 1715,
+     "sub": 1846
+    },
+    {
+     "NAME1_b": "WY",
+     "units": 482,
+     "mapped": 465,
+     "sub": 482
+    }
+   ]
+  },
+  {
+   "year": 2016,
+   "rows": 915122,
+   "units": 173393,
+   "mapped_units": 162586,
+   "geographic_units": 170074,
+   "units_with_polygon": 162586,
+   "polygon_rate_geographic": 0.9559721062596281,
+   "sub_county_share": 0.9519345928074161,
+   "votes_sub_county": 130433066.0,
+   "votes_county_tier": 6213948.0,
+   "votes_coarser": 125398.0,
+   "votes_unknown_grain": 246525.0,
+   "votes_total": 137018937.0,
+   "states_all_county_tier": [],
+   "level_counts": {
+    "precinct": 138594,
+    "vtd": 18340,
+    "ward": 6634,
+    "election district": 5178,
+    "county pool": 2085,
+    "municipality": 1097,
+    "town": 735,
+    "county": 363,
+    "county residual": 234,
+    "district pool": 121,
+    "(not joined)": 9,
+    "state pool": 3
+   },
+   "tier_counts": {
+    "census": 81100,
+    "official": 41379,
+    "official (SWDB, California's statutorily designated database)": 21501,
+    "third-party": 18606,
+    "unmatched": 10807
+   },
+   "bin_bytes": 4552408,
+   "state_counts": [
+    {
+     "NAME1_b": "AK",
+     "units": 562,
+     "mapped": 435,
+     "sub": 441
+    },
+    {
+     "NAME1_b": "AL",
+     "units": 2087,
+     "mapped": 1830,
+     "sub": 2067
+    },
+    {
+     "NAME1_b": "AR",
+     "units": 2542,
+     "mapped": 2322,
+     "sub": 2542
+    },
+    {
+     "NAME1_b": "AZ",
+     "units": 1470,
+     "mapped": 1463,
+     "sub": 1469
+    },
+    {
+     "NAME1_b": "CA",
+     "units": 23842,
+     "mapped": 21508,
+     "sub": 23785
+    },
+    {
+     "NAME1_b": "CO",
+     "units": 3011,
+     "mapped": 3011,
+     "sub": 3010
+    },
+    {
+     "NAME1_b": "CT",
+     "units": 169,
+     "mapped": 169,
+     "sub": 169
+    },
+    {
+     "NAME1_b": "DC",
+     "units": 143,
+     "mapped": 143,
+     "sub": 143
+    },
+    {
+     "NAME1_b": "DE",
+     "units": 433,
+     "mapped": 415,
+     "sub": 432
+    },
+    {
+     "NAME1_b": "FL",
+     "units": 5871,
+     "mapped": 5855,
+     "sub": 5870
+    },
+    {
+     "NAME1_b": "GA",
+     "units": 2822,
+     "mapped": 2632,
+     "sub": 2693
+    },
+    {
+     "NAME1_b": "HI",
+     "units": 248,
+     "mapped": 247,
+     "sub": 248
+    },
+    {
+     "NAME1_b": "IA",
+     "units": 1680,
+     "mapped": 1466,
+     "sub": 1680
+    },
+    {
+     "NAME1_b": "ID",
+     "units": 961,
+     "mapped": 841,
+     "sub": 926
+    },
+    {
+     "NAME1_b": "IL",
+     "units": 10180,
+     "mapped": 9933,
+     "sub": 10141
+    },
+    {
+     "NAME1_b": "IN",
+     "units": 5050,
+     "mapped": 4503,
+     "sub": 4958
+    },
+    {
+     "NAME1_b": "KS",
+     "units": 3812,
+     "mapped": 3711,
+     "sub": 3808
+    },
+    {
+     "NAME1_b": "KY",
+     "units": 3857,
+     "mapped": 3542,
+     "sub": 3609
+    },
+    {
+     "NAME1_b": "LA",
+     "units": 4032,
+     "mapped": 3504,
+     "sub": 3904
+    },
+    {
+     "NAME1_b": "MA",
+     "units": 2174,
+     "mapped": 2101,
+     "sub": 2174
+    },
+    {
+     "NAME1_b": "MD",
+     "units": 2056,
+     "mapped": 1814,
+     "sub": 2032
+    },
+    {
+     "NAME1_b": "ME",
+     "units": 533,
+     "mapped": 496,
+     "sub": 532
+    },
+    {
+     "NAME1_b": "MI",
+     "units": 5077,
+     "mapped": 4792,
+     "sub": 5021
+    },
+    {
+     "NAME1_b": "MN",
+     "units": 4120,
+     "mapped": 3953,
+     "sub": 4120
+    },
+    {
+     "NAME1_b": "MO",
+     "units": 3439,
+     "mapped": 2810,
+     "sub": 3087
+    },
+    {
+     "NAME1_b": "MS",
+     "units": 1801,
+     "mapped": 1523,
+     "sub": 1801
+    },
+    {
+     "NAME1_b": "MT",
+     "units": 733,
+     "mapped": 668,
+     "sub": 733
+    },
+    {
+     "NAME1_b": "NC",
+     "units": 3209,
+     "mapped": 2689,
+     "sub": 2710
+    },
+    {
+     "NAME1_b": "ND",
+     "units": 432,
+     "mapped": 355,
+     "sub": 432
+    },
+    {
+     "NAME1_b": "NE",
+     "units": 1297,
+     "mapped": 1088,
+     "sub": 1188
+    },
+    {
+     "NAME1_b": "NH",
+     "units": 320,
+     "mapped": 318,
+     "sub": 320
+    },
+    {
+     "NAME1_b": "NJ",
+     "units": 574,
+     "mapped": 565,
+     "sub": 565
+    },
+    {
+     "NAME1_b": "NM",
+     "units": 1527,
+     "mapped": 1492,
+     "sub": 1492
+    },
+    {
+     "NAME1_b": "NV",
+     "units": 2003,
+     "mapped": 1958,
+     "sub": 2002
+    },
+    {
+     "NAME1_b": "NY",
+     "units": 13863,
+     "mapped": 12972,
+     "sub": 13806
+    },
+    {
+     "NAME1_b": "OH",
+     "units": 8888,
+     "mapped": 8638,
+     "sub": 8887
+    },
+    {
+     "NAME1_b": "OK",
+     "units": 1958,
+     "mapped": 1955,
+     "sub": 1956
+    },
+    {
+     "NAME1_b": "OR",
+     "units": 917,
+     "mapped": 868,
+     "sub": 892
+    },
+    {
+     "NAME1_b": "PA",
+     "units": 9178,
+     "mapped": 9073,
+     "sub": 9176
+    },
+    {
+     "NAME1_b": "RI",
+     "units": 501,
+     "mapped": 420,
+     "sub": 461
+    },
+    {
+     "NAME1_b": "SC",
+     "units": 2550,
+     "mapped": 2214,
+     "sub": 2234
+    },
+    {
+     "NAME1_b": "SD",
+     "units": 707,
+     "mapped": 562,
+     "sub": 700
+    },
+    {
+     "NAME1_b": "TN",
+     "units": 2022,
+     "mapped": 1857,
+     "sub": 1988
+    },
+    {
+     "NAME1_b": "TX",
+     "units": 9713,
+     "mapped": 9712,
+     "sub": 9712
+    },
+    {
+     "NAME1_b": "UT",
+     "units": 1847,
+     "mapped": 1728,
+     "sub": 1828
+    },
+    {
+     "NAME1_b": "VA",
+     "units": 2881,
+     "mapped": 2340,
+     "sub": 2590
+    },
+    {
+     "NAME1_b": "VT",
+     "units": 246,
+     "mapped": 236,
+     "sub": 246
+    },
+    {
+     "NAME1_b": "WA",
+     "units": 7181,
+     "mapped": 7118,
+     "sub": 7126
+    },
+    {
+     "NAME1_b": "WI",
+     "units": 6634,
+     "mapped": 6634,
+     "sub": 6634
+    },
+    {
+     "NAME1_b": "WV",
+     "units": 1758,
+     "mapped": 1641,
+     "sub": 1756
+    },
+    {
+     "NAME1_b": "WY",
+     "units": 482,
+     "mapped": 466,
+     "sub": 482
+    }
+   ]
+  },
+  {
+   "year": 2020,
+   "rows": 937016,
+   "units": 169775,
+   "mapped_units": 162648,
+   "geographic_units": 167179,
+   "units_with_polygon": 162648,
+   "polygon_rate_geographic": 0.9728973136578158,
+   "sub_county_share": 0.9366004077585441,
+   "votes_sub_county": 148501860.0,
+   "votes_county_tier": 9762290.0,
+   "votes_coarser": 209079.0,
+   "votes_unknown_grain": 80898.0,
+   "votes_total": 158554127.0,
+   "states_all_county_tier": [],
+   "level_counts": {
+    "precinct": 134657,
+    "vtd": 18402,
+    "ward": 7078,
+    "election district": 5631,
+    "county pool": 1502,
+    "municipality": 1081,
+    "town": 735,
+    "county": 348,
+    "county residual": 189,
+    "district pool": 139,
+    "(not joined)": 8,
+    "state pool": 5
+   },
+   "tier_counts": {
+    "census": 99826,
+    "official": 34025,
+    "official (SWDB, California's statutorily designated database)": 20051,
+    "third-party": 8746,
+    "unmatched": 7127
+   },
+   "bin_bytes": 4554144,
+   "state_counts": [
+    {
+     "NAME1_b": "AK",
+     "units": 581,
+     "mapped": 434,
+     "sub": 441
+    },
+    {
+     "NAME1_b": "AL",
+     "units": 2111,
+     "mapped": 1896,
+     "sub": 2111
+    },
+    {
+     "NAME1_b": "AR",
+     "units": 2574,
+     "mapped": 2273,
+     "sub": 2574
+    },
+    {
+     "NAME1_b": "AZ",
+     "units": 1490,
+     "mapped": 1483,
+     "sub": 1489
+    },
+    {
+     "NAME1_b": "CA",
+     "units": 21400,
+     "mapped": 20051,
+     "sub": 21346
+    },
+    {
+     "NAME1_b": "CO",
+     "units": 3205,
+     "mapped": 3161,
+     "sub": 3205
+    },
+    {
+     "NAME1_b": "CT",
+     "units": 169,
+     "mapped": 169,
+     "sub": 169
+    },
+    {
+     "NAME1_b": "DC",
+     "units": 144,
+     "mapped": 143,
+     "sub": 144
+    },
+    {
+     "NAME1_b": "DE",
+     "units": 440,
+     "mapped": 433,
+     "sub": 439
+    },
+    {
+     "NAME1_b": "FL",
+     "units": 6098,
+     "mapped": 6036,
+     "sub": 6097
+    },
+    {
+     "NAME1_b": "GA",
+     "units": 2867,
+     "mapped": 2514,
+     "sub": 2656
+    },
+    {
+     "NAME1_b": "HI",
+     "units": 251,
+     "mapped": 250,
+     "sub": 251
+    },
+    {
+     "NAME1_b": "IA",
+     "units": 1661,
+     "mapped": 1441,
+     "sub": 1661
+    },
+    {
+     "NAME1_b": "ID",
+     "units": 973,
+     "mapped": 827,
+     "sub": 935
+    },
+    {
+     "NAME1_b": "IL",
+     "units": 10143,
+     "mapped": 9975,
+     "sub": 10113
+    },
+    {
+     "NAME1_b": "IN",
+     "units": 5165,
+     "mapped": 4879,
+     "sub": 5095
+    },
+    {
+     "NAME1_b": "KS",
+     "units": 3862,
+     "mapped": 3802,
+     "sub": 3862
+    },
+    {
+     "NAME1_b": "KY",
+     "units": 194,
+     "mapped": 174,
+     "sub": 73
+    },
+    {
+     "NAME1_b": "LA",
+     "units": 4062,
+     "mapped": 3564,
+     "sub": 3934
+    },
+    {
+     "NAME1_b": "MA",
+     "units": 2173,
+     "mapped": 2147,
+     "sub": 2173
+    },
+    {
+     "NAME1_b": "MD",
+     "units": 2035,
+     "mapped": 2027,
+     "sub": 2035
+    },
+    {
+     "NAME1_b": "ME",
+     "units": 517,
+     "mapped": 488,
+     "sub": 516
+    },
+    {
+     "NAME1_b": "MI",
+     "units": 4933,
+     "mapped": 4749,
+     "sub": 4889
+    },
+    {
+     "NAME1_b": "MN",
+     "units": 4110,
+     "mapped": 4107,
+     "sub": 4110
+    },
+    {
+     "NAME1_b": "MO",
+     "units": 3823,
+     "mapped": 3092,
+     "sub": 3553
+    },
+    {
+     "NAME1_b": "MS",
+     "units": 1745,
+     "mapped": 1692,
+     "sub": 1744
+    },
+    {
+     "NAME1_b": "MT",
+     "units": 663,
+     "mapped": 659,
+     "sub": 663
+    },
+    {
+     "NAME1_b": "NC",
+     "units": 3065,
+     "mapped": 2641,
+     "sub": 2662
+    },
+    {
+     "NAME1_b": "ND",
+     "units": 418,
+     "mapped": 353,
+     "sub": 416
+    },
+    {
+     "NAME1_b": "NE",
+     "units": 1483,
+     "mapped": 1248,
+     "sub": 1392
+    },
+    {
+     "NAME1_b": "NH",
+     "units": 320,
+     "mapped": 318,
+     "sub": 320
+    },
+    {
+     "NAME1_b": "NJ",
+     "units": 571,
+     "mapped": 565,
+     "sub": 565
+    },
+    {
+     "NAME1_b": "NM",
+     "units": 1959,
+     "mapped": 1903,
+     "sub": 1925
+    },
+    {
+     "NAME1_b": "NV",
+     "units": 2012,
+     "mapped": 1981,
+     "sub": 2011
+    },
+    {
+     "NAME1_b": "NY",
+     "units": 14322,
+     "mapped": 14320,
+     "sub": 14321
+    },
+    {
+     "NAME1_b": "OH",
+     "units": 8933,
+     "mapped": 8933,
+     "sub": 8933
+    },
+    {
+     "NAME1_b": "OK",
+     "units": 1950,
+     "mapped": 1948,
+     "sub": 1948
+    },
+    {
+     "NAME1_b": "OR",
+     "units": 980,
+     "mapped": 916,
+     "sub": 959
+    },
+    {
+     "NAME1_b": "PA",
+     "units": 9196,
+     "mapped": 9025,
+     "sub": 9187
+    },
+    {
+     "NAME1_b": "RI",
+     "units": 504,
+     "mapped": 421,
+     "sub": 462
+    },
+    {
+     "NAME1_b": "SC",
+     "units": 2399,
+     "mapped": 2247,
+     "sub": 2261
+    },
+    {
+     "NAME1_b": "SD",
+     "units": 693,
+     "mapped": 608,
+     "sub": 684
+    },
+    {
+     "NAME1_b": "TN",
+     "units": 1965,
+     "mapped": 1836,
+     "sub": 1961
+    },
+    {
+     "NAME1_b": "TX",
+     "units": 9712,
+     "mapped": 9712,
+     "sub": 9712
+    },
+    {
+     "NAME1_b": "UT",
+     "units": 2183,
+     "mapped": 2013,
+     "sub": 2165
+    },
+    {
+     "NAME1_b": "VA",
+     "units": 2775,
+     "mapped": 2426,
+     "sub": 2476
+    },
+    {
+     "NAME1_b": "VT",
+     "units": 246,
+     "mapped": 238,
+     "sub": 246
+    },
+    {
+     "NAME1_b": "WA",
+     "units": 7436,
+     "mapped": 7429,
+     "sub": 7436
+    },
+    {
+     "NAME1_b": "WI",
+     "units": 7078,
+     "mapped": 7029,
+     "sub": 7078
+    },
+    {
+     "NAME1_b": "WV",
+     "units": 1706,
+     "mapped": 1617,
+     "sub": 1706
+    },
+    {
+     "NAME1_b": "WY",
+     "units": 480,
+     "mapped": 455,
+     "sub": 480
+    }
+   ]
+  },
+  {
+   "year": 2024,
+   "rows": 1014857,
+   "units": 177872,
+   "mapped_units": 169460,
+   "geographic_units": 175799,
+   "units_with_polygon": 169460,
+   "polygon_rate_geographic": 0.9639417744128237,
+   "sub_county_share": 0.9621582914575451,
+   "votes_sub_county": 149558516.0,
+   "votes_county_tier": 5581170.0,
+   "votes_coarser": 173589.0,
+   "votes_unknown_grain": 127381.0,
+   "votes_total": 155440656.0,
+   "states_all_county_tier": [],
+   "level_counts": {
+    "precinct": 141249,
+    "election district": 16631,
+    "vtd": 9712,
+    "ward": 7150,
+    "county pool": 945,
+    "town": 736,
+    "municipality": 662,
+    "county": 294,
+    "county residual": 202,
+    "municipality pool": 156,
+    "district pool": 124,
+    "(not joined)": 6,
+    "state pool": 5
+   },
+   "tier_counts": {
+    "census": 62878,
+    "official": 54802,
+    "third-party": 27578,
+    "official (SWDB, California's statutorily designated database)": 24202,
+    "unmatched": 8412
+   },
+   "bin_bytes": 4744880,
+   "state_counts": [
+    {
+     "NAME1_b": "AK",
+     "units": 523,
+     "mapped": 402,
+     "sub": 402
+    },
+    {
+     "NAME1_b": "AL",
+     "units": 2085,
+     "mapped": 1944,
+     "sub": 2085
+    },
+    {
+     "NAME1_b": "AR",
+     "units": 2839,
+     "mapped": 2703,
+     "sub": 2839
+    },
+    {
+     "NAME1_b": "AZ",
+     "units": 1748,
+     "mapped": 1650,
+     "sub": 1734
+    },
+    {
+     "NAME1_b": "CA",
+     "units": 25055,
+     "mapped": 24202,
+     "sub": 25002
+    },
+    {
+     "NAME1_b": "CO",
+     "units": 3199,
+     "mapped": 2917,
+     "sub": 3199
+    },
+    {
+     "NAME1_b": "CT",
+     "units": 169,
+     "mapped": 169,
+     "sub": 169
+    },
+    {
+     "NAME1_b": "DC",
+     "units": 144,
+     "mapped": 143,
+     "sub": 144
+    },
+    {
+     "NAME1_b": "DE",
+     "units": 534,
+     "mapped": 528,
+     "sub": 533
+    },
+    {
+     "NAME1_b": "FL",
+     "units": 5713,
+     "mapped": 5612,
+     "sub": 5712
+    },
+    {
+     "NAME1_b": "GA",
+     "units": 2702,
+     "mapped": 2644,
+     "sub": 2701
+    },
+    {
+     "NAME1_b": "HI",
+     "units": 250,
+     "mapped": 244,
+     "sub": 250
+    },
+    {
+     "NAME1_b": "IA",
+     "units": 1653,
+     "mapped": 1484,
+     "sub": 1653
+    },
+    {
+     "NAME1_b": "ID",
+     "units": 985,
+     "mapped": 951,
+     "sub": 975
+    },
+    {
+     "NAME1_b": "IL",
+     "units": 8585,
+     "mapped": 8236,
+     "sub": 8580
+    },
+    {
+     "NAME1_b": "IN",
+     "units": 5073,
+     "mapped": 4631,
+     "sub": 4985
+    },
+    {
+     "NAME1_b": "KS",
+     "units": 4567,
+     "mapped": 3665,
+     "sub": 4567
+    },
+    {
+     "NAME1_b": "KY",
+     "units": 3273,
+     "mapped": 3220,
+     "sub": 3230
+    },
+    {
+     "NAME1_b": "LA",
+     "units": 3933,
+     "mapped": 3492,
+     "sub": 3805
+    },
+    {
+     "NAME1_b": "MA",
+     "units": 2394,
+     "mapped": 2116,
+     "sub": 2394
+    },
+    {
+     "NAME1_b": "MD",
+     "units": 1958,
+     "mapped": 1825,
+     "sub": 1958
+    },
+    {
+     "NAME1_b": "ME",
+     "units": 513,
+     "mapped": 487,
+     "sub": 512
+    },
+    {
+     "NAME1_b": "MI",
+     "units": 4436,
+     "mapped": 4327,
+     "sub": 4412
+    },
+    {
+     "NAME1_b": "MN",
+     "units": 4103,
+     "mapped": 3981,
+     "sub": 4103
+    },
+    {
+     "NAME1_b": "MO",
+     "units": 3397,
+     "mapped": 2973,
+     "sub": 3117
+    },
+    {
+     "NAME1_b": "MS",
+     "units": 1725,
+     "mapped": 1683,
+     "sub": 1724
+    },
+    {
+     "NAME1_b": "MT",
+     "units": 727,
+     "mapped": 710,
+     "sub": 727
+    },
+    {
+     "NAME1_b": "NC",
+     "units": 2908,
+     "mapped": 2479,
+     "sub": 2658
+    },
+    {
+     "NAME1_b": "ND",
+     "units": 385,
+     "mapped": 369,
+     "sub": 385
+    },
+    {
+     "NAME1_b": "NE",
+     "units": 1505,
+     "mapped": 1157,
+     "sub": 1413
+    },
+    {
+     "NAME1_b": "NH",
+     "units": 320,
+     "mapped": 318,
+     "sub": 320
+    },
+    {
+     "NAME1_b": "NJ",
+     "units": 6561,
+     "mapped": 6159,
+     "sub": 6556
+    },
+    {
+     "NAME1_b": "NM",
+     "units": 2202,
+     "mapped": 2168,
+     "sub": 2168
+    },
+    {
+     "NAME1_b": "NV",
+     "units": 1631,
+     "mapped": 1605,
+     "sub": 1621
+    },
+    {
+     "NAME1_b": "NY",
+     "units": 10456,
+     "mapped": 10261,
+     "sub": 10445
+    },
+    {
+     "NAME1_b": "OH",
+     "units": 8878,
+     "mapped": 8771,
+     "sub": 8878
+    },
+    {
+     "NAME1_b": "OK",
+     "units": 1986,
+     "mapped": 1984,
+     "sub": 1984
+    },
+    {
+     "NAME1_b": "OR",
+     "units": 1208,
+     "mapped": 1185,
+     "sub": 1193
+    },
+    {
+     "NAME1_b": "PA",
+     "units": 9189,
+     "mapped": 9010,
+     "sub": 9187
+    },
+    {
+     "NAME1_b": "RI",
+     "units": 497,
+     "mapped": 414,
+     "sub": 455
+    },
+    {
+     "NAME1_b": "SC",
+     "units": 2446,
+     "mapped": 2211,
+     "sub": 2309
+    },
+    {
+     "NAME1_b": "SD",
+     "units": 714,
+     "mapped": 624,
+     "sub": 681
+    },
+    {
+     "NAME1_b": "TN",
+     "units": 1862,
+     "mapped": 1782,
+     "sub": 1862
+    },
+    {
+     "NAME1_b": "TX",
+     "units": 9713,
+     "mapped": 9712,
+     "sub": 9712
+    },
+    {
+     "NAME1_b": "UT",
+     "units": 2916,
+     "mapped": 2557,
+     "sub": 2894
+    },
+    {
+     "NAME1_b": "VA",
+     "units": 2669,
+     "mapped": 2336,
+     "sub": 2536
+    },
+    {
+     "NAME1_b": "VT",
+     "units": 247,
+     "mapped": 238,
+     "sub": 247
+    },
+    {
+     "NAME1_b": "WA",
+     "units": 8127,
+     "mapped": 8108,
+     "sub": 8111
+    },
+    {
+     "NAME1_b": "WI",
+     "units": 7086,
+     "mapped": 7060,
+     "sub": 7086
+    },
+    {
+     "NAME1_b": "WV",
+     "units": 1651,
+     "mapped": 1630,
+     "sub": 1651
+    },
+    {
+     "NAME1_b": "WY",
+     "units": 432,
+     "mapped": 383,
+     "sub": 432
+    }
+   ]
+  }
+ ]
+}
