@@ -54,12 +54,18 @@
       <select id="state"><option value="">All states</option></select>
       <select id="grainfilter">
         <option value="">All grains</option>
-        <option value="1">Sub-county only</option>
+        <option value="1" selected>Sub-county only</option>
         <option value="2">County tier only</option>
         <option value="3">Coarser than county only</option>
         <option value="0">Grain not established</option>
       </select>
     </div>
+    <p class="note">Defaults to sub-county. A county-tier row is a whole county's
+      residual, not a unit, so plotting it beside precincts invites reading it as
+      one: Kentucky 2008 publishes its two major parties by precinct and the
+      three minor ones only by county, and those county rows drew as points where
+      a minor party appeared to win. Switch to <em>County tier only</em> to see
+      them for what they are.</p>
 
     <h2>Download</h2>
     <div class="ctl">
