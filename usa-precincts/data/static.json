@@ -1,5 +1,5 @@
 {
- "built": "2026-08-20T19:30:25Z",
+ "built": "2026-08-20T22:19:09Z",
  "shard": 2048,
  "rec": [
   "uid",
@@ -59,55 +59,55 @@
    "year": 1992,
    "n_units": 70923,
    "shards": 35,
-   "csv_bytes": 22894694
+   "csv_bytes": 22900292
   },
   {
    "year": 1996,
    "n_units": 108867,
    "shards": 54,
-   "csv_bytes": 33276024
+   "csv_bytes": 33283170
   },
   {
    "year": 2000,
-   "n_units": 141178,
-   "shards": 69,
-   "csv_bytes": 43138171
+   "n_units": 141634,
+   "shards": 70,
+   "csv_bytes": 43270105
   },
   {
    "year": 2004,
-   "n_units": 148545,
+   "n_units": 149489,
    "shards": 73,
-   "csv_bytes": 45930052
+   "csv_bytes": 46259778
   },
   {
    "year": 2008,
-   "n_units": 173025,
-   "shards": 85,
-   "csv_bytes": 50902788
+   "n_units": 181541,
+   "shards": 89,
+   "csv_bytes": 53261784
   },
   {
    "year": 2012,
    "n_units": 174624,
    "shards": 86,
-   "csv_bytes": 53946798
+   "csv_bytes": 53733991
   },
   {
    "year": 2016,
-   "n_units": 173393,
+   "n_units": 173491,
    "shards": 85,
-   "csv_bytes": 53360349
+   "csv_bytes": 53395562
   },
   {
    "year": 2020,
    "n_units": 170398,
    "shards": 84,
-   "csv_bytes": 54744130
+   "csv_bytes": 54742914
   },
   {
    "year": 2024,
    "n_units": 177872,
    "shards": 87,
-   "csv_bytes": 57931302
+   "csv_bytes": 57931481
   }
  ]
 }
