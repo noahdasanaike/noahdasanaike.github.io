@@ -1,19 +1,19 @@
 {
- "built": "2026-08-20T22:18:08Z",
+ "built": "2026-09-07T21:28:55Z",
  "source": "G:/Elections Dataset/Processed/United States/own_usa_precincts/sage/national",
  "years": [
   {
    "year": 1992,
-   "rows": 411450,
-   "units": 70923,
-   "mapped_units": 57970,
+   "rows": 411639,
+   "units": 70984,
+   "mapped_units": 57973,
    "geographic_units": 65213,
-   "units_with_polygon": 57970,
-   "polygon_rate_geographic": 0.8889331881680033,
-   "sub_county_share": 0.38949049292963295,
-   "votes_sub_county": 40601615.0,
-   "votes_county_tier": 62136228.0,
-   "votes_coarser": 1310981.0,
+   "units_with_polygon": 57973,
+   "polygon_rate_geographic": 0.8889791912655453,
+   "sub_county_share": 0.3898368858553625,
+   "votes_sub_county": 40637724.0,
+   "votes_county_tier": 63294597.0,
+   "votes_coarser": 116503.0,
    "votes_unknown_grain": 194067.0,
    "votes_total": 104242891.0,
    "states_all_county_tier": [
@@ -48,24 +48,24 @@
     "precinct": 55951,
     "ward": 6760,
     "county pool": 3008,
-    "county": 2379,
+    "county": 2380,
     "town": 1223,
     "election district": 893,
     "municipality": 351,
-    "municipality pool": 109,
+    "county residual": 138,
+    "municipality pool": 119,
     "district pool": 96,
-    "county residual": 87,
     "assembly district": 41,
-    "state pool": 21,
+    "state pool": 20,
     "(not joined)": 4
    },
    "tier_counts": {
-    "census": 34738,
+    "census": 34741,
     "official (SWDB, California's statutorily designated database)": 16084,
-    "unmatched": 12953,
+    "unmatched": 13011,
     "official": 7148
    },
-   "bin_bytes": 1623160,
+   "bin_bytes": 1623244,
    "state_counts": [
     {
      "NAME1_b": "AK",
@@ -93,9 +93,9 @@
     },
     {
      "NAME1_b": "CA",
-     "units": 23635,
+     "units": 23696,
      "mapped": 17603,
-     "sub": 21017
+     "sub": 21027
     },
     {
      "NAME1_b": "CO",
@@ -124,7 +124,7 @@
     {
      "NAME1_b": "FL",
      "units": 5486,
-     "mapped": 4207,
+     "mapped": 4210,
      "sub": 5419
     },
     {
@@ -371,16 +371,16 @@
   },
   {
    "year": 1996,
-   "rows": 672969,
-   "units": 108867,
-   "mapped_units": 93765,
-   "geographic_units": 102979,
-   "units_with_polygon": 93765,
-   "polygon_rate_geographic": 0.9105254469357831,
-   "sub_county_share": 0.6117224453200282,
-   "votes_sub_county": 56454107.0,
-   "votes_county_tier": 32981300.0,
-   "votes_coarser": 2808993.0,
+   "rows": 678321,
+   "units": 109536,
+   "mapped_units": 94083,
+   "geographic_units": 103547,
+   "units_with_polygon": 94083,
+   "polygon_rate_geographic": 0.908601890928757,
+   "sub_county_share": 0.6145224241296405,
+   "votes_sub_county": 56712509.0,
+   "votes_county_tier": 33171023.0,
+   "votes_coarser": 2360868.0,
    "votes_unknown_grain": 42727.0,
    "votes_total": 92287127.0,
    "states_all_county_tier": [
@@ -409,23 +409,23 @@
     "vtd": 21169,
     "ward": 6760,
     "county pool": 3094,
-    "county": 2079,
-    "election district": 912,
+    "county": 2080,
+    "election district": 1480,
     "town": 713,
+    "municipality pool": 357,
     "municipality": 351,
     "district pool": 271,
-    "municipality pool": 257,
     "county residual": 23,
     "(not joined)": 5,
     "state pool": 4
    },
    "tier_counts": {
-    "census": 60292,
+    "census": 60610,
     "official (SWDB, California's statutorily designated database)": 22968,
-    "unmatched": 15102,
+    "unmatched": 15453,
     "official": 10505
    },
-   "bin_bytes": 2625420,
+   "bin_bytes": 2634324,
    "state_counts": [
     {
      "NAME1_b": "AK",
@@ -484,7 +484,7 @@
     {
      "NAME1_b": "FL",
      "units": 5883,
-     "mapped": 4468,
+     "mapped": 4471,
      "sub": 5816
     },
     {
@@ -609,9 +609,9 @@
     },
     {
      "NAME1_b": "NJ",
-     "units": 1170,
-     "mapped": 737,
-     "sub": 1169
+     "units": 1839,
+     "mapped": 1052,
+     "sub": 1837
     },
     {
      "NAME1_b": "NM",
@@ -727,10 +727,10 @@
    "year": 2000,
    "rows": 843623,
    "units": 141634,
-   "mapped_units": 120112,
+   "mapped_units": 120115,
    "geographic_units": 136376,
-   "units_with_polygon": 120112,
-   "polygon_rate_geographic": 0.8807414794391976,
+   "units_with_polygon": 120115,
+   "polygon_rate_geographic": 0.8807634774447117,
    "sub_county_share": 0.7893397395429156,
    "votes_sub_county": 83223209.0,
    "votes_county_tier": 21992320.0,
@@ -764,13 +764,13 @@
     "state pool": 2
    },
    "tier_counts": {
-    "census": 86614,
+    "census": 86617,
     "official (SWDB, California's statutorily designated database)": 21926,
-    "unmatched": 21522,
+    "unmatched": 21519,
     "official": 11035,
     "third-party": 537
    },
-   "bin_bytes": 3363136,
+   "bin_bytes": 3363220,
    "state_counts": [
     {
      "NAME1_b": "AK",
@@ -829,7 +829,7 @@
     {
      "NAME1_b": "FL",
      "units": 6045,
-     "mapped": 4602,
+     "mapped": 4605,
      "sub": 6045
     },
     {
@@ -1082,47 +1082,45 @@
   },
   {
    "year": 2004,
-   "rows": 684348,
-   "units": 149489,
-   "mapped_units": 128151,
-   "geographic_units": 143712,
-   "units_with_polygon": 128151,
-   "polygon_rate_geographic": 0.8917209418837675,
-   "sub_county_share": 0.8315368456774934,
-   "votes_sub_county": 101697061.0,
-   "votes_county_tier": 20321649.0,
+   "rows": 720935,
+   "units": 156847,
+   "mapped_units": 132816,
+   "geographic_units": 150962,
+   "units_with_polygon": 132816,
+   "polygon_rate_geographic": 0.8797975649501198,
+   "sub_county_share": 0.8660703996331124,
+   "votes_sub_county": 105920519.0,
+   "votes_county_tier": 16098191.0,
    "votes_coarser": 228522.0,
    "votes_unknown_grain": 52894.0,
    "votes_total": 122300126.0,
    "states_all_county_tier": [
-    "KY",
-    "MS",
-    "SD"
+    "KY"
    ],
    "level_counts": {
-    "precinct": 131779,
+    "precinct": 137223,
     "vtd": 8074,
-    "election district": 3980,
-    "county pool": 2190,
-    "county": 1060,
+    "election district": 5901,
+    "county pool": 2265,
+    "county": 967,
     "district pool": 761,
     "town": 660,
     "municipality": 569,
     "region pool": 189,
+    "county residual": 87,
     "ward": 77,
-    "county residual": 76,
     "assembly district": 66,
     "(not joined)": 7,
     "state pool": 1
    },
    "tier_counts": {
-    "census": 92116,
-    "unmatched": 21338,
+    "census": 96735,
+    "unmatched": 24031,
     "official (SWDB, California's statutorily designated database)": 21224,
     "official": 13926,
-    "third-party": 885
+    "third-party": 931
    },
-   "bin_bytes": 3588228,
+   "bin_bytes": 3718848,
    "state_counts": [
     {
      "NAME1_b": "AK",
@@ -1180,9 +1178,9 @@
     },
     {
      "NAME1_b": "FL",
-     "units": 5415,
-     "mapped": 3657,
-     "sub": 5365
+     "units": 6650,
+     "mapped": 5316,
+     "sub": 6588
     },
     {
      "NAME1_b": "GA",
@@ -1210,15 +1208,15 @@
     },
     {
      "NAME1_b": "IL",
-     "units": 6425,
-     "mapped": 6133,
-     "sub": 6323
+     "units": 7269,
+     "mapped": 6827,
+     "sub": 7167
     },
     {
      "NAME1_b": "IN",
-     "units": 1491,
-     "mapped": 1400,
-     "sub": 1399
+     "units": 1700,
+     "mapped": 1599,
+     "sub": 1606
     },
     {
      "NAME1_b": "KS",
@@ -1276,9 +1274,9 @@
     },
     {
      "NAME1_b": "MS",
-     "units": 82,
-     "mapped": 82,
-     "sub": 0
+     "units": 1576,
+     "mapped": 1242,
+     "sub": 1545
     },
     {
      "NAME1_b": "MT",
@@ -1300,9 +1298,9 @@
     },
     {
      "NAME1_b": "NE",
-     "units": 644,
-     "mapped": 631,
-     "sub": 551
+     "units": 1200,
+     "mapped": 817,
+     "sub": 1060
     },
     {
      "NAME1_b": "NH",
@@ -1330,9 +1328,9 @@
     },
     {
      "NAME1_b": "NY",
-     "units": 4120,
-     "mapped": 112,
-     "sub": 4063
+     "units": 6028,
+     "mapped": 94,
+     "sub": 5984
     },
     {
      "NAME1_b": "OH",
@@ -1348,9 +1346,9 @@
     },
     {
      "NAME1_b": "OR",
-     "units": 1258,
-     "mapped": 965,
-     "sub": 1245
+     "units": 1303,
+     "mapped": 1009,
+     "sub": 1291
     },
     {
      "NAME1_b": "PA",
@@ -1372,9 +1370,9 @@
     },
     {
      "NAME1_b": "SD",
-     "units": 66,
-     "mapped": 65,
-     "sub": 0
+     "units": 840,
+     "mapped": 621,
+     "sub": 778
     },
     {
      "NAME1_b": "TN",
@@ -1384,15 +1382,15 @@
     },
     {
      "NAME1_b": "TX",
-     "units": 8328,
-     "mapped": 7963,
-     "sub": 8074
+     "units": 8403,
+     "mapped": 8033,
+     "sub": 8149
     },
     {
      "NAME1_b": "UT",
-     "units": 1232,
-     "mapped": 1216,
-     "sub": 1203
+     "units": 1450,
+     "mapped": 1331,
+     "sub": 1420
     },
     {
      "NAME1_b": "VA",
@@ -1436,10 +1434,10 @@
    "year": 2008,
    "rows": 841302,
    "units": 181541,
-   "mapped_units": 165752,
+   "mapped_units": 165750,
    "geographic_units": 177040,
-   "units_with_polygon": 165752,
-   "polygon_rate_geographic": 0.9362403976502486,
+   "units_with_polygon": 165750,
+   "polygon_rate_geographic": 0.936229100768188,
    "sub_county_share": 0.9381513536142123,
    "votes_sub_county": 123201627.0,
    "votes_county_tier": 7811466.0,
@@ -1461,14 +1459,14 @@
     "state pool": 2
    },
    "tier_counts": {
-    "census": 129572,
+    "census": 129570,
     "official (SWDB, California's statutorily designated database)": 22133,
-    "unmatched": 15789,
+    "unmatched": 15791,
     "official": 10963,
     "third-party": 2205,
     "census layer, third-party crosswalk": 879
    },
-   "bin_bytes": 4641056,
+   "bin_bytes": 4641000,
    "state_counts": [
     {
      "NAME1_b": "AK",
@@ -1527,7 +1525,7 @@
     {
      "NAME1_b": "FL",
      "units": 6900,
-     "mapped": 6216,
+     "mapped": 6240,
      "sub": 6870
     },
     {
@@ -1611,7 +1609,7 @@
     {
      "NAME1_b": "MN",
      "units": 4131,
-     "mapped": 3902,
+     "mapped": 3876,
      "sub": 4131
     },
     {
@@ -2473,15 +2471,15 @@
   },
   {
    "year": 2020,
-   "rows": 940126,
+   "rows": 940132,
    "units": 170398,
    "mapped_units": 163058,
    "geographic_units": 167802,
    "units_with_polygon": 163058,
    "polygon_rate_geographic": 0.9717285848797989,
-   "sub_county_share": 0.9390361374825645,
-   "votes_sub_county": 148888055.0,
-   "votes_county_tier": 9376095.0,
+   "sub_county_share": 0.9390362888504314,
+   "votes_sub_county": 148888079.0,
+   "votes_county_tier": 9376071.0,
    "votes_coarser": 209079.0,
    "votes_unknown_grain": 80898.0,
    "votes_total": 158554127.0,
@@ -2819,28 +2817,28 @@
   },
   {
    "year": 2024,
-   "rows": 1014857,
-   "units": 177872,
-   "mapped_units": 169235,
-   "geographic_units": 175799,
-   "units_with_polygon": 169235,
-   "polygon_rate_geographic": 0.9626619036513291,
-   "sub_county_share": 0.9621582914575451,
-   "votes_sub_county": 149558516.0,
-   "votes_county_tier": 5581170.0,
+   "rows": 1024083,
+   "units": 179258,
+   "mapped_units": 170278,
+   "geographic_units": 177186,
+   "units_with_polygon": 170278,
+   "polygon_rate_geographic": 0.9610127210953461,
+   "sub_county_share": 0.9682840118739592,
+   "votes_sub_county": 150510702.0,
+   "votes_county_tier": 4628984.0,
    "votes_coarser": 173589.0,
    "votes_unknown_grain": 127381.0,
    "votes_total": 155440656.0,
    "states_all_county_tier": [],
    "level_counts": {
     "precinct": 141249,
-    "election district": 16631,
+    "election district": 18018,
     "vtd": 9712,
     "ward": 7150,
     "county pool": 945,
     "town": 736,
     "municipality": 662,
-    "county": 294,
+    "county": 293,
     "county residual": 202,
     "municipality pool": 156,
     "district pool": 124,
@@ -2848,14 +2846,14 @@
     "state pool": 5
    },
    "tier_counts": {
-    "census": 62654,
-    "official": 54802,
+    "census": 62647,
+    "official": 55852,
     "third-party": 27576,
     "official (SWDB, California's statutorily designated database)": 24202,
-    "unmatched": 8637,
+    "unmatched": 8980,
     "unclassified": 1
    },
-   "bin_bytes": 4738580,
+   "bin_bytes": 4767784,
    "state_counts": [
     {
      "NAME1_b": "AK",
@@ -3063,9 +3061,9 @@
     },
     {
      "NAME1_b": "NY",
-     "units": 10456,
-     "mapped": 10261,
-     "sub": 10445
+     "units": 11842,
+     "mapped": 11304,
+     "sub": 11832
     },
     {
      "NAME1_b": "OH",
