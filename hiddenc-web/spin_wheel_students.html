@@ -1,254 +1,372 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Wheel</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        #wheel-container {
-            width: 100%;
-            max-width: 800px;
-            margin-bottom: 20px;
-            position: relative;
-        }
-
-        #wheel {
-            width: 100%;
-            height: auto;
-        }
-
-        #control-panel {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 10;
-        }
-
-        #spin-button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            outline: none;
-            transition: all 0.3s ease;
-        }
-
-        #spin-button:active {
-            transform: scale(0.95);
-        }
-
-        #spin-button:focus {
-            outline: none;
-        }
-
-        @keyframes buttonReset {
-            to {
-                transform: scale(1);
-            }
-        }
-
-        .button-clicked {
-            animation: buttonReset 0.3s ease forwards;
-        }
-
-        #result {
-            width: 100%;
-            max-width: 600px;
-            text-align: center;
-            margin-top: 20px;
-            word-wrap: break-word;
-        }
-        .wheel-section {
-            transition: all 0.3s ease;
-        }
-        .wheel-section.highlighted {
-            filter: brightness(1.2);
-            stroke: white;
-            stroke-width: 2;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Wheel</title>
+<style>
+  :root {
+    --bg: #f4f1ea;
+    --ink: #1d1d1f;
+    --muted: #6b6b70;
+    --card: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 32px 16px 48px;
+  }
+  h1 {
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.16em;
+    margin: 0 0 28px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  #stage {
+    position: relative;
+    z-index: 1;
+    width: min(88vw, 640px);
+    aspect-ratio: 1;
+  }
+  #wheel {
+    width: 100%;
+    height: 100%;
+    display: block;
+    filter: drop-shadow(0 12px 28px rgba(0,0,0,0.18));
+    transform: rotate(0deg);
+    will-change: transform;
+  }
+  #pointer {
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    width: 0; height: 0;
+    transform: translateX(-50%);
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 34px solid var(--ink);
+    filter: drop-shadow(0 3px 4px rgba(0,0,0,0.3));
+    z-index: 2;
+  }
+  #hub {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 14%; aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: var(--card);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.25), inset 0 0 0 4px var(--bg);
+    z-index: 1;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: clamp(11px, 2.2vw, 16px);
+    letter-spacing: 0.1em;
+    color: var(--ink);
+  }
+  #hub:hover { background: #fafafa; }
+  #hub:active { transform: translate(-50%, -50%) scale(0.95); }
+  #hub:disabled { cursor: default; color: var(--muted); }
+  /* Stand: two splayed legs meeting behind the hub, a crossbar and a foot. */
+  #stand {
+    position: relative;
+    width: min(88vw, 640px);
+    height: 120px;
+    margin-top: -36px;
+    z-index: 0;
+    pointer-events: none;
+  }
+  #stand .leg {
+    position: absolute;
+    top: -12%;
+    left: 50%;
+    width: 14px;
+    height: 118%;
+    background: linear-gradient(90deg, #8a5a3c, #b07a52 45%, #7a4a2e);
+    border-radius: 6px;
+    transform-origin: top center;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+  }
+  #stand .leg.left  { transform: translateX(-50%) rotate(22deg); }
+  #stand .leg.right { transform: translateX(-50%) rotate(-22deg); }
+  #stand .bar {
+    position: absolute;
+    left: 50%;
+    top: 58%;
+    width: 44%;
+    height: 10px;
+    transform: translateX(-50%);
+    background: linear-gradient(180deg, #b07a52, #8a5a3c);
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+  #stand .foot {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 62%;
+    height: 14px;
+    transform: translateX(-50%);
+    background: linear-gradient(180deg, #7a4a2e, #5c361f);
+    border-radius: 7px;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+  }
+  #stand .shadow {
+    position: absolute;
+    left: 50%;
+    bottom: -10px;
+    width: 80%;
+    height: 18px;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0.22), rgba(0,0,0,0) 70%);
+  }
+  #result {
+    margin-top: 28px;
+    min-height: 80px;
+    text-align: center;
+  }
+  #result .label {
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  #result .name {
+    font-size: clamp(28px, 6vw, 48px);
+    font-weight: 700;
+    margin-top: 4px;
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  #result .name.show {
+    animation: reveal 0.5s cubic-bezier(.2,.8,.2,1) forwards;
+  }
+  @keyframes reveal { to { opacity: 1; transform: translateY(0); } }
+  #footer {
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    color: var(--muted);
+    font-size: 14px;
+  }
+  #reset {
+    background: none;
+    border: 1px solid #c9c5bb;
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 13px;
+    color: var(--muted);
+    cursor: pointer;
+  }
+  #reset:hover { border-color: var(--ink); color: var(--ink); }
+  .slice { transition: opacity 0.3s ease; }
+  .dim .slice { opacity: 0.3; }
+  .dim .slice.winner { opacity: 1; }
+</style>
 </head>
 <body>
-    <h1>Student Wheel</h1>
-    <div id="wheel-container">
-        <svg id="wheel" viewBox="0 0 100 100">
-            <circle cx="50" cy="50" r="45" fill="none" stroke="black" stroke-width="0.5"/>
-            <line x1="50" y1="5" x2="50" y2="0" stroke="black" stroke-width="1" />
-        </svg>
-    </div>
-    <div id="control-panel">
-        <button id="spin-button">Spin the Wheel</button>
-    </div>
-    <div id="result"></div>
+  <h1>Student Wheel</h1>
+  <div id="stage">
+    <div id="pointer"></div>
+    <svg id="wheel" viewBox="0 0 100 100"></svg>
+    <button id="hub">SPIN</button>
+  </div>
+  <div id="stand">
+    <div class="leg left"></div>
+    <div class="leg right"></div>
+    <div class="bar"></div>
+    <div class="foot"></div>
+    <div class="shadow"></div>
+  </div>
+  <div id="result"><div class="label"></div><div class="name"></div></div>
+  <div id="footer">
+    <span id="status"></span>
+    <button id="reset">Reset round</button>
+  </div>
 
-    <script>
-        const studentsWithWeights = [
-            "Amelia Malpas",
-            "Nidhi Patel",
-            "Leah Stein",
-            "Jing Ling Tan", 
-            "Marc Sabatier Hvidkjaer",
-            "Nicholas Conroy",
-            "Michael Cerny",
-            "Mary Soledad Craig",
-            "Nicolas Wicaksono",
-            "Xinyuan Yang",
-            "Gabriela Fischer Armani", 
-            "Joshua Henderson",
-            "John Koo",
-            "David Struhs",
-            "Kentaro Nakamura",
-            "Jiyeon Lee",
-            "George Yean", 
-            "Christopher Vazquez",
-            "David Johnson Aboge"
-        ];
+<script>
+  const students = [
+    "Nemo",
+    "Gray",
+    "Nilou",
+    "Livia",
+    "Oliver",
+    "Bright",
+    "Jea",
+    "Zehua",
+    "JB",
+    "Frida",
+    "Sho",
+    "Xander",
+    "Fiker",
+    "Gufran",
+    "Rehma",
+    "Nina",
+    "Izzy",
+    "Bingjun",
+    "Haonan",
+    "Jayanth",
+    "Linda",
+    "Yimar"
+  ];
 
-        const uniqueStudents = Array.from(new Set(studentsWithWeights));
+  const uniqueStudents = Array.from(new Set(students));
+  const n = uniqueStudents.length;
+  const step = 360 / n;
 
-        function generateColors(count) {
-            const colors = [];
-            for (let i = 0; i < count; i++) {
-                const hue = (i * 360 / count) % 360;
-                colors.push(`hsl(${hue}, 70%, 60%)`);
-            }
-            return colors;
-        }
+  // Muted palette, cycled so neighbouring slices never share a colour.
+  const palette = ["#e07a5f", "#3d405b", "#81b29a", "#f2cc8f", "#6d597a", "#b56576", "#4f772d", "#f4a261", "#2a9d8f", "#9c6644"];
+  const colors = uniqueStudents.map((_, i) => palette[i % palette.length]);
+  if (n % palette.length === 1) colors[n - 1] = palette[Math.floor(palette.length / 2)];
 
-        const colors = generateColors(uniqueStudents.length);
-        uniqueStudents.forEach((student, index) => {
-            student.color = colors[index];
-        });
+  const wheel = document.getElementById('wheel');
+  const hub = document.getElementById('hub');
+  const resultLabel = document.querySelector('#result .label');
+  const resultName = document.querySelector('#result .name');
+  const statusEl = document.getElementById('status');
+  let isSpinning = false;
+  let currentRotation = 0;
 
-        const wheel = document.getElementById('wheel');
-        const spinButton = document.getElementById('spin-button');
-        const result = document.getElementById('result');
-        let isSpinning = false;
+  const STORAGE_KEY = 'spin_wheel_called_students';
+  let calledStudents = new Set();
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    calledStudents = new Set(saved.filter(s => uniqueStudents.includes(s)));
+  } catch (e) {}
+  function saveCalled() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify([...calledStudents])); } catch (e) {}
+  }
+  function updateStatus() {
+    statusEl.textContent = `${calledStudents.size} of ${n} called this round`;
+  }
 
-        function createWheel() {
-            const angleStep = 360 / uniqueStudents.length;
-            uniqueStudents.forEach((student, index) => {
-                const startAngle = index * angleStep;
-                const endAngle = (index + 1) * angleStep;
-                const x1 = 50 + 45 * Math.cos(Math.PI * startAngle / 180);
-                const y1 = 50 + 45 * Math.sin(Math.PI * startAngle / 180);
-                const x2 = 50 + 45 * Math.cos(Math.PI * endAngle / 180);
-                const y2 = 50 + 45 * Math.sin(Math.PI * endAngle / 180);
+  const NS = "http://www.w3.org/2000/svg";
+  function polar(r, deg) {
+    const a = Math.PI * deg / 180;
+    return [50 + r * Math.cos(a), 50 + r * Math.sin(a)];
+  }
 
-                const section = document.createElementNS("http://www.w3.org/2000/svg", "path");
-                section.setAttribute("d", `M50,50 L${x1},${y1} A45,45 0 0,1 ${x2},${y2} Z`);
-                section.setAttribute("fill", colors[index]);
-                section.classList.add("wheel-section");
-                section.dataset.index = index;
-                wheel.appendChild(section);
+  function createWheel() {
+    const fontSize = Math.max(1.6, Math.min(3.2, 110 / n));
+    uniqueStudents.forEach((student, i) => {
+      const a0 = i * step, a1 = (i + 1) * step;
+      const [x1, y1] = polar(48, a0);
+      const [x2, y2] = polar(48, a1);
+      const large = step > 180 ? 1 : 0;
+      const path = document.createElementNS(NS, "path");
+      path.setAttribute("d", `M50,50 L${x1},${y1} A48,48 0 ${large},1 ${x2},${y2} Z`);
+      path.setAttribute("fill", colors[i]);
+      path.setAttribute("stroke", "#f4f1ea");
+      path.setAttribute("stroke-width", "0.4");
+      path.classList.add("slice");
+      path.dataset.index = i;
+      wheel.appendChild(path);
 
-                const textGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
-                const textAngle = startAngle + angleStep / 2;
-                const textX = 50 + 30 * Math.cos(Math.PI * textAngle / 180);
-                const textY = 50 + 30 * Math.sin(Math.PI * textAngle / 180);
-                textGroup.setAttribute("transform", `rotate(${textAngle}, ${textX}, ${textY})`);
+      const mid = a0 + step / 2;
+      const [tx, ty] = polar(45, mid);
+      const text = document.createElementNS(NS, "text");
+      text.setAttribute("x", tx);
+      text.setAttribute("y", ty);
+      text.setAttribute("text-anchor", "end");
+      text.setAttribute("dominant-baseline", "middle");
+      text.setAttribute("font-size", fontSize);
+      text.setAttribute("font-weight", "600");
+      text.setAttribute("fill", "#ffffff");
+      text.setAttribute("transform", `rotate(${mid}, ${tx}, ${ty})`);
+      text.setAttribute("pointer-events", "none");
+      text.textContent = student.split(' ')[0];
+      wheel.appendChild(text);
+    });
+    const rim = document.createElementNS(NS, "circle");
+    rim.setAttribute("cx", 50); rim.setAttribute("cy", 50); rim.setAttribute("r", 48.6);
+    rim.setAttribute("fill", "none");
+    rim.setAttribute("stroke", "#1d1d1f");
+    rim.setAttribute("stroke-width", "1.2");
+    wheel.appendChild(rim);
+  }
 
-                const foreignObject = document.createElementNS("http://www.w3.org/2000/svg", "foreignObject");
-                foreignObject.setAttribute("x", textX - 10);
-                foreignObject.setAttribute("y", textY - 5);
-                foreignObject.setAttribute("width", "20");
-                foreignObject.setAttribute("height", "10");
+  function easeOutQuint(t) { return 1 - Math.pow(1 - t, 5); }
 
-                const div = document.createElement("div");
-                div.style.width = "100%";
-                div.style.height = "100%";
-                div.style.display = "flex";
-                div.style.alignItems = "center";
-                div.style.justifyContent = "center";
-                div.style.textAlign = "center";
-                div.style.color = "white";
-                div.style.fontSize = "1.5px";
-                div.style.wordWrap = "break-word";
-                div.textContent = student.split(' ')[0];  // Display only the first name due to space constraints
+  function spinWheel() {
+    if (isSpinning) return;
+    isSpinning = true;
+    hub.disabled = true;
+    wheel.classList.remove('dim');
+    document.querySelectorAll('.slice').forEach(s => s.classList.remove('winner'));
+    resultName.classList.remove('show');
+    resultLabel.textContent = '';
+    resultName.textContent = '';
 
-                foreignObject.appendChild(div);
-                textGroup.appendChild(foreignObject);
-                wheel.appendChild(textGroup);
-            });
-        }
+    // Draw without replacement: nobody repeats until everyone has been called.
+    let remaining = uniqueStudents.filter(s => !calledStudents.has(s));
+    if (remaining.length === 0) {
+      calledStudents.clear();
+      remaining = uniqueStudents.slice();
+    }
+    const selected = remaining[Math.floor(Math.random() * remaining.length)];
+    const idx = uniqueStudents.indexOf(selected);
 
-        function spinWheel() {
-            if (isSpinning) return;
-            isSpinning = true;
+    // The pointer sits at the top, which is 270 degrees in SVG terms. Rotate so
+    // the centre of slice idx lands under it, with a small offset inside the slice.
+    const jitter = (Math.random() - 0.5) * step * 0.7;
+    const target = 270 - (idx * step + step / 2 + jitter);
+    const turns = 6 + Math.floor(Math.random() * 3);
+    const startRotation = currentRotation % 360;
+    const delta = ((target - startRotation) % 360 + 360) % 360;
+    const totalDelta = turns * 360 + delta;
+    const duration = 5200 + Math.random() * 1300;
+    const startTime = performance.now();
 
-            // Remove highlight from all sections before spinning
-            document.querySelectorAll('.wheel-section').forEach(section => {
-                section.classList.remove('highlighted');
-            });
+    function frame(now) {
+      const t = Math.min(1, (now - startTime) / duration);
+      const rot = startRotation + totalDelta * easeOutQuint(t);
+      wheel.style.transform = `rotate(${rot}deg)`;
+      if (t < 1) {
+        requestAnimationFrame(frame);
+      } else {
+        currentRotation = startRotation + totalDelta;
+        finish(selected, idx);
+      }
+    }
+    requestAnimationFrame(frame);
+  }
 
-            const spins = 1 + Math.random() * 1.5;
-            const duration = spins * 500;
-            const startTime = Date.now();
+  function finish(selected, idx) {
+    calledStudents.add(selected);
+    saveCalled();
+    updateStatus();
+    resultLabel.textContent = 'Selected';
+    resultName.textContent = selected;
+    resultName.classList.add('show');
+    wheel.classList.add('dim');
+    document.querySelector(`.slice[data-index="${idx}"]`).classList.add('winner');
+    isSpinning = false;
+    hub.disabled = false;
+  }
 
-            function rotate() {
-                const now = Date.now();
-                const elapsed = now - startTime;
-                const rotation = (elapsed / duration) * spins * 360;
-
-                if (elapsed < duration) {
-                    wheel.style.transform = `rotate(${rotation}deg)`;
-                    requestAnimationFrame(rotate);
-                } else {
-                    const finalRotation = Math.floor(rotation % 360);
-                    wheel.style.transform = `rotate(${finalRotation}deg)`;
-                    showResult(finalRotation);
-                    isSpinning = false;
-                }
-            }
-
-            rotate();
-        }
-
-        function showResult(finalRotation) {
-            const selectedIndex = Math.floor(Math.random() * studentsWithWeights.length);
-            const selectedStudent = studentsWithWeights[selectedIndex];
-            const visualIndex = uniqueStudents.indexOf(selectedStudent);
-
-            result.innerHTML = `<h2>Selected Student:</h2><p>${selectedStudent}</p>`;
-
-            // Remove highlight from all sections
-            document.querySelectorAll('.wheel-section').forEach(section => {
-                section.classList.remove('highlighted');
-            });
-
-            // Add highlight to the selected section
-            const selectedSection = document.querySelector(`.wheel-section[data-index="${visualIndex}"]`);
-            if (selectedSection) {
-                selectedSection.classList.add('highlighted');
-            }
-
-            // Adjust wheel rotation to match the visual selection
-            const anglePerSection = 360 / uniqueStudents.length;
-            const newRotation = (360 - (visualIndex * anglePerSection)) % 360;
-            wheel.style.transform = `rotate(${newRotation}deg)`;
-        }
-
-        createWheel();
-        spinButton.addEventListener('click', () => {
-            if (!isSpinning) {
-                spinWheel();
-                spinButton.classList.add('button-clicked');
-                setTimeout(() => {
-                    spinButton.classList.remove('button-clicked');
-                }, 300);
-            }
-        });
-    </script>
+  createWheel();
+  updateStatus();
+  hub.addEventListener('click', spinWheel);
+  document.getElementById('reset').addEventListener('click', () => {
+    if (isSpinning) return;
+    calledStudents.clear();
+    saveCalled();
+    updateStatus();
+    wheel.classList.remove('dim');
+    resultLabel.textContent = '';
+    resultName.textContent = '';
+    resultName.classList.remove('show');
+  });
+</script>
 </body>
 </html>
