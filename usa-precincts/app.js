@@ -377,11 +377,20 @@ function buildMaps() {
     const el = document.createElement('div');
     host.appendChild(el);
     MAP_ELS.push(el);
-    const map = new maplibregl.Map({
-      container: el, style: basemapStyle(), center: cam.center, zoom: cam.zoom,
-      minZoom: 1.5, maxZoom: 15, dragRotate: false, pitchWithRotate: false,
-      fadeDuration: 0, attributionControl: k === n - 1 ? { compact: true } : false,
-    });
+    let map;
+    try {
+      map = new maplibregl.Map({
+        container: el, style: basemapStyle(), center: cam.center, zoom: cam.zoom,
+        minZoom: 1.5, maxZoom: 15, dragRotate: false, pitchWithRotate: false,
+        fadeDuration: 0, attributionControl: k === n - 1 ? { compact: true } : false,
+      });
+    } catch (err) {
+      // no WebGL (hardware acceleration off, or blocked): say so instead of
+      // leaving a blank map
+      console.error(err);
+      throw new Error('it needs WebGL, which this browser has turned off. ' +
+        'Turning on hardware acceleration in the browser settings fixes it.');
+    }
     map.touchZoomRotate.disableRotation();
     map.keyboard.disableRotation();
     map.__k = k; map.__year = null; map.__ready = false;
@@ -1486,4 +1495,8 @@ function wire() {
   // cross-origin fetch would stall the whole viewer if the bucket were slow.
   loadGisIndex();
   window.__ready = true;
-})();
+})().catch((err) => {
+  // a failed start must not leave a silently blank map
+  status('The map could not start: ' + err.message);
+  console.error(err);
+});
