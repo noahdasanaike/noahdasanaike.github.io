@@ -1,26 +1,27 @@
-/* USA precincts explorer -- dark surface only.  A point map reads best on a
-   dark ground, so one mode is selected rather than two half-tuned ones.
-   Copied unchanged from local_demo/style.css except for the .note rule at the
-   end, which the download caption needs. */
+/* USA precincts explorer -- light surface, over a normal labelled base map.
+   (It began dark-only, as a bare point canvas; with a real base map and unit
+   polygons under the points, a light ground reads like an ordinary map.) */
 
 :root {
-  color-scheme: dark;
-  --surface-0: #121211;
-  --surface-1: #1a1a19;
-  --surface-2: #232320;
-  --line: #33332f;
-  --text-primary: #ffffff;
-  --text-secondary: #c3c2b7;
-  --text-muted: #8b8a81;
+  color-scheme: light;
+  --surface-0: #fbfaf7;
+  --surface-1: #ffffff;
+  --surface-2: #f2f0eb;
+  --line: #e2dfd8;
+  --line-strong: #c9c5bc;
+  --text-primary: #1c1d1f;
+  --text-secondary: #4a4d52;
+  --text-muted: #7b7f86;
+  --float: rgba(255,255,255,.94);
 
-  /* categorical, dark steps, validated all-pairs (CVD dE 9.4, normal 20.9) */
-  --cat-1: #3987e5;   /* blue   */
-  --cat-2: #d95926;   /* orange */
-  --cat-3: #199e70;   /* aqua   */
-  --cat-na: #6b6b66;  /* no data -- deliberately outside the categorical band */
+  /* categorical, mid steps that hold on a light ground */
+  --cat-1: #2f6db5;   /* blue   */
+  --cat-2: #d1592b;   /* orange */
+  --cat-3: #1c9a6c;   /* aqua   */
+  --cat-na: #a3a29b;  /* no data -- deliberately outside the categorical band */
 
-  --dem: #3987e5;
-  --rep: #e34948;
+  --dem: #2f6db5;
+  --rep: #c8393a;
 }
 
 * { box-sizing: border-box; }
@@ -67,12 +68,12 @@ h2:first-of-type { margin-top: 4px; }
 .yearrow[aria-current="true"] { background: var(--surface-2); }
 .yearrow[aria-current="true"] .ylab { color: var(--text-primary); font-weight: 600; }
 .ylab { color: var(--text-secondary); font-variant-numeric: tabular-nums; }
-.ybar { height: 8px; background: #262623; border-radius: 4px; overflow: hidden; }
+.ybar { height: 8px; background: #ebe8e2; border-radius: 4px; overflow: hidden; }
 .ybar > i {
   display: block; height: 100%; background: var(--cat-1);
   border-radius: 4px;
 }
-.yearrow[aria-current="true"] .ybar > i { background: #86b6ef; }
+.yearrow[aria-current="true"] .ybar > i { background: #1d4f8c; }
 .yval {
   color: var(--text-muted); font-size: 11px; text-align: right;
   font-variant-numeric: tabular-nums;
@@ -89,7 +90,7 @@ select, button.act {
   padding: 5px 7px; font: inherit; width: 100%;
 }
 button.act { cursor: pointer; }
-button.act:hover { border-color: #55554e; }
+button.act:hover { border-color: var(--line-strong); }
 
 /* The shapefile download is an <a>, not a <button>, because it points at a
    file on the archive rather than building one in the page. Match the button
@@ -101,7 +102,7 @@ a.act {
   box-sizing: border-box; display: block; text-align: center;
   text-decoration: none; cursor: pointer;
 }
-a.act:hover { border-color: #55554e; }
+a.act:hover { border-color: var(--line-strong); }
 
 /* ---- legend ---------------------------------------------------------- */
 
@@ -116,14 +117,20 @@ a.act:hover { border-color: #55554e; }
 /* ---- map ------------------------------------------------------------- */
 
 #map { position: relative; background: var(--surface-1); overflow: hidden; }
-#map canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+/* One MapLibre map per panel underneath; the point canvas and the overlay sit
+   on top and let the pointer through, so the maps own pan, zoom and clicks. */
+#maps { position: absolute; inset: 0; display: grid; gap: 2px; background: var(--line); }
+#maps > div { position: relative; min-width: 0; min-height: 0; }
+#map canvas#pts, #map canvas#over { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; }
 #pts { z-index: 1; }
-#over { z-index: 2; cursor: crosshair; }
+#over { z-index: 2; }
+.maplibregl-ctrl-attrib { font-size: 10px; }
 
 #hud {
   position: absolute; left: 12px; top: 12px; z-index: 3;
-  background: rgba(18,18,17,.86); border: 1px solid var(--line);
+  background: var(--float); border: 1px solid var(--line);
   border-radius: 6px; padding: 8px 11px; pointer-events: none;
+  box-shadow: 0 1px 4px rgba(0,0,0,.08);
   font-variant-numeric: tabular-nums;
 }
 #hud b { font-size: 17px; font-weight: 600; }
@@ -131,25 +138,26 @@ a.act:hover { border-color: #55554e; }
 
 #tip {
   position: absolute; z-index: 4; pointer-events: none; display: none;
-  background: rgba(18,18,17,.95); border: 1px solid var(--line);
+  background: var(--float); border: 1px solid var(--line);
   border-radius: 6px; padding: 6px 9px; max-width: 280px; font-size: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.12);
 }
 #tip .t { color: var(--text-muted); font-size: 11px; }
 
 #zoombar {
-  position: absolute; right: 12px; top: 12px; z-index: 3;
+  position: absolute; right: 12px; bottom: 30px; z-index: 3;
   display: flex; gap: 5px;
 }
 #zoombar button {
-  background: rgba(18,18,17,.86); color: var(--text-secondary);
+  background: var(--float); color: var(--text-secondary);
   border: 1px solid var(--line); border-radius: 5px;
   padding: 4px 9px; font: inherit; cursor: pointer;
 }
-#zoombar button:hover { color: var(--text-primary); border-color: #55554e; }
+#zoombar button:hover { color: var(--text-primary); border-color: var(--line-strong); }
 
 #status {
   position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
-  z-index: 5; color: var(--text-secondary); background: rgba(18,18,17,.9);
+  z-index: 5; color: var(--text-secondary); background: var(--float);
   border: 1px solid var(--line); border-radius: 6px; padding: 10px 16px;
   display: none;
 }
@@ -181,11 +189,11 @@ table.votes td { padding: 3px 0; vertical-align: baseline; }
 table.votes td.n { text-align: right; font-variant-numeric: tabular-nums; color: var(--text-primary); }
 table.votes td.p { text-align: right; font-variant-numeric: tabular-nums; color: var(--text-muted); width: 46px; }
 table.votes td.c { color: var(--text-secondary); }
-table.votes tr.d td.c { color: #9ec5f4; }
-table.votes tr.r td.c { color: #f19a99; }
+table.votes tr.d td.c { color: #1f4e8c; }
+table.votes tr.r td.c { color: #a82e2e; }
 
 .empty { color: var(--text-muted); }
-a { color: #86b6ef; }
+a { color: #2f6db5; }
 code { font-family: ui-monospace, Consolas, monospace; font-size: 11px; color: var(--text-secondary); }
 
 #cells { display: none; gap: 4px; }

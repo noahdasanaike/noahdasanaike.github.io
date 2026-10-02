@@ -12,6 +12,10 @@
  *     megabyte.  `build_static.py` documents the encoding.
  *  B. There is a grid view.  Up to nine years draw at once, side by side, on
  *     one shared viewport.
+ *  C. There is a base map.  Each panel is a MapLibre map drawing that
+ *     year's precinct polygons from a PMTiles file on the archive, with the
+ *     same colourings and filters as the points; the point canvas sits
+ *     transparent on top of the maps and draws only in points mode.
  *
  * Design notes that are load-bearing, because the FIRST build of this demo
  * crashed the renderer after about seven years were loaded:
@@ -54,12 +58,12 @@ const DPR = () => Math.min(2, window.devicePixelRatio || 1);
 
 // ------------------------------------------------------------------ palette
 
-const SURFACE = [26, 26, 25];
-const CAT = {                      // dark steps, validated all-pairs
-  blue:   [0x39, 0x87, 0xe5],
-  orange: [0xd9, 0x59, 0x26],
-  aqua:   [0x19, 0x9e, 0x70],
-  na:     [0x6b, 0x6b, 0x66],
+// light steps for a light base map, validated all-pairs
+const CAT = {
+  blue:   [0x2f, 0x6d, 0xb5],
+  orange: [0xd1, 0x59, 0x2b],
+  aqua:   [0x1c, 0x9a, 0x6c],
+  na:     [0xa3, 0xa2, 0x9b],
 };
 const GRAIN_TIER = [               // index = lvl_tier
   { name: 'grain not established', rgb: CAT.na },
@@ -76,13 +80,14 @@ const TIER_COLOR = {
   'census layer, third-party crosswalk': CAT.aqua,
 };
 
-// diverging, blue <-> red, neutral gray midpoint; brighter = larger margin,
-// which is the right direction on a dark ground
-const MID = [0x6e, 0x6e, 0x68];
-const DEM_1 = [0x39, 0x87, 0xe5], DEM_2 = [0x9e, 0xc5, 0xf4];
-const REP_1 = [0xe3, 0x49, 0x48], REP_2 = [0xf1, 0x9a, 0x99];
-// sequential blue for magnitude
-const SEQ = [[0x18, 0x4f, 0x95], [0x25, 0x6a, 0xbf], [0x39, 0x87, 0xe5], [0x6d, 0xa7, 0xec], [0x9e, 0xc5, 0xf4], [0xcd, 0xe2, 0xfb]];
+// diverging, blue <-> red; darker = larger margin, which is the right direction
+// on a light ground.  The midpoint is a pale mauve rather than white so a tied
+// unit does not read as the base map showing through.
+const MID = [0xdc, 0xd6, 0xd9];
+const DEM_1 = [0x6b, 0x9f, 0xd8], DEM_2 = [0x0d, 0x3b, 0x7a];
+const REP_1 = [0xe0, 0x7a, 0x76], REP_2 = [0x7a, 0x12, 0x14];
+// sequential blue for magnitude, dark = large
+const SEQ = [[0x0b, 0x2f, 0x63], [0x1d, 0x4f, 0x91], [0x2f, 0x6d, 0xb5], [0x5e, 0x93, 0xcf], [0x9b, 0xbf, 0xe4], [0xd3, 0xe2, 0xf3]];
 
 function mix(a, b, t) {
   return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
@@ -93,6 +98,8 @@ function abgr(rgb) {
 function hex(rgb) {
   return '#' + rgb.map((v) => Math.round(v).toString(16).padStart(2, '0')).join('');
 }
+function lutRgb(c) { return [c & 255, (c >> 8) & 255, (c >> 16) & 255]; }
+function darken(rgb) { return mix(rgb, [0, 0, 0], 0.38); }
 
 // 33-step diverging LUT, built once
 const MARGIN_LUT = (() => {
@@ -111,7 +118,7 @@ const SEQ_LUT = (() => {
   for (let i = 0; i < SEQ.length; i++) out[i] = abgr(SEQ[i]);
   return out;
 })();
-const BG = abgr(SURFACE);
+const BG = 0;                      // transparent: the base map shows through
 
 // ------------------------------------------------------------------ projection
 
@@ -139,13 +146,20 @@ let Y = EMPTY;                 // the primary panel's payload
 let LAY = { rows: 1, cols: 1 };
 let CELLS = [null];            // year per panel
 let RECTS = [];                // panel rectangles, recomputed on resize/layout
-let view = { cx: 0.5, cy: 0.5, scale: 1000 };
+let view = { cx: 0.5, cy: 0.5, scale: 1000 };   // mirrors the first map's camera
 let hoverP = -1, hoverIdx = -1, selUid = -1;
 let px = null, pxW = 0, pxH = 0, imgData = null, pxBuf = null;
 let inflight = null;           // AbortController for the detail fetch
 
+// One MapLibre map per panel, all on one camera.  The point canvas and the
+// overlay sit on top of them and never take the mouse; the maps do.
+let MAPS = [], MAP_ELS = [];
+let SYNCING = false;
+let HOV = { map: null, id: null }, SEL = { map: null, id: null };
+const TILE_BASE = 'https://storage.googleapis.com/sage-archive/dev/usa-precincts';
+
 const ptsCanvas = $('#pts'), overCanvas = $('#over');
-const ctxP = ptsCanvas.getContext('2d', { alpha: false });
+const ctxP = ptsCanvas.getContext('2d');
 const ctxO = overCanvas.getContext('2d');
 
 // ------------------------------------------------------------------ transport
@@ -283,7 +297,8 @@ function applyFilterTo(y) {
 }
 
 function applyFilter() {
-  for (const y of RES.values()) { applyFilterTo(y); computeStateAnchors(y); }
+  for (const y of RES.values()) applyFilterTo(y);
+  styleMaps();
 }
 
 // ------------------------------------------------------------------ colouring
@@ -316,27 +331,303 @@ function buildLevelLut(meta) {
     const t = meta.level_tier[i] || 0;
     const base = GRAIN_TIER[t].rgb;
     const k = seen[t]++;
-    out[i] = abgr(mix(base, [255, 255, 255], Math.min(0.6, k * 0.13)));
+    out[i] = abgr(mix(base, [255, 255, 255], Math.min(0.5, k * 0.11)));
   }
   LEVEL_LUT = out;
 }
 
+// ------------------------------------------------------------------ maps
+
+const BASEMAPS = {
+  light: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
+  voyager: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
+  dark: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
+  satellite: {
+    version: 8,
+    sources: {
+      sat: {
+        type: 'raster', tileSize: 256, maxzoom: 19,
+        tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'],
+        attribution: 'Esri, Maxar, Earthstar Geographics',
+      },
+    },
+    layers: [{ id: 'sat', type: 'raster', source: 'sat' }],
+  },
+};
+const BASEMAP_KEY = 'usa-precincts.basemap';
+const basemapStyle = () => BASEMAPS[$('#basemap').value] || BASEMAPS.light;
+const showAreas = () => $('#show').value === 'polygons';
+const css = (rgb) => 'rgb(' + rgb.map((v) => Math.round(v)).join(',') + ')';
+
+// (Re)create the panel maps.  A layout with the same number of panels keeps its
+// maps; their sources follow CELLS in syncMapSources().
+function buildMaps() {
+  const n = LAY.rows * LAY.cols;
+  const host = $('#maps');
+  host.style.gridTemplateColumns = 'repeat(' + LAY.cols + ', 1fr)';
+  host.style.gridTemplateRows = 'repeat(' + LAY.rows + ', 1fr)';
+  if (MAPS.length === n) return;
+  const cam = MAPS.length ? { center: MAPS[0].getCenter(), zoom: MAPS[0].getZoom() }
+                          : { center: [-96, 38], zoom: 3 };
+  for (const m of MAPS) m.remove();
+  MAPS = []; MAP_ELS = [];
+  HOV = { map: null, id: null }; SEL = { map: null, id: null };
+  host.innerHTML = '';
+  for (let k = 0; k < n; k++) {
+    const el = document.createElement('div');
+    host.appendChild(el);
+    MAP_ELS.push(el);
+    const map = new maplibregl.Map({
+      container: el, style: basemapStyle(), center: cam.center, zoom: cam.zoom,
+      minZoom: 1.5, maxZoom: 15, dragRotate: false, pitchWithRotate: false,
+      fadeDuration: 0, attributionControl: k === n - 1 ? { compact: true } : false,
+    });
+    map.touchZoomRotate.disableRotation();
+    map.keyboard.disableRotation();
+    map.__k = k; map.__year = null; map.__ready = false;
+    map.on('style.load', () => {
+      map.__ready = true; map.__year = null;
+      addOverlay(map); styleMap(map); applyLabels(map);
+    });
+    map.on('move', () => onMove(map));
+    map.on('mousemove', (e) => onHover(map, e));
+    map.on('mouseout', clearHover);
+    map.on('click', (e) => onClick(map, e));
+    map.on('error', () => {});      // a year whose tiles are missing just stays empty
+    MAPS.push(map);
+  }
+}
+
+function firstSymbol(map) {
+  const l = map.getStyle().layers.find((q) => q.type === 'symbol');
+  return l ? l.id : undefined;
+}
+
+// Point the panel's source at its year's tiles; a no-op when it already does.
+function addOverlay(map) {
+  const yr = CELLS[map.__k];
+  if (!map.__ready || yr === null || yr === undefined) return;
+  if (map.__year === yr && map.getSource('units')) return;
+  for (const id of ['u-hover', 'u-edge', 'u-fill']) if (map.getLayer(id)) map.removeLayer(id);
+  if (map.getSource('units')) map.removeSource('units');
+  if (HOV.map === map) HOV = { map: null, id: null };
+  if (SEL.map === map) SEL = { map: null, id: null };
+  map.addSource('units', {
+    type: 'vector', url: 'pmtiles://' + TILE_BASE + '/year=' + yr + '.pmtiles', promoteId: 'uid',
+  });
+  const before = firstSymbol(map);
+  const src = { source: 'units', 'source-layer': 'units' };
+  map.addLayer(Object.assign({ id: 'u-fill', type: 'fill', paint: { 'fill-color': '#cccccc', 'fill-opacity': 0.86 } }, src), before);
+  // Unit edges in a darker shade of the fill, faint when zoomed out: white or
+  // grey edges wash a dense metro out to a blank patch at national zoom.
+  map.addLayer(Object.assign({
+    id: 'u-edge', type: 'line',
+    paint: {
+      'line-color': '#888888',
+      'line-width': ['interpolate', ['linear'], ['zoom'], 4, 0.2, 8, 0.5, 12, 1.1],
+      'line-opacity': ['interpolate', ['linear'], ['zoom'], 3, 0.12, 6, 0.3, 9, 0.7, 12, 0.9],
+    },
+  }, src), before);
+  map.addLayer(Object.assign({
+    id: 'u-hover', type: 'line',
+    paint: {
+      'line-color': '#111111',
+      'line-width': ['case', ['boolean', ['feature-state', 'sel'], false], 2.6, 1.8],
+      'line-opacity': ['case', ['any', ['boolean', ['feature-state', 'hover'], false],
+        ['boolean', ['feature-state', 'sel'], false]], 1, 0],
+    },
+  }, src), before);
+  map.__year = yr;
+}
+
+function syncMapSources() {
+  for (const m of MAPS) addOverlay(m);
+}
+
+function levelColors(meta) {
+  const save = LEVEL_LUT;
+  buildLevelLut(meta);
+  const out = Array.from(LEVEL_LUT, lutRgb);
+  LEVEL_LUT = save;
+  return out;
+}
+
+// The same five colourings as the points, as MapLibre expressions over the
+// tile properties.  Codes index the panel year's own meta.json dictionaries.
+function fillExpr(mode, meta, tx) {
+  const na = tx(CAT.na);
+  if (mode === 'margin') {
+    const m = ['/', ['-', ['get', 'd'], ['get', 'r']], ['max', ['get', 't'], 1]];
+    const stops = ['interpolate', ['linear'], m];
+    for (let i = 0; i <= 32; i++) stops.push((i - 16) / (16 * 2.2), tx(lutRgb(MARGIN_LUT[i])));
+    return ['case', ['<=', ['get', 't'], 0], na, stops];
+  }
+  if (mode === 'size') {
+    // k = round(log10(t + 1) * 1.4), as in colorOf()
+    const e = ['step', ['get', 't'], tx(SEQ[SEQ.length - 1])];
+    for (let j = 1; j < SEQ.length; j++) e.push(Math.pow(10, (j - 0.5) / 1.4) - 1, tx(SEQ[SEQ.length - 1 - j]));
+    return e;
+  }
+  let prop, cols;
+  if (mode === 'grain') { prop = 'lt'; cols = GRAIN_TIER.map((g) => g.rgb); }
+  else if (mode === 'level') { prop = 'lv'; cols = levelColors(meta); }
+  else { prop = 'bt'; cols = meta.tiers.map((t) => TIER_COLOR[t] || CAT.na); }
+  if (!cols.length) return na;
+  const e = ['match', ['get', prop]];
+  cols.forEach((c, i) => e.push(i, tx(c)));
+  e.push(na);
+  return e;
+}
+
+function styleMap(map) {
+  if (!map.__ready || !map.getLayer('u-fill')) return;
+  const y = RES.get(map.__year);
+  if (!y || !y.meta) return;
+  const mode = $('#mode').value;
+  map.setPaintProperty('u-fill', 'fill-color', fillExpr(mode, y.meta, css));
+  map.setPaintProperty('u-edge', 'line-color', fillExpr(mode, y.meta, (c) => css(darken(c))));
+  const f = ['all'];
+  const st = $('#state').value;
+  if (st) f.push(['==', ['get', 'st'], y.meta.states.indexOf(st)]);
+  const g = $('#grainfilter').value;
+  if (g !== '') f.push(['==', ['get', 'lt'], +g]);
+  const vis = showAreas() ? 'visible' : 'none';
+  for (const id of ['u-fill', 'u-edge', 'u-hover']) {
+    map.setFilter(id, f.length > 1 ? f : null);
+    map.setLayoutProperty(id, 'visibility', vis);
+  }
+  map.setLayoutProperty('u-fill', 'fill-sort-key',
+    $('#coarseTop').checked ? ['case', ['==', ['get', 'lt'], 1], 0, 1] : 0);
+}
+
+function styleMaps() { for (const m of MAPS) styleMap(m); }
+
+function applyLabels(map) {
+  if (!map.__ready) return;
+  const on = $('#labels').checked ? 'visible' : 'none';
+  for (const l of map.getStyle().layers) {
+    if (l.type === 'symbol' && !l.id.startsWith('u-')) map.setLayoutProperty(l.id, 'visibility', on);
+  }
+}
+
+// one camera: whichever map moved drives the rest, and the point canvas
+function onMove(map) {
+  if (SYNCING) return;
+  SYNCING = true;
+  const c = map.getCenter(), z = map.getZoom();
+  for (const o of MAPS) if (o !== map) o.jumpTo({ center: c, zoom: z });
+  SYNCING = false;
+  updateView();
+  schedule();
+}
+
+function updateView() {
+  if (!MAPS.length) return;
+  const m = MAPS[0], c = m.getCenter();
+  view.cx = merX(c.lng);
+  view.cy = merY(c.lat);
+  view.scale = 512 * Math.pow(2, m.getZoom()) * DPR();
+}
+
+function mapPoint(e) {
+  const r = $('#map').getBoundingClientRect(), dpr = DPR();
+  const oe = e.originalEvent;
+  return { cx: oe.clientX - r.left, cy: oe.clientY - r.top, w: r.width,
+           sx: (oe.clientX - r.left) * dpr, sy: (oe.clientY - r.top) * dpr };
+}
+
+function showTip(html, p) {
+  const tip = $('#tip');
+  tip.innerHTML = html;
+  tip.style.display = 'block';
+  tip.style.left = Math.min(p.w - 290, p.cx + 14) + 'px';
+  tip.style.top = (p.cy + 14) + 'px';
+}
+
+function tipHtml(y, st, lv, t, d, r) {
+  const m = t ? (d - r) / t : 0;
+  return '<b>' + esc(y.meta.states[st] || '??') + '</b> · ' + esc(y.meta.levels[lv] || '') +
+    (RECTS.length > 1 ? ' · ' + y.year : '') +
+    '<br><span class="t">' + fmt(t) + ' votes · ' +
+    (t ? ((m >= 0 ? 'D +' : 'R +') + Math.abs(100 * m).toFixed(1) + 'pp') : 'no votes') +
+    '<br>click to inspect</span>';
+}
+
+function setHover(map, id) {
+  if (HOV.map === map && HOV.id === id) return;
+  try {
+    if (HOV.map && HOV.id !== null) HOV.map.setFeatureState({ source: 'units', sourceLayer: 'units', id: HOV.id }, { hover: false });
+  } catch (err) { /* the panel's source was swapped */ }
+  HOV = { map: map, id: id };
+  if (map && id !== null) map.setFeatureState({ source: 'units', sourceLayer: 'units', id: id }, { hover: true });
+}
+
+function clearHover() {
+  setHover(null, null);
+  if (hoverIdx >= 0) { hoverP = -1; hoverIdx = -1; drawOverlay(); }
+  $('#tip').style.display = 'none';
+}
+
+function onHover(map, e) {
+  if (e.originalEvent.buttons) return;          // panning
+  const p = mapPoint(e);
+  if (!showAreas()) {
+    pickAt(p.sx, p.sy);
+    if (pickP !== hoverP || pickI !== hoverIdx) {
+      hoverP = pickP; hoverIdx = pickI;
+      drawOverlay();
+    }
+    const y = hoverP < 0 ? EMPTY : cellYear(hoverP);
+    if (hoverIdx < 0 || y === EMPTY) { $('#tip').style.display = 'none'; return; }
+    const i = hoverIdx;
+    showTip(tipHtml(y, y.st[i], y.lvl[i], y.tot[i], y.dem[i], y.rep[i]), p);
+    return;
+  }
+  const y = cellYear(map.__k);
+  const f = (y !== EMPTY && map.getLayer('u-fill'))
+    ? map.queryRenderedFeatures(e.point, { layers: ['u-fill'] })[0] : null;
+  setHover(f ? map : null, f ? f.id : null);
+  map.getCanvas().style.cursor = f ? 'pointer' : '';
+  if (!f) { $('#tip').style.display = 'none'; return; }
+  const q = f.properties;
+  showTip(tipHtml(y, q.st, q.lv, q.t, q.d, q.r), p);
+}
+
+function onClick(map, e) {
+  if (!showAreas()) {
+    const p = mapPoint(e);
+    pickAt(p.sx, p.sy);
+    if (pickI >= 0) {
+      const y = cellYear(pickP);
+      if (y !== EMPTY) showUnit(y, pickI);
+    }
+    return;
+  }
+  const y = cellYear(map.__k);
+  if (y === EMPTY || !map.getLayer('u-fill')) return;
+  const f = map.queryRenderedFeatures(e.point, { layers: ['u-fill'] })[0];
+  if (!f) return;
+  try {
+    if (SEL.map && SEL.id !== null) SEL.map.setFeatureState({ source: 'units', sourceLayer: 'units', id: SEL.id }, { sel: false });
+  } catch (err) { /* the panel's source was swapped */ }
+  SEL = { map: map, id: f.id };
+  map.setFeatureState({ source: 'units', sourceLayer: 'units', id: f.id }, { sel: true });
+  showUid(y, f.properties.uid);
+}
+
 // ------------------------------------------------------------------ layout
 
-// 5 — recomputed here and in resize(), never in the draw loop
+// Panel rectangles in canvas pixels, read off the map panels themselves so the
+// points land exactly on their map.  Recomputed here and in resize(), never in
+// the draw loop.
 function computeRects() {
-  const cells = LAY.rows * LAY.cols;
-  const g = cells === 1 ? 0 : Math.max(1, Math.round(DPR()));
-  const out = [];
-  for (let r = 0; r < LAY.rows; r++) {
-    for (let c = 0; c < LAY.cols; c++) {
-      const x0 = Math.round(c * pxW / LAY.cols), x1 = Math.round((c + 1) * pxW / LAY.cols);
-      const y0 = Math.round(r * pxH / LAY.rows), y1 = Math.round((r + 1) * pxH / LAY.rows);
-      const dx = c ? g : 0, dy = r ? g : 0;
-      out.push({ x: x0 + dx, y: y0 + dy, w: Math.max(1, x1 - x0 - dx), h: Math.max(1, y1 - y0 - dy) });
-    }
-  }
-  RECTS = out;
+  const host = $('#map').getBoundingClientRect(), dpr = DPR();
+  if (!MAP_ELS.length) { RECTS = [{ x: 0, y: 0, w: pxW, h: pxH }]; return; }
+  RECTS = MAP_ELS.map((el) => {
+    const r = el.getBoundingClientRect();
+    return { x: Math.round((r.left - host.left) * dpr), y: Math.round((r.top - host.top) * dpr),
+             w: Math.max(1, Math.round(r.width * dpr)), h: Math.max(1, Math.round(r.height * dpr)) };
+  });
 }
 
 function panelAt(sx, sy) {
@@ -356,23 +647,23 @@ function resize() {
   const r = $('#map').getBoundingClientRect();
   const dpr = DPR();
   const w = Math.max(1, Math.round(r.width * dpr)), h = Math.max(1, Math.round(r.height * dpr));
-  if (w === pxW && h === pxH) return;
-  pxW = w; pxH = h;
-  ptsCanvas.width = w; ptsCanvas.height = h;
-  overCanvas.width = w; overCanvas.height = h;
-  // 5 — one allocation per size, never per frame
-  imgData = ctxP.createImageData(w, h);
-  pxBuf = new Uint32Array(imgData.data.buffer);
-  px = imgData;
+  if (w !== pxW || h !== pxH) {
+    pxW = w; pxH = h;
+    ptsCanvas.width = w; ptsCanvas.height = h;
+    overCanvas.width = w; overCanvas.height = h;
+    // 5 — one allocation per size, never per frame
+    imgData = ctxP.createImageData(w, h);
+    pxBuf = new Uint32Array(imgData.data.buffer);
+    px = imgData;
+  }
   computeRects();
+  updateView();
 }
 
 function fitTo(box) {
-  const [w, s, e, n] = box;
-  const ax = merX(w), bx = merX(e), ay = merY(n), by = merY(s);
-  const sx = cellW() / (bx - ax), sy = cellH() / (by - ay);
-  view.scale = Math.min(sx, sy) * 0.96;
-  view.cx = (ax + bx) / 2; view.cy = (ay + by) / 2;
+  if (!MAPS.length) return;
+  MAPS[0].fitBounds([[box[0], box[1]], [box[2], box[3]]], { padding: 12, duration: 0 });
+  updateView();
   draw();
 }
 
@@ -421,22 +712,28 @@ function drawPanel(y, r, mode, coarseTop, rad) {
   y.drawn = drawn;
 }
 
+let ptsClear = false;
 function draw() {
   if (!pxBuf) return;
-  pxBuf.fill(BG);
-  const mode = $('#mode').value;
-  const coarseTop = $('#coarseTop').checked;
-  const fat = $('#big').checked;
-  const s = view.scale;
-  const dpr = DPR();
-  const rad = fat ? Math.round(1.8 * dpr) : (s > 12000 ? Math.round(1.2 * dpr) : 0);
-
-  for (let k = 0; k < RECTS.length; k++) {
-    const y = cellYear(k);
-    if (y === EMPTY) continue;
-    drawPanel(y, RECTS[k], mode, coarseTop, rad);
+  if (showAreas()) {
+    // the maps draw the areas; the point canvas only has to be empty
+    if (!ptsClear) { ctxP.clearRect(0, 0, pxW, pxH); ptsClear = true; }
+  } else {
+    pxBuf.fill(BG);
+    const mode = $('#mode').value;
+    const coarseTop = $('#coarseTop').checked;
+    const fat = $('#big').checked;
+    const s = view.scale;
+    const dpr = DPR();
+    const rad = fat ? Math.round(1.8 * dpr) : (s > 12000 ? Math.round(1.2 * dpr) : 0);
+    for (let k = 0; k < RECTS.length; k++) {
+      const y = cellYear(k);
+      if (y === EMPTY) continue;
+      drawPanel(y, RECTS[k], mode, coarseTop, rad);
+    }
+    ctxP.putImageData(px, 0, 0);
+    ptsClear = false;
   }
-  ctxP.putImageData(px, 0, 0);
   drawOverlay();
   updateHud();
 }
@@ -449,85 +746,48 @@ function cellYear(k) {
   return (y && y.vis) ? y : EMPTY;
 }
 
+function caption(text, x, y, font) {
+  ctxO.font = font;
+  ctxO.lineJoin = 'round';
+  ctxO.lineWidth = 3 * DPR();
+  ctxO.strokeStyle = 'rgba(255,255,255,.9)';
+  ctxO.strokeText(text, x, y);
+  ctxO.fillText(text, x, y);
+}
+
 function drawOverlay() {
   ctxO.setTransform(1, 0, 0, 1, 0, 0);
   ctxO.clearRect(0, 0, pxW, pxH);
   const dpr = DPR();
   const s = view.scale;
-  const grid = RECTS.length > 1;
-  const showLabels = $('#labels').checked;
-
-  for (let k = 0; k < RECTS.length; k++) {
-    const r = RECTS[k];
-    const y = cellYear(k);
-    if (grid) {
-      ctxO.strokeStyle = 'rgba(255,255,255,.09)';
-      ctxO.lineWidth = 1;
-      ctxO.strokeRect(r.x + .5, r.y + .5, r.w - 1, r.h - 1);
-    }
-    if (y === EMPTY) continue;
-    const ox = r.x + r.w / 2 - view.cx * s, oy = r.y + r.h / 2 - view.cy * s;
-    // 51 state labels in a 300 px cell is noise, not information
-    if (showLabels && y.stateAnchor && r.w >= 380) {
-      ctxO.save();
-      ctxO.beginPath();
-      ctxO.rect(r.x, r.y, r.w, r.h);
-      ctxO.clip();
-      ctxO.font = (11 * dpr) + 'px ui-sans-serif, Segoe UI, sans-serif';
-      ctxO.textAlign = 'center';
-      ctxO.fillStyle = 'rgba(255,255,255,.42)';
-      for (const a of y.stateAnchor) {
-        const x = a.x * s + ox, yy = a.y * s + oy;
-        if (x < r.x || x > r.x + r.w || yy < r.y || yy > r.y + r.h) continue;
-        ctxO.fillText(a.st, x, yy);
-      }
-      ctxO.restore();
-    }
-    if (grid) {
+  if (RECTS.length > 1) {
+    for (let k = 0; k < RECTS.length; k++) {
+      const r = RECTS[k];
+      const y = cellYear(k);
+      if (y === EMPTY) continue;
       // bottom-left, so the HUD in the top-left corner never sits on top of
-      // the first row's labels
+      // the first row
       const row = SUMMARY.years.find((q) => q.year === y.year) || {};
       ctxO.textAlign = 'left';
-      ctxO.font = '600 ' + (14 * dpr) + 'px ui-sans-serif, Segoe UI, sans-serif';
-      ctxO.fillStyle = 'rgba(255,255,255,.92)';
-      ctxO.fillText(String(y.year), r.x + 10 * dpr, r.y + r.h - 22 * dpr);
-      ctxO.font = (10 * dpr) + 'px ui-sans-serif, Segoe UI, sans-serif';
-      ctxO.fillStyle = 'rgba(255,255,255,.5)';
-      ctxO.fillText(pct(row.sub_county_share, 0) + ' of votes sub-county',
-        r.x + 10 * dpr, r.y + r.h - 8 * dpr);
+      ctxO.fillStyle = '#1c1d1f';
+      caption(String(y.year), r.x + 10 * dpr, r.y + r.h - 22 * dpr, '600 ' + (14 * dpr) + 'px ui-sans-serif, Segoe UI, sans-serif');
+      ctxO.fillStyle = '#4a4d52';
+      caption(pct(row.sub_county_share, 0) + ' of votes sub-county', r.x + 10 * dpr, r.y + r.h - 8 * dpr,
+        (10 * dpr) + 'px ui-sans-serif, Segoe UI, sans-serif');
     }
   }
-
-  if (hoverP >= 0 && hoverP < RECTS.length && hoverIdx >= 0) {
+  if (!showAreas() && hoverP >= 0 && hoverP < RECTS.length && hoverIdx >= 0) {
     const y = cellYear(hoverP);
     if (y !== EMPTY && hoverIdx < y.n) {
       const r = RECTS[hoverP];
       const ox = r.x + r.w / 2 - view.cx * s, oy = r.y + r.h / 2 - view.cy * s;
-      ctxO.strokeStyle = '#ffffff';
+      ctxO.strokeStyle = '#111111';
       ctxO.lineWidth = 1.5 * dpr;
       ctxO.beginPath();
       ctxO.arc(y.mx[hoverIdx] * s + ox, y.my[hoverIdx] * s + oy, 6 * dpr, 0, Math.PI * 2);
       ctxO.stroke();
     }
   }
-}
-
-function computeStateAnchors(y) {
-  if (!y || y === EMPTY || !y.vis) return;
-  const acc = new Map();
-  for (let i = 0; i < y.n; i++) {
-    if (!y.vis[i]) continue;
-    const k = y.st[i];
-    let a = acc.get(k);
-    if (!a) { a = { sx: 0, sy: 0, n: 0 }; acc.set(k, a); }
-    a.sx += y.mx[i]; a.sy += y.my[i]; a.n++;
-  }
-  const out = [];
-  for (const [k, a] of acc) {
-    if (a.n < 5) continue;
-    out.push({ st: y.meta.states[k] || '??', x: a.sx / a.n, y: a.sy / a.n });
-  }
-  y.stateAnchor = out;
 }
 
 // ------------------------------------------------------------------ hud + legend
@@ -540,6 +800,18 @@ function updateHud() {
   for (let k = 0; k < cells; k++) {
     const y = cellYear(k);
     if (y !== EMPTY) { drawn += y.drawn || 0; seen += y.n; }
+  }
+  if ($('#show').value === 'polygons') {
+    if (cells > 1) {
+      $('#hud').innerHTML = '<b>' + cells + ' years</b> &nbsp;<span class="m">precinct areas</span>';
+      return;
+    }
+    $('#hud').innerHTML =
+      '<b>' + Y.year + '</b> &nbsp;<span class="m">precinct areas · ' + fmt(s.units_with_polygon) +
+      ' units with a polygon; the rest appear under <i>points</i></span><br>' +
+      '<span class="m">sub-county share of votes <b style="font-size:13px">' + pct(s.sub_county_share) +
+      '</b> · polygon on ' + pct(s.polygon_rate_geographic, 2) + ' of geographic units</span>';
+    return;
   }
   if (cells > 1) {
     // the per-year figures live on each panel; the HUD only totals the grid,
@@ -581,8 +853,8 @@ function renderLegend() {
     return;
   }
   if (mode === 'size') {
-    const stops = SEQ.map((c, i) => hex(c) + ' ' + (i / (SEQ.length - 1) * 100).toFixed(0) + '%');
-    el.innerHTML = '<div class="rampbar" style="background:linear-gradient(90deg,' + stops.reverse().join(',') + ')"></div>' +
+    const stops = SEQ.slice().reverse().map((c, i) => hex(c) + ' ' + (i / (SEQ.length - 1) * 100).toFixed(0) + '%');
+    el.innerHTML = '<div class="rampbar" style="background:linear-gradient(90deg,' + stops.join(',') + ')"></div>' +
       '<div class="rampends"><span>1 vote</span><span>10k+</span></div>';
     return;
   }
@@ -720,7 +992,7 @@ function grainChip(tier, label) {
 
 function renderDetailPlaceholder() {
   const s = Y === EMPTY ? null : SUMMARY.years.find((r) => r.year === Y.year);
-  let h = '<h2>Unit</h2><p class="empty">Click a point to inspect a unit.</p>';
+  let h = '<h2>Unit</h2><p class="empty">Click an area or a point to inspect a unit.</p>';
   if (s) {
     h += '<h2>Year ' + s.year + '</h2><dl class="kv">' +
       '<dt>vote rows</dt><dd>' + fmt(s.rows) + '</dd>' +
@@ -739,8 +1011,8 @@ function renderDetailPlaceholder() {
   $('#detail').innerHTML = h;
 }
 
-async function showUnit(y, idx) {
-  const uid = y.uid[idx];
+async function showUnit(y, idx, uidArg) {
+  const uid = idx >= 0 ? y.uid[idx] : uidArg;
   const year = y.year;
   selUid = uid;
   if (inflight) inflight.abort();
@@ -760,7 +1032,7 @@ async function showUnit(y, idx) {
       return;
     }
     u = decodeUnit(rec, d);
-    u.lat = y.lat[idx]; u.lon = y.lon[idx];
+    if (idx >= 0) { u.lat = y.lat[idx]; u.lon = y.lon[idx]; }
   } catch (e) {
     if (e.name === 'AbortError') return;
     $('#detail').innerHTML = '<h2>Unit</h2><p class="empty">could not load unit: ' + esc(e.message) + '</p>';
@@ -820,6 +1092,19 @@ async function showUnit(y, idx) {
 function esc(s) {
   return String(s === null || s === undefined ? '' : s)
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+// A polygon click knows the uid, not the point index; uids ascend in the
+// point arrays, so a binary search finds it.  A unit with an area but no
+// centroid row still opens, without the centroid line.
+function showUid(y, uid) {
+  let lo = 0, hi = y.n - 1, idx = -1;
+  while (lo <= hi) {
+    const mid = (lo + hi) >> 1, v = y.uid[mid];
+    if (v === uid) { idx = mid; break; }
+    if (v < uid) lo = mid + 1; else hi = mid - 1;
+  }
+  return showUnit(y, idx, uid);
 }
 
 // ------------------------------------------------------------------ download
@@ -1028,6 +1313,7 @@ async function applyCells() {
     buildLevelLut(Y.meta);
     fillStateSelect(Y);
   }
+  syncMapSources();
   applyFilter();
   draw();
   renderLegend();
@@ -1062,6 +1348,7 @@ async function setLayout(name) {
   }
   LAY = { rows: L.rows, cols: L.cols };
   CELLS = next;
+  buildMaps();
   computeRects();
   renderCellPickers();
   const d = await applyCells();
@@ -1117,19 +1404,39 @@ async function stress() {
 
 // ------------------------------------------------------------------ events
 
+function unMerY(my) { return Math.atan(Math.sinh(Math.PI * (1 - 2 * my))) * 180 / Math.PI; }
+
+function showChanged() {
+  $('#bigrow').style.display = showAreas() ? 'none' : '';
+  hoverP = -1; hoverIdx = -1;
+  setHover(null, null);
+  $('#tip').style.display = 'none';
+  styleMaps();
+  draw();
+}
+
 function wire() {
   window.addEventListener('resize', () => { resize(); schedule(); });
 
-  $('#mode').addEventListener('change', () => { renderLegend(); schedule(); });
-  $('#coarseTop').addEventListener('change', schedule);
+  $('#mode').addEventListener('change', () => { renderLegend(); styleMaps(); schedule(); });
+  $('#coarseTop').addEventListener('change', () => { styleMaps(); schedule(); });
   $('#big').addEventListener('change', schedule);
-  $('#labels').addEventListener('change', () => { drawOverlay(); });
+  $('#labels').addEventListener('change', () => { for (const m of MAPS) applyLabels(m); });
+  $('#show').addEventListener('change', showChanged);
+  $('#basemap').addEventListener('change', () => {
+    try { localStorage.setItem(BASEMAP_KEY, $('#basemap').value); } catch (err) { /* private window */ }
+    for (const m of MAPS) {
+      m.__ready = false; m.__year = null;
+      m.setStyle(basemapStyle(), { diff: false });
+    }
+    HOV = { map: null, id: null }; SEL = { map: null, id: null };
+  });
   $('#layout').addEventListener('change', () => { setLayout($('#layout').value); });
   $('#download').addEventListener('click', downloadYear);
   $('#state').addEventListener('change', () => {
     applyFilter(); renderLegend();
     const v = $('#state').value;
-    if (v && Y !== EMPTY) {
+    if (v && Y !== EMPTY && MAPS.length) {
       let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
       for (let i = 0; i < Y.n; i++) {
         if (!Y.vis[i]) continue;
@@ -1137,8 +1444,9 @@ function wire() {
         if (Y.my[i] < y0) y0 = Y.my[i]; if (Y.my[i] > y1) y1 = Y.my[i];
       }
       if (x0 < x1) {
-        view.scale = Math.min(cellW() / (x1 - x0), cellH() / (y1 - y0)) * 0.9;
-        view.cx = (x0 + x1) / 2; view.cy = (y0 + y1) / 2;
+        // mercator x back to longitude keeps Alaska's unwrapped Aleutians west
+        fitTo([x0 * 360 - 180, unMerY(y1), x1 * 360 - 180, unMerY(y0)]);
+        return;
       }
     }
     draw();
@@ -1150,90 +1458,28 @@ function wire() {
   document.querySelectorAll('#zoombar button').forEach((b) => {
     b.addEventListener('click', () => fitTo(FITS[b.dataset.fit]));
   });
-
-  let dragging = false, lx = 0, ly = 0, moved = 0;
-  overCanvas.addEventListener('mousedown', (e) => { dragging = true; moved = 0; lx = e.clientX; ly = e.clientY; });
-  window.addEventListener('mouseup', () => { dragging = false; });
-  overCanvas.addEventListener('mousemove', (e) => {
-    const dpr = DPR();
-    if (dragging) {
-      // one shared viewport: panning moves every panel together
-      const dx = (e.clientX - lx) * dpr, dy = (e.clientY - ly) * dpr;
-      moved += Math.abs(dx) + Math.abs(dy);
-      lx = e.clientX; ly = e.clientY;
-      view.cx -= dx / view.scale; view.cy -= dy / view.scale;
-      schedule();
-      return;
-    }
-    const r = overCanvas.getBoundingClientRect();
-    const sx = (e.clientX - r.left) * dpr, sy = (e.clientY - r.top) * dpr;
-    pickAt(sx, sy);
-    if (pickP !== hoverP || pickI !== hoverIdx) {
-      hoverP = pickP; hoverIdx = pickI;
-      drawOverlay();
-      const tip = $('#tip');
-      const y = hoverP < 0 ? EMPTY : cellYear(hoverP);
-      if (hoverIdx < 0 || y === EMPTY) { tip.style.display = 'none'; }
-      else {
-        const i = hoverIdx;
-        const t = y.tot[i], m = t ? (y.dem[i] - y.rep[i]) / t : 0;
-        tip.innerHTML = '<b>' + y.meta.states[y.st[i]] + '</b> · ' + esc(y.meta.levels[y.lvl[i]]) +
-          (RECTS.length > 1 ? ' · ' + y.year : '') +
-          '<br><span class="t">' + fmt(t) + ' votes · ' +
-          (t ? ((m >= 0 ? 'D +' : 'R +') + Math.abs(100 * m).toFixed(1) + 'pp') : 'no votes') +
-          '<br>click to inspect</span>';
-        tip.style.display = 'block';
-        tip.style.left = Math.min(r.width - 290, e.clientX - r.left + 14) + 'px';
-        tip.style.top = (e.clientY - r.top + 14) + 'px';
-      }
-    }
-  });
-  overCanvas.addEventListener('mouseleave', () => {
-    hoverP = -1; hoverIdx = -1; $('#tip').style.display = 'none'; drawOverlay();
-  });
-  overCanvas.addEventListener('click', (e) => {
-    if (moved > 6) return;
-    const dpr = DPR();
-    const r = overCanvas.getBoundingClientRect();
-    pickAt((e.clientX - r.left) * dpr, (e.clientY - r.top) * dpr);
-    if (pickI >= 0) {
-      const y = cellYear(pickP);
-      if (y !== EMPTY) showUnit(y, pickI);
-    }
-  });
-  overCanvas.addEventListener('wheel', (e) => {
-    e.preventDefault();
-    const dpr = DPR();
-    const r = overCanvas.getBoundingClientRect();
-    const sx = (e.clientX - r.left) * dpr, sy = (e.clientY - r.top) * dpr;
-    // zoom about the cursor within its own panel; the scale is shared, so
-    // every panel keeps the same extent
-    const k = panelAt(sx, sy);
-    const rect = k >= 0 ? RECTS[k] : { x: 0, y: 0, w: pxW, h: pxH };
-    const cxp = rect.x + rect.w / 2, cyp = rect.y + rect.h / 2;
-    const before = { x: (sx - (cxp - view.cx * view.scale)) / view.scale,
-                     y: (sy - (cyp - view.cy * view.scale)) / view.scale };
-    const kk = Math.exp(-e.deltaY * 0.0016);
-    view.scale = Math.max(200, Math.min(4e6, view.scale * kk));
-    const ox = cxp - view.cx * view.scale, oy = cyp - view.cy * view.scale;
-    const after = { x: (sx - ox) / view.scale, y: (sy - oy) / view.scale };
-    view.cx += before.x - after.x; view.cy += before.y - after.y;
-    schedule();
-  }, { passive: false });
 }
 
 // ------------------------------------------------------------------ boot
 
 (async function boot() {
-  resize();
+  const protocol = new pmtiles.Protocol();
+  maplibregl.addProtocol('pmtiles', protocol.tile);
+  try {
+    const b = localStorage.getItem(BASEMAP_KEY);
+    if (b && BASEMAPS[b]) $('#basemap').value = b;
+  } catch (err) { /* private window */ }
   wire();
   $('#dlnote').innerHTML = DL_NOTE;
+  $('#bigrow').style.display = showAreas() ? 'none' : '';
   status('loading summary…');
   SUMMARY = await (await fetch('data/summary.json')).json();
   STATIC = await (await fetch('data/static.json')).json();
   renderYears();
   const last = SUMMARY.years[SUMMARY.years.length - 1].year;
   CELLS = [last];
+  buildMaps();
+  resize();
   await applyCells();
   fitTo(FITS['48']);
   // Not awaited: the archive index is optional, and blocking readiness on a
