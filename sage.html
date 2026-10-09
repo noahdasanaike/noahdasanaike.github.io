@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Small-Area Global Elections (SAGE) Dataset - Noah Dasanaike</title>
     <meta name="description"
-        content="SAGE: small-area, mostly polling-station-level election results with polygon geometry for 131 countries." />
+        content="SAGE: small-area, mostly polling-station-level election results with polygon geometry for 134 countries." />
 
     <!-- schema.org/Dataset markup -> Google Dataset Search indexing.
          TODO: confirm the "license" URL matches the license set on the Dataverse deposit. -->
@@ -16,7 +16,7 @@
       "@type": "Dataset",
       "name": "The Small-Area Global Elections (SAGE) Dataset",
       "alternateName": "SAGE",
-      "description": "Lower-house parliamentary and presidential election returns for 131 countries and territories at the smallest unit each electoral authority publishes — for most countries a polling station with fewer than a thousand voters. SAGE geocodes the units and harmonizes party and candidate identifiers across languages, covering roughly ten billion votes across more than eight million units between 1948 and 2026. Distributed as partitioned Parquet, GeoParquet polygons, and native R sf objects, with companion R and Python packages.",
+      "description": "Lower-house parliamentary and presidential election returns for 134 countries and territories at the smallest unit each electoral authority publishes — for most countries a polling station with fewer than a thousand voters. SAGE geocodes the units and harmonizes party and candidate identifiers across languages, covering roughly ten billion votes across more than eight million units between 1948 and 2026. Distributed as partitioned Parquet, GeoParquet polygons, and native R sf objects, with companion R and Python packages.",
       "url": "https://noahdasanaike.github.io/sage.html",
       "sameAs": "https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/YGJR1L",
       "identifier": "https://doi.org/10.7910/DVN/YGJR1L",
@@ -30,7 +30,7 @@
       },
       "includedInDataCatalog": { "@type": "DataCatalog", "name": "Harvard Dataverse" },
       "temporalCoverage": "1948/2026",
-      "spatialCoverage": "Global (131 countries and territories)",
+      "spatialCoverage": "Global (134 countries and territories)",
       "distribution": [
         { "@type": "DataDownload", "encodingFormat": "application/vnd.apache.parquet", "contentUrl": "https://storage.googleapis.com/sage-archive/parquet/" },
         { "@type": "DataDownload", "encodingFormat": "application/zip", "contentUrl": "https://storage.googleapis.com/sage-archive/zip/" }
@@ -288,7 +288,7 @@
         <p><a href="index.html">by Noah Dasanaike</a></p>
     </header>
 
-    <p>SAGE collects lower-house parliamentary and presidential election returns for 131 countries at the
+    <p>SAGE collects lower-house parliamentary and presidential election returns for 134 countries at the
         smallest unit each electoral authority publishes, which for most countries is a polling station with fewer
         than a thousand voters. It geocodes the units and harmonizes party and candidate identifiers across
         languages. In total the data contain roughly ten billion votes cast across more than eight million units.</p>
@@ -354,11 +354,88 @@ Python: pip install "git+https://github.com/noahdasanaike/sage.git#subdirectory=
             target="_blank" rel="noopener">Harvard Dataverse deposit</a>.</p>
     <p>[<button class="abstract-toggle"
             onclick="toggleAbstract('country-downloads', 'country downloads', 'hide country downloads')">country
-            downloads</button>] <span style="color:#666; font-size:0.9em;">131 countries</span></p>
+            downloads</button>] <span style="color:#666; font-size:0.9em;">134 countries</span></p>
     <div id="country-downloads" class="abstract-content">
         <input type="text" class="country-search" id="country-search" placeholder="Filter countries&hellip;"
             oninput="filterCountries()">
         <div class="country-list" id="sage-countries"></div>
+    </div>
+
+    <div class="version-section">
+        <div class="version-header">
+            <h3 class="version-title">Release V1.3</h3>
+            <span class="version-date">Unreleased</span>
+        </div>
+        <p>[<button class="abstract-toggle" onclick="toggleAbstract('changelog-v13')">changelog</button>] [<a
+                href="https://storage.googleapis.com/sage-archive/codebook.pdf">codebook</a>] [<a
+                href="https://github.com/noahdasanaike/sage">country-level coverage</a>]</p>
+        <div id="changelog-v13" class="abstract-content">
+            <ul class="abstract-text" style="margin:0; padding-left:1.1em;">
+                <li>Added 3 new countries: Malta (general elections 2003&ndash;2022 at electoral-division level), Morocco (House of Representatives 2016, 2021, and 2026 at the level of the 92 local constituencies), and the Isle of Man (House of Keys 2016, 2021, and 2026 at candidate level in the 12 constituencies), bringing total coverage to 134 countries</li>
+                <li>Added Sweden's 2026 Riksdag election at electoral-district level, with official 2026 district boundaries; parties outside the Riksdag are grouped as "other", with their own names kept in <code>party_b</code></li>
+                <li>Added Latvia's 2026 Saeima election at polling-station level, located with the Central Election Commission's own station coordinates (provisional count)</li>
+                <li>Added the newest elections for Malta (2026), Saint Lucia (2025), Belize (2025), Barbados (2026), Benin (2026 legislative), Albania (2025, polling-centre level), Namibia (2024 presidential and National Assembly), Ghana (2024 presidential and parliamentary), and Sri Lanka (2024 presidential and parliamentary)</li>
+                <li>Added Seychelles' 2025 presidential election, both rounds, and its 2025 National Assembly election</li>
+                <li>Added Kyrgyzstan's November 2021 parliamentary election (national party lists) at precinct level</li>
+                <li>Added Moldova's 2019 parliamentary election (national party lists) at polling-station level</li>
+                <li>Added Mongolia's 2020 parliamentary election at polling-station level, with votes for every candidate</li>
+                <li>Added El Salvador's 2019 presidential and 2021 legislative elections at voting-centre level</li>
+                <li>Added Jamaica's 2025 general election at polling-station level</li>
+                <li>Added Chile's 2025 Chamber of Deputies election and both rounds of its 2025 presidential election at polling-table level, including votes cast abroad</li>
+                <li>Added Bangladesh's 2026 parliamentary election at polling-centre level</li>
+                <li>Added Malawi's 2025 presidential and parliamentary elections at polling-station level</li>
+                <li>Added Brazil's 2026 election (first round), labelled every presidential election from 2002 onward as first or second round, including votes cast abroad, and made Brazil's 1998&ndash;2022 totals match the official results in every state and round: added votes cast for a party rather than a candidate and the 1998 abroad votes, and removed annulled votes for federal deputy in 2014&ndash;2022</li>
+                <li>Added New Zealand's 1996 general election, its first under mixed-member proportional representation, at polling-place level (party vote)</li>
+                <li>Added Egypt's 2015 House of Representatives election at polling-station level (both the individual seats, with runoffs, and the party lists) and its 2018 presidential election at polling-committee level</li>
+                <li>Upgraded Barbados 2022 from constituency to polling-division level, using the Electoral and Boundaries Commission's official report and polling-district boundaries, and corrected several vote counts, party labels, and candidate names</li>
+                <li>Replaced Kyrgyzstan's geocoded polling-station locations in every election with the Central Election Commission's own published coordinates; 2015 now has geometry, and stations no longer pile onto town centres</li>
+                <li>Replaced Moldova's geocoded polling-station locations with the Central Election Commission's official station points; 2014 and 2016, which had no locations before, now have them for about half and a quarter of stations, and 2019&ndash;2025 stations are no longer placed in the wrong district</li>
+                <li>Fixed Egypt 2014's district geometry: 30 districts had been placed on the wrong polygon, usually a rural district on the town polygon of the same name and twice in another governorate; the same check on 2018 corrected or placed 11 more districts</li>
+                <li>Re-geocoded 115 Iranian county seats in 2017 that had been placed on a province-level point or on a different place with the same name</li>
+                <li>Fixed Zambia 2021's geometry: many constituencies had carried another area's district polygon; each now has its own constituency polygon, or is Missing where the 2016 redistricting changed it, and eight constituencies' provinces are corrected</li>
+                <li>Made Sweden's 2002&ndash;2018 constituency codes match 2022 and 2026, so the same constituency carries the same code in every year</li>
+                <li>Fixed Jamaica 2007&ndash;2020's locations: polling places that had been geocoded outside their parish, many of them onto a single country-level point, are now relocated or Missing, and each division's parish is now taken from the Electoral Commission's own numbering</li>
+                <li>Replaced Panama's 2004 and 2009 data, which had been local corregimiento-representative races rather than national elections, with presidential and National Assembly results by electoral circuit, and added Panama's 2014, 2019, and 2024 elections the same way</li>
+                <li>Fixed Chile 2013&ndash;2021: repaired garbled accented characters in place names, gave coastal and island polling places the Thiessen polygons they had been missing, and relocated polling places that had been geocoded outside their own commune</li>
+                <li>Fixed New Zealand 1996&ndash;2023 locations: polling places that had been geocoded to a single default point offshore are now Missing, coastal polling places that had lost their Thiessen polygons have them again, and about 950 polling places that had been stacked on a shared town point or placed far from the venue were moved to the venue's official Electoral Commission location (or a school-directory or map location) where one could be confirmed</li>
+                <li>Replaced Bangladesh's geocoded polling-centre locations in 2018, 2024, and 2026 with the Election Commission's official centre coordinates; up to 1,098 centres had been stacked on a single town point, and many were placed in the wrong district</li>
+                <li>Replaced Malawi's geocoded polling-centre locations in 2019 and 2025 with surveyed coordinates (the Malawi Electoral Commission's polling-centre map for 2025, and the commission's 2019 coordinates from Yeandle's replication data for 2019); the geocodes had placed most centres many kilometres away, often stacked on a single village or town point. Also repaired truncated 2019 polling-centre names and codes and made the 2019 region labels match 2025</li>
+                <li>Fixed Pakistan 2018, whose constituencies had been drawn with the 2002 boundaries; seats are now on 2018 boundaries where those can be verified and Missing otherwise</li>
+                <li>Updated two Ivory Coast 2025 legislative constituencies to their February 2026 re-run results</li>
+                <li>Corrected several Moldovan party labels, including two 2021 parties whose names had been swapped, and labelled Moldova's 2016 presidential runoff as the second round (it had been labelled as part of the first)</li>
+                <li>Gave Jamaica's two Red Hills divisions distinct names in 2011&ndash;2020</li>
+                <li>Rebuilt Jamaica's 2007, 2011, 2016, and 2020 results from the Electoral Commission's box-by-box returns: in about 20 constituencies a year, votes had been assigned to the wrong party and rejected ballots counted as independent votes, and minor parties, some independents, and up to 185 polling stations a year were missing. Every division and constituency total now matches the official returns, and each candidate is named in a <code>candidate</code> column</li>
+                <li>Fixed Albania 2021: restored the 4,247 votes for independent candidates, which had been dropped, gave every polling centre its full official code, so centres with similar numbers are no longer confused, and relocated polling centres that had been placed outside their own municipality</li>
+                <li>Fixed Albania 2025's polling-centre locations and addresses: centres that were split off from another centre had been given that centre's 2021 location and address; each now has its own address, and its own location where one can be verified</li>
+                <li>Fixed Mongolia's 2021 polling-station names and geometry: stations in Uvs had no names, several areas were mislabelled, place names had broken spellings, and some stations had been given a coarser polygon than the rest</li>
+                <li>Fixed the two Grand Anse areas in Seychelles 2020, whose locations had been swapped</li>
+                <li>Made Hungary 2026's election type match its other years ("Legislative (unicameral)")</li>
+                <li>Fixed Bulgaria 2021: the April parliamentary election had every row twice, doubling its votes, and the July and November 2021 parliamentary elections were missing; all of Bulgaria's 2021 elections are now included once, and match the official totals. Bulgaria 2022's votes, split across voting machines, are now combined per section and match the official total, and the independent candidates dropped from Bulgaria's 2013, 2022, 2023, and 2024 data are restored</li>
+                <li>Relocated Bulgaria's 2013&ndash;2024 polling sections to the Central Election Commission's official coordinates; 2013&ndash;2017 now have locations for 75-92% of sections, where they had none before, and no section is placed outside its own settlement. Section, settlement, and district codes keep their leading zeros, and each district carries its official name in every year</li>
+                <li>Replaced Bosnia and Herzegovina's data, which had been the two entity parliaments, with the House of Representatives of Bosnia and Herzegovina and the three members of the Presidency, 2018 and 2022, at polling-station level; polling stations are located at the building level, and stations that could not be found are Missing</li>
+                <li>Gave polling places in Greece, Argentina, Denmark, and Bosnia and Herzegovina the Thiessen polygons they had been missing, including all of Greece 2019, and set polling places placed outside their own province in Argentina 2023 to Missing</li>
+                <li>Removed locations from 33,353 rows across 14 countries that had no polygon and whose location was wrong: outside the country, stacked on one town point, or in the wrong region (Peru, Senegal, Colombia, Romania, South Korea, Philippines, Russia, Mexico, Poland, Hungary, Cyprus, Guyana, Netherlands, Dominica)</li>
+                <li>Gave each Malawian parliamentary candidate their name in a <code>candidate</code> column, so independent candidates in the same constituency are no longer indistinguishable</li>
+                <li>Restored Germany 2025's polygons, which had been missing from the polygon files, and filled in the place names missing from Cabo Verde 2026's polygons, so both join to their vote data again</li>
+                <li>Repaired garbled accented place names in Peru and Italy that stopped their polygon files from joining to the vote data</li>
+                <li>Labelled Suriname 2025's polygons correctly as Thiessen polygons, and added the country code to Norway's data files</li>
+                <li>Restored six Iranian provinces (Qom, Lorestan, Hormozgan, Hamadan, Golestan, and Yazd; 58 counties and about 4.8 million votes) that had been dropped from the 2017 election by a number-reading error; a county with an unknown location is now Missing instead of carrying a placeholder coordinate, and one county that had been placed in the wrong province is now located correctly</li>
+                <li>Added the UK's 2001 general election, completing UK coverage for 2001&ndash;2025</li>
+                <li>Extended Luxembourg back to 2004 and 2009, Norway back to 2001 and 2005, Finland back to 2003 and 2007, and Sweden back to 2002</li>
+                <li>Completed Slovakia for 2001&ndash;2025 by adding 2002, 2006, 2010, and 2012 at municipality level</li>
+                <li>Added Hungary's 2002 and 2006 elections at polling-station level, and Estonia's 2011 and 2023 elections</li>
+                <li>Deepened Malaysia's 2008 election from constituency to polling-stream level</li>
+                <li>Fixed Northern Ireland's parties in every UK year: they had been recorded under British party labels, Sinn Féin had been dropped, and turnout in Northern Irish seats was understated as a result</li>
+                <li>Moved Luxembourg onto the official historical commune boundaries, so merged communes no longer share their successor's shape, and made <code>total_votes</code> mean the same thing in every Luxembourg year</li>
+                <li>Added geometry for Finland's 2007, 2011, and 2012 elections, and fixed Swedish-language place names that had been garbled in every Finnish year</li>
+                <li>Fixed Norway 2017, whose real district boundaries were labelled as Thiessen polygons, and removed whole-municipality shapes from Norway's 2021 advance-vote pools</li>
+                <li>Fixed missing district boundaries in Sweden 2018 and stopped labelling Sweden's vote pools as having boundaries</li>
+                <li>Attached the municipality boundaries that Slovakia's 2002&ndash;2012 elections were labelled as having but did not carry</li>
+                <li>Added the county to every Estonian polling station in 2011, 2015, and 2023</li>
+                <li>Fixed polygons for Bangladesh 2024, Bolivia 2025, Hungary 2010, and every Estonian year that were stored in degrees while labelled as metres</li>
+                <li>Relabelled rows across 27 countries that were marked as Thiessen polygons but carried no geometry</li>
+            </ul>
+        </div>
     </div>
 
     <div class="version-section">
@@ -694,7 +771,7 @@ Python: pip install "git+https://github.com/noahdasanaike/sage.git#subdirectory=
             'Saint Lucia', 'Samoa', 'Senegal', 'Serbia', 'Seychelles', 'Singapore', 'Slovakia', 'Slovenia', 'Solomon Islands', 'South Africa',
             'South Korea', 'Spain', 'Sri Lanka', 'Suriname', 'Sweden', 'Switzerland', 'Taiwan', 'Thailand', 'Timor-Leste', 'Trinidad and Tobago',
             'Tunisia', 'Turkey', 'Uganda', 'Ukraine', 'United Kingdom', 'United States of America', 'Uruguay', 'Vanuatu', 'Venezuela', 'Zambia',
-            'Zimbabwe'
+            'Zimbabwe', 'Malta', 'Morocco', 'Isle of Man'
         ].sort((a, b) => a.localeCompare(b));
 
         function countryZipUrl(country) {
