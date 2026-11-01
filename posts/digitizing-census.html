@@ -153,7 +153,7 @@
         Gemini 3 Pro remains the best option, particularly for historical documents, handwritten or multilingual
         text, and so on.
         When I first started the project, Gemini 2.5 Pro was state of the art (SOTA), but the difference between the two
-        was considerable enough once 3 was released that I fully re-generated my training data with it. Gemini
+        was considerable enough once 3 was released that I fully regenerated my training data with Gemini 3 Pro. Gemini
         performs so well at
         many of the older documents that it was accurately translating text that I couldn't read myself. There was one
         mid-19th century Canadian census where I was attempting to transcribe the (cramped, handwritten) table cells by
@@ -181,17 +181,16 @@
         Mexico, Argentina, and so on. The performance difference between small and large models on this latter set was
         enormous.</p>
 
-      <p>Image resolution matters a lot, much more than the attention to which I see it paid. So does
+      <p>Image resolution matters a lot, much more than the attention paid to it would suggest. So does
         inference parameter optimization: image resizing prior to making any calls, maximum model and output tokens
         (including image tokens), and repetition penalty (especially for very high resolution images), among others. For
         context, all
         of
-        my base images are around 4000x3000 resolution. I consistently
-        observed ~0.10 validation performance differentials during grid search before deployment. Models fine-tuned on
+        my base images are around 4000x3000 resolution. I consistently observed differences of about 0.10 in validation performance during grid search before deployment. Models fine-tuned on
         the highest resolution images always converged better than resized versions, but this was not always the case at
         inference time.</p>
 
-      <p>Once you find a strong model for your use-case, stick with it, and try to ignore more recent model releases.
+      <p>Once you find a strong model for your use case, stick with it, and try to ignore more recent model releases.
         This might seem like poor advice. For the small model, I found the best fine-tuning performance with dots.ocr
         after simultaneously training on that, PaddleOCR-VL, DeepSeek-OCR, MinerU, LightOnOCR-1B, and hunyuanocr. Over
         the months following, successive OCR models were released that each claimed SOTA on existing and novel
@@ -199,25 +198,22 @@
         PaddleOCR-VL-1.5,
         DeepSeek-OCR2, MinerU2.5, LightOnOCR-2-1B, and GLM-OCR, to name but a few. Each would outperform dots.ocr on,
         say,
-        OmniDocBench 1.5. While inference ran (still runs?) in the background, I would fine-tune my training labels on
-        each one of these, and they would all turn out to be a waste of time: poor fine-tuning convergence, Chinese
+        OmniDocBench 1.5. While inference ran (still runs?) in the background, I would fine-tune each of these models on my training labels, and they would all turn out to be a waste of time: poor fine-tuning convergence, Chinese
         characters randomly inserted into output, constraints on image resolution (static or dynamic tiling). This was
         the same with the large model cases: early tests obtained the strongest performance with OlmOCR 2, but I also
         experimented with other large models (Chandra, Infinity-Parser) and all the aforementioned small models as they
-        were released. A key
-        take-away here should be that many of the OCR benchmarks are practically useless for
+        were released. A key takeaway here should be that many of the OCR benchmarks are practically useless for
         discriminating between top models, and you absolutely must experiment with your own images, either with formal
         validation or manually verifying outputs.</p>
 
-      <p>The most painful part of the digitization process has doubtlessly been (1) compute and (2) storage, which is
-        not surprising. I have access to GPUs on the Harvard FASRC (research cluster), but the cluster uses Slurm for
+      <p>Unsurprisingly, the most painful parts of the digitization process have been (1) compute and (2) storage. I have access to GPUs on the Harvard FASRC (research cluster), but the cluster uses Slurm for
         job scheduling and GPU jobs strongly affect fair-share priority. Nothing was worse than submitting a batch
         job to fine-tune a new model and having the job instantly fail because of a quirk in the script. I also
         experimented with on-demand instances (used Runpod), but the cost far exceeds affordability for processing at
         scale, and with Cloud
         TPUs, which I was able to secure a one-month research trial for and thereafter believed I could zerg rush all 20
         million
-        images. That dream was crushed as soon as I attempted to run ms-swift with a vLLM TPU back-end, or fine-tune a
+        images. That dream was crushed as soon as I attempted to run ms-swift with a vLLM TPU backend, or fine-tune a
         model from scratch on the TPUs with PyTorch/XLA or MaxText. At the moment,
         I'm running the fine-tuned large (OlmOCR 2) model on 24 H100 GPUs each with 2 concurrent requests (with a
         separate process to handle the division of new images effectively). The fine-tuned small model (dots.ocr) is
@@ -226,17 +222,17 @@
         take days at this point (the maximum GPU job run time is 3 days on the FASRC). It may very well be the case that
         the data will not be digitized for another year, at this rate.</p>
 
-      <p>The raw images are sitting on a 20TB HDD on my local machine and I have a "smart" bash script that only uploads
+      <p>The raw images are stored on a 20TB HDD on my local machine, and I have a "smart" bash script that only uploads
         images with neither (1) outputs on the cluster waiting to be transformed locally or (2) outputs already
         transferred locally. This is necessary firstly because the images must be stored in scratch space that is
         regularly wiped, and secondly because even with parallel workers my upload capacity with rsync can only handle
         so much. The stock movement of SanDisk and Western Digital does not surprise me (see above point about image
         resolution).</p>
 
-      <p>You almost certainly need post-processing, perhaps even more-so than with traditional OCR methods, even if you
+      <p>You almost certainly need post-processing, perhaps even more so than with traditional OCR methods, even if you
         are running zero-shot inference with a proprietary model
-        and a cleaner use-case than mine. I ended up with a two-stage solution where I first classify all markdown
-        outputs into one of three categories: fully valid, partially degenerate (e.g. repetition at the end), or fully
+        and a cleaner use case than mine. I ended up with a two-stage solution where I first classify all markdown
+        outputs into one of three categories: fully valid, partially degenerate (e.g., repetition at the end), or fully
         degenerate (no valid output whatsoever). This is done with simple regex and thresholds that were calibrated
         by Claude. All of the fully degenerate results that I spot checked were because of the images themselves (e.g.,
         blank or fully destroyed pages). These are deleted upon syncing locally. The partially degenerate results are
@@ -249,11 +245,11 @@
         with
         minimal reasoning return the text in tabular format according to several columns that I predefined.
         After testing out different chunk sizes, I split the input and output files into just several lines each (each
-        row being a person and their meta-data) and fine-tuned small Qwen3 models (0.6B, 1.7B, 4B). This served the
+        row being a person and their metadata) and fine-tuned small Qwen3 models (0.6B, 1.7B, 4B). This served the
         purpose of identifying
         systematic bias in the post-processing; i.e., I expected 19th century Estonia outputs to look different from
         those of 21st century New Zealand. As expected, the older and more diverse documents had worse results in
-        coversion from raw output to cleaned tabular format. To redress this, I generated synthetic input-output pairs
+        conversion from raw output to cleaned tabular format. To redress this, I generated synthetic input-output pairs
         oversampling the poor performers.</p>
 
       <p>However, given that more than ten million markdown files will need to be processed locally, I didn't expect to
@@ -261,8 +257,7 @@
         fine-tuned a GLiNER (Named Entity Recognition) model on the real and synthetic inputs and outputs, and this
         worked much more effectively at post-processing. It also runs relatively efficiently on my local RTX 4090.</p>
 
-      <p>The final lesson that I've learned is perhaps the most important one to anyone working on related projects, and
-        circles back to the point on endlessly fine-tuning new model releases. A friend told me when I first started the
+      <p>The final lesson that I've learned is perhaps the most important one to anyone working on related projects, and relates to the earlier point about endlessly fine-tuning new model releases. A friend told me when I first started the
         PhD that he knew of students in CS who would spend their five years tuning parameters trying to eke out
         marginal improvements in model performance. For OCR with VLMs and related tasks, it is absolutely the case that
         I could have continued fine-tuning the OCR or post-processing models in perpetuity and never actually begun

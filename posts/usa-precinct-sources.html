@@ -244,17 +244,17 @@
       the data are found and processed.</strong> These state-years are marked <span class="co-badge">co</span>.</p>
 
   <div class="legend legend-top">
-    <p>Every result document below carries one of these four sources.</p>
+    <p>Each result document below belongs to one of these four source classes.</p>
     <dl>
       <dt>official, from the office's own live host</dt>
-      <dd>Pulled from the election office's own website.</dd>
+      <dd>Downloaded from the election office's own website.</dd>
       <dt>official, recovered from the Internet Archive</dt>
       <dd>The office published it and no longer serves it; recovered from a
         Wayback capture of the office's own host.</dd>
       <dt>the office's own file, byte-identical copy</dt>
-      <dd>Held by OpenElections, but byte-identical (SHA-256) to the office published version.</dd>
+      <dd>Held by OpenElections, but byte-identical (SHA-256) to the version that the office published.</dd>
       <dt>transcribed by a third party</dt>
-      <dd>Some person(s) re-typed the figures from a printed or scanned original. These are most often from the Census
+      <dd>Some person(s) retyped the figures from a printed or scanned original. These are most often from the Census
         Bureau. The
         only class where a number could differ from the office's own.</dd>
     </dl>
@@ -277,8 +277,7 @@
     </dl>
     <p>New York 2012 is the one case where a compilation is preferred over an office's
       own document: no New York authority published a statewide sub-county file, and
-      twenty-one counties rest on a re-keyed one. Twenty-eight of the thirty-nine
-      counties also built from board documents reproduce it district for district.</p>
+      data for twenty-one counties come from a rekeyed compilation. For twenty-eight of the thirty-nine counties that I also built from board documents, the board figures match that compilation district for district.</p>
   </div>
 
   <div class="controls">
@@ -319,7 +318,7 @@
       if (c.units != null) bits.push(num(c.units) + " reporting units"
         + (c.county_only ? ", reported at county level" : ""));
       if (c.map_pct != null) bits.push(num(c.map_n) + " of " + num(c.map_tot)
-        + " units carry a boundary (" + c.map_pct.toFixed(1) + "%)");
+        + " units have a boundary (" + c.map_pct.toFixed(1) + "%)");
       if (c.geo_pct != null) bits.push(c.geo_pct.toFixed(1)
         + "% of the " + num(c.geo_units) + " sub-county units are matched to a precinct shape");
       if (c.pct_dem != null && c.pct_rep != null && (c.pct_dem || c.pct_rep))
@@ -351,7 +350,7 @@
 
       h += '<h3 class="second">Boundary layer</h3>';
       const g = d.g || [];
-      if (!g.length) h += '<p class="none">No units carry a boundary in this year.</p>';
+      if (!g.length) h += '<p class="none">No units have a boundary in this year.</p>';
       else {
         h += "<ul>";
         for (const s of g) {

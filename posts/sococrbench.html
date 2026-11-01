@@ -352,9 +352,9 @@
     <div class="post-content">
       <p>As discussed in a <a href="digitizing-census.html">previous post</a>, existing OCR benchmarks
         are not especially useful for discriminating between models on the kinds of documents that social scientists
-        actually work with. Most benchmarks, like OmniDocBench v1.5, over-index on modern printed text, clean scans, and
+        actually work with. Most benchmarks, such as OmniDocBench v1.5, overrepresent modern printed text, clean scans, and
         well-resourced languages. Handwritten census records, historical logbooks, degraded administrative
-        forms, and other ``messy" real-world data are not well represented.</p>
+        forms, and other &ldquo;messy&rdquo; real-world data are not well represented.</p>
 
       <p>socOCRbench is a small (private) benchmark designed with this gap in mind. It evaluates OCR models on
         samples across handwriting recognition, table extraction, and printed text recognition. The overall score
@@ -4502,7 +4502,7 @@
             support disabling reasoning).</p>
           <p><strong>June 24, 2026:</strong> Added MinerU2.5-Pro (0.1647), a 1.2B local parser that
             tops OmniDocBench v1.6 but handles only Latin and CJK print, returning almost nothing on
-            the non-Latin historical scripts that fill much of this benchmark. Corrected Kimi K2.5
+            the non-Latin historical scripts that constitute much of this benchmark. Corrected Kimi K2.5
             (0.0969 to 0.4775): its old score was an artifact of provider timeouts that blanked 229 of
             280 pages; re-running with throughput routing and reasoning off filled every page. The same
             routing fix raised Qwen3.6 27B (0.2810 to 0.3949), though it still returns blank on many
@@ -4514,32 +4514,23 @@
             tables (TEDS 0.45 vs 0.13). Strong on printed text (0.7159) and the best Mistral result
             on handwriting to date.</p>
           <p><strong>June 18, 2026:</strong> Added MiniMax M3 (0.4605) via OpenRouter at
-            $0.30/$1.20 per million tokens. Also hardened the OCR prompt and added an eval-time
+            $0.30/$1.20 per million tokens. Also revised the OCR prompt and added an eval-time
             preamble stripper: some vision models prefix their output with meta-commentary
             (&ldquo;This is a Hebrew manuscript page&hellip; Here&rsquo;s my best attempt:&rdquo;)
-            before the actual transcription, which inflated edit distance. The stripper removes a
-            leading commentary block only when a substantial transcription follows (&ge;200 chars),
-            so genuine refusals still score near zero. No benchmark ground-truth text begins
-            with a trigger phrase, so it never removes real OCR. Net leaderboard effect was
-            negligible (preambles cluster on the hardest manuscripts, where even cleaned output
-            scores low), but it makes the scoring fair to models that did the work.</p>
+            before the actual transcription. This commentary inflated edit distance. The stripper removes a leading commentary block only when a substantial transcription follows (&ge;200 chars). Genuine refusals therefore still score near zero. Because no benchmark ground-truth text begins with a trigger phrase, the stripper never removes real OCR. The net effect on the leaderboard was negligible (preambles are concentrated on the hardest manuscripts, where even cleaned output scores low), but the stripper makes the scoring fair to models that produced a transcription.</p>
           <p><strong>June 11, 2026:</strong> Added Qwen3.7 Plus (0.5830) via OpenRouter at
             $0.32/$1.28 per million tokens, ninth overall and the best Qwen result to date.
             Added Step 3.7 Flash (0.4668), StepFun's 196B-A11B MoE at $0.20/$1.15, scored at its
             default (medium) reasoning effort; reasoning cannot be disabled, and half the samples
             needed a 32K completion budget (~30 needed 64K) to emit any output.</p>
           <p><strong>June 8, 2026:</strong> Corrected the Infinity-Parser2 scores. Both models had
-            been run through the infly Gradio Space in <code>doc2md</code> mode, which linearizes
-            every document to plain prose with no table structure, so their near-zero table
-            (TEDS) scores were a data-collection artifact, not a model limitation. Re-ran both in
-            <code>doc2json</code> mode, where table blocks carry <code>&lt;table&gt;</code> HTML that
+            been run through the infly Gradio Space in <code>doc2md</code> mode, which linearizes every document to plain prose with no table structure. Their near-zero table (TEDS) scores were therefore an artifact of data collection. Reran both in <code>doc2json</code> mode, where table blocks include <code>&lt;table&gt;</code> HTML that
             the scorer reads: Infinity-Parser2 Pro 0.3541 &rarr; 0.4592 (TEDS 0.04 &rarr; 0.41) and
             Flash 0.3040 &rarr; 0.3867 (TEDS 0.06 &rarr; 0.30). A handful of non-Latin handwriting
             scans where the layout detector finds only the stamped folio number still score near
             zero; those are genuine model misses.</p>
           <p><strong>May 29, 2026:</strong> Fixed a TEDS scoring bug that systematically penalized
-            OCR models which emit tables as HTML <code>&lt;table&gt;</code> rather than markdown pipes:
-            the parser previously scored their tables near zero even when read correctly. This raised
+            OCR models that emit tables as HTML <code>&lt;table&gt;</code> instead of markdown pipes. The parser previously scored their tables near zero even when read correctly. This raised
             11 open-source OCR specialists on the table category: dots.ocr 1.5 (+0.145, to 0.478),
             FireRed-OCR (+0.137), dots.ocr (+0.134), GLM-OCR (+0.121), PaddleOCR-VL-1.6 (+0.111),
             OCRVerse, PaddleOCR-VL-1.5, OlmOCR-2, LightOnOCR-2, Nemotron-3-Nano-Omni, and Qianfan-OCR.
@@ -4549,9 +4540,8 @@
             scripts. Added PaddleOCR-VL-1.6 (0.3944) via the Baidu AIStudio job API; handles printed
             text (0.6584) far better than non-Latin scripts.
             Added Infinity-Parser2 Pro (0.3541) and Flash (0.3040), run through the public infly
-            Gradio Space; both read printed text well (Pro 0.7321) but linearize handwritten tables
-            in markdown mode, so their table (TEDS) scores are near zero.
-            Re-ran Datalab on a new subscription key and added the balanced mode: fast 0.5124,
+            Gradio Space; both read printed text well (Pro 0.7321) but linearize handwritten tables in markdown mode. Their table (TEDS) scores are therefore near zero.
+            Reran Datalab on a new subscription key and added the balanced mode: fast 0.5124,
             balanced 0.5167, accurate 0.5213, marginally below the prior key (fast 0.5374,
             accurate 0.5391) across all modes.</p>
           <p><strong>May 23, 2026:</strong> Added GPT-5.5 with auto resolution + medium reasoning
@@ -4563,21 +4553,16 @@
             Kimi K2.5 ($0.60/$2.50 &rarr; $0.40/$1.90), Llama 4 Maverick ($0.27/$0.85 &rarr; $0.15/$0.60),
             Qwen3 VL 30B, Qwen3.5 9B, Qwen3.5 Plus (2026-04-20), and the Qwen3.6 27B/35B/Flash
             line. Fixed a long-standing bug in <code>call_openai</code>: reasoning-capable models
-            (GPT-5 / o3 family) were given only 4096 completion tokens, so medium-reasoning calls
-            burned the entire budget on hidden reasoning tokens and returned empty output; the
-            budget now scales to 32K when reasoning is on.</p>
+            (GPT-5 / o3 family) were given only 4096 completion tokens. Medium-reasoning calls therefore used the entire budget on hidden reasoning tokens and returned empty output. The budget now scales to 32K when reasoning is on.</p>
           <p><strong>May 21, 2026:</strong> Added Gemini 3.5 Flash with minimal (0.6022) and low
-            (0.6095) reasoning, a modest gain over Gemini 3 Flash (0.5920 / 0.5995). Pricing
-            tripled to $1.50/$9.00 (from $0.50/$3.00), so cost-performance is meaningfully
-            worse despite the score bump.</p>
+            (0.6095) reasoning, a modest gain over Gemini 3 Flash (0.5920 / 0.5995). Because pricing tripled to $1.50/$9.00 (from $0.50/$3.00), cost-performance is meaningfully worse despite the higher score.</p>
           <p><strong>May 14, 2026:</strong> Various updates. Audited every model's API pricing
             against its native source (Google, Anthropic, OpenAI, OpenRouter, DashScope, xAI).
             Gemini 2.5 Flash $0.30/$2.50 (was $0.15/$0.60, per
             <a href="https://ai.google.dev/gemini-api/docs/pricing" target="_blank">Google</a>);
             Claude Opus 4.6 $5/$25 (was $15/$75); Kimi K2.5 $0.40/$1.90 (was $0.60/$2.50);
             Llama 4 Maverick $0.15/$0.60 (was $0.27/$0.85); Grok 4.2 Fast $0.20/$0.50
-            (was $2/$10); Qwen3 VL 30B $0.13/$0.52 (was $0.10/$0.40). Filled previously-unknown
-            prices: Qwen3.6 Plus $0.33/$1.95, Mistral Small 2603 $0.15/$0.60, Gemma 4 31B
+            (was $2/$10); Qwen3 VL 30B $0.13/$0.52 (was $0.10/$0.40). Filled previously unknown prices: Qwen3.6 Plus $0.33/$1.95, Mistral Small 2603 $0.15/$0.60, Gemma 4 31B
             $0.12/$0.37, Gemma 4 26B $0.06/$0.33, GPT-5.4 Mini $0.75/$4.50, GPT-5.4 Nano
             $0.20/$1.25. Cost-performance chart entries refreshed accordingly.</p>
           <p><strong>March 17, 2026:</strong> 64 models evaluated. Added Mistral Small 2603 (0.3140),

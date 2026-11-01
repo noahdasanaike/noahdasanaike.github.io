@@ -282,24 +282,22 @@
     <p class="post-date">March 19, 2026</p>
 
     <div class="post-content">
-      <p>Ethnicity and race inference from names is a common task in social science, typically handled by
-        algorithms like BISG (Bayesian Improved Surname Geocoding) or dictionary-based classifiers. But how
-        well do large language models perform on this task out of the box? This benchmark evaluates LLMs on
-        name-based ethnicity inference across four datasets with ground-truth labels.</p>
+      <p>Ethnicity and race inference from names is a common task in social science, typically handled by algorithms such as BISG (Bayesian Improved Surname Geocoding) or dictionary-based classifiers. But how
+        well do large language models perform on this task out of the box? I evaluate LLMs on name-based ethnicity inference across four datasets with ground-truth labels.</p>
 
-      <p>The benchmark uses 100-person samples from each dataset. Models are given only a person's name and
+      <p>I use 100-person samples from each dataset. Models are given only a person's name and
         asked to predict a categorical label. All predictions use structured outputs (JSON schema constraints)
-        to ensure valid labels. The metric is macro-averaged accuracy: we compute per-label accuracy within
+        to ensure valid labels. The metric is macro-averaged accuracy. I compute per-label accuracy within
         each dataset, then average across labels (correcting for class imbalance), then average across datasets.</p>
 
       <h3>Datasets</h3>
       <ul>
-        <li><strong>North Carolina</strong> &mdash; 100 voters from the NC voter file, labeled by self-reported race
+        <li><strong>North Carolina</strong>: 100 voters from the NC voter file, labeled by self-reported race
           (WHITE, BLACK, HISPANIC, ASIAN)</li>
-        <li><strong>Florida</strong> &mdash; 100 voters from the FL voter file, same race categories</li>
-        <li><strong>Lebanon</strong> &mdash; 100 individuals from Lebanese voter rolls, labeled by religious sect
+        <li><strong>Florida</strong>: 100 voters from the FL voter file, same race categories</li>
+        <li><strong>Lebanon</strong>: 100 individuals from Lebanese voter rolls, labeled by religious sect
           (Sunni, Shia, Druze, Maronite, Roman Orthodox, Roman Catholic, Armenian Orthodox)</li>
-        <li><strong>India</strong> &mdash; 100 Indian politicians from reserved constituencies, labeled as
+        <li><strong>India</strong>: 100 Indian politicians from reserved constituencies, labeled as
           Scheduled Caste (SC) or Scheduled Tribe (ST)</li>
       </ul>
 
