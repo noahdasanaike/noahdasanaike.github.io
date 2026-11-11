@@ -1,0 +1,1098 @@
+﻿country,iso3,year,election_type,special_type,round,units,units_located,share_located,votes,polygons
+Afghanistan,AFG,2018,Legislative (lower house),,,17715,17694,0.999,3294827,True
+Afghanistan,AFG,2019,Presidential,,,25075,25051,0.999,1824391,True
+Albania,ALB,2017,Legislative (unicameral),,,5361,0,0.0,1582195,False
+Albania,ALB,2021,Legislative (unicameral),,,5199,5190,0.998,1578117,True
+Albania,ALB,2025,Legislative (unicameral),,,5218,5045,0.967,1407401,True
+Argentina,ARG,2011,Legislative (lower house),,,84429,0,0.0,20158660,False
+Argentina,ARG,2011,Presidential,,,84429,0,0.0,21484844,False
+Argentina,ARG,2015,Legislative (lower house),First Round,1,93655,0,0.0,22679308,False
+Argentina,ARG,2015,Presidential,First Round,1,93655,0,0.0,24420841,False
+Argentina,ARG,2015,Presidential,Second Round,2,94170,0,0.0,25101742,False
+Argentina,ARG,2017,Legislative (lower house),,,99681,0,0.0,24329184,False
+Argentina,ARG,2019,Legislative (lower house),,,97282,0,0.0,24769142,False
+Argentina,ARG,2019,Presidential,,,97282,0,0.0,25931564,False
+Argentina,ARG,2023,Legislative (lower house),,,104520,99324,0.95,24059851,True
+Argentina,ARG,2023,Presidential,First Round,1,104520,99324,0.95,26291718,True
+Argentina,ARG,2023,Presidential,Second Round,2,104520,99324,0.95,25992604,True
+Argentina,ARG,2025,Legislative (lower house),,,108992,108632,0.997,22977871,True
+Armenia,ARM,2012,Legislative (unicameral),,,1983,1981,0.999,1506048,True
+Armenia,ARM,2013,Presidential,,,1988,1986,0.999,1468640,True
+Armenia,ARM,2018,Legislative (unicameral),,,2010,2010,1.0,1255676,True
+Armenia,ARM,2021,Legislative (unicameral),,,2008,2008,1.0,1276238,True
+Armenia,ARM,2026,Legislative (unicameral),,,2006,2004,0.999,1456740,True
+Australia,AUS,2004,Legislative (lower house),Hospital,,542,0,0.0,105471,True
+Australia,AUS,2004,Legislative (lower house),Mobile,,60,0,0.0,18665,True
+Australia,AUS,2004,Legislative (lower house),Two Candidate Preferred,,8234,7632,0.927,9627057,True
+Australia,AUS,2004,Legislative (lower house),,,7632,7632,1.0,10059479,True
+Australia,AUS,2007,Legislative (lower house),Hospital,,534,0,0.0,103194,True
+Australia,AUS,2007,Legislative (lower house),Mobile,,62,0,0.0,20635,True
+Australia,AUS,2007,Legislative (lower house),Two Candidate Preferred,,8235,7639,0.928,9954283,True
+Australia,AUS,2007,Legislative (lower house),,,7639,7639,1.0,10264336,True
+Australia,AUS,2010,Legislative (lower house),Hospital,,525,0,0.0,91949,True
+Australia,AUS,2010,Legislative (lower house),Mobile,,55,0,0.0,19171,True
+Australia,AUS,2010,Legislative (lower house),Two Candidate Preferred,,8951,8220,0.918,10433184,True
+Australia,AUS,2010,Legislative (lower house),,,8220,8220,1.0,10881894,True
+Australia,AUS,2013,Legislative (lower house),Hospital,,451,0,0.0,94641,True
+Australia,AUS,2013,Legislative (lower house),Mobile,,72,0,0.0,22206,True
+Australia,AUS,2013,Legislative (lower house),Two Candidate Preferred,,9146,8473,0.926,10678283,True
+Australia,AUS,2013,Legislative (lower house),,,8473,8473,1.0,11206971,True
+Australia,AUS,2016,Legislative (lower house),Hospital,,495,0,0.0,89918,True
+Australia,AUS,2016,Legislative (lower house),Mobile,,65,0,0.0,22511,True
+Australia,AUS,2016,Legislative (lower house),Two Candidate Preferred,,8328,7618,0.915,11179893,True
+Australia,AUS,2016,Legislative (lower house),,,7618,7618,1.0,11668088,True
+Australia,AUS,2019,Legislative (lower house),Hospital,,489,0,0.0,89825,True
+Australia,AUS,2019,Legislative (lower house),Mobile,,68,0,0.0,24261,True
+Australia,AUS,2019,Legislative (lower house),Two Candidate Preferred,,8875,8167,0.92,11822144,True
+Australia,AUS,2019,Legislative (lower house),,,8167,8167,1.0,12418671,True
+Australia,AUS,2022,Legislative (lower house),Hospital,,60,0,0.0,4060,True
+Australia,AUS,2022,Legislative (lower house),Mobile,,51,0,0.0,18492,True
+Australia,AUS,2022,Legislative (lower house),Two Candidate Preferred,,8479,8368,0.987,11477254,True
+Australia,AUS,2022,Legislative (lower house),,,8368,8368,1.0,12127933,True
+Australia,AUS,2025,Legislative (lower house),Hospital,,484,0,0.0,85064,True
+Australia,AUS,2025,Legislative (lower house),Mobile,,191,0,0.0,27498,True
+Australia,AUS,2025,Legislative (lower house),Two Candidate Preferred,,8940,8263,0.924,12322744,True
+Australia,AUS,2025,Legislative (lower house),,,8265,8263,1.0,12994831,True
+Austria,AUT,1999,Legislative (lower house),Postal,,43,0,0.0,243004,False
+Austria,AUT,1999,Legislative (lower house),,,2381,0,0.0,4330449,False
+Austria,AUT,2002,Legislative (lower house),Postal,,49,0,0.0,432568,False
+Austria,AUT,2002,Legislative (lower house),,,2352,0,0.0,3944871,False
+Austria,AUT,2006,Legislative (lower house),Postal,,43,0,0.0,257259,False
+Austria,AUT,2006,Legislative (lower house),,,2380,0,0.0,4450936,False
+Austria,AUT,2008,Legislative (lower house),Postal,,52,0,0.0,84281,False
+Austria,AUT,2008,Legislative (lower house),,,2500,0,0.0,4803028,False
+Austria,AUT,2010,Presidential,Postal,,121,0,0.0,263573,True
+Austria,AUT,2010,Presidential,,,2379,2163,0.909,2898391,True
+Austria,AUT,2013,Legislative (lower house),Postal,,165,0,0.0,565395,True
+Austria,AUT,2013,Legislative (lower house),,,2376,2376,1.0,4126565,True
+Austria,AUT,2016,Presidential,Postal,,117,0,0.0,606102,True
+Austria,AUT,2016,Presidential,,,2122,2122,1.0,3991451,True
+Austria,AUT,2017,Legislative (lower house),Postal,,164,0,0.0,790606,True
+Austria,AUT,2017,Legislative (lower house),,,2122,2122,1.0,4279323,True
+Austria,AUT,2019,Legislative (lower house),Postal,,164,0,0.0,950677,True
+Austria,AUT,2019,Legislative (lower house),,,2118,2118,1.0,3826569,True
+Austria,AUT,2022,Presidential,Postal,,116,0,0.0,795101,True
+Austria,AUT,2022,Presidential,,,2115,2115,1.0,3261630,True
+Austria,AUT,2024,Legislative (lower house),Postal,,164,0,0.0,174511,True
+Austria,AUT,2024,Legislative (lower house),,,2115,2115,1.0,4708377,True
+Bangladesh,BGD,2018,Legislative (unicameral),,,40149,35057,0.873,83616317,True
+Bangladesh,BGD,2024,Legislative (unicameral),,,41907,39272,0.937,48974130,True
+Bangladesh,BGD,2026,Legislative (unicameral),,,42384,40412,0.953,73510765,True
+Barbados,BRB,2022,Legislative,,,313,313,1.0,114013,True
+Barbados,BRB,2026,Legislative,,,30,30,1.0,112626,True
+Belgium,BEL,2014,Legislative (lower house),,,589,589,1.0,6721873,True
+Belgium,BEL,2019,Legislative (lower house),,,581,581,1.0,6747812,True
+Belgium,BEL,2024,Legislative (lower house),,,592,592,1.0,6964341,True
+Belize,BLZ,1984,Legislative,,,28,28,1.0,47658,True
+Belize,BLZ,1989,Legislative,,,28,28,1.0,58951,True
+Belize,BLZ,1993,Legislative,,,29,29,1.0,70431,True
+Belize,BLZ,1998,Legislative,,,29,29,1.0,84345,True
+Belize,BLZ,2003,Legislative,,,29,29,1.0,99570,True
+Belize,BLZ,2008,Legislative,,,31,31,1.0,120301,True
+Belize,BLZ,2012,Legislative,,,31,31,1.0,128820,True
+Belize,BLZ,2015,Legislative,,,31,31,1.0,141431,True
+Belize,BLZ,2020,Legislative,,,31,31,1.0,147706,True
+Belize,BLZ,2025,Legislative,,,29,29,1.0,125299,True
+Benin,BEN,2023,Legislative,,,24,24,1.0,2477948,True
+Benin,BEN,2026,Legislative,,,24,24,1.0,2788992,True
+Bhutan,BTN,2018,Legislative (lower house),Postal,,20,0,0.0,108580,True
+Bhutan,BTN,2018,Legislative (lower house),,,865,864,0.999,182310,True
+Bolivia,BOL,2019,Legislative (unicameral),,,32769,32769,1.0,4860139,True
+Bolivia,BOL,2019,Presidential,Abroad,,1507,0,0.0,201629,True
+Bolivia,BOL,2019,Presidential,,,33048,33048,1.0,5936042,True
+Bolivia,BOL,2020,Legislative (unicameral),,,33872,33872,1.0,5431247,True
+Bolivia,BOL,2020,Presidential,Abroad,,1443,0,0.0,162809,True
+Bolivia,BOL,2020,Presidential,,,34157,34157,1.0,5996402,True
+Bolivia,BOL,2025,Legislative (unicameral),,,33443,33443,1.0,4340283,True
+Bolivia,BOL,2025,Presidential,Abroad,1,1227,0,0.0,119709,True
+Bolivia,BOL,2025,Presidential,Abroad,2,1227,0,0.0,151585,True
+Bolivia,BOL,2025,Presidential,,1,34026,34026,1.0,5236925,True
+Bolivia,BOL,2025,Presidential,,2,34026,34026,1.0,6252610,True
+Bosnia and Herzegovina,BIH,2018,Legislative (lower house),,,5516,4015,0.728,1590998,True
+Bosnia and Herzegovina,BIH,2018,Presidential,Bosniak member,,3276,2173,0.663,569546,True
+Bosnia and Herzegovina,BIH,2018,Presidential,Croat member,,3276,2173,0.663,408359,True
+Bosnia and Herzegovina,BIH,2018,Presidential,Serb member,,2240,1842,0.822,650939,True
+Bosnia and Herzegovina,BIH,2022,Legislative (lower house),,,5557,4175,0.751,1529147,True
+Bosnia and Herzegovina,BIH,2022,Presidential,Bosniak member,,3318,2231,0.672,556531,True
+Bosnia and Herzegovina,BIH,2022,Presidential,Croat member,,3318,2231,0.672,391493,True
+Bosnia and Herzegovina,BIH,2022,Presidential,Serb member,,2239,1944,0.868,611651,True
+Botswana,BWA,2014,Legislative (unicameral),,,57,57,1.0,688082,True
+Botswana,BWA,2019,Legislative (unicameral),,,57,57,1.0,772158,True
+Brazil,BRA,1998,Legislative (lower house),,,6092,5785,0.95,66599875,True
+Brazil,BRA,1998,Presidential,Abroad,,101,0,0.0,20916,True
+Brazil,BRA,1998,Presidential,,,6092,5785,0.95,67701387,True
+Brazil,BRA,2002,Legislative (lower house),,,6159,5960,0.968,87474543,True
+Brazil,BRA,2002,Presidential,Abroad,1,102,0,0.0,37134,True
+Brazil,BRA,2002,Presidential,Abroad,2,102,0,0.0,34514,True
+Brazil,BRA,2002,Presidential,First Round,1,6159,5960,0.968,84915378,True
+Brazil,BRA,2002,Presidential,Second Round,2,6159,5960,0.968,86129589,True
+Brazil,BRA,2006,Legislative (lower house),,,6215,6200,0.998,93771589,True
+Brazil,BRA,2006,Presidential,Abroad,1,77,0,0.0,39077,True
+Brazil,BRA,2006,Presidential,Abroad,2,77,0,0.0,38860,True
+Brazil,BRA,2006,Presidential,First Round,1,6215,6200,0.998,95957656,True
+Brazil,BRA,2006,Presidential,Second Round,2,6215,6200,0.998,95799360,True
+Brazil,BRA,2010,Legislative (lower house),,,6257,6257,1.0,98389861,True
+Brazil,BRA,2010,Presidential,Abroad,1,126,0,0.0,84303,True
+Brazil,BRA,2010,Presidential,Abroad,2,126,0,0.0,81025,True
+Brazil,BRA,2010,Presidential,First Round,1,6305,6257,0.992,101505850,True
+Brazil,BRA,2010,Presidential,Second Round,2,6305,6257,0.992,99382892,True
+Brazil,BRA,2014,Legislative (lower house),,,94067,93160,0.99,97355354,True
+Brazil,BRA,2014,Presidential,Abroad,1,218,0,0.0,132739,True
+Brazil,BRA,2014,Presidential,Abroad,2,218,0,0.0,135180,True
+Brazil,BRA,2014,Presidential,First Round,1,94193,93193,0.989,103891063,True
+Brazil,BRA,2014,Presidential,Second Round,2,94192,93192,0.989,105407093,True
+Brazil,BRA,2018,Legislative (lower house),,,93580,92776,0.991,98257142,True
+Brazil,BRA,2018,Presidential,Abroad,1,171,0,0.0,193381,True
+Brazil,BRA,2018,Presidential,Abroad,2,171,0,0.0,185401,True
+Brazil,BRA,2018,Presidential,First Round,1,93580,92776,0.991,106857368,True
+Brazil,BRA,2018,Presidential,Second Round,2,93580,92776,0.991,104653352,True
+Brazil,BRA,2022,Legislative (lower house),,,92361,92353,1.0,109305870,True
+Brazil,BRA,2022,Presidential,Abroad,1,160,0,0.0,294525,True
+Brazil,BRA,2022,Presidential,Abroad,2,161,0,0.0,298169,True
+Brazil,BRA,2022,Presidential,First Round,1,92361,92353,1.0,117935194,True
+Brazil,BRA,2022,Presidential,Second Round,2,92361,92353,1.0,118254184,True
+Brazil,BRA,2026,Legislative (lower house),,,94539,93698,0.991,113678019,True
+Brazil,BRA,2026,Presidential,Abroad,1,170,0,0.0,330882,True
+Brazil,BRA,2026,Presidential,Abroad,2,169,0,0.0,371651,True
+Brazil,BRA,2026,Presidential,First Round,1,94539,93698,0.991,118969906,True
+Brazil,BRA,2026,Presidential,Second Round,2,94539,93698,0.991,123710622,True
+Bulgaria,BGR,2013,Legislative (unicameral),,,11902,8738,0.734,3540559,True
+Bulgaria,BGR,2014,Legislative (unicameral),,,12177,8754,0.719,3283165,True
+Bulgaria,BGR,2016,Presidential,First Round,1,12340,10888,0.882,3613556,True
+Bulgaria,BGR,2016,Presidential,Second Round,2,12340,10890,0.882,3319517,True
+Bulgaria,BGR,2017,Legislative (unicameral),,,12441,11055,0.889,3420524,True
+Bulgaria,BGR,2021,Legislative (unicameral),,,14820,12195,0.823,8554176,True
+Bulgaria,BGR,2021,Presidential,First Round,1,13238,12094,0.914,2615149,True
+Bulgaria,BGR,2021,Presidential,Second Round,2,13234,12094,0.914,2273441,True
+Bulgaria,BGR,2022,Legislative (unicameral),,,12932,11880,0.919,2505271,True
+Bulgaria,BGR,2023,Legislative (unicameral),,,12916,11949,0.925,2529129,True
+Bulgaria,BGR,2024,Legislative (unicameral),,,25762,23767,0.923,4584191,True
+Bulgaria,BGR,2026,Legislative (unicameral),,,12721,11943,0.939,3240156,True
+Cabo Verde,CPV,2021,Presidential,Abroad,,241,0,0.0,14860,True
+Cabo Verde,CPV,2021,Presidential,,,1053,1017,0.966,170331,True
+Cabo Verde,CPV,2026,Legislative,Abroad,,275,0,0.0,19762,True
+Cabo Verde,CPV,2026,Legislative,,,1057,1002,0.948,168702,True
+Cambodia,KHM,2013,Legislative,,,1621,1621,1.0,6585869,True
+Canada,CAN,1997,Legislative (lower house),Mobile,,832,0,0.0,58030,False
+Canada,CAN,1997,Legislative (lower house),No Electors,,2588,0,0.0,564946,False
+Canada,CAN,1997,Legislative (lower house),,,56242,0,0.0,12349399,False
+Canada,CAN,2000,Legislative (lower house),Mobile,,1186,0,0.0,71979,True
+Canada,CAN,2000,Legislative (lower house),No Electors,,3489,339,0.097,934156,True
+Canada,CAN,2000,Legislative (lower house),,,57526,56863,0.988,11830115,True
+Canada,CAN,2004,Legislative (lower house),No Electors,,4645,1,0.0,1545686,True
+Canada,CAN,2004,Legislative (lower house),,,59822,58620,0.98,12018810,True
+Canada,CAN,2006,Legislative (lower house),No Electors,,4991,0,0.0,2076738,True
+Canada,CAN,2006,Legislative (lower house),,,61102,59882,0.98,12740421,True
+Canada,CAN,2008,Legislative (lower house),No Electors,,6218,45,0.007,1626494,True
+Canada,CAN,2008,Legislative (lower house),,,56149,54398,0.969,10378002,True
+Canada,CAN,2011,Legislative (lower house),No Electors,,8472,188,0.022,2475767,True
+Canada,CAN,2011,Legislative (lower house),,,65208,62989,0.966,12248213,True
+Canada,CAN,2015,Legislative (lower house),Mobile,,2556,0,0.0,171049,True
+Canada,CAN,2015,Legislative (lower house),No Electors,,5470,71,0.013,4204304,True
+Canada,CAN,2015,Legislative (lower house),,,67049,66709,0.995,13216115,True
+Canada,CAN,2019,Legislative (lower house),Mobile,,2617,0,0.0,167071,True
+Canada,CAN,2019,Legislative (lower house),No Electors,,6216,44,0.007,4840543,True
+Canada,CAN,2019,Legislative (lower house),,,66578,65902,0.99,13163266,True
+Canada,CAN,2021,Legislative (lower house),Mobile,,5620,0,0.0,140415,True
+Canada,CAN,2021,Legislative (lower house),No Electors,,6685,53,0.008,5852416,True
+Canada,CAN,2021,Legislative (lower house),,,67263,66586,0.99,11041412,True
+Canada,CAN,2025,Legislative (lower house),No Electors,,8083,8038,0.994,7463104,True
+Canada,CAN,2025,Legislative (lower house),,,74226,73537,0.991,12178559,True
+Chile,CHL,2013,Legislative (lower house),,,41349,41092,0.994,6220222,True
+Chile,CHL,2013,Presidential,First Round,1,41349,41092,0.994,6585808,True
+Chile,CHL,2013,Presidential,Second Round,2,41349,41092,0.994,5582270,True
+Chile,CHL,2017,Legislative (lower house),,,42890,42655,0.995,5996972,True
+Chile,CHL,2017,Presidential,First Round,1,42890,42686,0.995,6577217,True
+Chile,CHL,2017,Presidential,Second Round,2,42890,42686,0.995,6936509,True
+Chile,CHL,2021,Legislative (lower house),,,46639,46485,0.997,6328214,True
+Chile,CHL,2021,Presidential,First Round,1,46639,46547,0.998,6994533,True
+Chile,CHL,2021,Presidential,Second Round,2,46639,46547,0.998,8237185,True
+Chile,CHL,2025,Legislative (lower house),,,40471,40118,0.991,10718031,True
+Chile,CHL,2025,Presidential,First Round,1,40900,40120,0.981,12975034,True
+Chile,CHL,2025,Presidential,Second Round,2,40900,40120,0.981,12485794,True
+Colombia,COL,2018,Legislative (lower house),Abroad,,1899,0,0.0,109168,True
+Colombia,COL,2018,Legislative (lower house),,,102130,100934,0.988,14224708,True
+Colombia,COL,2026,Legislative (lower house),Abroad,,889,0,0.0,226219,True
+Colombia,COL,2026,Legislative (lower house),,,13428,13282,0.989,18615436,True
+Costa Rica,CRI,2018,Legislative (unicameral),,,2086,2083,0.999,2137556,True
+Costa Rica,CRI,2018,Presidential,First Round,1,2086,2083,0.999,2150306,True
+Costa Rica,CRI,2018,Presidential,Second Round,2,2086,2083,0.999,2178520,True
+Costa Rica,CRI,2022,Legislative (unicameral),,,2100,2100,1.0,2075872,True
+Costa Rica,CRI,2022,Presidential,First Round,1,2152,2100,0.976,2094816,True
+Costa Rica,CRI,2022,Presidential,Second Round,2,2100,2100,1.0,1954718,True
+Croatia,HRV,2011,Legislative (unicameral),,,6869,6289,0.916,2429482,True
+Croatia,HRV,2014,Presidential,First Round,1,6350,6038,0.951,1759212,True
+Croatia,HRV,2014,Presidential,Second Round,2,6352,6038,0.951,2197381,True
+Croatia,HRV,2015,Legislative (unicameral),,,7013,6327,0.902,2176529,True
+Croatia,HRV,2016,Legislative (unicameral),,,7005,6328,0.903,1792732,True
+Croatia,HRV,2019,Presidential,First Round,1,6533,6190,0.947,1881643,True
+Croatia,HRV,2019,Presidential,Second Round,2,6533,6190,0.947,1963877,True
+Croatia,HRV,2020,Legislative (unicameral),,,6997,6338,0.906,1645454,True
+Croatia,HRV,2024,Legislative (unicameral),,,6988,6300,0.902,2084605,True
+Croatia,HRV,2024,Presidential,First Round,1,6755,6428,0.952,1606213,True
+Croatia,HRV,2025,Presidential,Second Round,2,6755,6428,0.952,1503611,True
+Cyprus,CYP,2001,Legislative (unicameral),,,1244,1241,0.998,410996,True
+Cyprus,CYP,2003,Presidential,,,1071,1069,0.998,414193,True
+Cyprus,CYP,2006,Legislative (unicameral),,,1242,1240,0.998,421087,True
+Cyprus,CYP,2008,Presidential,First Round,1,1150,1148,0.998,450639,True
+Cyprus,CYP,2008,Presidential,Second Round,2,1150,1148,0.998,450799,True
+Cyprus,CYP,2011,Legislative (unicameral),,,1241,1222,0.985,404577,True
+Cyprus,CYP,2013,Presidential,First Round,1,1133,1091,0.963,441256,True
+Cyprus,CYP,2013,Presidential,Second Round,2,1133,1091,0.963,412232,True
+Cyprus,CYP,2016,Legislative (unicameral),,,1184,1174,0.992,351389,True
+Cyprus,CYP,2018,Presidential,First Round,1,1119,1080,0.965,386611,True
+Cyprus,CYP,2018,Presidential,Second Round,2,1119,1080,0.965,384524,True
+Cyprus,CYP,2021,Legislative (unicameral),,,1220,1208,0.99,357712,True
+Cyprus,CYP,2023,Presidential,First Round,1,1144,1107,0.968,397317,True
+Cyprus,CYP,2023,Presidential,Second Round,2,1144,1107,0.968,394202,True
+Cyprus,CYP,2026,Legislative (unicameral),,,1280,1260,0.984,372060,True
+Czechia,CZE,2002,Legislative (lower house),,,14866,0,0.0,4768006,False
+Czechia,CZE,2006,Legislative (lower house),,,14866,0,0.0,5348976,False
+Czechia,CZE,2010,Legislative (lower house),,,14894,0,0.0,5230859,False
+Czechia,CZE,2013,Legislative (lower house),,,14872,0,0.0,4969984,False
+Czechia,CZE,2013,Presidential,First Round,1,14904,0,0.0,5143966,False
+Czechia,CZE,2013,Presidential,Second Round,2,14904,0,0.0,4958576,False
+Czechia,CZE,2017,Legislative (lower house),,,14863,14703,0.989,5060745,True
+Czechia,CZE,2018,Presidential,First Round,1,14866,14703,0.989,5148141,True
+Czechia,CZE,2018,Presidential,Second Round,2,14866,14703,0.989,5554596,True
+Czechia,CZE,2021,Legislative (lower house),,,14886,14721,0.989,5375090,True
+Czechia,CZE,2023,Presidential,First Round,1,14857,14733,0.992,5578689,True
+Czechia,CZE,2023,Presidential,Second Round,2,14857,14733,0.992,5759199,True
+Czechia,CZE,2025,Legislative (lower house),,,14819,14710,0.993,5621717,True
+Democratic Republic of the Congo,COD,2023,Presidential,Abroad,,5,0,0.0,5330,True
+Democratic Republic of the Congo,COD,2023,Presidential,,,20104,20104,1.0,18039997,True
+Denmark,DNK,1979,Legislative (lower house),,,1944,738,0.38,3168127,True
+Denmark,DNK,1981,Legislative (lower house),,,1956,742,0.379,3120769,True
+Denmark,DNK,1984,Legislative (lower house),,,1953,753,0.386,3358923,True
+Denmark,DNK,1987,Legislative (lower house),,,1967,757,0.385,3356954,True
+Denmark,DNK,1988,Legislative (lower house),,,1968,757,0.385,3323320,True
+Denmark,DNK,1990,Legislative (lower house),,,1956,767,0.392,3226728,True
+Denmark,DNK,1994,Legislative (lower house),,,1915,768,0.401,3292282,True
+Denmark,DNK,1998,Legislative (lower house),,,1917,769,0.401,3401331,True
+Denmark,DNK,2001,Legislative (lower house),,,1898,775,0.408,3445615,True
+Denmark,DNK,2005,Legislative (lower house),,,1854,783,0.422,3352920,True
+Denmark,DNK,2007,Legislative (lower house),,,1644,1102,0.67,3455682,True
+Denmark,DNK,2011,Legislative (lower house),,,1389,1327,0.955,3412874,True
+Denmark,DNK,2015,Legislative (lower house),,,1389,1327,0.955,3517988,True
+Denmark,DNK,2019,Legislative (lower house),,,1384,1353,0.978,3527724,True
+Denmark,DNK,2022,Legislative (lower house),,,1347,1291,0.958,3533951,True
+Denmark,DNK,2026,Legislative (lower house),,,1314,1313,0.999,3567625,True
+Dominica,DMA,2014,Legislative (unicameral),,,250,248,0.992,41084,True
+Dominica,DMA,2019,Legislative (unicameral),,,255,251,0.984,40067,True
+Dominica,DMA,2022,Legislative (unicameral),,,202,199,0.985,18480,True
+Dominican Republic,DOM,2000,Presidential,,,11413,0,0.0,3188130,False
+Dominican Republic,DOM,2002,Legislative (lower house),,,11518,11487,0.997,4548844,True
+Dominican Republic,DOM,2004,Presidential,Abroad,,101,0,0.0,34504,True
+Dominican Republic,DOM,2004,Presidential,,,12102,12070,0.997,3571694,True
+Dominican Republic,DOM,2006,Legislative (lower house),,,12372,12339,0.997,6029283,True
+Dominican Republic,DOM,2008,Presidential,Abroad,,321,0,0.0,75948,True
+Dominican Republic,DOM,2008,Presidential,,,12754,12720,0.997,4005949,True
+Dominican Republic,DOM,2010,Legislative (lower house),,,13730,0,0.0,6707825,False
+Dominican Republic,DOM,2012,Presidential,Abroad,,624,0,0.0,145373,True
+Dominican Republic,DOM,2012,Presidential,,,14020,14005,0.999,4391537,True
+Dominican Republic,DOM,2016,Legislative (lower house),,,15496,0,0.0,4293229,False
+Dominican Republic,DOM,2016,Presidential,Abroad,,748,0,0.0,184849,False
+Dominican Republic,DOM,2016,Presidential,,,15514,0,0.0,4427114,False
+Dominican Republic,DOM,2020,Legislative (lower house),,,16159,15907,0.984,3881252,True
+Dominican Republic,DOM,2020,Presidential,Abroad,,1065,0,0.0,121650,True
+Dominican Republic,DOM,2020,Presidential,,,16209,15907,0.981,3981712,True
+Dominican Republic,DOM,2024,Legislative (lower house),,,16884,16337,0.968,4110335,True
+Dominican Republic,DOM,2024,Presidential,Abroad,,1550,0,0.0,161250,True
+Dominican Republic,DOM,2024,Presidential,,,16945,16337,0.964,4203897,True
+Ecuador,ECU,2002,Presidential,First Round,1,1162,1161,0.999,4569182,True
+Ecuador,ECU,2002,Presidential,Second Round,2,1162,1161,0.999,5116097,True
+Ecuador,ECU,2006,Presidential,First Round,1,1241,1180,0.951,5457607,True
+Ecuador,ECU,2006,Presidential,Second Round,2,1241,1180,0.951,6207053,True
+Ecuador,ECU,2009,Legislative (unicameral),,,1248,1184,0.949,10078882,True
+Ecuador,ECU,2009,Presidential,,,1248,1184,0.949,6897912,True
+Ecuador,ECU,2013,Legislative (unicameral),,,1300,1222,0.94,87872205,True
+Ecuador,ECU,2013,Presidential,,,1300,1222,0.94,8602603,True
+Ecuador,ECU,2017,Presidential,First Round,1,1306,1230,0.942,9442495,True
+Ecuador,ECU,2017,Presidential,Second Round,2,1306,1230,0.942,9895407,True
+Ecuador,ECU,2021,Legislative (unicameral),,,1299,1235,0.951,8024141,True
+Ecuador,ECU,2021,Presidential,First Round,1,1299,1235,0.951,9272034,True
+Ecuador,ECU,2021,Presidential,Second Round,2,1299,1235,0.951,8892941,True
+Ecuador,ECU,2023,Legislative (unicameral),,,1300,1235,0.95,8485962,True
+Ecuador,ECU,2023,Presidential,First Round,1,1235,1235,1.0,9864640,True
+Ecuador,ECU,2023,Presidential,Second Round,2,1300,1235,0.95,10132226,True
+Ecuador,ECU,2025,Legislative (unicameral),,,1301,1234,0.949,9110884,True
+Ecuador,ECU,2025,Presidential,First Round,1,1301,1234,0.949,10251189,True
+Ecuador,ECU,2025,Presidential,Second Round,2,1301,1234,0.949,10553878,True
+Egypt,EGY,2014,Presidential,Abroad,,141,0,0.0,313835,True
+Egypt,EGY,2014,Presidential,,,13899,13459,0.968,24223780,True
+Egypt,EGY,2015,Legislative (lower house),Constituency,1,25979,23569,0.907,35242024,True
+Egypt,EGY,2015,Legislative (lower house),Constituency,2,25900,23490,0.907,28019987,True
+Egypt,EGY,2015,Legislative (lower house),Proportional,1,25977,23567,0.907,13669746,True
+Egypt,EGY,2018,Presidential,Abroad,,139,0,0.0,153250,True
+Egypt,EGY,2018,Presidential,,,13706,13257,0.967,22338671,True
+El Salvador,SLV,2014,Presidential,First Round,1,1591,1591,1.0,2688936,True
+El Salvador,SLV,2014,Presidential,Second Round,2,1591,1591,1.0,2985266,True
+El Salvador,SLV,2018,Legislative (unicameral),,,1595,1595,1.0,2003251,True
+El Salvador,SLV,2019,Presidential,Abroad,1,1,0,0.0,3643,True
+El Salvador,SLV,2019,Presidential,First Round,1,1595,1595,1.0,2698349,True
+El Salvador,SLV,2021,Legislative (unicameral),,,1595,1595,1.0,2616748,True
+Estonia,EST,2011,Legislative (unicameral),,,637,0,0.0,575133,False
+Estonia,EST,2015,Legislative (unicameral),,,547,0,0.0,553131,False
+Estonia,EST,2019,Legislative (unicameral),,,451,451,1.0,554720,True
+Estonia,EST,2023,Legislative (unicameral),,,504,405,0.804,610299,True
+Fiji,FJI,2022,Legislative (unicameral),,,991,974,0.983,316594,True
+Finland,FIN,2003,Legislative (unicameral),,,446,446,1.0,2791757,True
+Finland,FIN,2007,Legislative (unicameral),,,2601,2601,1.0,2771236,True
+Finland,FIN,2011,Legislative (unicameral),,,2351,2351,1.0,2939571,True
+Finland,FIN,2012,Presidential,First Round,1,2326,2326,1.0,3060771,True
+Finland,FIN,2012,Presidential,Second Round,2,2327,2327,1.0,2879753,True
+Finland,FIN,2015,Legislative (unicameral),,,2142,2142,1.0,2968462,True
+Finland,FIN,2018,Presidential,,,1990,1990,1.0,2993668,True
+Finland,FIN,2019,Legislative (unicameral),,,1943,1937,0.997,3081916,True
+Finland,FIN,2023,Legislative (unicameral),,,1808,1808,1.0,3095604,True
+Finland,FIN,2024,Presidential,First Round,1,1756,1756,1.0,3243451,True
+Finland,FIN,2024,Presidential,Second Round,2,1756,1756,1.0,3052078,True
+France,FRA,2002,Legislative (lower house),First Round,1,63888,62606,0.98,25658539,True
+France,FRA,2002,Legislative (lower house),Second Round,2,57497,56472,0.982,21127778,True
+France,FRA,2002,Presidential,First Round,1,64060,62779,0.98,28191674,True
+France,FRA,2002,Presidential,Second Round,2,64060,62779,0.98,30724428,True
+France,FRA,2007,Legislative (lower house),First Round,1,65527,63932,0.976,25847982,True
+France,FRA,2007,Legislative (lower house),Second Round,2,51722,50129,0.969,20205627,True
+France,FRA,2007,Presidential,First Round,1,65526,63932,0.976,36175364,True
+France,FRA,2007,Presidential,Second Round,2,65526,63932,0.976,35201022,True
+France,FRA,2012,Legislative (lower house),First Round,1,67828,64847,0.956,25952834,True
+France,FRA,2012,Legislative (lower house),Second Round,2,62529,59858,0.957,23029309,True
+France,FRA,2012,Presidential,First Round,1,67828,64847,0.956,35883209,True
+France,FRA,2012,Presidential,Second Round,2,67828,64847,0.956,34861353,True
+France,FRA,2017,Legislative (lower house),First Round,1,69249,66550,0.961,22657276,True
+France,FRA,2017,Legislative (lower house),Second Round,2,68775,66076,0.961,18178638,True
+France,FRA,2017,Presidential,First Round,1,69249,66552,0.961,36059144,True
+France,FRA,2017,Presidential,Second Round,2,69249,66552,0.961,31385740,True
+France,FRA,2022,Legislative (lower house),First Round,1,69680,66642,0.956,22745595,True
+France,FRA,2022,Legislative (lower house),Second Round,2,69353,66315,0.956,20747499,True
+France,FRA,2022,Presidential,First Round,1,69672,66645,0.957,35132947,True
+France,FRA,2022,Presidential,Second Round,2,69671,66645,0.957,32057325,True
+France,FRA,2024,Legislative (lower house),First Round,1,70064,66319,0.947,31063865,True
+France,FRA,2024,Legislative (lower house),Second Round,2,61580,58586,0.951,27268867,True
+Gambia,GMB,2021,Presidential,,,53,53,1.0,859567,True
+Georgia,GEO,2012,Legislative (unicameral),,,3563,3549,0.996,2142383,True
+Georgia,GEO,2016,Legislative (unicameral),,,3625,3601,0.993,1754931,True
+Georgia,GEO,2020,Legislative (unicameral),,,3795,3635,0.958,1912310,True
+Georgia,GEO,2024,Legislative (unicameral),,,3043,3042,1.0,2042483,True
+Germany,DEU,1998,Legislative (lower house),Proportional,,89038,88387,0.993,49308512,True
+Germany,DEU,2002,Legislative (lower house),Constituency,,89437,88442,0.989,47841724,True
+Germany,DEU,2005,Legislative (lower house),Constituency,,88456,87613,0.99,47194062,True
+Germany,DEU,2009,Legislative (lower house),Proportional,,88390,87218,0.987,43371190,True
+Germany,DEU,2013,Legislative (lower house),Constituency,,87607,86963,0.993,43625042,True
+Germany,DEU,2017,Legislative (lower house),Constituency,,88072,87096,0.989,46389615,True
+Germany,DEU,2021,Legislative (lower house),Constituency,,93864,92538,0.986,46362013,True
+Germany,DEU,2021,Legislative (lower house),Proportional,,93864,92538,0.986,46442023,True
+Germany,DEU,2025,Legislative (lower house),Constituency,,93948,92505,0.985,49505389,True
+Germany,DEU,2025,Legislative (lower house),Proportional,,93948,92505,0.985,49649512,True
+Ghana,GHA,2012,Legislative (unicameral),,,275,275,1.0,10973706,True
+Ghana,GHA,2012,Presidential,,,275,275,1.0,11008170,True
+Ghana,GHA,2016,Legislative (unicameral),,,275,275,1.0,10787608,True
+Ghana,GHA,2016,Presidential,,,275,275,1.0,10761641,True
+Ghana,GHA,2020,Legislative (unicameral),,,275,275,1.0,13243420,True
+Ghana,GHA,2020,Presidential,,,275,275,1.0,13060739,True
+Ghana,GHA,2024,Legislative (unicameral),,,276,275,0.996,11854381,True
+Ghana,GHA,2024,Presidential,,,275,274,0.996,11700316,True
+Greece,GRC,2012,Legislative (lower house),Snap Election,,20378,19285,0.946,6137694,True
+Greece,GRC,2012,Legislative (lower house),,,20379,19285,0.946,6311227,True
+Greece,GRC,2015,Legislative (lower house),Snap Election,,19513,18415,0.944,5431146,True
+Greece,GRC,2015,Legislative (lower house),,,19294,18350,0.951,6179030,True
+Greece,GRC,2019,Legislative (lower house),,,21544,19170,0.89,5661935,True
+Greece,GRC,2023,Legislative (lower house),Snap Election,,23338,21568,0.924,11128713,True
+Greenland,GRL,2005,Legislative (unicameral),,,83,80,0.964,28885,True
+Greenland,GRL,2007,Danish Parliament,,,74,74,1.0,25105,True
+Greenland,GRL,2009,Legislative (unicameral),,,83,80,0.964,28275,True
+Greenland,GRL,2011,Danish Parliament,,,73,73,1.0,22498,True
+Greenland,GRL,2013,Legislative (unicameral),,,75,75,1.0,29873,True
+Greenland,GRL,2014,Legislative (unicameral),,,74,74,1.0,29201,True
+Greenland,GRL,2015,Danish Parliament,,,71,71,1.0,20206,True
+Greenland,GRL,2018,Legislative (unicameral),,,72,72,1.0,29003,True
+Greenland,GRL,2019,Danish Parliament,,,71,71,1.0,19990,True
+Greenland,GRL,2021,Legislative (unicameral),,,72,72,1.0,26528,True
+Greenland,GRL,2022,Danish Parliament,,,72,72,1.0,19256,True
+Greenland,GRL,2025,Legislative (unicameral),,,72,72,1.0,28298,True
+Greenland,GRL,2026,Danish Parliament,,,73,73,1.0,20973,True
+Grenada,GRD,2022,Legislative,,,15,15,1.0,60630,True
+Guatemala,GTM,2023,Legislative (unicameral),,,24104,22372,0.928,4171353,True
+Guatemala,GTM,2023,Presidential,First Round,1,24295,22404,0.922,4202442,True
+Guatemala,GTM,2023,Presidential,Second Round,2,24575,22690,0.923,4009133,True
+Guyana,GUY,2015,Legislative (lower house),,,2296,2264,0.986,411781,True
+Guyana,GUY,2025,Legislative (lower house),,,1722,1722,1.0,415770,True
+Honduras,HND,2021,Legislative (unicameral),,,18273,18200,0.996,31715087,True
+Honduras,HND,2021,Presidential,Abroad,,20,0,0.0,360,True
+Honduras,HND,2021,Presidential,,,18273,18200,0.996,3357693,True
+Hong Kong,HKG,2016,Legislative (unicameral),,,104,104,1.0,2168411,True
+Hong Kong,HKG,2021,Legislative (unicameral),,,656,656,1.0,1323185,True
+Hungary,HUN,2002,Legislative (unicameral),Individual Constituency,,10842,0,0.0,5624583,False
+Hungary,HUN,2002,Legislative (unicameral),Regional List,,10842,0,0.0,5616750,False
+Hungary,HUN,2006,Legislative (unicameral),Individual Constituency,,10910,0,0.0,5403675,False
+Hungary,HUN,2006,Legislative (unicameral),Regional List,,10910,0,0.0,5408050,False
+Hungary,HUN,2010,Legislative (unicameral),Individual Constituency,,10926,10858,0.994,5114573,True
+Hungary,HUN,2010,Legislative (unicameral),National List,,10926,10858,0.994,5132531,True
+Hungary,HUN,2014,Legislative (unicameral),Individual Constituency,,10386,10382,1.0,4900553,True
+Hungary,HUN,2014,Legislative (unicameral),National List,,10386,10382,1.0,4893499,True
+Hungary,HUN,2018,Legislative (unicameral),Individual Constituency,,10042,10040,1.0,5272353,True
+Hungary,HUN,2018,Legislative (unicameral),National List,,10042,10040,1.0,5317721,True
+Hungary,HUN,2022,Legislative (unicameral),Individual Constituency,,10243,10242,1.0,5240988,True
+Hungary,HUN,2022,Legislative (unicameral),National List,,10194,10193,1.0,5213952,True
+Hungary,HUN,2026,Legislative (unicameral),Individual Constituency,,10022,10016,0.999,6032396,True
+Hungary,HUN,2026,Legislative (unicameral),National List,,10022,10016,0.999,5989267,True
+Iceland,ISL,1952,Presidential,,,8,0,0.0,68224,False
+Iceland,ISL,1959,Legislative (unicameral),,,8,8,1.0,85095,True
+Iceland,ISL,1963,Legislative (unicameral),,,8,8,1.0,89352,True
+Iceland,ISL,1967,Legislative (unicameral),,,8,8,1.0,96090,True
+Iceland,ISL,1968,Presidential,,,8,0,0.0,102972,False
+Iceland,ISL,1971,Legislative (unicameral),,,8,8,1.0,105395,True
+Iceland,ISL,1974,Legislative (unicameral),,,8,8,1.0,114108,True
+Iceland,ISL,1978,Legislative (unicameral),,,8,8,1.0,122207,True
+Iceland,ISL,1979,Legislative (unicameral),,,8,8,1.0,123751,True
+Iceland,ISL,1980,Presidential,,,8,0,0.0,129049,False
+Iceland,ISL,1983,Legislative (unicameral),,,8,8,1.0,129962,True
+Iceland,ISL,1987,Legislative (unicameral),,,8,8,1.0,152722,True
+Iceland,ISL,1988,Presidential,,,8,0,0.0,124004,False
+Iceland,ISL,1991,Legislative (unicameral),,,8,8,1.0,157769,True
+Iceland,ISL,1995,Legislative (unicameral),,,8,8,1.0,165043,True
+Iceland,ISL,1996,Presidential,,,8,0,0.0,165233,False
+Iceland,ISL,1999,Legislative (unicameral),,,8,8,1.0,165727,True
+Iceland,ISL,2003,Legislative (unicameral),,,6,6,1.0,183172,True
+Iceland,ISL,2004,Presidential,,,6,0,0.0,105913,True
+Iceland,ISL,2007,Legislative (unicameral),,,6,6,1.0,182169,True
+Iceland,ISL,2009,Legislative (unicameral),,,6,6,1.0,187183,True
+Iceland,ISL,2012,Presidential,,,6,0,0.0,159207,True
+Iceland,ISL,2013,Legislative (unicameral),,,6,6,1.0,189023,True
+Iceland,ISL,2016,Legislative (unicameral),,,6,6,1.0,189648,True
+Iceland,ISL,2016,Presidential,,,6,0,0.0,182608,True
+Iceland,ISL,2017,Legislative (unicameral),,,6,6,1.0,196259,True
+Iceland,ISL,2020,Presidential,,,6,0,0.0,163710,True
+Iceland,ISL,2021,Legislative (unicameral),,,6,6,1.0,199730,True
+Iceland,ISL,2024,Presidential,,,6,6,1.0,214320,True
+India,IND,2019,Legislative (lower house),,,1020235,658615,0.646,590767293,True
+Indonesia,IDN,2019,Legislative (lower house),,,799266,699815,0.876,136686753,True
+Indonesia,IDN,2019,Presidential,,,806079,705446,0.875,152171781,True
+Iran,IRN,2017,Presidential,,,430,430,1.0,39996735,True
+Iraq,IRQ,2021,Legislative,,,92,83,0.902,8854025,True
+Ireland,IRL,2002,Legislative (lower house),,,42,0,0.0,1857902,False
+Ireland,IRL,2007,Legislative (lower house),,,43,0,0.0,2065810,False
+Ireland,IRL,2011,Legislative (lower house),,,43,0,0.0,2220359,False
+Ireland,IRL,2016,Legislative (lower house),,,40,40,1.0,2192133,True
+Ireland,IRL,2020,Legislative (lower house),,,39,39,1.0,2245782,True
+Ireland,IRL,2024,Legislative (lower house),,,43,43,1.0,2202453,True
+Ireland,IRL,2025,Presidential,,,43,43,1.0,1442698,True
+Isle of Man,IMN,2016,Legislative (lower house),,,12,12,1.0,56572,True
+Isle of Man,IMN,2021,Legislative (lower house),,,12,12,1.0,58914,True
+Isle of Man,IMN,2026,Legislative (lower house),,,12,12,1.0,58749,True
+Israel,ISR,2006,Legislative (unicameral),Double Envelope Voting,,149,0,0.0,171390,False
+Israel,ISR,2006,Legislative (unicameral),,,8237,0,0.0,2965674,False
+Israel,ISR,2009,Legislative (unicameral),,,9261,0,0.0,3416587,False
+Israel,ISR,2013,Legislative (unicameral),Double Envelope Voting,,228,0,0.0,212949,False
+Israel,ISR,2013,Legislative (unicameral),,,9881,0,0.0,3579793,False
+Israel,ISR,2015,Legislative (unicameral),Double Envelope Voting,,295,0,0.0,232681,False
+Israel,ISR,2015,Legislative (unicameral),,,10061,0,0.0,3978203,False
+Israel,ISR,2019,Legislative (unicameral),Double Envelope Voting,,667,0,0.0,519038,False
+Israel,ISR,2019,Legislative (unicameral),,,11280,0,0.0,8227038,False
+Israel,ISR,2020,Legislative (unicameral),Double Envelope Voting,,548,0,0.0,327702,True
+Israel,ISR,2020,Legislative (unicameral),,,10631,10631,1.0,4262360,True
+Israel,ISR,2021,Legislative (unicameral),Double Envelope Voting,,799,0,0.0,421619,True
+Israel,ISR,2021,Legislative (unicameral),,,12127,12127,1.0,3988433,True
+Israel,ISR,2022,Legislative (unicameral),Double Envelope Voting,,838,0,0.0,458714,False
+Israel,ISR,2022,Legislative (unicameral),,,11707,0,0.0,4306028,False
+Italy,ITA,1948,Legislative (lower house),Proportional,,7658,0,0.0,26184159,False
+Italy,ITA,1953,Legislative (lower house),Proportional,,7849,0,0.0,27091326,False
+Italy,ITA,1958,Legislative (lower house),Proportional,,7983,0,0.0,29558300,False
+Italy,ITA,1963,Legislative (lower house),Proportional,,8037,0,0.0,30751940,False
+Italy,ITA,1968,Legislative (lower house),Proportional,,8055,0,0.0,31800100,False
+Italy,ITA,1972,Legislative (lower house),Proportional,,8055,0,0.0,33404397,False
+Italy,ITA,1976,Legislative (lower house),Proportional,,8065,0,0.0,36717719,False
+Italy,ITA,1979,Legislative (lower house),Proportional,,8080,0,0.0,36677526,False
+Italy,ITA,1983,Legislative (lower house),Proportional,,8088,0,0.0,36902772,False
+Italy,ITA,1987,Legislative (lower house),Proportional,,8093,0,0.0,38585251,False
+Italy,ITA,1992,Legislative (lower house),Proportional,,8101,0,0.0,39241378,False
+Italy,ITA,1994,Legislative (lower house),First Past the Post,,8192,0,0.0,38510069,False
+Italy,ITA,1994,Legislative (lower house),Proportional,,8117,0,0.0,38738121,False
+Italy,ITA,1996,Legislative (lower house),First Past the Post,,8189,0,0.0,37305013,False
+Italy,ITA,1996,Legislative (lower house),Proportional,,8117,0,0.0,37494985,False
+Italy,ITA,2001,Legislative (lower house),First Past the Post,,8188,7897,0.964,37282706,True
+Italy,ITA,2001,Legislative (lower house),Proportional,,8112,7826,0.965,36965947,True
+Italy,ITA,2006,Legislative (lower house),Proportional,,8027,7773,0.968,38152446,True
+Italy,ITA,2008,Legislative (lower house),First Past the Post,,74,71,0.959,153586,True
+Italy,ITA,2008,Legislative (lower house),Proportional,,8027,7854,0.978,36452305,True
+Italy,ITA,2013,Legislative (lower house),First Past the Post,,74,71,0.959,72436,True
+Italy,ITA,2013,Legislative (lower house),Proportional,,8018,7845,0.978,34002523,True
+Italy,ITA,2018,Legislative (lower house),First Past the Post,,7986,7630,0.955,32907395,True
+Italy,ITA,2018,Legislative (lower house),Proportional,,7912,7630,0.964,31582538,True
+Italy,ITA,2022,Legislative (lower house),First Past the Post,,7916,7636,0.965,28150536,True
+Italy,ITA,2022,Legislative (lower house),Proportional,,7842,7565,0.965,27069655,True
+Ivory Coast,CIV,2025,Legislative,,,204,204,1.0,2912843,True
+Jamaica,JAM,2007,Legislative (lower house),,,6376,5877,0.922,816506,True
+Jamaica,JAM,2011,Legislative (lower house),,,6629,6155,0.928,870952,True
+Jamaica,JAM,2016,Legislative (lower house),,,7039,6532,0.928,872514,True
+Jamaica,JAM,2020,Legislative (lower house),,,6978,6461,0.926,715511,True
+Jamaica,JAM,2025,Legislative (lower house),,,7294,7125,0.977,816593,True
+Japan,JPN,2009,Legislative (lower house),Proportional Representation,,2068,2068,1.0,71100129,True
+Japan,JPN,2009,Legislative (lower house),Single-Member District,,2037,2037,1.0,70581680,True
+Japan,JPN,2012,Legislative (lower house),Proportional Representation,,1995,1995,1.0,60179888,True
+Japan,JPN,2012,Legislative (lower house),Single-Member District,,1994,1994,1.0,59626568,True
+Japan,JPN,2014,Legislative (lower house),Proportional Representation,,1983,1983,1.0,53334447,True
+Japan,JPN,2014,Legislative (lower house),Single-Member District,,1983,1983,1.0,52939790,True
+Japan,JPN,2017,Legislative (lower house),Proportional Representation,,2041,2041,1.0,56932456,True
+Japan,JPN,2017,Legislative (lower house),Single-Member District,,1999,1999,1.0,55607437,True
+Japan,JPN,2021,Legislative (lower house),Proportional Representation,,1995,1995,1.0,57465979,True
+Japan,JPN,2021,Legislative (lower house),Single-Member District,,1996,1996,1.0,57667475,True
+Japan,JPN,2024,Legislative (lower house),Proportional Representation,,1925,1924,0.999,54549720,True
+Japan,JPN,2024,Legislative (lower house),Single-Member District,,1925,1924,0.999,54261878,True
+Japan,JPN,2026,Legislative (lower house),Proportional Representation,,1926,1925,0.999,57259957,True
+Japan,JPN,2026,Legislative (lower house),Single-Member District,,1926,1925,0.999,56446726,True
+Kenya,KEN,2022,Presidential,,,46221,46036,0.996,14212370,True
+Kosovo,XKX,2017,Legislative (unicameral),,,2490,2490,1.0,727986,True
+Kosovo,XKX,2019,Legislative (unicameral),,,2819,2547,0.904,841275,True
+Kosovo,XKX,2021,Legislative (unicameral),,,2185,2185,1.0,724610,True
+Kosovo,XKX,2025,Legislative (unicameral),,,3122,2704,0.866,1816399,True
+Kosovo,XKX,2026,Legislative (unicameral),,,2498,2498,1.0,697089,True
+Kyrgyzstan,KGZ,2015,Legislative (unicameral),,,2367,2061,0.871,1571029,True
+Kyrgyzstan,KGZ,2017,Presidential,,,2375,2299,0.968,1683958,True
+Kyrgyzstan,KGZ,2020,Legislative (unicameral),,,2475,2414,0.975,1887350,True
+Kyrgyzstan,KGZ,2021,Legislative (unicameral),,,2494,2428,0.974,1169789,True
+Kyrgyzstan,KGZ,2021,Presidential,,,2474,2419,0.978,1384476,True
+Kyrgyzstan,KGZ,2025,Legislative (unicameral),,,2492,2485,0.997,1307193,True
+Latvia,LVA,2014,Legislative (unicameral),Abroad,,100,0,0.0,22968,True
+Latvia,LVA,2014,Legislative (unicameral),,,954,954,1.0,883597,True
+Latvia,LVA,2018,Legislative (unicameral),Abroad,,123,0,0.0,31659,True
+Latvia,LVA,2018,Legislative (unicameral),,,955,955,1.0,807341,True
+Latvia,LVA,2022,Legislative (unicameral),Abroad,,104,0,0.0,24872,True
+Latvia,LVA,2022,Legislative (unicameral),,,951,951,1.0,878767,True
+Latvia,LVA,2026,Legislative (unicameral),Abroad,,120,0,0.0,21481,True
+Latvia,LVA,2026,Legislative (unicameral),,,939,933,0.994,772365,True
+Lebanon,LBN,2018,Legislative (unicameral),Abroad,,2772,0,0.0,45463,True
+Lebanon,LBN,2018,Legislative (unicameral),,,6835,6826,0.999,1761802,True
+Lebanon,LBN,2022,Legislative (unicameral),Abroad,,5141,0,0.0,132859,True
+Lebanon,LBN,2022,Legislative (unicameral),,,6860,6860,1.0,1556925,True
+Lesotho,LSO,2017,Legislative (lower house),,,79,79,1.0,575053,True
+Lesotho,LSO,2022,Legislative (lower house),,,78,78,1.0,505031,True
+Liberia,LBR,2011,Presidential,,,4457,4457,1.0,1206642,True
+Liberia,LBR,2017,Presidential,,,5390,5390,1.0,1553348,True
+Liberia,LBR,2023,Presidential,,,5890,5890,1.0,1834516,True
+Liechtenstein,LIE,2001,Legislative (unicameral),,,11,11,1.0,184790,True
+Liechtenstein,LIE,2005,Legislative (unicameral),,,11,11,1.0,193980,True
+Liechtenstein,LIE,2009,Legislative (unicameral),,,11,11,1.0,200005,True
+Liechtenstein,LIE,2013,Legislative (unicameral),,,11,11,1.0,194105,True
+Liechtenstein,LIE,2017,Legislative (unicameral),,,11,11,1.0,194970,True
+Liechtenstein,LIE,2021,Legislative (unicameral),,,11,11,1.0,201635,True
+Liechtenstein,LIE,2025,Legislative (unicameral),,,11,11,1.0,207380,True
+Lithuania,LTU,2016,Legislative (unicameral),Constituency,1,2047,1995,0.975,1199914,True
+Lithuania,LTU,2016,Legislative (unicameral),Constituency,2,1973,1921,0.974,883482,True
+Lithuania,LTU,2016,Legislative (unicameral),Proportional,,2047,1995,0.975,1220885,True
+Lithuania,LTU,2019,Presidential,,1,2024,1971,0.974,1416622,True
+Lithuania,LTU,2019,Presidential,,2,2024,1971,0.974,1335626,True
+Lithuania,LTU,2020,Legislative (unicameral),Constituency,1,1989,1936,0.973,1118904,True
+Lithuania,LTU,2020,Legislative (unicameral),Constituency,2,1914,1861,0.972,894291,True
+Lithuania,LTU,2020,Legislative (unicameral),Proportional,,1989,1936,0.973,1133561,True
+Lithuania,LTU,2024,Legislative (unicameral),Constituency,1,1947,1894,0.973,1200941,True
+Lithuania,LTU,2024,Legislative (unicameral),Constituency,2,1685,1632,0.969,854405,True
+Lithuania,LTU,2024,Legislative (unicameral),Proportional,,1947,1894,0.973,1220570,True
+Lithuania,LTU,2024,Presidential,,1,1947,1894,0.973,1444281,True
+Lithuania,LTU,2024,Presidential,,2,1947,1894,0.973,1191774,True
+Luxembourg,LUX,2004,Legislative (unicameral),Candidate Vote,,118,118,1.0,1399746,True
+Luxembourg,LUX,2004,Legislative (unicameral),List Vote,,118,118,1.0,1689208,True
+Luxembourg,LUX,2009,Legislative (unicameral),Candidate Vote,,116,116,1.0,1427767,True
+Luxembourg,LUX,2009,Legislative (unicameral),List Vote,,116,116,1.0,1597187,True
+Luxembourg,LUX,2013,Legislative (unicameral),Candidate Vote,,106,106,1.0,1314956,True
+Luxembourg,LUX,2013,Legislative (unicameral),List Vote,,106,106,1.0,1961736,True
+Luxembourg,LUX,2018,Legislative (unicameral),Candidate Vote,,102,102,1.0,1274812,True
+Luxembourg,LUX,2018,Legislative (unicameral),List Vote,,102,102,1.0,2255157,True
+Luxembourg,LUX,2023,Legislative (unicameral),Candidate Vote,,100,100,1.0,1291031,True
+Luxembourg,LUX,2023,Legislative (unicameral),List Vote,,100,100,1.0,2472649,True
+Madagascar,MDG,2018,Presidential,First Round,1,18677,18623,0.997,3775763,True
+Madagascar,MDG,2018,Presidential,Second Round,2,24844,24766,0.997,4647785,True
+Madagascar,MDG,2023,Presidential,,,27371,27301,0.997,4844764,True
+Madagascar,MDG,2024,Legislative (lower house),,,27540,26571,0.965,4690342,True
+Malawi,MWI,2019,Legislative (unicameral),,,11001,10869,0.988,4967774,True
+Malawi,MWI,2019,Presidential,,,11058,10926,0.988,5031264,True
+Malawi,MWI,2025,Legislative (unicameral),,,15148,14765,0.975,5322209,True
+Malawi,MWI,2025,Presidential,,,15148,14765,0.975,5347757,True
+Malaysia,MYS,2008,Legislative (lower house),Postal,,222,0,0.0,206030,True
+Malaysia,MYS,2008,Legislative (lower house),,,21822,19510,0.894,7738651,True
+Malaysia,MYS,2013,Legislative (lower house),Early,,849,0,0.0,211833,True
+Malaysia,MYS,2013,Legislative (lower house),Postal,,222,0,0.0,119889,True
+Malaysia,MYS,2013,Legislative (lower house),,,25279,25278,1.0,10723165,True
+Malaysia,MYS,2018,Legislative (lower house),Early,,906,0,0.0,229047,True
+Malaysia,MYS,2018,Legislative (lower house),Postal,,222,0,0.0,172893,True
+Malaysia,MYS,2018,Legislative (lower house),,,28112,28111,1.0,11681039,True
+Malaysia,MYS,2022,Legislative (lower house),Early,,966,0,0.0,210559,True
+Malaysia,MYS,2022,Legislative (lower house),Postal,,222,0,0.0,302134,True
+Malaysia,MYS,2022,Legislative (lower house),,,38349,38348,1.0,15101287,True
+Maldives,MDV,2024,Legislative (unicameral),Abroad,,124,0,0.0,356,True
+Maldives,MDV,2024,Legislative (unicameral),,,8709,8709,1.0,209889,True
+Malta,MLT,2003,Legislative (lower house),,,13,0,0.0,282213,False
+Malta,MLT,2008,Legislative (lower house),,,13,0,0.0,290799,False
+Malta,MLT,2013,Legislative (lower house),,,13,0,0.0,305556,False
+Malta,MLT,2017,Legislative (lower house),,,13,0,0.0,310665,False
+Malta,MLT,2022,Legislative (lower house),,,13,0,0.0,295248,False
+Malta,MLT,2026,Legislative (lower house),,,13,0,0.0,306036,False
+Mauritania,MRT,2024,Presidential,Abroad,,52,0,0.0,14217,True
+Mauritania,MRT,2024,Presidential,,,4451,4451,1.0,974612,True
+Mexico,MEX,1991,Legislative (lower house),,,86773,0,0.0,22976434,False
+Mexico,MEX,1994,Legislative (lower house),,,95738,0,0.0,34035152,False
+Mexico,MEX,1997,Legislative (lower house),,,104716,0,0.0,29206325,False
+Mexico,MEX,2000,Legislative (lower house),,,113423,0,0.0,36317996,False
+Mexico,MEX,2000,Presidential,,,113424,0,0.0,36782429,False
+Mexico,MEX,2003,Legislative (lower house),,,121369,0,0.0,25912250,False
+Mexico,MEX,2006,Legislative (lower house),,,130488,130055,0.997,40126129,True
+Mexico,MEX,2006,Presidential,,,130788,130055,0.994,40588729,True
+Mexico,MEX,2009,Legislative (lower house),,,139181,139180,1.0,32664842,True
+Mexico,MEX,2012,Legislative (lower house),,,143132,0,0.0,47308972,False
+Mexico,MEX,2012,Presidential,,,143437,0,0.0,49062086,False
+Mexico,MEX,2015,Legislative (lower house),,,148833,148827,1.0,37784931,True
+Mexico,MEX,2018,Legislative (lower house),,,156808,156806,1.0,54020556,True
+Mexico,MEX,2018,Presidential,,,156840,156806,1.0,55007931,True
+Mexico,MEX,2021,Legislative (lower house),,,162793,0,0.0,47433307,False
+Mexico,MEX,2024,Presidential,,,167891,166474,0.992,58373375,True
+Moldova,MDA,2014,Legislative (unicameral),,,2071,1013,0.489,1598518,True
+Moldova,MDA,2016,Presidential,First Round,1,2077,474,0.228,1417295,True
+Moldova,MDA,2016,Presidential,Second Round,2,2077,474,0.228,1599355,True
+Moldova,MDA,2019,Legislative (unicameral),,,2141,1719,0.803,1416359,True
+Moldova,MDA,2020,Presidential,First Round,1,2143,1999,0.933,1348719,True
+Moldova,MDA,2020,Presidential,Second Round,2,2143,1999,0.933,1633621,True
+Moldova,MDA,2021,Legislative (unicameral),,,2150,1994,0.927,1467216,True
+Moldova,MDA,2024,Presidential,First Round,1,2219,1982,0.893,1546031,True
+Moldova,MDA,2024,Presidential,Second Round,2,2219,1982,0.893,1680569,True
+Moldova,MDA,2025,Legislative (unicameral),,,2274,1968,0.865,1578723,True
+Mongolia,MNG,2020,Legislative (unicameral),,,2070,2041,0.986,3993687,True
+Mongolia,MNG,2021,Presidential,,,2087,2056,0.985,1137707,True
+Montenegro,MNE,2020,Legislative (unicameral),,,824,824,1.0,219041,True
+Montenegro,MNE,2023,Legislative (unicameral),,,997,997,1.0,302442,True
+Morocco,MAR,2016,Legislative (lower house),,,92,88,0.957,5790249,True
+Morocco,MAR,2021,Legislative (lower house),,,92,88,0.957,7588505,True
+Morocco,MAR,2026,Legislative (lower house),,,92,88,0.957,4900377,True
+Mozambique,MOZ,1994,Legislative (unicameral),,,7114,7114,1.0,4624799,True
+Mozambique,MOZ,1994,Presidential,,,7114,7114,1.0,4817673,True
+Mozambique,MOZ,1999,Legislative (unicameral),,,3452,3452,1.0,4051211,True
+Mozambique,MOZ,1999,Presidential,,,3452,3452,1.0,4421387,True
+Mozambique,MOZ,2004,Legislative (unicameral),Abroad,,57,0,0.0,26100,True
+Mozambique,MOZ,2004,Legislative (unicameral),,,11845,11845,1.0,2970516,True
+Mozambique,MOZ,2004,Presidential,Abroad,,59,0,0.0,27249,True
+Mozambique,MOZ,2004,Presidential,,,11865,11865,1.0,3074237,True
+Mozambique,MOZ,2009,Legislative (unicameral),Abroad,,93,0,0.0,35195,True
+Mozambique,MOZ,2009,Legislative (unicameral),,,12252,12252,1.0,3838158,True
+Mozambique,MOZ,2009,Presidential,Abroad,,93,0,0.0,35376,True
+Mozambique,MOZ,2009,Presidential,,,12273,12273,1.0,3906802,True
+Myanmar,MMR,2010,Legislative (lower house),,,325,324,0.997,20626524,True
+Myanmar,MMR,2015,Legislative (lower house),,,322,313,0.972,20994957,True
+Namibia,NAM,2014,Legislative (lower house),,,121,121,1.0,888606,True
+Namibia,NAM,2019,Legislative (lower house),,,121,121,1.0,818938,True
+Namibia,NAM,2019,Presidential,,,121,121,1.0,824904,True
+Namibia,NAM,2024,Legislative (lower house),Abroad,,1,0,0.0,2114,True
+Namibia,NAM,2024,Legislative (lower house),,,121,121,1.0,1090571,True
+Namibia,NAM,2024,Presidential,Abroad,,1,0,0.0,2108,True
+Namibia,NAM,2024,Presidential,,,121,121,1.0,1097474,True
+Nepal,NPL,2017,Legislative (lower house),,,162,162,1.0,9620292,True
+Nepal,NPL,2022,Legislative (lower house),,,164,164,1.0,10456114,True
+Nepal,NPL,2026,Legislative (lower house),,,165,165,1.0,10559017,True
+Netherlands,NLD,2010,Legislative (lower house),,,9581,9571,0.999,9347166,True
+Netherlands,NLD,2012,Legislative (lower house),,,9514,9504,0.999,9421602,True
+Netherlands,NLD,2017,Legislative (lower house),,,391,388,0.992,10524838,True
+Netherlands,NLD,2021,Legislative (lower house),,,13824,13817,0.999,10418758,True
+Netherlands,NLD,2023,Legislative (lower house),,,10046,9581,0.954,10432167,True
+Netherlands,NLD,2025,Legislative (lower house),,,10085,9713,0.963,10571990,True
+New Zealand,NZL,1996,Legislative (lower house),Māori electorates,,836,834,0.998,67492,True
+New Zealand,NZL,1996,Legislative (lower house),,,3228,3192,0.989,1702130,True
+New Zealand,NZL,1999,Legislative (lower house),Māori electorates,,993,809,0.815,67291,True
+New Zealand,NZL,1999,Legislative (lower house),,,3386,3107,0.918,1690971,True
+New Zealand,NZL,2002,Legislative (lower house),Māori electorates,,2143,2018,0.942,90329,True
+New Zealand,NZL,2002,Legislative (lower house),,,3233,3067,0.949,1623696,True
+New Zealand,NZL,2005,Legislative (lower house),Māori electorates,,2201,2136,0.97,109824,True
+New Zealand,NZL,2005,Legislative (lower house),,,3082,3016,0.979,1761580,True
+New Zealand,NZL,2008,Legislative (lower house),Māori electorates,,2269,2266,0.999,107645,True
+New Zealand,NZL,2008,Legislative (lower house),,,3247,3244,0.999,1747910,True
+New Zealand,NZL,2011,Legislative (lower house),Māori electorates,,2160,2160,1.0,96677,True
+New Zealand,NZL,2011,Legislative (lower house),,,3348,3348,1.0,1611962,True
+New Zealand,NZL,2014,Legislative (lower house),Māori electorates,,2121,2120,1.0,87272,True
+New Zealand,NZL,2014,Legislative (lower house),,,3337,3337,1.0,1388450,True
+New Zealand,NZL,2017,Legislative (lower house),Māori electorates,,2247,1928,0.858,123636,True
+New Zealand,NZL,2017,Legislative (lower house),,,4063,3207,0.789,2012769,True
+New Zealand,NZL,2020,Legislative (lower house),Māori electorates,,2333,1894,0.812,137616,True
+New Zealand,NZL,2020,Legislative (lower house),,,4371,3571,0.817,2246079,True
+New Zealand,NZL,2023,Legislative (lower house),Māori electorates,,2160,1896,0.878,136108,True
+New Zealand,NZL,2023,Legislative (lower house),,,4051,3389,0.837,2109752,True
+Nicaragua,NIC,2001,Presidential,,,9453,9453,1.0,2181518,True
+Nigeria,NGA,2019,Legislative (lower house),,,337,337,1.0,26366470,True
+North Macedonia,MKD,2016,Legislative (unicameral),,,3478,3475,0.999,1144221,True
+North Macedonia,MKD,2024,Legislative (unicameral),Abroad,,83,0,0.0,1684,True
+North Macedonia,MKD,2024,Legislative (unicameral),,,3477,3471,0.998,977247,True
+North Macedonia,MKD,2024,Presidential,Second Round,2,3587,3471,0.968,812882,True
+Norway,NOR,2001,Legislative (unicameral),,,435,435,1.0,2521820,True
+Norway,NOR,2005,Legislative (unicameral),,,433,433,1.0,2638263,True
+Norway,NOR,2009,Legislative (unicameral),,,655,650,0.992,2682903,True
+Norway,NOR,2013,Legislative (unicameral),Sami Parliament,,7,0,0.0,9919,True
+Norway,NOR,2013,Legislative (unicameral),,,648,643,0.992,2836029,True
+Norway,NOR,2017,Legislative (unicameral),Sami Parliament,,7,0,0.0,11757,True
+Norway,NOR,2017,Legislative (unicameral),,,1625,1445,0.889,2926836,True
+Norway,NOR,2021,Legislative (unicameral),Sami Parliament,,7,0,0.0,13834,True
+Norway,NOR,2021,Legislative (unicameral),,,1669,1480,0.887,2984187,True
+Norway,NOR,2025,Legislative (unicameral),Sami Parliament,,7,0,0.0,18585,True
+Norway,NOR,2025,Legislative (unicameral),,,3602,1618,0.449,3219888,True
+Pakistan,PAK,2018,Legislative (lower house),Female Polling Station,,2097,988,0.471,732744,True
+Pakistan,PAK,2018,Legislative (lower house),Male Polling Station,,2421,1121,0.463,1724777,True
+Pakistan,PAK,2018,Legislative (lower house),,,74512,51111,0.686,47069030,True
+Palestine,PSE,2006,Legislative,,,2790,2650,0.95,990873,True
+Panama,PAN,2004,Legislative (unicameral),,,41,39,0.951,1453088,True
+Panama,PAN,2004,Presidential,,,43,41,0.953,1499047,True
+Panama,PAN,2009,Legislative (unicameral),,,39,37,0.949,1504355,True
+Panama,PAN,2009,Presidential,Abroad,,1,0,0.0,510,True
+Panama,PAN,2009,Presidential,,,39,37,0.949,1585917,True
+Panama,PAN,2014,Legislative (unicameral),,,39,37,0.949,1701082,True
+Panama,PAN,2014,Presidential,Abroad,,1,0,0.0,936,True
+Panama,PAN,2014,Presidential,,,39,37,0.949,1853266,True
+Panama,PAN,2019,Legislative (unicameral),,,39,37,0.949,1807440,True
+Panama,PAN,2019,Presidential,Abroad,,1,0,0.0,1352,True
+Panama,PAN,2019,Presidential,,,39,37,0.949,1963425,True
+Panama,PAN,2024,Legislative (unicameral),,,39,37,0.949,2139628,True
+Panama,PAN,2024,Presidential,Abroad,,1,0,0.0,4104,True
+Panama,PAN,2024,Presidential,,,39,37,0.949,2271075,True
+Papua New Guinea,PNG,1987,Legislative (unicameral),First Round,1,88,88,1.0,1408796,True
+Papua New Guinea,PNG,1992,Legislative (unicameral),First Round,1,88,88,1.0,1602795,True
+Papua New Guinea,PNG,1997,Legislative (unicameral),First Round,1,89,89,1.0,2244531,True
+Papua New Guinea,PNG,2002,Legislative (unicameral),First Round,1,88,88,1.0,3101589,True
+Papua New Guinea,PNG,2007,Legislative (unicameral),First Round,1,85,85,1.0,2243888,True
+Papua New Guinea,PNG,2007,Legislative (unicameral),Second Round,2,30,30,1.0,495675,True
+Papua New Guinea,PNG,2012,Legislative (unicameral),First Round,1,88,88,1.0,3585728,True
+Papua New Guinea,PNG,2012,Legislative (unicameral),Second Round,2,82,82,1.0,1845533,True
+Papua New Guinea,PNG,2017,Legislative (unicameral),First Round,1,89,89,1.0,4110117,True
+Papua New Guinea,PNG,2017,Legislative (unicameral),Second Round,2,82,82,1.0,2198670,True
+Paraguay,PRY,2003,Legislative (lower house),,,8401,8401,1.0,1476608,True
+Paraguay,PRY,2003,Presidential,,,8401,8401,1.0,1499200,True
+Paraguay,PRY,2008,Legislative (lower house),,,14306,14306,1.0,1768722,True
+Paraguay,PRY,2008,Presidential,,,14306,14306,1.0,1807824,True
+Paraguay,PRY,2013,Legislative (lower house),,,17460,17460,1.0,2243721,True
+Paraguay,PRY,2013,Presidential,,,17520,17460,0.997,2277734,True
+Paraguay,PRY,2018,Legislative (lower house),,,21016,21016,1.0,2371607,True
+Paraguay,PRY,2018,Presidential,,,21206,21016,0.991,2463441,True
+Peru,PER,2006,Andean Parliament,,,88481,0,0.0,8531432,False
+Peru,PER,2006,Legislative (unicameral),,,88481,0,0.0,10753323,False
+Peru,PER,2006,Presidential,,,88481,0,0.0,12275385,False
+Peru,PER,2011,Andean Parliament,,,107455,0,0.0,10140343,False
+Peru,PER,2011,Legislative (unicameral),,,107455,0,0.0,12839144,False
+Peru,PER,2011,Presidential,First Round,1,107455,0,0.0,14647163,False
+Peru,PER,2011,Presidential,Second Round,2,107449,0,0.0,15428351,False
+Peru,PER,2016,Andean Parliament,,,77307,0,0.0,10232624,False
+Peru,PER,2016,Legislative (unicameral),,,77307,0,0.0,12375919,False
+Peru,PER,2016,Presidential,First Round,1,77307,0,0.0,15340143,False
+Peru,PER,2016,Presidential,Second Round,2,77307,0,0.0,17152817,False
+Peru,PER,2021,Andean Parliament,,,83730,80712,0.964,10579294,True
+Peru,PER,2021,Legislative (unicameral),,,83791,80780,0.964,12858920,True
+Peru,PER,2021,Presidential,First Round,1,85002,81912,0.964,14400630,True
+Peru,PER,2021,Presidential,Second Round,2,86254,82587,0.957,17627700,True
+Peru,PER,2026,Presidential,First Round,1,92657,82604,0.892,16749197,True
+Peru,PER,2026,Presidential,Second Round,2,92729,82644,0.891,18397136,True
+Philippines,PHL,2022,Legislative (lower house),Abroad,,990,0,0.0,383207,True
+Philippines,PHL,2022,Legislative (lower house),,,102722,102717,1.0,81599921,True
+Philippines,PHL,2022,Presidential,Abroad,,990,0,0.0,471678,True
+Philippines,PHL,2022,Presidential,,,102722,102717,1.0,51350217,True
+Philippines,PHL,2025,Legislative (lower house),Abroad,,234,0,0.0,199230,True
+Philippines,PHL,2025,Legislative (lower house),,,92588,79668,0.86,91569180,True
+Poland,POL,1990,Presidential,First Round,1,22238,22228,1.0,16321601,True
+Poland,POL,1990,Presidential,Second Round,2,22238,22228,1.0,14305794,True
+Poland,POL,1991,Legislative (lower house),,,22340,22176,0.993,11218602,True
+Poland,POL,1993,Legislative (lower house),,,22482,22359,0.995,13639467,True
+Poland,POL,1995,Presidential,First Round,1,22750,22718,0.999,17872350,True
+Poland,POL,1995,Presidential,Second Round,2,22472,22466,1.0,18762615,True
+Poland,POL,1997,Legislative (lower house),,,23074,22922,0.993,12996763,True
+Poland,POL,2000,Presidential,First Round,1,24681,24512,0.993,17598919,True
+Poland,POL,2001,Legislative (lower house),,,24827,24661,0.993,13017929,True
+Poland,POL,2005,Legislative (lower house),,,25165,25002,0.994,11757755,True
+Poland,POL,2005,Presidential,First Round,1,25167,25003,0.993,14946689,True
+Poland,POL,2005,Presidential,Second Round,2,25166,25002,0.993,15279787,True
+Poland,POL,2007,Legislative (lower house),,,25476,25269,0.992,16068628,True
+Poland,POL,2010,Presidential,First Round,1,25774,25510,0.99,16806170,True
+Poland,POL,2010,Presidential,Second Round,2,25773,25509,0.99,16853021,True
+Poland,POL,2011,Legislative (lower house),,,25993,25724,0.99,14310475,True
+Poland,POL,2015,Legislative (lower house),,,27859,27608,0.991,15148501,True
+Poland,POL,2015,Presidential,First Round,1,27817,27588,0.992,14898934,True
+Poland,POL,2015,Presidential,Second Round,2,27773,27544,0.992,16742938,True
+Poland,POL,2019,Legislative (lower house),,,27415,27095,0.988,18411684,True
+Poland,POL,2020,Presidential,First Round,1,27225,27059,0.994,19425034,True
+Poland,POL,2023,Legislative (lower house),,,31497,31077,0.987,21549913,True
+Poland,POL,2025,Presidential,First Round,1,32140,31627,0.984,19603446,True
+Poland,POL,2025,Presidential,Second Round,2,32140,31627,0.984,20843805,True
+Portugal,PRT,1976,Legislative (unicameral),,,4224,3991,0.945,5135748,True
+Portugal,PRT,1976,Presidential,,,4224,3991,0.945,4819943,True
+Portugal,PRT,1979,Legislative (unicameral),,,4225,3992,0.945,5746276,True
+Portugal,PRT,1980,Legislative (unicameral),,,4225,3992,0.945,5777890,True
+Portugal,PRT,1980,Presidential,,,4225,3992,0.945,5769701,True
+Portugal,PRT,1983,Legislative (unicameral),,,4225,3992,0.945,5481574,True
+Portugal,PRT,1985,Legislative (unicameral),,,4228,3995,0.945,5594025,True
+Portugal,PRT,1986,Presidential,First Round,1,4224,3991,0.945,5765374,True
+Portugal,PRT,1986,Presidential,Second Round,2,4224,3991,0.945,5880078,True
+Portugal,PRT,1987,Legislative (unicameral),,,4225,3992,0.945,5498461,True
+Portugal,PRT,1991,Presidential,,,4246,4013,0.945,4915465,True
+Portugal,PRT,1995,Legislative (unicameral),,,4226,3993,0.945,5744184,True
+Portugal,PRT,1996,Presidential,,,4224,3991,0.945,5644887,True
+Portugal,PRT,1999,Legislative (unicameral),,,4257,4050,0.951,5257126,True
+Portugal,PRT,2001,Presidential,,,4260,4053,0.951,4324786,True
+Portugal,PRT,2002,Legislative (unicameral),,,4253,4046,0.951,5321420,True
+Portugal,PRT,2005,Legislative (unicameral),,,4255,4048,0.951,5545049,True
+Portugal,PRT,2006,Presidential,,,4260,4048,0.95,5428937,True
+Portugal,PRT,2009,Legislative (unicameral),,,4261,4261,1.0,5478367,True
+Portugal,PRT,2011,Legislative (unicameral),,,4260,4260,1.0,5332119,True
+Portugal,PRT,2011,Presidential,,,4264,4264,1.0,4202022,True
+Portugal,PRT,2015,Legislative (unicameral),,,3092,3084,0.997,5181312,True
+Portugal,PRT,2016,Presidential,,,3113,3105,0.997,4624117,True
+Portugal,PRT,2019,Legislative (unicameral),,,3114,3106,0.997,4874651,True
+Portugal,PRT,2021,Presidential,,,3092,3084,0.997,4146803,True
+Portugal,PRT,2022,Legislative (unicameral),,,3113,3105,0.997,5278406,True
+Portugal,PRT,2024,Legislative (unicameral),,,3108,3100,0.997,5984963,True
+Portugal,PRT,2025,Legislative (unicameral),,,3084,3084,1.0,5809527,True
+Portugal,PRT,2026,Presidential,First Round,1,3259,3259,1.0,5570922,True
+Portugal,PRT,2026,Presidential,Second Round,2,3259,3259,1.0,5161381,True
+Romania,ROU,2014,Presidential,First Round,1,18847,18553,0.984,9485340,True
+Romania,ROU,2014,Presidential,Second Round,2,18847,18553,0.984,11553152,True
+Romania,ROU,2016,Legislative (lower house),,,19043,0,0.0,6963696,False
+Romania,ROU,2019,Presidential,First Round,1,19583,18716,0.956,9193341,True
+Romania,ROU,2019,Presidential,Second Round,2,19583,18716,0.956,9833395,True
+Romania,ROU,2020,Legislative (lower house),,,19550,18769,0.96,5542909,True
+Romania,ROU,2024,Legislative (lower house),,,19918,18939,0.951,9255921,True
+Romania,ROU,2024,Presidential,First Round,1,19918,18939,0.951,9238259,True
+Romania,ROU,2025,Presidential,First Round,1,19944,18950,0.95,9426436,True
+Russia,RUS,2000,Presidential,,,91333,0,0.0,70661939,False
+Russia,RUS,2003,Legislative (lower house),Other,,316,0,0.0,6889,False
+Russia,RUS,2003,Legislative (lower house),,,94889,0,0.0,56828759,False
+Russia,RUS,2004,Presidential,Abroad,,345,0,0.0,266090,False
+Russia,RUS,2004,Presidential,Other,,334,0,0.0,24200,False
+Russia,RUS,2004,Presidential,,,95100,0,0.0,66238591,False
+Russia,RUS,2007,Legislative (lower house),Abroad,,358,0,0.0,301742,False
+Russia,RUS,2007,Legislative (lower house),Other,,254,0,0.0,7813,False
+Russia,RUS,2007,Legislative (lower house),,,95581,0,0.0,68467581,False
+Russia,RUS,2008,Presidential,Abroad,,357,0,0.0,326661,False
+Russia,RUS,2008,Presidential,Other,,330,0,0.0,22259,False
+Russia,RUS,2008,Presidential,,,95925,0,0.0,73382196,False
+Russia,RUS,2011,Legislative (lower house),Abroad,,376,0,0.0,304998,False
+Russia,RUS,2011,Legislative (lower house),Other,,276,0,0.0,8050,False
+Russia,RUS,2011,Legislative (lower house),,,94573,0,0.0,64302204,False
+Russia,RUS,2012,Presidential,,,91768,91624,0.998,69375211,True
+Russia,RUS,2016,Legislative (lower house),Other,,224,0,0.0,7618,True
+Russia,RUS,2016,Legislative (lower house),,,96647,84611,0.875,51641635,True
+Russia,RUS,2018,Presidential,Abroad,,393,0,0.0,468565,True
+Russia,RUS,2018,Presidential,Other,,271,0,0.0,19562,True
+Russia,RUS,2018,Presidential,,,97035,85368,0.88,72299607,True
+Russia,RUS,2021,Legislative (lower house),,,96313,93338,0.969,55158109,True
+Russia,RUS,2024,Presidential,Abroad,,286,0,0.0,313777,True
+Russia,RUS,2024,Presidential,,,91530,88669,0.969,73562108,True
+Saint Lucia,LCA,2021,Legislative,,,110,110,1.0,87035,True
+Saint Lucia,LCA,2025,Legislative,,,110,110,1.0,87602,True
+Samoa,WSM,2025,Legislative,,,50,50,1.0,89890,True
+Senegal,SEN,2024,Legislative (unicameral),Incomplete,,10932,10703,0.979,2184241,True
+Serbia,SRB,2000,Legislative (unicameral),,,8170,0,0.0,3660849,False
+Serbia,SRB,2002,Presidential,,,8615,0,0.0,3559964,False
+Serbia,SRB,2003,Legislative (unicameral),,,8589,0,0.0,3774802,False
+Serbia,SRB,2003,Presidential,,,8577,0,0.0,2437711,False
+Serbia,SRB,2004,Presidential,First Round,1,8584,0,0.0,3081040,False
+Serbia,SRB,2004,Presidential,Second Round,2,8586,0,0.0,3115596,False
+Serbia,SRB,2007,Legislative (unicameral),,,8462,0,0.0,3952994,False
+Serbia,SRB,2008,Legislative (unicameral),,,8525,0,0.0,3994229,False
+Serbia,SRB,2008,Presidential,First Round,1,8546,0,0.0,4032821,False
+Serbia,SRB,2008,Presidential,Second Round,2,8573,0,0.0,4501622,False
+Serbia,SRB,2012,Presidential,First Round,1,8391,0,0.0,3739317,False
+Serbia,SRB,2012,Presidential,Second Round,2,8391,0,0.0,3034015,False
+Serbia,SRB,2014,Legislative (unicameral),,,8387,0,0.0,3476716,False
+Serbia,SRB,2016,Legislative (unicameral),,,8364,0,0.0,3667915,False
+Serbia,SRB,2017,Presidential,,,8396,8287,0.987,3593636,True
+Serbia,SRB,2020,Legislative (unicameral),,,8433,0,0.0,3100608,False
+Serbia,SRB,2022,Legislative (unicameral),,,8267,0,0.0,3693328,False
+Serbia,SRB,2022,Presidential,,,8267,0,0.0,3707679,False
+Seychelles,SYC,2020,Presidential,,,26,25,0.962,64761,True
+Seychelles,SYC,2025,Legislative (lower house),,,26,25,0.962,62837,True
+Seychelles,SYC,2025,Presidential,First Round,1,26,25,0.962,62939,True
+Seychelles,SYC,2025,Presidential,Second Round,2,26,25,0.962,65212,True
+Singapore,SGP,2020,Legislative (unicameral),,,31,31,1.0,2494537,True
+Singapore,SGP,2025,Legislative (unicameral),,,33,33,1.0,2395665,True
+Slovakia,SVK,2002,Legislative (unicameral),,,2918,2915,0.999,2875081,True
+Slovakia,SVK,2006,Legislative (unicameral),,,2926,2926,1.0,2303139,True
+Slovakia,SVK,2010,Legislative (unicameral),,,2926,2926,1.0,2529385,True
+Slovakia,SVK,2012,Legislative (unicameral),,,2926,2926,1.0,2553726,True
+Slovakia,SVK,2016,Legislative (unicameral),,,5992,5991,1.0,2607750,True
+Slovakia,SVK,2019,Presidential,First Round,1,5940,5940,1.0,2145364,True
+Slovakia,SVK,2019,Presidential,Second Round,2,5940,5940,1.0,1808985,True
+Slovakia,SVK,2020,Legislative (unicameral),,,5998,5997,1.0,2881511,True
+Slovakia,SVK,2023,Legislative (unicameral),,,6013,5995,0.997,2967896,True
+Slovakia,SVK,2024,Presidential,First Round,1,5938,5938,1.0,2254206,True
+Slovakia,SVK,2024,Presidential,Second Round,2,5938,5938,1.0,2652964,True
+Slovenia,SVN,2012,Presidential,First Round,1,3678,3420,0.93,817772,True
+Slovenia,SVN,2012,Presidential,Second Round,2,3673,3415,0.93,710830,True
+Slovenia,SVN,2014,Legislative (lower house),,,12583,3354,0.267,874291,True
+Slovenia,SVN,2017,Presidential,First Round,1,3376,3112,0.922,749462,True
+Slovenia,SVN,2017,Presidential,Second Round,2,3373,3111,0.922,711121,True
+Slovenia,SVN,2018,Legislative (lower house),,,5314,3107,0.585,891097,True
+Slovenia,SVN,2022,Legislative (lower house),,,14172,3278,0.231,1192293,True
+Slovenia,SVN,2022,Presidential,First Round,1,3797,3015,0.794,871941,True
+Slovenia,SVN,2022,Presidential,Second Round,2,3798,3016,0.794,897841,True
+Slovenia,SVN,2026,Legislative (lower house),,,3085,2965,0.961,1153007,True
+Solomon Islands,SLB,2006,Legislative (unicameral),,,49,49,1.0,191321,True
+Solomon Islands,SLB,2010,Legislative (unicameral),,,50,50,1.0,235694,True
+Solomon Islands,SLB,2014,Legislative (unicameral),,,50,50,1.0,256972,True
+Solomon Islands,SLB,2019,Legislative (unicameral),,,50,50,1.0,309765,True
+South Africa,ZAF,2004,Legislative (lower house),,,16963,16963,1.0,15612528,True
+South Africa,ZAF,2009,Legislative (lower house),,,19725,19725,1.0,17670872,True
+South Africa,ZAF,2014,Legislative (lower house),,,22262,22262,1.0,18384365,True
+South Africa,ZAF,2019,Legislative (lower house),,,22904,22904,1.0,17393162,True
+South Africa,ZAF,2024,Legislative (lower house),,,23291,23291,1.0,16039009,True
+South Korea,KOR,2002,Presidential,Absentee Voting,,244,0,0.0,785468,False
+South Korea,KOR,2002,Presidential,,,13471,0,0.0,23776419,False
+South Korea,KOR,2004,Legislative (unicameral),Absentee Voting,,311,0,0.0,1538696,False
+South Korea,KOR,2004,Legislative (unicameral),,,13226,0,0.0,41118292,False
+South Korea,KOR,2007,Presidential,Absentee Voting,,225,0,0.0,743936,True
+South Korea,KOR,2007,Presidential,,,13178,13169,0.999,22867194,True
+South Korea,KOR,2008,Legislative (unicameral),,,27051,26408,0.976,34302009,True
+South Korea,KOR,2012,Legislative (unicameral),Abroad,,251,0,0.0,56102,True
+South Korea,KOR,2012,Legislative (unicameral),Absentee Voting,,677,0,0.0,1542567,True
+South Korea,KOR,2012,Legislative (unicameral),,,23247,23213,0.999,41279101,True
+South Korea,KOR,2012,Presidential,Abroad,,251,0,0.0,157291,True
+South Korea,KOR,2012,Presidential,Absentee Voting,,251,0,0.0,985916,True
+South Korea,KOR,2012,Presidential,,,13542,13520,0.998,29450834,True
+South Korea,KOR,2016,Legislative (unicameral),Abroad,,669,0,0.0,238046,True
+South Korea,KOR,2016,Legislative (unicameral),Advance Voting,,5423,0,0.0,10067077,True
+South Korea,KOR,2016,Legislative (unicameral),,,21457,21426,0.999,37404037,True
+South Korea,KOR,2017,Presidential,Abroad,,500,0,0.0,314998,True
+South Korea,KOR,2017,Presidential,Advance Voting,,250,0,0.0,3613790,True
+South Korea,KOR,2017,Presidential,Early Voting,,3491,0,0.0,7406142,True
+South Korea,KOR,2017,Presidential,,,13964,13960,1.0,21336919,True
+South Korea,KOR,2020,Legislative (unicameral),Abroad,,711,0,0.0,216474,True
+South Korea,KOR,2020,Legislative (unicameral),Absentee Voting,,714,0,0.0,5304744,True
+South Korea,KOR,2020,Legislative (unicameral),Advance Voting,,6383,0,0.0,17624657,True
+South Korea,KOR,2020,Legislative (unicameral),,,26136,26120,0.999,33490476,True
+South Korea,KOR,2022,Presidential,Abroad,,501,0,0.0,235043,True
+South Korea,KOR,2022,Presidential,Advance Voting,,250,0,0.0,3859395,True
+South Korea,KOR,2022,Presidential,Early Voting,,3510,0,0.0,12358565,True
+South Korea,KOR,2022,Presidential,,,14464,14458,1.0,17306663,True
+South Korea,KOR,2024,Legislative (unicameral),Advance Voting,,3551,0,0.0,20783831,True
+South Korea,KOR,2024,Legislative (unicameral),,,14259,14005,0.982,30233252,True
+South Korea,KOR,2025,Presidential,Abroad,,506,0,0.0,282453,True
+South Korea,KOR,2025,Presidential,Advance Voting,,3807,0,0.0,15309291,True
+South Korea,KOR,2025,Presidential,,,14295,14039,0.982,19388602,True
+Spain,ESP,1982,Legislative (lower house),,,40813,0,0.0,21139940,False
+Spain,ESP,1986,Legislative (lower house),,,42811,0,0.0,20192408,False
+Spain,ESP,1989,Legislative (lower house),,,44354,0,0.0,20478132,False
+Spain,ESP,1993,Legislative (lower house),,,46781,0,0.0,23648031,False
+Spain,ESP,1996,Legislative (lower house),,,49289,0,0.0,25156779,False
+Spain,ESP,2000,Legislative (lower house),,,53716,0,0.0,23233046,False
+Spain,ESP,2004,Legislative (lower house),,,56657,56499,0.997,26048906,True
+Spain,ESP,2008,Legislative (lower house),,,59418,59346,0.999,26203435,True
+Spain,ESP,2011,Legislative (lower house),,,59948,59831,0.998,24160535,True
+Spain,ESP,2015,Legislative (lower house),,,57583,57489,0.998,25199134,True
+Spain,ESP,2016,Legislative (lower house),,,57603,57527,0.999,24114304,True
+Spain,ESP,2019,Legislative (lower house),,,61270,61175,0.998,50562914,True
+Spain,ESP,2023,Legislative (lower house),,,60386,60230,0.997,24894097,True
+Sri Lanka,LKA,2020,Legislative (unicameral),Displaced,,1,0,0.0,5061,True
+Sri Lanka,LKA,2020,Legislative (unicameral),Postal,,22,0,0.0,642056,True
+Sri Lanka,LKA,2020,Legislative (unicameral),,,159,153,0.962,10676129,True
+Sri Lanka,LKA,2024,Legislative (unicameral),Postal,,22,0,0.0,705983,True
+Sri Lanka,LKA,2024,Legislative (unicameral),,,160,154,0.962,10442023,True
+Sri Lanka,LKA,2024,Presidential,Postal,,22,0,0.0,687613,True
+Sri Lanka,LKA,2024,Presidential,,,160,154,0.962,12632003,True
+Suriname,SUR,2025,Legislative,,,431,431,1.0,272918,True
+Sweden,SWE,2002,Legislative (lower house),,,6266,0,0.0,5385430,False
+Sweden,SWE,2006,Legislative (lower house),,,5783,5783,1.0,5541132,True
+Sweden,SWE,2010,Legislative (lower house),,,6063,5668,0.935,6028682,True
+Sweden,SWE,2014,Legislative (lower house),,,6227,5837,0.937,6290016,True
+Sweden,SWE,2018,Legislative (lower house),,,6325,6004,0.949,6535101,True
+Sweden,SWE,2022,Legislative (lower house),,,6554,6264,0.956,6477970,True
+Sweden,SWE,2026,Legislative (lower house),,,6626,6312,0.953,6767429,True
+Switzerland,CHE,1971,Legislative (lower house),,,2914,0,0.0,1986982,False
+Switzerland,CHE,1975,Legislative (lower house),,,2902,0,0.0,1907165,False
+Switzerland,CHE,1979,Legislative (lower house),,,2889,0,0.0,1803849,False
+Switzerland,CHE,1983,Legislative (lower house),,,2901,0,0.0,1922115,False
+Switzerland,CHE,1987,Legislative (lower house),,,2901,0,0.0,1895731,False
+Switzerland,CHE,1991,Legislative (lower house),,,2860,0,0.0,2002881,False
+Switzerland,CHE,1995,Legislative (lower house),,,2860,0,0.0,1891019,False
+Switzerland,CHE,1999,Legislative (lower house),,,2860,0,0.0,1951988,False
+Switzerland,CHE,2003,Legislative (lower house),Abroad,,3,0,0.0,8825,False
+Switzerland,CHE,2003,Legislative (lower house),,,2830,0,0.0,2119136,False
+Switzerland,CHE,2007,Legislative (lower house),Abroad,,4,0,0.0,10495,False
+Switzerland,CHE,2007,Legislative (lower house),,,2701,0,0.0,2362356,False
+Switzerland,CHE,2011,Legislative (lower house),Abroad,,6,0,0.0,11909,True
+Switzerland,CHE,2011,Legislative (lower house),,,2504,2497,0.997,2398040,True
+Switzerland,CHE,2015,Legislative (lower house),Abroad,,12,0,0.0,26280,True
+Switzerland,CHE,2015,Legislative (lower house),,,2314,2314,1.0,2536560,True
+Switzerland,CHE,2019,Legislative (lower house),Abroad,,12,0,0.0,26143,True
+Switzerland,CHE,2019,Legislative (lower house),,,2206,2206,1.0,2436408,True
+Switzerland,CHE,2023,Legislative (lower house),Abroad,,12,0,0.0,28761,True
+Switzerland,CHE,2023,Legislative (lower house),,,2131,2131,1.0,2576047,True
+Taiwan,TWN,1995,Legislative (unicameral),Constituency,,12201,0,0.0,9311367,False
+Taiwan,TWN,1996,Presidential,,,12597,0,0.0,10766119,False
+Taiwan,TWN,1998,Legislative (unicameral),Constituency,,13472,0,0.0,9899442,False
+Taiwan,TWN,2000,Presidential,,,13305,0,0.0,12664393,False
+Taiwan,TWN,2001,Legislative (unicameral),Constituency,,13511,0,0.0,10173996,False
+Taiwan,TWN,2004,Legislative (unicameral),Constituency,,13930,0,0.0,9572532,False
+Taiwan,TWN,2004,Legislative (unicameral),Lowland Aboriginal,,368,0,0.0,63241,False
+Taiwan,TWN,2004,Legislative (unicameral),Mountain Aboriginal,,368,0,0.0,81586,False
+Taiwan,TWN,2004,Presidential,,,13786,0,0.0,12943369,False
+Taiwan,TWN,2008,Legislative (unicameral),Constituency,,14377,0,0.0,9740896,False
+Taiwan,TWN,2008,Legislative (unicameral),Lowland Aboriginal,,14377,0,0.0,65522,False
+Taiwan,TWN,2008,Legislative (unicameral),Mountain Aboriginal,,14377,0,0.0,84358,False
+Taiwan,TWN,2008,Legislative (unicameral),Proportional,,14377,0,0.0,9780573,False
+Taiwan,TWN,2008,Presidential,,,14401,0,0.0,13103963,False
+Taiwan,TWN,2012,Legislative (unicameral),Constituency,,14806,0,0.0,12943139,False
+Taiwan,TWN,2012,Legislative (unicameral),Lowland Aboriginal,,14806,0,0.0,98131,False
+Taiwan,TWN,2012,Legislative (unicameral),Mountain Aboriginal,,14806,0,0.0,116712,False
+Taiwan,TWN,2012,Legislative (unicameral),Proportional,,14806,0,0.0,13162373,False
+Taiwan,TWN,2012,Presidential,,,14806,0,0.0,13354305,False
+Taiwan,TWN,2016,Legislative (unicameral),Constituency,,15582,0,0.0,11941149,False
+Taiwan,TWN,2016,Legislative (unicameral),Lowland Aboriginal,,15582,0,0.0,94607,False
+Taiwan,TWN,2016,Legislative (unicameral),Mountain Aboriginal,,15582,0,0.0,112965,False
+Taiwan,TWN,2016,Legislative (unicameral),Proportional,,15582,0,0.0,12190139,False
+Taiwan,TWN,2016,Presidential,,,15582,0,0.0,12284970,False
+Taiwan,TWN,2020,Legislative (unicameral),Constituency,,17226,17109,0.993,13885428,True
+Taiwan,TWN,2020,Legislative (unicameral),Lowland Aboriginal,,17226,17109,0.993,121880,True
+Taiwan,TWN,2020,Legislative (unicameral),Mountain Aboriginal,,17226,17109,0.993,144724,True
+Taiwan,TWN,2020,Legislative (unicameral),Proportional,,17226,17109,0.993,14160138,True
+Taiwan,TWN,2020,Presidential,,,17226,17109,0.993,14300940,True
+Taiwan,TWN,2024,Legislative (unicameral),Constituency,,17795,17791,1.0,13363780,True
+Taiwan,TWN,2024,Legislative (unicameral),Lowland Aboriginal,,17795,17678,0.993,119063,True
+Taiwan,TWN,2024,Legislative (unicameral),Mountain Aboriginal,,17795,17671,0.993,144214,True
+Taiwan,TWN,2024,Legislative (unicameral),Proportional,,17795,17791,1.0,13776736,True
+Taiwan,TWN,2024,Presidential,,,17795,17791,1.0,13947506,True
+Thailand,THA,2023,Legislative (lower house),Constituency,,400,400,1.0,37190108,True
+Thailand,THA,2023,Legislative (lower house),Party List,,400,400,1.0,37522694,True
+Thailand,THA,2026,Legislative (lower house),Constituency,,400,400,1.0,34777608,True
+Thailand,THA,2026,Legislative (lower house),Party List,,400,400,1.0,35030528,True
+Timor-Leste,TLS,2018,Legislative,Abroad,,2,0,0.0,1359,True
+Timor-Leste,TLS,2018,Legislative,,,65,65,1.0,620022,True
+Trinidad and Tobago,TTO,2015,Legislative (lower house),,,41,41,1.0,732533,True
+Trinidad and Tobago,TTO,2020,Legislative (lower house),,,41,41,1.0,656522,True
+Trinidad and Tobago,TTO,2025,Legislative (lower house),,,41,36,0.878,620180,True
+Tunisia,TUN,2014,Presidential,First Round,1,10504,10494,0.999,3250681,True
+Tunisia,TUN,2014,Presidential,Second Round,2,10572,10562,0.999,3073796,True
+Turkey,TUR,2011,Legislative (unicameral),,,199659,199659,1.0,39993979,True
+Turkey,TUR,2014,Presidential,,,165467,165467,1.0,40019352,True
+Turkey,TUR,2015,Legislative (unicameral),,,211691,211691,1.0,91137776,True
+Turkey,TUR,2018,Legislative (unicameral),,,186824,186824,1.0,49864009,True
+Turkey,TUR,2018,Presidential,,,180524,180524,1.0,48562084,True
+Turkey,TUR,2023,Legislative (unicameral),,,199084,199084,1.0,54014128,True
+Turkey,TUR,2023,Presidential,First Round,1,192214,192214,1.0,52972934,True
+Turkey,TUR,2023,Presidential,Second Round,2,192214,192214,1.0,51418556,True
+Uganda,UGA,2006,Presidential,,,19786,0,0.0,6941154,False
+Uganda,UGA,2011,Presidential,,,23968,23964,1.0,7928276,True
+Uganda,UGA,2016,Presidential,,,28010,28005,1.0,9851812,True
+Uganda,UGA,2021,Presidential,,,34767,34761,1.0,10350819,True
+Ukraine,UKR,2019,Legislative (unicameral),,,29885,29739,0.995,14613290,True
+Ukraine,UKR,2019,Presidential,First Round,1,29989,29785,0.993,18669164,True
+Ukraine,UKR,2019,Presidential,Second Round,2,29981,29783,0.993,18063848,True
+United Kingdom,GBR,2001,Legislative (lower house),,,659,641,0.973,26363122,True
+United Kingdom,GBR,2005,Legislative (lower house),,,646,646,1.0,27148480,True
+United Kingdom,GBR,2010,Legislative (lower house),,,650,650,1.0,29687737,True
+United Kingdom,GBR,2015,Legislative (lower house),,,650,650,1.0,30697854,True
+United Kingdom,GBR,2017,Legislative (lower house),,,650,650,1.0,32202871,True
+United Kingdom,GBR,2019,Legislative (lower house),,,650,650,1.0,32014110,True
+United Kingdom,GBR,2024,Legislative (lower house),,,650,650,1.0,28810084,True
+United States of America,USA,2016,Presidential,,,176970,176970,1.0,136527600,True
+United States of America,USA,2020,Presidential,,,169512,169512,1.0,158393769,True
+United States of America,USA,2024,Presidential,,,167549,167549,1.0,155158672,True
+Uruguay,URY,2014,Legislative (lower house),,,7044,6967,0.989,4491097,True
+Uruguay,URY,2019,Legislative (lower house),,,7248,7172,0.99,4691646,True
+Uruguay,URY,2024,Legislative (lower house),,,7358,7305,0.993,4656517,True
+Vanuatu,VUT,2002,Legislative (unicameral),,,17,17,1.0,79033,True
+Vanuatu,VUT,2004,Legislative (unicameral),,,17,17,1.0,91676,True
+Vanuatu,VUT,2012,Legislative (unicameral),,,17,17,1.0,120148,True
+Vanuatu,VUT,2016,Legislative (unicameral),,,18,18,1.0,113063,True
+Vanuatu,VUT,2020,Legislative (unicameral),,,18,18,1.0,142673,True
+Vanuatu,VUT,2025,Legislative (unicameral),,,18,18,1.0,146123,True
+Venezuela,VEN,2013,Presidential,,,39256,38901,0.991,14994589,True
+Zambia,ZMB,2021,Presidential,,,155,141,0.91,4733287,True
+Zimbabwe,ZWE,2018,Presidential,,,10503,10399,0.99,4773440,True

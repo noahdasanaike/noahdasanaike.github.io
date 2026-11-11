@@ -151,13 +151,108 @@
 
         .country-list {
             line-height: 1.7;
-            columns: 2;
-            column-gap: 2em;
         }
 
         .country-row {
-            break-inside: avoid;
-            display: block;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 0 1em;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .country-row .links {
+            white-space: nowrap;
+        }
+
+        /* Coverage table */
+        .coverage-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5em 1em;
+            align-items: center;
+            margin: 0.5em 0;
+        }
+
+        .coverage-controls input[type=text] {
+            flex: 1 1 14em;
+            padding: 8px 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+
+        .coverage-wrap {
+            max-height: 32em;
+            overflow: auto;
+            border: 1px solid #eee;
+        }
+
+        .coverage-table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 0.85em;
+        }
+
+        .coverage-table th {
+            position: sticky;
+            top: 0;
+            background: #f9f9f9;
+            cursor: pointer;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        .coverage-table th,
+        .coverage-table td {
+            padding: 4px 8px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .coverage-table td.num,
+        .coverage-table th.num {
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .coverage-table tr.cov-country {
+            cursor: pointer;
+        }
+
+        .coverage-table tr.cov-country:hover {
+            background: #faf5f5;
+        }
+
+        .coverage-table .cov-toggle {
+            border: none;
+            background: none;
+            color: #750014;
+            cursor: pointer;
+            font-size: 1em;
+            padding: 0 4px 0 0;
+        }
+
+        .coverage-table tr.cov-detail>td {
+            background: #fcfcfc;
+            padding: 4px 8px 10px 28px;
+        }
+
+        .coverage-table table.cov-years {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 0.95em;
+        }
+
+        .coverage-table table.cov-years th {
+            position: static;
+            background: none;
+            cursor: default;
+            color: #666;
+            font-weight: normal;
+        }
+
+        .coverage-table tr.year-first td {
+            border-top: 1px solid #e4e4e4;
         }
 
         .country-row .name {
@@ -320,7 +415,7 @@
         <p><strong>Tabular (Parquet)</strong>, partitioned by country and year, with coordinates (about 1&nbsp;GB);
             most analyses need only this. <strong>Polygons (GeoParquet)</strong>, one file per country, for
             choropleth mapping. The R and Python packages load one country and year in a single line:</p>
-        <pre>R:      remotes::install_github("noahdasanaike/sage", subdir = "sage_R")
+        <pre>R:      install.packages("sage")
         sage_load("Germany", years = 2021)
 
 Python: pip install "git+https://github.com/noahdasanaike/sage.git#subdirectory=sage_python"
@@ -348,9 +443,12 @@ Python: pip install "git+https://github.com/noahdasanaike/sage.git#subdirectory=
         R&nbsp;<code>arrow</code>. Polygon boundaries are not in this file; use the per-country bundles below or the
         <code>polygons/</code> tree for geometry.
     </p>
-    <p><strong>By country:</strong> for each country you can download a <strong>bundle</strong> (a ZIP of the Parquet
-        vote partitions and the GeoParquet polygon boundaries) or the native R <code>sf</code> object, with the polygons
-        joined to the vote rows. The citable copy of the full dataset is the <a id="dataverse-inline" href="#"
+    <p><strong>By country:</strong> each country has five downloads. <strong>csv</strong> is a ZIP with one CSV
+        file per election year, which opens in Excel, Stata, R, or Python. <strong>gpkg</strong> has the unit
+        boundaries as a GeoPackage for QGIS, ArcGIS, R, or Python. <strong>parquet</strong> is a ZIP of the Parquet
+        vote files and GeoParquet boundaries. <strong>rds</strong> is the native R <code>sf</code> object, with the
+        polygons joined to the vote rows. <strong>codebook</strong> is that country's section of the codebook, with
+        its sources and notes. The citable copy of the full dataset is the <a id="dataverse-inline" href="#"
             target="_blank" rel="noopener">Harvard Dataverse deposit</a>.</p>
     <p>[<button class="abstract-toggle"
             onclick="toggleAbstract('country-downloads', 'country downloads', 'hide country downloads')">country
@@ -359,6 +457,26 @@ Python: pip install "git+https://github.com/noahdasanaike/sage.git#subdirectory=
         <input type="text" class="country-search" id="country-search" placeholder="Filter countries&hellip;"
             oninput="filterCountries()">
         <div class="country-list" id="sage-countries"></div>
+    </div>
+
+    <h2 id="coverage">Coverage</h2>
+    <p>Click a country to see its elections by year, with the election type, the
+        vote type
+        or round where there is one, and the number of units. Units are the smallest units in the data, and located
+        units are those with coordinates. Click a column to sort. The table by election is also available as a
+        <a href="data/sage_coverage.csv" download data-gc="coverage-csv">CSV file</a>.
+    </p>
+    <div class="coverage-controls">
+        <input type="text" id="coverage-search" placeholder="Filter by country, year or election type&hellip;"
+            oninput="renderCoverage()">
+        <label><input type="checkbox" id="coverage-poly" onchange="renderCoverage()"> with polygons only</label>
+        <span id="coverage-count" style="color:#666; font-size:0.9em;"></span>
+    </div>
+    <div class="coverage-wrap">
+        <table class="coverage-table">
+            <thead id="coverage-head"></thead>
+            <tbody id="coverage-body"></tbody>
+        </table>
     </div>
 
     <div class="version-section">
@@ -951,6 +1069,9 @@ Python: pip install "git+https://github.com/noahdasanaike/sage.git#subdirectory=
         function countryRdsUrl(country) {
             return `${GCS_BASE}/rds/${encodeURIComponent(country)}.RDS`;
         }
+        function countryFileUrl(kind, country, ext) {
+            return `${GCS_BASE}/${kind}/${encodeURIComponent(country)}.${ext}`;
+        }
 
         function populateCountries() {
             const container = document.getElementById('sage-countries');
@@ -963,27 +1084,148 @@ Python: pip install "git+https://github.com/noahdasanaike/sage.git#subdirectory=
                 name.className = 'name';
                 name.textContent = country;
 
-                const dl = document.createElement('a');
-                dl.className = 'dl';
-                dl.href = countryZipUrl(country);
-                dl.textContent = '[zip/parquet]';
-                dl.setAttribute('download', '');
-                dl.dataset.gc = 'zip/' + country;
-
-                const rds = document.createElement('a');
-                rds.className = 'dl';
-                rds.href = countryRdsUrl(country);
-                rds.textContent = '[RDS/sf]';
-                rds.setAttribute('download', '');
-                rds.style.marginLeft = '8px';
-                rds.dataset.gc = 'rds/' + country;
+                const links = document.createElement('span');
+                links.className = 'links';
+                [
+                    ['csv', countryFileUrl('csv', country, 'zip'), 'csv/'],
+                    ['gpkg', countryFileUrl('gpkg', country, 'zip'), 'gpkg/'],
+                    ['parquet', countryZipUrl(country), 'zip/'],
+                    ['rds', countryRdsUrl(country), 'rds/'],
+                    ['codebook', countryFileUrl('codebook', country, 'pdf'), 'codebook/'],
+                ].forEach(([label, href, gc]) => {
+                    const a = document.createElement('a');
+                    a.className = 'dl';
+                    a.href = href;
+                    a.textContent = `[${label}]`;
+                    if (label !== 'codebook') a.setAttribute('download', '');
+                    else { a.target = '_blank'; a.rel = 'noopener'; }
+                    a.dataset.gc = gc + country;
+                    links.appendChild(a);
+                });
 
                 row.appendChild(name);
-                row.appendChild(dl);
-                row.appendChild(rds);
+                row.appendChild(links);
                 container.appendChild(row);
             });
         }
+
+        // Coverage table: data/sage_coverage.json = {columns: [...], rows: [[...], ...]}
+        // One row per country; a toggle opens that country's contests by year.
+        let covData = null, covCountries = [], covSort = { col: 'country', dir: 1 };
+        const covOpen = new Set();
+        const COV_TOP = [
+            ['country', 'Country', false], ['years', 'Years', false], ['n_years', 'Elections', true],
+            ['units', 'Units (latest)', true], ['share', '% located', true], ['poly', 'Polygons', true]
+        ];
+        const covEsc = s => String(s).replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
+        const covNum = v => v === null || v === undefined ? '' : Number(v).toLocaleString('en-US');
+        const covPct = v => v === null || v === undefined || isNaN(v) ? '' : Math.round(v * 100) + '%';
+
+        function buildCoverage(d) {
+            const ci = Object.fromEntries(d.columns.map((c, i) => [c, i]));
+            const by = new Map();
+            d.rows.forEach(r => {
+                const o = {
+                    country: r[ci.country], iso3: r[ci.iso3], year: r[ci.year], election_type: r[ci.election_type],
+                    special_type: r[ci.special_type], round: r[ci.round], units: r[ci.units],
+                    units_located: r[ci.units_located], share: r[ci.share_located], votes: r[ci.votes], poly: r[ci.polygons]
+                };
+                if (!by.has(o.country)) by.set(o.country, []);
+                by.get(o.country).push(o);
+            });
+            covCountries = [...by.entries()].map(([country, rows]) => {
+                rows.sort((a, b) => a.year - b.year || String(a.election_type).localeCompare(String(b.election_type)));
+                const years = [...new Set(rows.map(r => r.year))];
+                const last = years[years.length - 1];
+                const lastRows = rows.filter(r => r.year === last);
+                const units = Math.max(...lastRows.map(r => r.units));
+                const top = lastRows.find(r => r.units === units);
+                const polyYears = new Set(rows.filter(r => r.poly).map(r => r.year));
+                return {
+                    country, iso3: rows[0].iso3, rows,
+                    years: years.length > 1 ? `${years[0]}–${last}` : `${last}`,
+                    first: years[0], n_years: years.length, units,
+                    share: top.units ? top.units_located / top.units : null,
+                    poly: polyYears.size, polyLabel: polyYears.size === years.length ? 'all years'
+                        : polyYears.size ? `${polyYears.size} of ${years.length} years` : ''
+                };
+            });
+        }
+
+        function contestMatches(r, terms) {
+            const hay = [r.country, r.iso3, r.year, r.election_type, r.special_type].join(' ').toLowerCase();
+            return terms.every(t => hay.includes(t));
+        }
+
+        function detailTable(c, rows) {
+            let html = '<table class="cov-years"><thead><tr><th>Year</th><th>Election type</th><th>Vote type</th>' +
+                '<th class="num">Round</th><th class="num">Units</th><th class="num">% located</th>' +
+                '<th class="num">Votes</th><th>Polygons</th></tr></thead><tbody>';
+            let prev = null;
+            rows.forEach(r => {
+                const first = r.year !== prev;
+                html += `<tr${first ? ' class="year-first"' : ''}><td>${first ? r.year : ''}</td>` +
+                    `<td>${covEsc(r.election_type ?? '')}</td><td>${covEsc(r.special_type ?? '')}</td>` +
+                    `<td class="num">${r.round ?? ''}</td><td class="num">${covNum(r.units)}</td>` +
+                    `<td class="num">${covPct(r.share)}</td><td class="num">${covNum(r.votes)}</td>` +
+                    `<td>${r.poly ? 'yes' : ''}</td></tr>`;
+                prev = r.year;
+            });
+            return html + '</tbody></table>';
+        }
+
+        function renderCoverage() {
+            if (!covData) return;
+            const q = document.getElementById('coverage-search').value.trim().toLowerCase();
+            const terms = q ? q.split(/\s+/) : [];
+            const polyOnly = document.getElementById('coverage-poly').checked;
+            let list = covCountries.map(c => {
+                let rows = c.rows;
+                if (polyOnly) rows = rows.filter(r => r.poly);
+                if (terms.length) rows = rows.filter(r => contestMatches(r, terms));
+                return { c, rows };
+            }).filter(x => x.rows.length);
+            const k = covSort.col;
+            list.sort((a, b) => {
+                const x = k === 'years' ? a.c.first : a.c[k], y = k === 'years' ? b.c.first : b.c[k];
+                if (x === y) return a.c.country.localeCompare(b.c.country);
+                if (typeof x === 'string') return x.localeCompare(y) * covSort.dir;
+                return (x < y ? -1 : 1) * covSort.dir;
+            });
+            document.getElementById('coverage-head').innerHTML = '<tr>' + COV_TOP.map(([col, label, num]) =>
+                `<th${num ? ' class="num"' : ''} onclick="sortCoverage('${col}')">${label}` +
+                `${covSort.col === col ? (covSort.dir > 0 ? ' ▲' : ' ▼') : ''}</th>`).join('') + '</tr>';
+            // a search that names a year or election type opens the matching countries
+            const narrowed = terms.length && list.length <= 5;
+            document.getElementById('coverage-body').innerHTML = list.map(({ c, rows }) => {
+                const open = covOpen.has(c.country) || narrowed;
+                const id = covEsc(c.country).replace(/'/g, '&#39;');
+                let html = `<tr class="cov-country" onclick="toggleCoverage('${id}')"><td>` +
+                    `<button class="cov-toggle" aria-expanded="${open}">${open ? '−' : '+'}</button>` +
+                    `${covEsc(c.country)}</td><td>${c.years}</td><td class="num">${c.n_years}</td>` +
+                    `<td class="num">${covNum(c.units)}</td><td class="num">${covPct(c.share)}</td>` +
+                    `<td class="num">${c.polyLabel}</td></tr>`;
+                if (open) html += `<tr class="cov-detail"><td colspan="${COV_TOP.length}">${detailTable(c, rows)}</td></tr>`;
+                return html;
+            }).join('');
+            const nContests = list.reduce((n, x) => n + x.rows.length, 0);
+            document.getElementById('coverage-count').textContent =
+                `${list.length} countr${list.length === 1 ? 'y' : 'ies'}, ${nContests.toLocaleString('en-US')} ` +
+                `contest${nContests === 1 ? '' : 's'}`;
+        }
+
+        function toggleCoverage(country) {
+            if (covOpen.has(country)) covOpen.delete(country); else covOpen.add(country);
+            renderCoverage();
+        }
+
+        function sortCoverage(col) {
+            covSort = covSort.col === col ? { col, dir: -covSort.dir } : { col, dir: col === 'country' ? 1 : -1 };
+            renderCoverage();
+        }
+
+        fetch('data/sage_coverage.json').then(r => r.json()).then(d => { covData = d; buildCoverage(d); renderCoverage(); })
+            .catch(() => { document.getElementById('coverage-count').textContent = 'The coverage table did not load.'; });
 
         function filterCountries() {
             const q = document.getElementById('country-search').value.trim().toLowerCase();
