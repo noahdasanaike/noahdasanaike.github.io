@@ -219,6 +219,24 @@
             cursor: pointer;
         }
 
+        .dl-table td {
+            text-align: left;
+        }
+
+        .dl-table tr.cov-country > td:first-child {
+            white-space: nowrap;
+        }
+
+        .dl-table td.dl-links .dl {
+            margin-left: 0;
+            margin-right: 6px;
+            white-space: nowrap;
+        }
+
+        .dl-size {
+            color: #888;
+        }
+
         .coverage-table tr.cov-country:hover {
             background: #faf5f5;
         }
@@ -443,20 +461,29 @@ Python: pip install "git+https://github.com/noahdasanaike/sage.git#subdirectory=
         R&nbsp;<code>arrow</code>. Polygon boundaries are not in this file; use the per-country bundles below or the
         <code>polygons/</code> tree for geometry.
     </p>
-    <p><strong>By country:</strong> each country has five downloads. <strong>csv</strong> is a ZIP with one CSV
-        file per election year, which opens in Excel, Stata, R, or Python. <strong>gpkg</strong> has the unit
-        boundaries as a GeoPackage for QGIS, ArcGIS, R, or Python. <strong>parquet</strong> is a ZIP of the Parquet
-        vote files and GeoParquet boundaries. <strong>rds</strong> is the native R <code>sf</code> object, with the
-        polygons joined to the vote rows. <strong>codebook</strong> is that country's section of the codebook, with
-        its sources and notes. The citable copy of the full dataset is the <a id="dataverse-inline" href="#"
-            target="_blank" rel="noopener">Harvard Dataverse deposit</a>.</p>
-    <p>[<button class="abstract-toggle"
-            onclick="toggleAbstract('country-downloads', 'country downloads', 'hide country downloads')">country
-            downloads</button>] <span style="color:#666; font-size:0.9em;">134 countries</span></p>
-    <div id="country-downloads" class="abstract-content">
-        <input type="text" class="country-search" id="country-search" placeholder="Filter countries&hellip;"
-            oninput="filterCountries()">
-        <div class="country-list" id="sage-countries"></div>
+    <p><strong>By country:</strong> each row below has a country's files for all years. Click a country to
+        download a single year. <strong>csv</strong> is a ZIP with one CSV file per election year, which opens in
+        Excel, Stata, R, or Python. <strong>gpkg</strong> has the unit boundaries as a GeoPackage for QGIS, ArcGIS,
+        R, or Python. <strong>parquet</strong> has the vote rows as Parquet; for all years it is a ZIP with the
+        GeoParquet boundaries as well. <strong>rds</strong> is the native R <code>sf</code> object, with the polygons
+        joined to the vote rows, for all years only. <strong>codebook</strong> is that country's section of the
+        codebook, with its sources and notes. The citable copy of the full dataset is the <a id="dataverse-inline"
+            href="#" target="_blank" rel="noopener">Harvard Dataverse deposit</a>.</p>
+    <div class="coverage-controls">
+        <input type="text" id="country-search" placeholder="Filter countries&hellip;" oninput="renderDownloads()">
+        <span id="dl-count" style="color:#666; font-size:0.9em;"></span>
+    </div>
+    <div class="coverage-wrap">
+        <table class="coverage-table dl-table">
+            <thead>
+                <tr>
+                    <th>Country</th>
+                    <th>Years</th>
+                    <th>All years</th>
+                </tr>
+            </thead>
+            <tbody id="dl-body"></tbody>
+        </table>
     </div>
 
     <h2 id="coverage">Coverage</h2>
@@ -1073,40 +1100,63 @@ Python: pip install "git+https://github.com/noahdasanaike/sage.git#subdirectory=
             return `${GCS_BASE}/${kind}/${encodeURIComponent(country)}.${ext}`;
         }
 
+        // Country downloads: data/sage_downloads.json =
+        //   {Country: {all: {csv, gpkg, parquet, rds, codebook}, years: {YYYY: {csv, gpkg, parquet}}}}
+        // where each file is {path (relative to GCS_BASE), bytes} or null.
+        let dlData = null;
+        const dlOpen = new Set();
+        const DL_FORMATS = ['csv', 'gpkg', 'parquet', 'rds', 'codebook'];
+
+        function fmtBytes(b) {
+            if (!b) return '';
+            if (b < 1e6) return Math.max(1, Math.round(b / 1e3)) + ' KB';
+            if (b < 1e9) return (b < 1e7 ? (b / 1e6).toFixed(1) : Math.round(b / 1e6)) + ' MB';
+            return (b / 1e9).toFixed(1) + ' GB';
+        }
+
+        function dlLink(label, f, gc) {
+            if (!f || !f.path) return '';
+            const href = GCS_BASE + '/' + f.path.split('/').map(encodeURIComponent).join('/');
+            const pdf = f.path.endsWith('.pdf');
+            const size = f.bytes ? ` <span class="dl-size">${fmtBytes(f.bytes)}</span>` : '';
+            return `<a class="dl" href="${href}" data-gc="${gc}" onclick="event.stopPropagation()"` +
+                `${pdf ? ' target="_blank" rel="noopener"' : ''}>[${label}${size}]</a>`;
+        }
+
+        function renderDownloads() {
+            if (!dlData) return;
+            const q = document.getElementById('country-search').value.trim().toLowerCase();
+            const names = Object.keys(dlData).sort((a, b) => a.localeCompare(b))
+                .filter(c => !q || c.toLowerCase().includes(q));
+            const esc = s => String(s).replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
+            document.getElementById('dl-body').innerHTML = names.map(c => {
+                const d = dlData[c], years = Object.keys(d.years).sort();
+                const open = dlOpen.has(c) || names.length === 1;
+                const span = years.length > 1 ? `${years[0]}–${years[years.length - 1]}` : years[0];
+                const id = esc(c).replace(/'/g, '&#39;');
+                let html = `<tr class="cov-country" onclick="toggleDownloads('${id}')"><td>` +
+                    `<button class="cov-toggle" aria-expanded="${open}">${open ? '−' : '+'}</button>${esc(c)}</td>` +
+                    `<td>${span}</td><td class="dl-links">` +
+                    DL_FORMATS.map(k => dlLink(k, d.all[k], `${k}/all/${c}`)).join(' ') + '</td></tr>';
+                if (open) {
+                    html += `<tr class="cov-detail"><td colspan="3"><table class="cov-years"><tbody>` +
+                        years.slice().reverse().map(y => `<tr><td>${y}</td><td class="dl-links">` +
+                            ['csv', 'gpkg', 'parquet'].map(k => dlLink(k, d.years[y][k], `${k}/${y}/${c}`)).join(' ') +
+                            '</td></tr>').join('') + '</tbody></table></td></tr>';
+                }
+                return html;
+            }).join('');
+            document.getElementById('dl-count').textContent = `${names.length} countr${names.length === 1 ? 'y' : 'ies'}`;
+        }
+
+        function toggleDownloads(country) {
+            if (dlOpen.has(country)) dlOpen.delete(country); else dlOpen.add(country);
+            renderDownloads();
+        }
+
         function populateCountries() {
-            const container = document.getElementById('sage-countries');
-            sageCountries.forEach(country => {
-                const row = document.createElement('div');
-                row.className = 'country-row';
-                row.dataset.name = country.toLowerCase();
-
-                const name = document.createElement('span');
-                name.className = 'name';
-                name.textContent = country;
-
-                const links = document.createElement('span');
-                links.className = 'links';
-                [
-                    ['csv', countryFileUrl('csv', country, 'zip'), 'csv/'],
-                    ['gpkg', countryFileUrl('gpkg', country, 'zip'), 'gpkg/'],
-                    ['parquet', countryZipUrl(country), 'zip/'],
-                    ['rds', countryRdsUrl(country), 'rds/'],
-                    ['codebook', countryFileUrl('codebook', country, 'pdf'), 'codebook/'],
-                ].forEach(([label, href, gc]) => {
-                    const a = document.createElement('a');
-                    a.className = 'dl';
-                    a.href = href;
-                    a.textContent = `[${label}]`;
-                    if (label !== 'codebook') a.setAttribute('download', '');
-                    else { a.target = '_blank'; a.rel = 'noopener'; }
-                    a.dataset.gc = gc + country;
-                    links.appendChild(a);
-                });
-
-                row.appendChild(name);
-                row.appendChild(links);
-                container.appendChild(row);
-            });
+            fetch('data/sage_downloads.json').then(r => r.json()).then(d => { dlData = d; renderDownloads(); })
+                .catch(() => { document.getElementById('dl-count').textContent = 'The download list did not load.'; });
         }
 
         // Coverage table: data/sage_coverage.json = {columns: [...], rows: [[...], ...]}
@@ -1227,12 +1277,6 @@ Python: pip install "git+https://github.com/noahdasanaike/sage.git#subdirectory=
         fetch('data/sage_coverage.json').then(r => r.json()).then(d => { covData = d; buildCoverage(d); renderCoverage(); })
             .catch(() => { document.getElementById('coverage-count').textContent = 'The coverage table did not load.'; });
 
-        function filterCountries() {
-            const q = document.getElementById('country-search').value.trim().toLowerCase();
-            document.querySelectorAll('.country-row').forEach(row => {
-                row.style.display = row.dataset.name.includes(q) ? '' : 'none';
-            });
-        }
 
         function submitSignup(e) {
             e.preventDefault();
