@@ -1,6 +1,17 @@
+% !TEX program = xelatex
 \documentclass[12pt]{article}
 \usepackage[margin=.85in]{geometry}
-\usepackage{mathptmx}
+\usepackage{fontspec}
+% Instrument Sans (same font as the website); compile with XeLaTeX
+\setmainfont{InstrumentSans}[
+    Path=fonts/,
+    Extension=.ttf,
+    UprightFont=*-Regular,
+    ItalicFont=*-Italic,
+    BoldFont=*-SemiBold,
+    BoldItalicFont=*-SemiBoldItalic,
+    RawFeature={+ss04;+ss05;+ss07}
+]
 \usepackage{chngpage}
 \usepackage[dvipsnames]{xcolor}
 \usepackage{url}

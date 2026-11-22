@@ -9,10 +9,33 @@
   </script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"></script>
   <style>
+    @font-face {
+      font-family: Instrument;
+      src: url(fonts/InstrumentSans.woff2) format("woff2");
+      font-weight: 400 700;
+      font-stretch: 75% 100%;
+    }
+
+    @font-face {
+      font-family: Instrument;
+      font-style: italic;
+      src: url(fonts/InstrumentSans-Italic.woff2) format("woff2");
+      font-weight: 400 700;
+      font-stretch: 75% 100%;
+    }
+
     body {
+      font-family: Instrument, Helvetica, sans-serif;
+      font-stretch: 97%;
+      font-weight: 435;
+      font-feature-settings: "ss04" on, "ss05" on, "ss07" on;
       max-width: 1000px;
       margin: auto;
       padding: 1em;
+    }
+
+    h1, h2, h3, h4, b, strong {
+      font-weight: 590;
     }
 
     a {
@@ -24,6 +47,14 @@
       font-weight: 600;
       color: #1a3a6c;
       white-space: nowrap;
+    }
+
+    .rr::before {
+      content: "(";
+    }
+
+    .rr::after {
+      content: ")";
     }
 
     .left-panel {
